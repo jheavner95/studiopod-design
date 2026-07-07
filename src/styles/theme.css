@@ -1,0 +1,121 @@
+/**
+ * StudioPOD design tokens — Tailwind v4 theme layer.
+ * Every value here becomes a utility class automatically
+ * (e.g. --color-accent-500 -> bg-accent-500 / text-accent-500 / border-accent-500).
+ * Keep this file the single source of truth for color, radius, shadow,
+ * spacing, container and font tokens. Motion + z-index tokens live in tokens.css
+ * and lib/tokens.ts since they are consumed by JS (framer-motion) as well as CSS.
+ */
+
+@theme {
+  /* ---------------------------------------------------------------- */
+  /* Fonts                                                             */
+  /* ---------------------------------------------------------------- */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  /* ---------------------------------------------------------------- */
+  /* Canvas + surfaces                                                  */
+  /* Cool graphite black, never pure #000 — keeps depth in dark mode. */
+  /* ---------------------------------------------------------------- */
+  --color-canvas: #07080a;
+  --color-canvas-raised: #0b0d11;
+  --color-surface: #101319;
+  --color-surface-hover: #151923;
+  --color-surface-active: #1a1f2b;
+  --color-panel: #12151c;
+
+  /* ---------------------------------------------------------------- */
+  /* Borders                                                            */
+  /* ---------------------------------------------------------------- */
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-border-accent: rgba(107, 140, 255, 0.4);
+
+  /* ---------------------------------------------------------------- */
+  /* Ink (text) colors — "ink" avoids colliding with Tailwind's        */
+  /* text-{color} utility naming for the color itself.                 */
+  /* ---------------------------------------------------------------- */
+  --color-ink-primary: #f4f5f7;
+  --color-ink-secondary: #9aa1af;
+  --color-ink-tertiary: #676d7a;
+  --color-ink-disabled: #454a55;
+  --color-ink-inverse: #08090b;
+
+  /* ---------------------------------------------------------------- */
+  /* Accent — confident indigo/blue, the "systems" color.              */
+  /* ---------------------------------------------------------------- */
+  --color-accent-300: #9fb4ff;
+  --color-accent-400: #7d98ff;
+  --color-accent-500: #5b7fff;
+  --color-accent-600: #4364e8;
+  --color-accent-700: #324ec2;
+  --color-accent-soft: rgba(91, 127, 255, 0.12);
+
+  /* ---------------------------------------------------------------- */
+  /* Status colors                                                      */
+  /* ---------------------------------------------------------------- */
+  --color-success: #34d399;
+  --color-success-soft: rgba(52, 211, 153, 0.12);
+  --color-warning: #fbbf24;
+  --color-warning-soft: rgba(251, 191, 36, 0.12);
+  --color-error: #f87171;
+  --color-error-soft: rgba(248, 113, 113, 0.12);
+  --color-neutral: #8b93a3;
+  --color-neutral-soft: rgba(139, 147, 163, 0.12);
+
+  /* ---------------------------------------------------------------- */
+  /* Radii                                                              */
+  /* ---------------------------------------------------------------- */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+
+  /* ---------------------------------------------------------------- */
+  /* Shadows — soft, low-contrast, dark-theme appropriate.              */
+  /* ---------------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 0 1px rgba(91, 127, 255, 0.4), 0 0 32px rgba(91, 127, 255, 0.25);
+
+  /* Semantic elevation scale — same underlying values as above, named by
+     purpose for the elevation showcase and for components that want to
+     reach for "how high does this sit" rather than a raw size token. */
+  --shadow-subtle: var(--shadow-xs);
+  --shadow-card: var(--shadow-sm);
+  --shadow-panel: var(--shadow-md);
+  --shadow-floating: var(--shadow-lg);
+  --shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  /* ---------------------------------------------------------------- */
+  /* Spacing — fluid section rhythm + content gutter.                  */
+  /* Extends (not replaces) Tailwind's default numeric spacing scale.  */
+  /* ---------------------------------------------------------------- */
+  --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --spacing-section-xs: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+  --spacing-section-sm: clamp(3.5rem, 2.75rem + 3.5vw, 5rem);
+  --spacing-section-md: clamp(5rem, 3.75rem + 5.5vw, 7rem);
+  --spacing-section-lg: clamp(6rem, 4.25rem + 7.5vw, 9rem);
+  --spacing-section-xl: clamp(8rem, 5.5rem + 10vw, 11rem);
+
+  /* ---------------------------------------------------------------- */
+  /* Containers                                                         */
+  /* ---------------------------------------------------------------- */
+  --container-narrow: 720px;
+  --container-content: 1200px;
+  --container-wide: 1440px;
+
+  /* ---------------------------------------------------------------- */
+  /* Easing curves (also mirrored in lib/tokens.ts for framer-motion)   */
+  /* ---------------------------------------------------------------- */
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+}

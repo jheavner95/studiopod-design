@@ -1,0 +1,47 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { pulseVariants } from "./variants";
+import { useMotionPreference } from "./MotionPreference";
+
+export type PulseTone = "accent" | "success" | "warning" | "error" | "neutral";
+
+const toneMap: Record<PulseTone, string> = {
+  accent: "bg-accent-500",
+  success: "bg-success",
+  warning: "bg-warning",
+  error: "bg-error",
+  neutral: "bg-neutral",
+};
+
+const sizeMap = { sm: "size-1.5", md: "size-2.5" };
+
+interface PulseStatusProps {
+  tone?: PulseTone;
+  size?: "sm" | "md";
+  className?: string;
+  /** Set false for a static dot (completed/idle states shouldn't feel "live"). */
+  active?: boolean;
+}
+
+/** A status dot with an expanding ring pulse — the "this is live" signal. */
+export function PulseStatus({ tone = "accent", size = "md", active = true, className }: PulseStatusProps) {
+  const reduceMotion = useMotionPreference();
+  const dotClass = cn("relative rounded-full", sizeMap[size], toneMap[tone], className);
+
+  if (!active || reduceMotion) {
+    return <span className={dotClass} />;
+  }
+
+  return (
+    <span className={cn("relative inline-flex", sizeMap[size])}>
+      <motion.span
+        className={cn("absolute inset-0 rounded-full", toneMap[tone])}
+        variants={pulseVariants}
+        animate="idle"
+      />
+      <span className={dotClass} />
+    </span>
+  );
+}

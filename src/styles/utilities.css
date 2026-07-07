@@ -1,0 +1,43 @@
+/**
+ * Small, composable utility classes that don't fit Tailwind's generated
+ * utility model (backdrop compositing, background patterns, focus rings).
+ */
+
+/* Restrained glass effect — use sparingly (hero panels, spotlight callouts). */
+.glass-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Consistent keyboard focus ring across all interactive primitives. */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Subtle dot-grid texture for system/backdrop surfaces (SystemGrid). */
+.bg-grid-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-grid-lines {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Hide scrollbars on horizontally-scrollable rows without losing scroll. */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

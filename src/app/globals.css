@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "../styles/theme.css";
+@import "../styles/tokens.css";
+@import "../styles/typography.css";
+@import "../styles/utilities.css";
+
+@theme inline {
+  --color-background: var(--color-canvas);
+  --color-foreground: var(--color-ink-primary);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink-primary);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink-primary);
+  }
+}

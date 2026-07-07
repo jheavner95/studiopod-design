@@ -1,0 +1,76 @@
+/**
+ * Fluid typography scale. Plain CSS classes (not Tailwind @theme font-size
+ * tokens) so font-size, line-height and letter-spacing travel together as
+ * one class and clamp() gets full control over responsive scaling.
+ *
+ * Usage: prefer the Typography components (src/components/ui/Typography.tsx)
+ * in application code — these classes are their implementation detail, but
+ * are also valid to reach for directly in one-off markup.
+ */
+
+.text-display-1 {
+  font-size: clamp(2.75rem, 2rem + 3vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.text-display-2 {
+  font-size: clamp(2.25rem, 1.75rem + 2.25vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+}
+
+.text-heading-1 {
+  font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.014em;
+}
+
+.text-heading-2 {
+  font-size: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.text-heading-3 {
+  font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.006em;
+}
+
+.text-heading-4 {
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.text-body-lg {
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.text-body-md {
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+.text-caption {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+}
+
+.text-metadata {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
