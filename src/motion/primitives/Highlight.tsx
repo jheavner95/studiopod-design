@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useMotion } from "@/hooks/useMotion";
 import { useMotionEnabled } from "@/hooks/useMotionEnabled";
+import { accentRgb } from "@/lib/tokens";
 import { transition } from "../utils";
 import type { MotionPrimitiveProps } from "./types";
 
@@ -34,8 +35,8 @@ export function Highlight({ duration = "slow", delay = "none", disabled, trigger
     <motion.div
       key={flashKey}
       className={className}
-      initial={flashKey === 0 ? false : { boxShadow: "0 0 0 4px rgba(91, 127, 255, 0.4)" }}
-      animate={{ boxShadow: "0 0 0 0 rgba(91, 127, 255, 0)" }}
+      initial={flashKey === 0 ? false : { boxShadow: `0 0 0 4px rgba(${accentRgb}, 0.4)` }}
+      animate={{ boxShadow: `0 0 0 0 rgba(${accentRgb}, 0)` }}
       transition={transition({ duration, delay, ease: "emphasis", speed })}
       style={{ borderRadius: "inherit" }}
     >

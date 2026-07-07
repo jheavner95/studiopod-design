@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useMotion } from "@/hooks/useMotion";
 import { useMotionEnabled } from "@/hooks/useMotionEnabled";
+import { accentRgb, successRgb } from "@/lib/tokens";
 import { transition } from "../utils";
 import type { MotionPrimitiveProps } from "./types";
 
@@ -13,9 +14,9 @@ export interface ActivateProps extends MotionPrimitiveProps {
 }
 
 const ringColor: Record<ActivateState, string> = {
-  inactive: "rgba(91, 127, 255, 0)",
-  active: "rgba(91, 127, 255, 0.18)",
-  complete: "rgba(52, 211, 153, 0)",
+  inactive: `rgba(${accentRgb}, 0)`,
+  active: `rgba(${accentRgb}, 0.18)`,
+  complete: `rgba(${successRgb}, 0)`,
 };
 
 const scaleFor: Record<ActivateState, number> = {

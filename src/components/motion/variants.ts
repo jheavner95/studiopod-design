@@ -1,5 +1,5 @@
 import type { Variants } from "framer-motion";
-import { motionDuration, motionEase } from "@/lib/tokens";
+import { motionDuration, motionEase, accentRgb, successRgb } from "@/lib/tokens";
 
 /**
  * Simple opacity entrance. Use for text, metadata, anything that shouldn't
@@ -45,16 +45,16 @@ export const pulseVariants: Variants = {
 export const activeNodeVariants: Variants = {
   inactive: {
     scale: 1,
-    boxShadow: "0 0 0 0 rgba(91, 127, 255, 0)",
+    boxShadow: `0 0 0 0 rgba(${accentRgb}, 0)`,
   },
   active: {
     scale: 1.06,
-    boxShadow: "0 0 0 6px rgba(91, 127, 255, 0.15)",
+    boxShadow: `0 0 0 6px rgba(${accentRgb}, 0.15)`,
     transition: { duration: motionDuration.base, ease: motionEase.standard },
   },
   complete: {
     scale: 1,
-    boxShadow: "0 0 0 0 rgba(52, 211, 153, 0)",
+    boxShadow: `0 0 0 0 rgba(${successRgb}, 0)`,
     transition: { duration: motionDuration.base, ease: motionEase.standard },
   },
 };

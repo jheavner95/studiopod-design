@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { accentRgb } from "@/lib/tokens";
 
 interface SystemGridProps {
   variant?: "dots" | "lines";
@@ -24,7 +25,7 @@ export function SystemGrid({ variant = "dots", glow = true, className }: SystemG
       {glow ? (
         <div
           className="absolute left-1/2 top-0 size-[600px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-40 blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(91,127,255,0.25), transparent 70%)" }}
+          style={{ background: `radial-gradient(circle, rgba(${accentRgb}, 0.25), transparent 70%)` }}
         />
       ) : null}
     </div>

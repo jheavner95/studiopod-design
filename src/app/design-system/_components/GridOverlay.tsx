@@ -1,5 +1,6 @@
 "use client";
 
+import { accentRgb } from "@/lib/tokens";
 import { useGridOverlay } from "../_lib/grid-overlay-context";
 
 /**
@@ -20,8 +21,7 @@ export function GridOverlay() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage:
-              "repeating-linear-gradient(to bottom, rgba(91,127,255,0.14) 0, rgba(91,127,255,0.14) 1px, transparent 1px, transparent 8px)",
+            backgroundImage: `repeating-linear-gradient(to bottom, rgba(${accentRgb},0.14) 0, rgba(${accentRgb},0.14) 1px, transparent 1px, transparent 8px)`,
           }}
         />
       )}

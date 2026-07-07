@@ -34,3 +34,15 @@ export const zIndex = {
   toast: 60,
   tooltip: 70,
 } as const;
+
+/**
+ * RGB triples mirroring theme.css's --color-accent-500 / --color-success,
+ * for the handful of framer-motion `animate`/`initial` boxShadow values
+ * that interpolate a color's alpha channel. Framer-motion can't tween a
+ * `var(--color-x)` reference (it needs literal rgb components to animate
+ * between), so these exist as the single source those call sites build
+ * an `rgba(${accentRgb}, alpha)` string from, instead of each repeating
+ * the digits. Keep in sync with theme.css if the palette changes.
+ */
+export const accentRgb = "59, 130, 246";
+export const successRgb = "34, 197, 94";

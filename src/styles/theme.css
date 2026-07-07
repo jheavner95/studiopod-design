@@ -16,54 +16,60 @@
 
   /* ---------------------------------------------------------------- */
   /* Canvas + surfaces                                                  */
-  /* Cool graphite black, never pure #000 — keeps depth in dark mode. */
+  /* Aligned to the StudioPOD application (MS-2A): a cool slate-navy,   */
+  /* not an achromatic black — the app's canvas carries a blue cast.   */
   /* ---------------------------------------------------------------- */
-  --color-canvas: #07080a;
-  --color-canvas-raised: #0b0d11;
-  --color-surface: #101319;
-  --color-surface-hover: #151923;
-  --color-surface-active: #1a1f2b;
-  --color-panel: #12151c;
+  --color-canvas: #0a0e17;
+  --color-canvas-raised: #0d1420;
+  --color-surface: #131a2b;
+  --color-surface-hover: #182136;
+  --color-surface-active: #1e2942;
+  --color-panel: #111827;
 
   /* ---------------------------------------------------------------- */
-  /* Borders                                                            */
+  /* Borders — slate-tinted, matching the app's low-contrast hairlines  */
+  /* (not a neutral white overlay).                                    */
   /* ---------------------------------------------------------------- */
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
-  --color-border-accent: rgba(107, 140, 255, 0.4);
+  --color-border-subtle: rgba(148, 163, 184, 0.08);
+  --color-border: rgba(148, 163, 184, 0.14);
+  --color-border-strong: rgba(148, 163, 184, 0.22);
+  --color-border-accent: rgba(59, 130, 246, 0.4);
 
   /* ---------------------------------------------------------------- */
   /* Ink (text) colors — "ink" avoids colliding with Tailwind's        */
   /* text-{color} utility naming for the color itself.                 */
   /* ---------------------------------------------------------------- */
-  --color-ink-primary: #f4f5f7;
-  --color-ink-secondary: #9aa1af;
-  --color-ink-tertiary: #676d7a;
-  --color-ink-disabled: #454a55;
-  --color-ink-inverse: #08090b;
+  --color-ink-primary: #f1f5f9;
+  --color-ink-secondary: #94a3b8;
+  --color-ink-tertiary: #64748b;
+  --color-ink-disabled: #475569;
+  --color-ink-inverse: #0a0e17;
 
   /* ---------------------------------------------------------------- */
-  /* Accent — confident indigo/blue, the "systems" color.              */
+  /* Accent — the app's primary blue (buttons, active nav, links),      */
+  /* replacing the marketing site's prior periwinkle-leaning blue.      */
   /* ---------------------------------------------------------------- */
-  --color-accent-300: #9fb4ff;
-  --color-accent-400: #7d98ff;
-  --color-accent-500: #5b7fff;
-  --color-accent-600: #4364e8;
-  --color-accent-700: #324ec2;
-  --color-accent-soft: rgba(91, 127, 255, 0.12);
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-soft: rgba(59, 130, 246, 0.12);
 
   /* ---------------------------------------------------------------- */
-  /* Status colors                                                      */
+  /* Status colors — matched to the app's Connected/Configured (green), */
+  /* missing-vars (amber), and Missing (red) treatments. Error is a     */
+  /* touch lighter than the app's raw red-500 so text stays >=4.5:1     */
+  /* against error-soft (verified — see MS-2A contrast pass).           */
   /* ---------------------------------------------------------------- */
-  --color-success: #34d399;
-  --color-success-soft: rgba(52, 211, 153, 0.12);
-  --color-warning: #fbbf24;
-  --color-warning-soft: rgba(251, 191, 36, 0.12);
-  --color-error: #f87171;
-  --color-error-soft: rgba(248, 113, 113, 0.12);
-  --color-neutral: #8b93a3;
-  --color-neutral-soft: rgba(139, 147, 163, 0.12);
+  --color-success: #22c55e;
+  --color-success-soft: rgba(34, 197, 94, 0.12);
+  --color-warning: #f59e0b;
+  --color-warning-soft: rgba(245, 158, 11, 0.12);
+  --color-error: #f56565;
+  --color-error-soft: rgba(245, 101, 101, 0.12);
+  --color-neutral: #94a3b8;
+  --color-neutral-soft: rgba(148, 163, 184, 0.12);
 
   /* ---------------------------------------------------------------- */
   /* Radii                                                              */
@@ -83,7 +89,7 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 0 1px rgba(91, 127, 255, 0.4), 0 0 32px rgba(91, 127, 255, 0.25);
+  --shadow-glow: 0 0 0 1px rgba(59, 130, 246, 0.4), 0 0 32px rgba(59, 130, 246, 0.25);
 
   /* Semantic elevation scale — same underlying values as above, named by
      purpose for the elevation showcase and for components that want to
@@ -92,7 +98,7 @@
   --shadow-card: var(--shadow-sm);
   --shadow-panel: var(--shadow-md);
   --shadow-floating: var(--shadow-lg);
-  --shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 163, 184, 0.08);
 
   /* ---------------------------------------------------------------- */
   /* Spacing — fluid section rhythm + content gutter.                  */
