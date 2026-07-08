@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { MotionProvider } from "@/providers";
+import { GlobalNav } from "@/components/layout";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StudioPOD: Production Operating System",
-  description: "The production operating system for product businesses.",
+  title: "StudioPOD Design System",
+  description: "The shared design system powering the StudioPOD marketing site and the StudioPOD application.",
 };
 
 export default function RootLayout({
@@ -29,7 +30,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full dark`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink-primary antialiased">
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <GlobalNav />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );
