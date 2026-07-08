@@ -45,7 +45,12 @@ export function AnimatedNode({ status = "idle", icon, size = "md", className }: 
   if (reduceMotion) return content;
 
   return (
-    <motion.div className="inline-flex" variants={activeNodeVariants} animate={variantState} initial="inactive">
+    <motion.div
+      className="inline-flex rounded-full"
+      variants={activeNodeVariants}
+      animate={variantState}
+      initial="inactive"
+    >
       {content}
     </motion.div>
   );
