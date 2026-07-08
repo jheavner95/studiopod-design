@@ -3,11 +3,16 @@
  * utility model (backdrop compositing, background patterns, focus rings).
  */
 
-/* Restrained glass effect — use sparingly (hero panels, spotlight callouts). */
+/* Restrained glass effect — use sparingly (hero panels, spotlight callouts).
+   The blur itself is applied via Tailwind's `backdrop-blur-[20px]` utility
+   on the component, not here: a hand-written `backdrop-filter` declaration
+   in this file gets silently stripped by the CSS build pipeline, while the
+   Tailwind-generated utility class survives — so this rule only owns the
+   background compositing, which isn't affected by that. */
 .glass-panel {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background:
+    radial-gradient(140% 100% at 0% 0%, rgba(255, 255, 255, 0.05), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
 }
 
 /* Consistent keyboard focus ring across all interactive primitives. */
