@@ -12,6 +12,7 @@ const SECTIONS = [
   { id: "motion", label: "Motion" },
   { id: "illustration", label: "Illustration" },
   { id: "components", label: "Components" },
+  { id: "form-controls", label: "Forms & controls" },
   { id: "layout", label: "Layout" },
   { id: "grid-tools", label: "Grid tools" },
   { id: "theme-preview", label: "Theme preview" },

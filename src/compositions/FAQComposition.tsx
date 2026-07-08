@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SectionShell } from "@/components/layout";
-import { SectionHeader, Card, Expandable, Button, Body } from "@/components/ui";
+import { SectionHeader, Card, Expandable, Body, FilterBar } from "@/components/ui";
 
 export interface FAQItem {
   id: string;
@@ -64,41 +64,12 @@ export function FAQComposition({
         {title ? <SectionHeader eyebrow={eyebrow} title={title} description={description} /> : null}
 
         {searchable || derivedCategories.length > 0 ? (
-          <div className="flex flex-col gap-4">
-            {searchable ? (
-              <div className="relative max-w-md">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-tertiary" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search questions"
-                  className="focus-ring w-full rounded-md border border-border bg-surface py-2 pl-9 pr-3 text-body-sm text-ink-primary placeholder:text-ink-tertiary"
-                />
-              </div>
-            ) : null}
-            {derivedCategories.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  size="sm"
-                  variant={activeCategory === null ? "secondary" : "ghost"}
-                  onClick={() => setActiveCategory(null)}
-                >
-                  All
-                </Button>
-                {derivedCategories.map((category) => (
-                  <Button
-                    key={category}
-                    size="sm"
-                    variant={activeCategory === category ? "secondary" : "ghost"}
-                    onClick={() => setActiveCategory(category)}
-                  >
-                    {category}
-                  </Button>
-                ))}
-              </div>
-            ) : null}
-          </div>
+          <FilterBar
+            search={searchable ? { value: query, onChange: setQuery, placeholder: "Search questions" } : undefined}
+            chips={derivedCategories.map((category) => ({ key: category, label: category }))}
+            activeChip={activeCategory}
+            onChipChange={setActiveCategory}
+          />
         ) : null}
 
         <div className="flex flex-col gap-3">

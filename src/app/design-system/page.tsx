@@ -13,6 +13,7 @@ import { ShadowSection } from "./_sections/ShadowSection";
 import { MotionSection } from "./_sections/MotionSection";
 import { IllustrationSection } from "./_sections/IllustrationSection";
 import { ComponentGallerySection } from "./_sections/ComponentGallerySection";
+import { FormControlsSection } from "./_sections/FormControlsSection";
 import { LayoutSection } from "./_sections/LayoutSection";
 import { GridToolsSection } from "./_sections/GridToolsSection";
 import { ThemePreviewSection } from "./_sections/ThemePreviewSection";
@@ -51,6 +52,7 @@ export default function DesignSystemPage() {
         <MotionSection />
         <IllustrationSection />
         <ComponentGallerySection />
+        <FormControlsSection />
         <LayoutSection />
         <GridToolsSection />
         <ThemePreviewSection />
