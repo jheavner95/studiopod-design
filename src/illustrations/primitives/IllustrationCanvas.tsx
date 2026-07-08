@@ -9,7 +9,7 @@ import {
   DEFAULT_SPACING,
   DEFAULT_PADDING,
 } from "../layout";
-import { useElementSize, computeConnectorAnchor, midpoint } from "../utils";
+import { useElementSize, computeConnectorAnchor, offsetAlongPerpendicular, pointAlongLine } from "../utils";
 import { useIllustrationDev } from "../dev";
 import { IllustrationNode, type IllustrationNodeSize } from "./IllustrationNode";
 import { IllustrationConnection } from "./IllustrationConnection";
@@ -24,9 +24,11 @@ export interface IllustrationCanvasProps {
 }
 
 const NODE_PIXEL_SIZE: Record<IllustrationNodeSize, number> = { sm: 40, md: 64, lg: 80 };
-const GROUP_PADDING = 28;
+const GROUP_PADDING = 32;
 /** Node labels overflow below their icon box via absolute positioning (see IllustrationNode) — reserve room for a two-line label so it never overlaps whatever follows the canvas in the page. */
-const LABEL_CLEARANCE = 56;
+const LABEL_CLEARANCE = 64;
+/** How far a connector's label is nudged off the line itself, so it doesn't sit exactly on top of a node's label band or another edge's label. */
+const EDGE_LABEL_OFFSET = 26;
 
 /**
  * The one entry point every diagram is rendered through:
@@ -60,9 +62,39 @@ export function IllustrationCanvas({ diagram, className, nodeSize = "md", onSele
   const nodeRadius = nodePx / 2;
   const routing = adjustedLayout === "grid" ? "orthogonal" : "straight";
 
+  // When several labeled edges share a source (a hub fanning out, a decision
+  // branch, multiple collinear back-edges in a chain), stacking every label
+  // on its own exact midpoint crowds them together or on top of each other.
+  // Spread each sibling along its own line (helps when edges fan out at
+  // different angles) *and* increase how far each is nudged off the line
+  // (helps when siblings are collinear, so same-angle offsets alone would
+  // still land at the same spot).
+  const edgeLabelPlacements = useMemo(() => {
+    const labeled = diagram.connections.filter((connection) => connection.label);
+    const countBySource = new Map<string, number>();
+    labeled.forEach((connection) => {
+      countBySource.set(connection.source, (countBySource.get(connection.source) ?? 0) + 1);
+    });
+    const seenBySource = new Map<string, number>();
+    const placements = new Map<string, { x: number; y: number }>();
+    labeled.forEach((connection) => {
+      const sourcePos = layoutResult.positions[connection.source];
+      const targetPos = layoutResult.positions[connection.target];
+      if (!sourcePos || !targetPos) return;
+      const total = countBySource.get(connection.source) ?? 1;
+      const index = seenBySource.get(connection.source) ?? 0;
+      seenBySource.set(connection.source, index + 1);
+      const t = total > 1 ? 0.45 + (index / (total - 1)) * 0.25 : 0.55;
+      const base = pointAlongLine(sourcePos, targetPos, t);
+      const offset = EDGE_LABEL_OFFSET + index * 36;
+      placements.set(connection.id, offsetAlongPerpendicular(sourcePos, targetPos, offset, base));
+    });
+    return placements;
+  }, [diagram.connections, layoutResult]);
+
   const groupBounds = useMemo(() => {
     if (!diagram.groups) return [];
-    return diagram.groups.map((group) => {
+    const bounds = diagram.groups.map((group) => {
       const points = group.nodes.map((id) => layoutResult.positions[id]).filter((p): p is { x: number; y: number } => Boolean(p));
       if (points.length === 0) return null;
       const minX = Math.min(...points.map((p) => p.x)) - nodeRadius - GROUP_PADDING;
@@ -71,7 +103,51 @@ export function IllustrationCanvas({ diagram, className, nodeSize = "md", onSele
       const maxY = Math.max(...points.map((p) => p.y)) + nodeRadius + GROUP_PADDING * 1.8;
       return { group, x: minX, y: minY, width: maxX - minX, height: maxY - minY };
     });
+
+    // In a vertical layout, a group's bottom padding (generous, to leave
+    // room for its own title band) plus the next group's top padding can
+    // together exceed the plain node-to-node spacing when both groups are
+    // small — the two boxes overlap even though no single node moved.
+    // Sorting by vertical position and clamping each adjacent pair to meet
+    // at their overlap's midpoint keeps every group's box collision-free
+    // without touching the node layout itself.
+    const sorted = bounds.filter((b): b is NonNullable<typeof b> => Boolean(b)).sort((a, b) => a.y - b.y);
+    for (let i = 0; i < sorted.length - 1; i++) {
+      const current = sorted[i];
+      const next = sorted[i + 1];
+      // Only groups actually stacked in the same column collide vertically
+      // — groups sitting side by side in a horizontal/grid layout can share
+      // a similar y-range without being adjacent at all, and squeezing
+      // those apart would shrink boxes that were never overlapping.
+      const xOverlaps = current.x < next.x + next.width && next.x < current.x + current.width;
+      const currentBottom = current.y + current.height;
+      const overlap = currentBottom - next.y;
+      if (xOverlaps && overlap > 0) {
+        const shift = overlap / 2;
+        current.height -= shift;
+        next.y += shift;
+        next.height -= shift;
+      }
+    }
+
+    return bounds;
   }, [diagram.groups, layoutResult, nodeRadius]);
+
+  // A group's own padding (see above, especially its extra bottom margin
+  // for the title band) can reach past whatever the layout algorithm
+  // computed as the diagram's bounds — most visibly when the last node in
+  // a vertical/stacked layout is also a group's last member, so the
+  // group's box extends below where the canvas reserved space. Without
+  // this, that overflow spills into whatever follows the canvas in the
+  // page instead of staying inside it.
+  const contentWidth = groupBounds.reduce(
+    (max, bounds) => (bounds ? Math.max(max, bounds.x + bounds.width) : max),
+    layoutResult.width,
+  );
+  const contentHeight = groupBounds.reduce(
+    (max, bounds) => (bounds ? Math.max(max, bounds.y + bounds.height) : max),
+    layoutResult.height,
+  );
 
   return (
     <div ref={containerRef} className={cn("relative w-full", className)}>
@@ -79,9 +155,9 @@ export function IllustrationCanvas({ diagram, className, nodeSize = "md", onSele
         <div
           className="relative mx-auto"
           style={{
-            width: layoutResult.width,
-            height: layoutResult.height + LABEL_CLEARANCE,
-            minWidth: layoutResult.width,
+            width: contentWidth,
+            height: contentHeight + LABEL_CLEARANCE,
+            minWidth: contentWidth,
           }}
           role="group"
           aria-label="Diagram"
@@ -127,15 +203,13 @@ export function IllustrationCanvas({ diagram, className, nodeSize = "md", onSele
 
           {diagram.connections.map((connection) => {
             if (!connection.label) return null;
-            const sourcePos = layoutResult.positions[connection.source];
-            const targetPos = layoutResult.positions[connection.target];
-            if (!sourcePos || !targetPos) return null;
-            const mid = midpoint(sourcePos, targetPos);
+            const pos = edgeLabelPlacements.get(connection.id);
+            if (!pos) return null;
             return (
               <div
                 key={`${connection.id}-label`}
                 className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: mid.x, top: mid.y }}
+                style={{ left: pos.x, top: pos.y }}
               >
                 <IllustrationLabel>{connection.label}</IllustrationLabel>
               </div>

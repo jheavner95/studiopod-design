@@ -42,7 +42,7 @@ export function PlaygroundNav() {
   }, []);
 
   return (
-    <nav className="fixed left-6 top-1/2 z-[var(--z-sticky)] hidden -translate-y-1/2 xl:block">
+    <nav className="fixed left-6 top-1/2 z-[var(--z-sticky)] hidden -translate-y-1/2 2xl:block">
       <ol className="flex flex-col gap-1 border-l border-border pl-4">
         {SECTIONS.map((s) => (
           <li key={s.id}>

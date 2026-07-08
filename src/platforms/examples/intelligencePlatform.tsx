@@ -46,13 +46,15 @@ export const intelligencePlatform: PlatformArchitecture = {
     { id: "observe-analyze", source: "observe", target: "analyze", relationshipType: "data-flow" },
     { id: "analyze-recommend", source: "analyze", target: "recommend", relationshipType: "data-flow" },
     { id: "recommend-automate", source: "recommend", target: "automate", relationshipType: "data-flow" },
+    // The enclosing "Continuous loop" group (see `layers` above) already
+    // titles and outlines this exact cycle, so labeling the wrap-around
+    // edge with the same text repeats it rather than adding information.
     {
       id: "automate-observe-loop",
       source: "automate",
       target: "observe",
       relationshipType: "data-flow",
       direction: "backward",
-      label: "Continuous loop",
     },
   ],
 };

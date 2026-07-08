@@ -6,6 +6,8 @@ export {
   type ConnectorAnchor,
   computeConnectorAnchor,
   midpoint,
+  offsetAlongPerpendicular,
+  pointAlongLine,
   type RoutingStyle,
   buildConnectorPath,
 } from "./geometry";

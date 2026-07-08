@@ -9,7 +9,9 @@ export function compileStageToNode(stage: ValidationStage, selectedStageId?: str
   return {
     id: stage.id,
     label: stage.title,
-    subtitle: stage.description,
+    // The full description is a sentence meant for the expanded details
+    // panel (ValidationDiagram) and timeline, not the compact node label,
+    // where it would overflow into neighboring nodes.
     icon: stage.icon,
     status: toNodeStatus(status),
     selected: stage.id === selectedStageId,

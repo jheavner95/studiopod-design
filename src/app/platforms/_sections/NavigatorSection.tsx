@@ -30,6 +30,7 @@ export function NavigatorSection() {
         <div className="scrollbar-none overflow-x-auto">
           <PlatformArchitectureDiagram
             architecture={completeArchitecture}
+            layout="horizontal"
             selectedPlatformId={focusId}
             onSelectPlatform={(id) => setFocusId((current) => (current === id ? undefined : id))}
             focusPlatformId={focusId}

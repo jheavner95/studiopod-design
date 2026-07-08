@@ -41,16 +41,25 @@ export function compileWorkflowToDiagram(workflow: Workflow, selectedStepId?: st
     };
   });
 
+  // A branch's fan-out targets are often already present as explicit
+  // connections (e.g. a decision step with two named outgoing edges) —
+  // skip drawing a second, redundant edge on top of one that already
+  // exists between the same pair, which would otherwise double up labels
+  // and lines on the same line segment.
+  const existingPairs = new Set(workflow.connections.map((connection) => `${connection.source}->${connection.target}`));
+
   const branchConnections: DiagramConnection[] = (workflow.branches ?? []).flatMap((branch) => {
     const sourceDone = stepById.get(branch.from)?.completed ?? false;
-    return branch.to.map((targetId) => ({
-      id: `${branch.id}-${targetId}`,
-      source: branch.from,
-      target: targetId,
-      label: branch.label,
-      direction: "forward" as const,
-      status: (sourceDone && isReached(targetId) ? "flowing" : sourceDone ? "active" : "inactive") as DiagramConnection["status"],
-    }));
+    return branch.to
+      .filter((targetId) => !existingPairs.has(`${branch.from}->${targetId}`))
+      .map((targetId) => ({
+        id: `${branch.id}-${targetId}`,
+        source: branch.from,
+        target: targetId,
+        label: branch.label,
+        direction: "forward" as const,
+        status: (sourceDone && isReached(targetId) ? "flowing" : sourceDone ? "active" : "inactive") as DiagramConnection["status"],
+      }));
   });
 
   return { nodes, connections: [...connections, ...branchConnections] };

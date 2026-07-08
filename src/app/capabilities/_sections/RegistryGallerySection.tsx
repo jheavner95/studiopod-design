@@ -4,7 +4,26 @@ import { useState } from "react";
 import { Caption } from "@/components/ui";
 import { CapabilityRegistryDiagram, CapabilityDetails, ProviderLegend } from "@/capabilities";
 import { exampleRegistries } from "@/capabilities/examples";
+import type { DiagramLayoutKind } from "@/illustrations";
 import { PreviewSection } from "../_components/preview-primitives";
+
+/**
+ * These three registries are all literally one capability implemented by
+ * a handful of providers, the exact shape hub-and-spoke layout exists
+ * for. The default "grid" folds them into an awkward square instead.
+ *
+ * "capability-registry" groups its nine nodes into three same-size
+ * clusters (see its `groups`). Grid's column count is derived from
+ * container width, not group size, so at some widths a group's members
+ * wrap across a row boundary and its bounding box collides with its
+ * neighbor's. A single row keeps every group contiguous at any width.
+ */
+const LAYOUT_HINTS: Partial<Record<string, DiagramLayoutKind>> = {
+  "ai-capability-layer": "hub-and-spoke",
+  "publishing-capability": "hub-and-spoke",
+  "commerce-capability": "hub-and-spoke",
+  "capability-registry": "horizontal",
+};
 
 function RegistryGalleryCard({ registry }: { registry: (typeof exampleRegistries)[number] }) {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
@@ -20,6 +39,7 @@ function RegistryGalleryCard({ registry }: { registry: (typeof exampleRegistries
       <div className="scrollbar-none overflow-x-auto">
         <CapabilityRegistryDiagram
           registry={registry}
+          layout={LAYOUT_HINTS[registry.id]}
           selectedId={selectedId}
           onSelect={(id) => setSelectedId((current) => (current === id ? undefined : id))}
         />

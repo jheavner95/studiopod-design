@@ -18,6 +18,17 @@ export interface IllustrationNodeProps {
 
 const sizeMap: Record<IllustrationNodeSize, string> = { sm: "size-10", md: "size-16", lg: "size-20" };
 
+/**
+ * Label max-width per node size, matched to DEFAULT_SPACING so a
+ * full-width label still clears its neighbor's label with a real gutter
+ * (not just the node icons) rather than one fixed width for every size.
+ */
+const labelWidthMap: Record<IllustrationNodeSize, string> = {
+  sm: "max-w-[6rem]",
+  md: "max-w-[8rem]",
+  lg: "max-w-[9rem]",
+};
+
 const toneStyles: Record<NodeStatus, string> = {
   idle: "border-border bg-surface text-ink-tertiary",
   active: "border-accent-500 bg-accent-soft text-accent-400",
@@ -96,7 +107,8 @@ export function IllustrationNode({ node, size = "md", onSelect, className }: Ill
 
       <div
         className={cn(
-          "absolute left-1/2 top-full mt-2 flex w-max max-w-[8rem] -translate-x-1/2 flex-col items-center gap-0.5 text-center",
+          "absolute left-1/2 top-full mt-2 flex w-max -translate-x-1/2 flex-col items-center gap-0.5 text-center",
+          labelWidthMap[size],
           dev.labelRegions && "outline outline-1 outline-dashed outline-accent-400/40",
         )}
       >

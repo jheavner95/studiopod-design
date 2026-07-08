@@ -52,13 +52,16 @@ export const platformLayers: PlatformArchitecture = {
   relationships: [
     { id: "core-foundation", source: "core-platform", target: "foundation-platform", relationshipType: "dependency" },
     { id: "saas-core", source: "saas-platform", target: "core-platform", relationshipType: "dependency" },
+    // Each of these is an "integration" relationship carrying telemetry.
+    // Labeling all three identically added nothing (the relationship type
+    // + dashed style + legend already convey it) while crowding this small
+    // diagram, so none of them repeat the text inline.
     {
       id: "operations-foundation",
       source: "operations-platform",
       target: "foundation-platform",
       relationshipType: "integration",
       direction: "bidirectional",
-      label: "Telemetry",
     },
     {
       id: "operations-core",
@@ -66,7 +69,6 @@ export const platformLayers: PlatformArchitecture = {
       target: "core-platform",
       relationshipType: "integration",
       direction: "bidirectional",
-      label: "Telemetry",
     },
     {
       id: "operations-saas",
@@ -74,7 +76,6 @@ export const platformLayers: PlatformArchitecture = {
       target: "saas-platform",
       relationshipType: "integration",
       direction: "bidirectional",
-      label: "Telemetry",
     },
   ],
 };

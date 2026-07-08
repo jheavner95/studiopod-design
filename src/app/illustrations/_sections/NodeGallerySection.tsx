@@ -13,7 +13,7 @@ export function NodeGallerySection() {
       title="IllustrationNode"
       description="One node primitive. Every status, plus health, badge, selection, and disabled overlays composed on top."
     >
-      <div className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
         {STATUSES.map((status) => (
           <NodeDemo
             key={status}

@@ -7,6 +7,7 @@ import type {
   CapabilityAdapter,
   CapabilityRelationship,
   CapabilityRegistry,
+  CapabilityGroup,
 } from "../types";
 
 export function compileCapabilityToNode(capability: Capability, selectedId?: string): DiagramNode {
@@ -80,7 +81,9 @@ export function compileAdapterToConnection(
     direction: "forward",
     style: adapter.status === "deprecated" ? "dotted" : "solid",
     animated: adapter.status !== "unavailable" && adapter.status !== "offline",
-    label: adapter.latency,
+    // Latency is detail, surfaced in CapabilityDetails/ProviderCard, not a
+    // connector label: a registry with several adapters per capability
+    // would otherwise crowd the diagram with a label on every edge.
     status: touchesFocus ? (focusId ? "highlighted" : "active") : "inactive",
   };
 }
@@ -90,14 +93,42 @@ export interface CompileRegistryOptions {
   focusId?: string;
 }
 
+/**
+ * Grid and horizontal layouts position nodes strictly in array order, so a
+ * group's bounding box only stays clear of its neighbors when its members
+ * are contiguous in that order. Capabilities and providers are compiled as
+ * two separate blocks (see below), which scatters each group's members
+ * across both blocks — reorder to group-then-group instead, since that's
+ * the arrangement every positional layout actually needs.
+ */
+function reorderNodesByGroup(nodes: DiagramNode[], groups: CapabilityGroup[]): DiagramNode[] {
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const placed = new Set<string>();
+  const ordered: DiagramNode[] = [];
+  groups.forEach((group) => {
+    group.memberIds.forEach((id) => {
+      const node = nodeById.get(id);
+      if (node && !placed.has(id)) {
+        ordered.push(node);
+        placed.add(id);
+      }
+    });
+  });
+  nodes.forEach((node) => {
+    if (!placed.has(node.id)) ordered.push(node);
+  });
+  return ordered;
+}
+
 /** The single translation point from registry data to the illustration engine's plain Diagram: capabilities and providers as nodes, relationships and adapters as connections. */
 export function compileRegistryToDiagram(registry: CapabilityRegistry, options: CompileRegistryOptions = {}): Diagram {
   const { selectedId, focusId } = options;
 
-  const nodes: DiagramNode[] = [
+  const compiledNodes: DiagramNode[] = [
     ...registry.capabilities.map((capability) => compileCapabilityToNode(capability, selectedId)),
     ...registry.providers.map((provider) => compileProviderToNode(provider, selectedId)),
   ];
+  const nodes = registry.groups ? reorderNodesByGroup(compiledNodes, registry.groups) : compiledNodes;
 
   const connections: DiagramConnection[] = [
     ...(registry.relationships ?? []).map((relationship) => compileRelationshipToConnection(relationship, { focusId })),

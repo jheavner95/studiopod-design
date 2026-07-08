@@ -39,6 +39,7 @@ export function ControlDock() {
           size="sm"
           variant={paused ? "primary" : "secondary"}
           onClick={togglePaused}
+          aria-pressed={paused}
           leadingIcon={paused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
         >
           {paused ? "Play" : "Pause"}
@@ -65,6 +66,7 @@ export function ControlDock() {
           size="sm"
           variant={reducedActive ? "primary" : "secondary"}
           onClick={() => setReducedMotionOverride(reducedActive ? null : true)}
+          aria-pressed={reducedActive}
           leadingIcon={<Accessibility className="size-3.5" />}
         >
           Reduced motion
