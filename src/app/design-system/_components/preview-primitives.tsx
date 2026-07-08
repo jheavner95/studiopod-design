@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { motionDuration, motionEase } from "@/lib/tokens";
@@ -47,21 +47,42 @@ export function PreviewSection({
 }
 
 interface SwatchProps {
-  swatchClassName: string;
+  /** A Tailwind utility (e.g. "bg-canvas") for tokens that have one. Omit for raw `--palette-*` values, which have none by design — the swatch then fills itself directly from `cssVar`. */
+  swatchClassName?: string;
   name: string;
   cssVar: string;
-  usage: string;
+  usage?: string;
+  /**
+   * Resolves and displays the CSS variable's live computed value beneath
+   * the name, instead of a second hardcoded hex string that could drift
+   * from the token — for the Foundation Palette, where showing the literal
+   * value matters.
+   */
+  showHex?: boolean;
 }
 
 /** A color token tile: swatch, name, CSS variable, and a one-line usage note. */
-export function Swatch({ swatchClassName, name, cssVar, usage }: SwatchProps) {
+export function Swatch({ swatchClassName, name, cssVar, usage, showHex = false }: SwatchProps) {
+  const swatchRef = useRef<HTMLDivElement>(null);
+  const [hex, setHex] = useState("");
+
+  useEffect(() => {
+    if (!showHex || !swatchRef.current) return;
+    setHex(getComputedStyle(swatchRef.current).getPropertyValue(cssVar).trim());
+  }, [showHex, cssVar]);
+
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-border-subtle bg-surface p-3">
-      <div className={cn("h-14 w-full rounded-md border border-border-subtle", swatchClassName)} />
+      <div
+        ref={swatchRef}
+        className={cn("h-14 w-full rounded-md border border-border-subtle", swatchClassName)}
+        style={swatchClassName ? undefined : { backgroundColor: `var(${cssVar})` }}
+      />
       <div className="flex flex-col gap-0.5">
         <span className="text-body-sm font-medium text-ink-primary">{name}</span>
+        {showHex && hex ? <span className="text-caption font-mono text-ink-tertiary">{hex}</span> : null}
         <span className="text-caption font-mono text-ink-tertiary">{cssVar}</span>
-        <span className="text-caption text-ink-secondary">{usage}</span>
+        {usage ? <span className="text-caption text-ink-secondary">{usage}</span> : null}
       </div>
     </div>
   );

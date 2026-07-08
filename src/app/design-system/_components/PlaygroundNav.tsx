@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const SECTIONS = [
+  { id: "foundation-palette", label: "Foundation palette" },
   { id: "colors", label: "Colors" },
   { id: "typography", label: "Typography" },
   { id: "spacing", label: "Spacing" },

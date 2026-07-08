@@ -5,6 +5,7 @@ import { SystemGrid } from "@/components/illustration";
 import { GridOverlayProvider } from "./_lib/grid-overlay-context";
 import { GridOverlay } from "./_components/GridOverlay";
 import { PlaygroundNav } from "./_components/PlaygroundNav";
+import { FoundationPaletteSection } from "./_sections/FoundationPaletteSection";
 import { ColorsSection } from "./_sections/ColorsSection";
 import { TypographySection } from "./_sections/TypographySection";
 import { SpacingSection } from "./_sections/SpacingSection";
@@ -44,6 +45,7 @@ export default function DesignSystemPage() {
           </div>
         </SectionShell>
 
+        <FoundationPaletteSection />
         <ColorsSection />
         <TypographySection />
         <SpacingSection />
