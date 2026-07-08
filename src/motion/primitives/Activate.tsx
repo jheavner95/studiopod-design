@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { useMotion } from "@/hooks/useMotion";
 import { useMotionEnabled } from "@/hooks/useMotionEnabled";
 import { accentRgb, successRgb } from "@/lib/tokens";
@@ -32,12 +33,12 @@ export function Activate({ duration = "fast", disabled, state = "inactive", chil
   const enabled = motionEnabled && !disabled;
 
   if (!enabled) {
-    return <div className={className}>{children}</div>;
+    return <div className={cn("rounded-full", className)}>{children}</div>;
   }
 
   return (
     <motion.div
-      className={className}
+      className={cn("rounded-full", className)}
       animate={{ scale: scaleFor[state], boxShadow: `0 0 0 6px ${ringColor[state]}` }}
       transition={transition({ duration, ease: "standard", speed })}
     >
