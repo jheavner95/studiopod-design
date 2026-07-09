@@ -6,16 +6,17 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, Badge, Body, Caption, Heading } from "@/components/ui";
 import { Activate } from "@/motion";
-import { WORKSPACE_REGIONS, type WorkspaceRegion } from "../_data/regions";
+import { HEADER_REGIONS, type HeaderRegion } from "../_data/regions";
 
-const COLUMN_SPAN: Record<WorkspaceRegion["column"], string> = {
-  full: "lg:col-span-4",
-  narrow: "lg:col-span-1",
-  wide: "lg:col-span-2",
+const COLUMN_SPAN: Record<HeaderRegion["column"], string> = {
+  identity: "lg:col-span-2",
+  status: "lg:col-span-1",
+  actions: "lg:col-span-1",
+  context: "lg:col-span-4",
 };
 
 interface RegionCardProps {
-  region: WorkspaceRegion;
+  region: HeaderRegion;
   selected: boolean;
   onSelect: () => void;
 }
@@ -32,7 +33,7 @@ function RegionCard({ region, selected, onSelect }: RegionCardProps) {
         <Activate state={selected ? "active" : "inactive"} className="rounded-lg">
           <Card
             interactive
-            className={cn("flex h-full min-h-32 flex-col gap-2", selected && "border-accent-500/60 bg-accent-soft/30")}
+            className={cn("flex h-full min-h-28 flex-col gap-2", selected && "border-accent-500/60 bg-accent-soft/30")}
           >
             <span className="text-body-md font-medium text-ink-primary">{region.name}</span>
             <Body size="sm" muted className="line-clamp-2">
@@ -48,7 +49,7 @@ function RegionCard({ region, selected, onSelect }: RegionCardProps) {
   );
 }
 
-function RegionDetail({ region }: { region: WorkspaceRegion }) {
+function RegionDetail({ region }: { region: HeaderRegion }) {
   return (
     <Card padding="lg" className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
@@ -93,6 +94,35 @@ function RegionDetail({ region }: { region: WorkspaceRegion }) {
         </div>
       </div>
 
+      <div className="flex flex-col gap-4 border-t border-border-subtle pt-4">
+        {region.guidance.map((note) => (
+          <div key={note.label} className="flex flex-col gap-1.5">
+            <Caption className="text-ink-tertiary">{note.label}</Caption>
+            <Body size="sm" muted>
+              {note.text}
+            </Body>
+          </div>
+        ))}
+      </div>
+
+      {region.examples ? (
+        <div className="flex flex-col gap-2 border-t border-border-subtle pt-4">
+          <Caption className="text-ink-tertiary">Examples</Caption>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {region.examples.map((example) => (
+              <div key={example.platform} className="flex min-w-0 flex-col gap-1 rounded-md border border-border-subtle bg-canvas-raised p-3">
+                <Badge tone="accent" size="sm" className="w-fit">
+                  {example.platform}
+                </Badge>
+                <Body size="sm" muted className="min-w-0 break-words">
+                  {example.text}
+                </Body>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       <div className="flex flex-col gap-2 border-t border-border-subtle pt-4">
         <Caption className="text-ink-tertiary">Reuse notes</Caption>
         <Body size="sm" muted>
@@ -117,16 +147,16 @@ function RegionDetail({ region }: { region: WorkspaceRegion }) {
   );
 }
 
-/** The exploded workspace anatomy diagram: seven regions laid out spatially, each a selectable card whose full detail renders below. */
-export function WorkspaceAnatomyExplorer() {
-  const [selectedId, setSelectedId] = useState(WORKSPACE_REGIONS[0].id);
-  const selectedRegion = WORKSPACE_REGIONS.find((region) => region.id === selectedId) ?? WORKSPACE_REGIONS[0];
+/** The exploded header anatomy: Identity/Status/Actions share a top row, Context sits full-width beneath — four selectable regions, one detail panel. */
+export function HeaderAnatomyExplorer() {
+  const [selectedId, setSelectedId] = useState(HEADER_REGIONS[0].id);
+  const selectedRegion = HEADER_REGIONS.find((region) => region.id === selectedId) ?? HEADER_REGIONS[0];
 
   return (
     <div className="flex flex-col gap-8">
       <div className="rounded-xl border border-border-subtle bg-surface/40 p-6 sm:p-10">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-          {WORKSPACE_REGIONS.map((region) => (
+          {HEADER_REGIONS.map((region) => (
             <RegionCard
               key={region.id}
               region={region}

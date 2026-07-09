@@ -51,7 +51,10 @@ export const WORKSPACE_REGIONS: WorkspaceRegion[] = [
     required: ["Title", "Primary Actions"],
     optional: ["Subtitle", "Health", "Status"],
     reuseNotes: "Maps to the Workspace family's Workspace Header item — currently Needed, with no direct existing analog.",
-    reuseLinks: [{ label: "Workspace family", href: "/application-components/architecture#workspace" }],
+    reuseLinks: [
+      { label: "Workspace family", href: "/application-components/architecture#workspace" },
+      { label: "Workspace Header framework", href: "/application-components/workspace-header" },
+    ],
     column: "full",
   },
   {
