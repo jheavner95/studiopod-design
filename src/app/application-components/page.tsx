@@ -16,9 +16,23 @@ export default function ApplicationComponentsPage() {
             libraries the StudioPOD application&rsquo;s own screens are built from — not just how those subsystems
             are explained on a marketing page. The libraries below already exist and are the starting point.
           </Body>
-          <Button variant="secondary" size="sm" href="/application-components/inventory" className="w-fit">
-            View the component inventory
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="secondary" size="sm" href="/application-components/inventory">
+              Component inventory
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/architecture">
+              Architecture
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/coverage">
+              Coverage matrix
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/maturity">
+              Maturity model
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/templates">
+              Platform templates
+            </Button>
+          </div>
         </div>
       </Card>
     </SectionPlaceholder>
