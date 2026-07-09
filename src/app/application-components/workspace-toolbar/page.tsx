@@ -4,45 +4,55 @@ import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
-import { HeaderAnatomyExplorer } from "./_components/HeaderAnatomyExplorer";
+import { ToolbarAnatomyExplorer } from "./_components/ToolbarAnatomyExplorer";
 import { VariantCard } from "./_components/VariantCard";
-import { ResponsiveMockups } from "./_components/ResponsiveMockups";
-import { HEADER_VARIANTS } from "./_data/variants";
-import { HEADER_PRINCIPLES } from "./_data/principles";
-import { HEADER_MISTAKES } from "./_data/mistakes";
-import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
+import { ResponsiveRulesTable } from "./_components/ResponsiveRulesTable";
+import { TOOLBAR_VARIANTS } from "./_data/variants";
+import { TOOLBAR_PRINCIPLES } from "./_data/principles";
+import { TOOLBAR_MISTAKES } from "./_data/mistakes";
+import { TOOLBAR_IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
+import { TOOLBAR_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-export default function WorkspaceHeaderPage() {
+function CrossLinks() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Link
+        href="/application-components/workspace-framework"
+        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+      >
+        Workspace Framework
+        <ArrowUpRight className="size-3.5" aria-hidden />
+      </Link>
+      <Link
+        href="/application-components/workspace-header"
+        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+      >
+        Workspace Header
+        <ArrowUpRight className="size-3.5" aria-hidden />
+      </Link>
+      <Link
+        href="/application-components/workspace-layout"
+        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+      >
+        Workspace Layout
+        <ArrowUpRight className="size-3.5" aria-hidden />
+      </Link>
+      <span className="flex items-center gap-1 text-caption font-medium text-ink-tertiary">Library Region (coming soon)</span>
+    </div>
+  );
+}
+
+export default function WorkspaceToolbarPage() {
   return (
     <PageShell background={<SystemGrid />}>
       <SectionShell spacing="xl">
         <PageIntro
-          eyebrow="package · application components · workspace header"
-          title="Workspace header framework"
-          description="The standard header used by every StudioPOD platform — this page is the design contract for all future workspace headers. Documentation and an interactive demonstration only; this doesn't touch the production application."
+          eyebrow="package · application components · workspace toolbar"
+          title="Workspace toolbar framework"
+          description="The standard command surface used throughout StudioPOD. The Workspace Header provides context; the Workspace Toolbar provides interaction — search, filter, sort, select, and act. Documentation and an interactive demonstration only; this doesn't touch the production application."
         >
-          <div className="flex flex-wrap gap-4 pt-2">
-            <Link
-              href="/application-components/workspace-framework"
-              className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-            >
-              Part of the Workspace Framework
-              <ArrowUpRight className="size-3.5" aria-hidden />
-            </Link>
-            <Link
-              href="/application-components/workspace-layout"
-              className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-            >
-              Workspace Layout rules
-              <ArrowUpRight className="size-3.5" aria-hidden />
-            </Link>
-            <Link
-              href="/application-components/workspace-toolbar"
-              className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-            >
-              Workspace Toolbar framework
-              <ArrowUpRight className="size-3.5" aria-hidden />
-            </Link>
+          <div className="pt-2">
+            <CrossLinks />
           </div>
         </PageIntro>
       </SectionShell>
@@ -51,11 +61,11 @@ export default function WorkspaceHeaderPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Workspace header anatomy"
-            description="Select a region to see its full purpose, responsibilities, required and optional children, and the rules that keep it from overlapping the others."
+            title="Toolbar anatomy"
+            description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
             descriptionMaxWidth={false}
           />
-          <HeaderAnatomyExplorer />
+          <ToolbarAnatomyExplorer />
         </div>
       </SectionShell>
 
@@ -63,12 +73,12 @@ export default function WorkspaceHeaderPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Variants</Eyebrow>}
-            title="Header variants"
-            description="The same four regions, adapted to whatever mode the Primary Workspace below the header is in."
+            title="Toolbar variants"
+            description="The same eight regions, adapted to whatever mode the Primary Workspace is in — see Workspace Header's own variants for the header half of each pairing."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {HEADER_VARIANTS.map((variant) => (
+            {TOOLBAR_VARIANTS.map((variant) => (
               <VariantCard key={variant.id} variant={variant} />
             ))}
           </CardGrid>
@@ -79,23 +89,19 @@ export default function WorkspaceHeaderPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="The same header, three widths"
-            description="What collapses first, second, and last as the viewport narrows — Identity's icon and name are the only thing guaranteed to survive down to mobile."
+            title="Responsive behavior"
+            description="Five dimensions of behavior across three conceptual breakpoints — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
             descriptionMaxWidth={false}
           />
-          <ResponsiveMockups />
+          <ResponsiveRulesTable />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>}
-            title="Header principles"
-            descriptionMaxWidth={false}
-          />
+          <SectionHeader eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Toolbar principles" descriptionMaxWidth={false} />
           <CardGrid columns={4}>
-            {HEADER_PRINCIPLES.map((principle) => (
+            {TOOLBAR_PRINCIPLES.map((principle) => (
               <Card key={principle.title} className="flex flex-col gap-2">
                 <span className="text-body-sm font-medium text-ink-primary">{principle.title}</span>
                 <Body size="sm" muted>
@@ -116,7 +122,7 @@ export default function WorkspaceHeaderPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {HEADER_MISTAKES.map((mistake) => (
+            {TOOLBAR_MISTAKES.map((mistake) => (
               <Card key={mistake.title} className="flex flex-col gap-2 border-error/30 bg-error-soft/20">
                 <span className="text-body-sm font-medium text-ink-primary">{mistake.title}</span>
                 <Body size="sm" muted>
@@ -133,16 +139,16 @@ export default function WorkspaceHeaderPage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
-            description="A reference checklist for whoever builds the first real Workspace Header."
+            description="A reference checklist for whoever builds the first real Workspace Toolbar."
             descriptionMaxWidth={false}
           />
           <div className="rounded-lg border border-border-subtle bg-surface p-4 sm:p-6">
             <dl className="flex flex-col">
-              {IMPLEMENTATION_GUIDANCE.map((item, index) => (
+              {TOOLBAR_IMPLEMENTATION_GUIDANCE.map((item, index) => (
                 <div
                   key={item.label}
                   className={
-                    index < IMPLEMENTATION_GUIDANCE.length - 1
+                    index < TOOLBAR_IMPLEMENTATION_GUIDANCE.length - 1
                       ? "flex flex-col gap-1.5 border-b border-border-subtle py-4 first:pt-0 sm:flex-row sm:gap-6"
                       : "flex flex-col gap-1.5 py-4 first:pt-0 sm:flex-row sm:gap-6"
                   }
@@ -169,12 +175,41 @@ export default function WorkspaceHeaderPage() {
               ))}
             </dl>
           </div>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
+            title="Future extensions"
+            description="Room the toolbar anatomy leaves for later — reserved, not scoped or committed."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={4}>
+            {TOOLBAR_FUTURE_EXTENSIONS.map((extension) => (
+              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                <Body size="sm" muted>
+                  {extension.description}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
           <Caption className="text-ink-tertiary">
-            See also the{" "}
+            See also{" "}
             <Link href="/application-components/workspace-framework" className="text-accent-400 hover:text-accent-300">
               Workspace Framework
+            </Link>
+            ,{" "}
+            <Link href="/application-components/workspace-header" className="text-accent-400 hover:text-accent-300">
+              Workspace Header
+            </Link>
+            , and{" "}
+            <Link href="/application-components/workspace-layout" className="text-accent-400 hover:text-accent-300">
+              Workspace Layout
             </Link>{" "}
-            for how this header fits into the full seven-region workspace anatomy.
+            for how this toolbar fits into the full workspace anatomy.
           </Caption>
         </div>
       </SectionShell>

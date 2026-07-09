@@ -34,6 +34,13 @@ export default function WorkspaceFrameworkPage() {
               Workspace Layout rules
               <ArrowUpRight className="size-3.5" aria-hidden />
             </Link>
+            <Link
+              href="/application-components/workspace-toolbar"
+              className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+            >
+              Workspace Toolbar framework
+              <ArrowUpRight className="size-3.5" aria-hidden />
+            </Link>
           </div>
         </PageIntro>
       </SectionShell>
