@@ -56,6 +56,13 @@ function CrossLinks() {
         Primary Workspace
         <ArrowUpRight className="size-3.5" aria-hidden />
       </Link>
+      <Link
+        href="/application-components/inspector-workspace"
+        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+      >
+        Inspector Workspace
+        <ArrowUpRight className="size-3.5" aria-hidden />
+      </Link>
     </div>
   );
 }
