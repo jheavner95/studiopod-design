@@ -4,24 +4,24 @@ import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
-import { MetadataAnatomyExplorer } from "./_components/MetadataAnatomyExplorer";
-import { ComponentGallery } from "./_components/ComponentGallery";
-import { PatternGallery } from "./_components/PatternGallery";
-import { HierarchyDemo } from "./_components/HierarchyDemo";
-import { INFORMATION_HIERARCHY } from "./_data/hierarchy";
-import { METADATA_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
-import { METADATA_GUIDANCE } from "./_data/implementation-guidance";
-import { METADATA_PROMOTION_CANDIDATES, totalPromotionFiles } from "./_data/promotion-candidates";
-import { METADATA_FUTURE_EXTENSIONS } from "./_data/future-extensions";
+import { FormAnatomyExplorer } from "./_components/FormAnatomyExplorer";
+import { FieldGallery } from "./_components/FieldGallery";
+import { FieldStatesDemo } from "./_components/FieldStatesDemo";
+import { ValidationDemo } from "./_components/ValidationDemo";
+import { PropertyEditingDemo } from "./_components/PropertyEditingDemo";
+import { FIELD_STATE_DOCS } from "./_data/states";
+import { FORM_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
+import { FORM_GUIDANCE } from "./_data/implementation-guidance";
+import { FORM_PROMOTION_CANDIDATES, totalPromotionLines } from "./_data/promotion-candidates";
+import { FORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
   const links = [
     { label: "Foundation Components", href: "/application-components/foundation-components" },
     { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Table System", href: "/application-components/foundation-table" },
+    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
     { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
-    { label: "Operational Status Workspace", href: "/application-components/status-workspace" },
-    { label: "Foundation Form System", href: "/application-components/foundation-forms" },
+    { label: "Primary Workspace", href: "/application-components/primary-workspace" },
   ];
   return (
     <div className="flex flex-wrap gap-4">
@@ -45,14 +45,14 @@ const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
   High: "accent",
 };
 
-export default function FoundationMetadataPage() {
+export default function FoundationFormsPage() {
   return (
     <PageShell background={<SystemGrid />}>
       <SectionShell spacing="xl">
         <PageIntro
-          eyebrow="package · application components · foundation metadata"
-          title="Foundation metadata system"
-          description="The canonical information presentation system used throughout StudioPOD — Inspector Workspace, Asset Cards, Health Panels, Validation Panels, Status Workspace, and dashboard summaries all build from this one system. Metadata presents information; it does not edit it — editing belongs to the Foundation Form System. Reusable foundation components, documentation, and an interactive demonstration. Existing pages are not refactored yet."
+          eyebrow="package · application components · foundation forms"
+          title="Foundation form system"
+          description="The canonical editing system for StudioPOD — Settings, Inspector editing, Provider configuration, Style/Recipe editors, Publishing settings, Commerce configuration, and Workspace preferences all build from this one system. Forms edit information; Foundation Metadata presents it. Reusable foundation components, documentation, and an interactive demonstration. Existing pages are not refactored yet."
         >
           <div className="pt-2">
             <CrossLinks />
@@ -64,71 +64,76 @@ export default function FoundationMetadataPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Metadata anatomy"
+            title="Form anatomy"
             description="Eight regions, top to bottom — select one to see the component that owns it."
             descriptionMaxWidth={false}
           />
-          <MetadataAnatomyExplorer />
+          <FormAnatomyExplorer />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Component gallery</Eyebrow>}
-            title="Component gallery"
-            description="Ten components, each with a live example plus when — and when not — to reach for it."
+            eyebrow={<Eyebrow tone="accent">Field gallery</Eyebrow>}
+            title="Field gallery"
+            description="Ten fields, each with a live, working example plus when — and when not — to reach for it."
             descriptionMaxWidth={false}
           />
-          <ComponentGallery />
+          <FieldGallery />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Presentation patterns</Eyebrow>}
-            title="Presentation patterns"
-            description="Seven ways the same components can be arranged, with the advantages and tradeoffs of each."
+            eyebrow={<Eyebrow tone="accent">Field states</Eyebrow>}
+            title="Field states"
+            description="Eleven states every field can be in — three of them live below, the rest documented alongside."
             descriptionMaxWidth={false}
           />
-          <PatternGallery />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Information hierarchy</Eyebrow>}
-            title="Information hierarchy"
-            description="Four tiers, in visual-weight order — the rule that keeps a fully-populated metadata block from turning into visual noise."
-            descriptionMaxWidth={false}
-          />
+          <FieldStatesDemo />
           <CardGrid columns={4}>
-            {INFORMATION_HIERARCHY.map((tier) => (
-              <Card key={tier.id} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{tier.name}</span>
+            {FIELD_STATE_DOCS.map((state) => (
+              <Card key={state.id} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{state.name}</span>
                 <Body size="sm" muted>
-                  {tier.description}
+                  {state.behavior}
                 </Body>
-                <div className="mt-auto flex flex-wrap gap-1.5 border-t border-border-subtle pt-3">
-                  {tier.components.map((component) => (
-                    <Badge key={component} tone="neutral" size="sm">
-                      {component}
-                    </Badge>
-                  ))}
-                </div>
               </Card>
             ))}
           </CardGrid>
-          <HierarchyDemo />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            eyebrow={<Eyebrow tone="accent">Validation</Eyebrow>}
+            title="Validation"
+            description="A real, working form — Validate runs a blocking Form-level check; fixing a flagged field re-validates it immediately (progressive validation), and every problem is aggregated once in the Validation Summary above the fields."
+            descriptionMaxWidth={false}
+          />
+          <ValidationDemo />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            eyebrow={<Eyebrow tone="accent">Property editing</Eyebrow>}
+            title="Property editing"
+            description="Four ways PropertyEditor composes into a real editing surface."
+            descriptionMaxWidth={false}
+          />
+          <PropertyEditingDemo />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
-          <DescriptionList items={METADATA_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={FORM_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
 
@@ -140,7 +145,7 @@ export default function FoundationMetadataPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
-            {METADATA_GUIDANCE.map((rule) => (
+            {FORM_GUIDANCE.map((rule) => (
               <Card key={rule.title} className="flex flex-col gap-2">
                 <span className="text-body-sm font-medium text-ink-primary">{rule.title}</span>
                 <Body size="sm" muted>
@@ -157,11 +162,11 @@ export default function FoundationMetadataPage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
-            description={`Real, grep-verifiable repeated metadata patterns found in this codebase today — ${METADATA_PROMOTION_CANDIDATES.length} categories, ${totalPromotionFiles()} files combined.`}
+            description={`Real, grep-verifiable form patterns found in this codebase today — ${FORM_PROMOTION_CANDIDATES.length} categories, ${totalPromotionLines()} lines combined across the two that measure in lines.`}
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
-            {METADATA_PROMOTION_CANDIDATES.map((candidate) => (
+            {FORM_PROMOTION_CANDIDATES.map((candidate) => (
               <Card key={candidate.id} className="flex flex-col gap-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <span className="text-body-md font-medium text-ink-primary">{candidate.title}</span>
@@ -174,7 +179,8 @@ export default function FoundationMetadataPage() {
                 </Body>
                 <div className="flex flex-col gap-1">
                   <Caption className="text-ink-tertiary">
-                    {candidate.count} file{candidate.count === 1 ? "" : "s"} · verified with
+                    {candidate.count} file{candidate.count === 1 ? "" : "s"}
+                    {candidate.lineTotal > 0 ? ` · ${candidate.lineTotal} lines` : ""} · verified with
                   </Caption>
                   <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
                     {candidate.findingCommand}
@@ -208,7 +214,7 @@ export default function FoundationMetadataPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
-            {METADATA_FUTURE_EXTENSIONS.map((extension) => (
+            {FORM_FUTURE_EXTENSIONS.map((extension) => (
               <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
                 <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
                 <Body size="sm" muted>
