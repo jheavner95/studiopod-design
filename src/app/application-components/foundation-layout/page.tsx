@@ -16,6 +16,7 @@ function CrossLinks() {
     { label: "Workspace Layout", href: "/application-components/workspace-layout" },
     { label: "Asset Workspace", href: "/application-components/asset-workspace" },
     { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
+    { label: "Foundation Table System", href: "/application-components/foundation-table" },
   ];
   return (
     <div className="flex flex-wrap gap-4">
