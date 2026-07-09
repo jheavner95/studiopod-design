@@ -77,6 +77,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/foundation-overlays">
               Foundation overlay system
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/foundation-navigation">
+              Foundation navigation system
+            </Button>
             <Button variant="secondary" size="sm" href="/application-components/foundation-audit">
               Foundation layer audit
             </Button>
