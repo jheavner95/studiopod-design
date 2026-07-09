@@ -30,7 +30,7 @@ export const MATURITY_LEVELS: { level: MaturityLevel; description: string }[] = 
 ];
 
 /** The default maturity a component reaches purely from its inventory status — see the page copy for why Certified/Locked have zero entries today. */
-const MATURITY_FROM_STATUS: Record<InventoryStatus, MaturityLevel> = {
+export const MATURITY_FROM_STATUS: Record<InventoryStatus, MaturityLevel> = {
   Needed: "Concept",
   Partial: "Prototype",
   Exists: "Production Ready",

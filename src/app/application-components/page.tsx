@@ -59,6 +59,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/workspace-certification">
               Workspace certification
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/foundation-components">
+              Foundation components
+            </Button>
           </div>
         </div>
       </Card>

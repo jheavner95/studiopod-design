@@ -16,7 +16,7 @@ export const ARCHITECTURE_ROADMAP: RoadmapStage[] = [
   {
     id: "operational-component-library",
     title: "Operational Component Library",
-    description: "The reusable components that fill each blueprint tier — tracked today in the Component Architecture and Coverage pages.",
+    description: "The reusable components that fill each blueprint tier — tracked today in the Component Architecture and Coverage pages, now underway with the Foundation Component Catalog.",
     status: "future",
   },
   {
