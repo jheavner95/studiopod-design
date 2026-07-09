@@ -43,6 +43,13 @@ export default function WorkspaceHeaderPage() {
               Workspace Toolbar framework
               <ArrowUpRight className="size-3.5" aria-hidden />
             </Link>
+            <Link
+              href="/application-components/asset-workspace"
+              className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+            >
+              Asset Workspace framework
+              <ArrowUpRight className="size-3.5" aria-hidden />
+            </Link>
           </div>
         </PageIntro>
       </SectionShell>
