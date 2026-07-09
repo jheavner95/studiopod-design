@@ -16,26 +16,6 @@ export interface MetadataPromotionCandidate {
  */
 export const METADATA_PROMOTION_CANDIDATES: MetadataPromotionCandidate[] = [
   {
-    id: "accessibility-dl",
-    title: "Hand-rolled Accessibility sections",
-    files: [
-      "status-workspace/page.tsx",
-      "workspace-toolbar/page.tsx",
-      "primary-workspace/page.tsx",
-      "foundation-layout/page.tsx",
-      "workspace-layout/page.tsx",
-      "asset-workspace/page.tsx",
-      "workspace-header/page.tsx",
-      "inspector-workspace/page.tsx",
-      "foundation-components/page.tsx",
-    ],
-    count: 9,
-    findingCommand: String.raw`grep -rl 'dl className="flex flex-col"' src/app/application-components/`,
-    description: "Nine pages still hand-roll the dl/dt/dd Accessibility block — including foundation-layout and foundation-components, the two pages that introduced and catalog DescriptionList itself, but never adopted it for their own Accessibility section.",
-    migrationEffort: "Low",
-    migrationNote: "Each is a direct swap to <DescriptionList items={...} /> — the exact migration Foundation Layout's own page already proves out in its Cell Types and other sections.",
-  },
-  {
     id: "identity-regions",
     title: "Ad hoc Identity regions",
     files: ["workspace-header/_data/regions.ts", "inspector-workspace/_data/regions.ts", "workspace-framework/_data/regions.ts"],
@@ -93,3 +73,27 @@ export const METADATA_PROMOTION_CANDIDATES: MetadataPromotionCandidate[] = [
 export function totalPromotionFiles(): number {
   return METADATA_PROMOTION_CANDIDATES.reduce((sum, candidate) => sum + candidate.count, 0);
 }
+
+export interface ResolvedMetadataMigration {
+  id: string;
+  title: string;
+  filesMigrated: number;
+  resolvedIn: string;
+  note: string;
+}
+
+/**
+ * Real migrations completed against this repository — not projected, not planned.
+ * Kept separate from METADATA_PROMOTION_CANDIDATES above (which tracks current,
+ * unresolved duplication) so the audit trail survives even after a candidate
+ * is fully migrated.
+ */
+export const METADATA_RESOLVED_MIGRATIONS: ResolvedMetadataMigration[] = [
+  {
+    id: "accessibility-dl",
+    title: "Hand-rolled Accessibility sections",
+    filesMigrated: 9,
+    resolvedIn: "DS-2.1.7.1",
+    note: "All 9 files that hand-rolled the dl/dt/dd Accessibility block — including foundation-layout/page.tsx and foundation-components/page.tsx, the two pages that introduced and catalog DescriptionList but hadn't adopted it themselves — now render <DescriptionList items={...} /> directly, imported from @/components/metadata. Re-verified via grep immediately before migrating; the count hadn't drifted from the original finding. This is the Foundation Metadata System's first production adoption — status is Adoption In Progress, not Certified, since DescriptionList is one of 16 Metadata components and the rest of the family remains unadopted.",
+  },
+];

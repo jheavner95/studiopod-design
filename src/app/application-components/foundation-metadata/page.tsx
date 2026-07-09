@@ -11,7 +11,7 @@ import { HierarchyDemo } from "./_components/HierarchyDemo";
 import { INFORMATION_HIERARCHY } from "./_data/hierarchy";
 import { METADATA_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { METADATA_GUIDANCE } from "./_data/implementation-guidance";
-import { METADATA_PROMOTION_CANDIDATES, totalPromotionFiles } from "./_data/promotion-candidates";
+import { METADATA_PROMOTION_CANDIDATES, METADATA_RESOLVED_MIGRATIONS, totalPromotionFiles } from "./_data/promotion-candidates";
 import { METADATA_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
@@ -22,6 +22,7 @@ function CrossLinks() {
     { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
     { label: "Operational Status Workspace", href: "/application-components/status-workspace" },
     { label: "Foundation Form System", href: "/application-components/foundation-forms" },
+    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
   ];
   return (
     <div className="flex flex-wrap gap-4">
@@ -196,6 +197,22 @@ export default function FoundationMetadataPage() {
               </Card>
             ))}
           </CardGrid>
+          {METADATA_RESOLVED_MIGRATIONS.map((migration) => (
+            <Card key={migration.id} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
+                <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
+                  Adoption In Progress
+                </Badge>
+              </div>
+              <Caption className="text-ink-tertiary">
+                {migration.filesMigrated} files migrated in {migration.resolvedIn}
+              </Caption>
+              <Body size="sm" muted>
+                {migration.note}
+              </Body>
+            </Card>
+          ))}
         </div>
       </SectionShell>
 

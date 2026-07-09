@@ -22,6 +22,7 @@ function CrossLinks() {
     { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
     { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
     { label: "Primary Workspace", href: "/application-components/primary-workspace" },
+    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
   ];
   return (
     <div className="flex flex-wrap gap-4">

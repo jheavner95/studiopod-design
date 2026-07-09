@@ -14,6 +14,8 @@ interface DescriptionListProps {
   layout?: DescriptionListLayout;
   /** Wraps the list in the same rounded-border card every DS-1.x Accessibility section already uses — turn off to embed the bare <dl> inside a container of your own. */
   bordered?: boolean;
+  /** Overrides the label column's width class at sm: and up. Default (sm:w-56) matches every existing Accessibility-block usage; a couple of pages with shorter labels (e.g. a certification-level name) use a narrower column instead. */
+  labelWidth?: string;
 }
 
 /**
@@ -23,7 +25,7 @@ interface DescriptionListProps {
  * exact count). "responsive" stacks on mobile and goes side-by-side from
  * sm: up; "stacked" always stacks; "two-column" always sits side-by-side.
  */
-export function DescriptionList({ items, className, layout = "responsive", bordered = true }: DescriptionListProps) {
+export function DescriptionList({ items, className, layout = "responsive", bordered = true, labelWidth = "sm:w-56" }: DescriptionListProps) {
   const rowDirection = layout === "stacked" ? "flex-col" : layout === "two-column" ? "flex-row" : "flex-col sm:flex-row";
 
   const list = (
@@ -38,7 +40,7 @@ export function DescriptionList({ items, className, layout = "responsive", borde
             index < items.length - 1 && "border-b border-border-subtle",
           )}
         >
-          <dt className="w-full shrink-0 text-body-sm font-medium text-ink-primary sm:w-56">{item.label}</dt>
+          <dt className={cn("w-full shrink-0 text-body-sm font-medium text-ink-primary", labelWidth)}>{item.label}</dt>
           <dd className="min-w-0 break-words text-body-sm text-ink-secondary">{item.value}</dd>
         </div>
       ))}

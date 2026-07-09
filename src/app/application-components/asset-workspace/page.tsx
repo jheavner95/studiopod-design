@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { DescriptionList } from "@/components/metadata";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
@@ -211,39 +212,30 @@ export default function AssetWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
-          <div className="rounded-lg border border-border-subtle bg-surface p-4 sm:p-6">
-            <dl className="flex flex-col">
-              {ACCESSIBILITY_GUIDANCE.map((item, index) => (
-                <div
-                  key={item.label}
-                  className={
-                    index < ACCESSIBILITY_GUIDANCE.length - 1
-                      ? "flex flex-col gap-1.5 border-b border-border-subtle py-4 first:pt-0 sm:flex-row sm:gap-6"
-                      : "flex flex-col gap-1.5 py-4 first:pt-0 sm:flex-row sm:gap-6"
-                  }
-                >
-                  <dt className="w-full shrink-0 text-body-sm font-medium text-ink-primary sm:w-56">{item.label}</dt>
-                  <dd className="flex min-w-0 flex-col gap-2 text-body-sm text-ink-secondary">
-                    <span className="min-w-0 break-words">{item.text}</span>
-                    {item.links ? (
-                      <span className="flex flex-wrap gap-4">
-                        {item.links.map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 hover:text-accent-300"
-                          >
-                            {link.label}
-                            <ArrowUpRight className="size-3.5" aria-hidden />
-                          </Link>
-                        ))}
-                      </span>
-                    ) : null}
-                  </dd>
+          <DescriptionList
+            items={ACCESSIBILITY_GUIDANCE.map((item) => ({
+              label: item.label,
+              value: (
+                <div className="flex min-w-0 flex-col gap-2">
+                  <span className="min-w-0 break-words">{item.text}</span>
+                  {item.links ? (
+                    <span className="flex flex-wrap gap-4">
+                      {item.links.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 hover:text-accent-300"
+                        >
+                          {link.label}
+                          <ArrowUpRight className="size-3.5" aria-hidden />
+                        </Link>
+                      ))}
+                    </span>
+                  ) : null}
                 </div>
-              ))}
-            </dl>
-          </div>
+              ),
+            }))}
+          />
         </div>
       </SectionShell>
 

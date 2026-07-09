@@ -1,0 +1,63 @@
+export type ReadinessVerdict = "Ready" | "Not ready" | "Partially ready";
+
+export interface ReadinessRow {
+  id: string;
+  system: string;
+  verdict: ReadinessVerdict;
+  reasoning: string;
+  blockingComponents: string[];
+}
+
+export const READINESS_ASSESSMENT: ReadinessRow[] = [
+  {
+    id: "overlay-system",
+    system: "Overlay System",
+    verdict: "Partially ready",
+    reasoning:
+      "All 6 overlay components (Dialog, Drawer, Popover, Menu, Tooltip, Command Palette) are still Needed — 0% built. But the Foundation Layer they'd be built on is ready to support them: Surface's floating elevation tier is already proven in production use inside UnsavedChangesBanner, and Layout's composition patterns (Panel headers, Stack bodies) transfer directly to overlay content.",
+    blockingComponents: ["Dialog", "Drawer", "Popover", "Menu", "Tooltip", "Command Palette"],
+  },
+  {
+    id: "navigation-system",
+    system: "Navigation System",
+    verdict: "Not ready",
+    reasoning:
+      "Tabs and Section Nav sit at Partial; Breadcrumbs, Pagination, Stepper, and Sidebar Nav are all Needed. DS-2.3 Inspector Components is explicitly blocked in part on Tabs. The Foundation Layer doesn't block this system, but Navigation's own components are the prerequisite gap, and none of the four built families substitutes for them.",
+    blockingComponents: ["Tabs", "Breadcrumbs", "Pagination", "Stepper", "Sidebar Nav"],
+  },
+  {
+    id: "feedback-system",
+    system: "Feedback System",
+    verdict: "Partially ready",
+    reasoning:
+      "Roughly half-built: Badge, Progress, and Skeleton exist; Spinner and Empty State are Partial; Chip, Tag, Toast, and Alert are Needed, with Toast and Alert both flagged High priority. Table and Metadata already shipped their own local empty-state answers (TableEmptyState, EmptyMetadata) — when a shared Feedback empty-state primitive is eventually built, it should generalize from those two real implementations rather than starting from scratch.",
+    blockingComponents: ["Toast", "Alert", "Chip", "Tag"],
+  },
+  {
+    id: "operational-components",
+    system: "Operational Components",
+    verdict: "Partially ready",
+    reasoning:
+      "Table, Metadata, and Forms give real, composable building blocks for asset cards, property editing, and status displays — the core of what Operational Components need. But DS-2.2/2.4/2.5's own readiness blockers still include several Needed items (Chip, Avatar, Toast, Menu, Dropdown Button, Alert, List, Popover) plus Partial Spinner. Just as material: zero workspace or operational page has ever consumed Table, Metadata, or Forms, so there's no proven integration pattern for how an Operational Component should actually wire them together — that's a readiness gap independent of raw component existence.",
+    blockingComponents: ["Chip", "Avatar", "Toast", "Menu", "Dropdown Button", "Alert", "List", "Popover"],
+  },
+  {
+    id: "workflow-components",
+    system: "Workflow Components",
+    verdict: "Not ready",
+    reasoning:
+      "Shares Operational Components' blockers plus Stepper — Progress exists, but Stepper, Toast, Menu, and Dropdown Button are all still Needed, and DS-2.4's own readiness entry names exactly this set.",
+    blockingComponents: ["Stepper", "Toast", "Menu", "Dropdown Button"],
+  },
+  {
+    id: "platform-templates",
+    system: "Platform Templates",
+    verdict: "Not ready",
+    reasoning:
+      "Composes Operational and Workflow Components, neither of which is ready yet — transitively not ready. Separately, the certification data this system would report against has its own integrity issue worth fixing first: platform-certification.ts tracks 9 platforms (including \"Product\"), while coverage.ts tracks a different 8 (including \"Admin\" but not \"Product\") — the two lists don't agree, which is exactly why \"Product\" shows a null component-coverage figure today.",
+    blockingComponents: ["Operational Components", "Workflow Components"],
+  },
+];
+
+export const READINESS_SUMMARY =
+  "Nothing downstream is fully ready today. The Foundation Layer itself (Layout/Table/Metadata/Forms) is real and Production Ready, which is a genuine precondition for Operational Components specifically — but Overlay, Navigation, and Feedback each have real component gaps of their own that the Foundation Layer doesn't close, and zero real integration pattern exists yet for how any downstream system should actually consume Table, Metadata, or Forms.";

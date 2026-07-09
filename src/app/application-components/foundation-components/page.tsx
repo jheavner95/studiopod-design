@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { DescriptionList } from "@/components/metadata";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
@@ -20,6 +21,7 @@ function CrossLinks() {
     { label: "Foundation Table System", href: "/application-components/foundation-table" },
     { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
     { label: "Foundation Form System", href: "/application-components/foundation-forms" },
+    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
   ];
   return (
     <div className="flex flex-wrap gap-4">
@@ -156,23 +158,10 @@ export default function FoundationComponentsPage() {
             description="The same five levels Workspace Architecture Certification defined — reused directly, not restated."
             descriptionMaxWidth={false}
           />
-          <div className="rounded-lg border border-border-subtle bg-surface p-4 sm:p-6">
-            <dl className="flex flex-col">
-              {MATURITY_LEVELS.map((entry, index) => (
-                <div
-                  key={entry.level}
-                  className={
-                    index < MATURITY_LEVELS.length - 1
-                      ? "flex flex-col gap-1.5 border-b border-border-subtle py-4 first:pt-0 sm:flex-row sm:gap-6"
-                      : "flex flex-col gap-1.5 py-4 first:pt-0 sm:flex-row sm:gap-6"
-                  }
-                >
-                  <dt className="w-full shrink-0 text-body-sm font-medium text-ink-primary sm:w-44">{entry.level}</dt>
-                  <dd className="min-w-0 break-words text-body-sm text-ink-secondary">{entry.description}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          <DescriptionList
+            labelWidth="sm:w-44"
+            items={MATURITY_LEVELS.map((entry) => ({ label: entry.level, value: entry.description }))}
+          />
           <Caption className="text-ink-tertiary">
             No component in this catalog has been marked Certified or Locked — neither level can be reached from
             status alone, and no foundation component has gone through that review yet.

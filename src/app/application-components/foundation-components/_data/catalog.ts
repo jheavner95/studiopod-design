@@ -582,7 +582,7 @@ export const FOUNDATION_COMPONENTS: FoundationComponent[] = [
     groupId: "data-display",
     purpose: "A set of label/value pairs, presented as rows.",
     status: "Exists",
-    source: "src/components/layout/DescriptionList.tsx — built in DS-2.1.2, generalizing the dl/dt/dd row pattern that had been hand-rolled identically across every DS-1.x Accessibility section since DS-1.2.",
+    source: "src/components/layout/DescriptionList.tsx — built in DS-2.1.2, generalizing the dl/dt/dd row pattern that had been hand-rolled identically across every DS-1.x Accessibility section since DS-1.2. Also documented as a Foundation Metadata component (src/components/metadata/DescriptionList.tsx re-exports it). Adopted by all 9 real duplicate implementations in DS-2.1.7.1 — the Foundation Layer's first production adoption. Status: Adoption In Progress, not Certified.",
     priority: "High",
     requiredStates: ["Default row"],
     requiredVariants: ["Stacked (mobile)", "Side-by-side (desktop)"],

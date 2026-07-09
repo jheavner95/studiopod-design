@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { DescriptionList } from "@/components/metadata";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
@@ -160,23 +161,7 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
-          <div className="rounded-lg border border-border-subtle bg-surface p-4 sm:p-6">
-            <dl className="flex flex-col">
-              {ACCESSIBILITY_GUIDANCE.map((item, index) => (
-                <div
-                  key={item.label}
-                  className={
-                    index < ACCESSIBILITY_GUIDANCE.length - 1
-                      ? "flex flex-col gap-1.5 border-b border-border-subtle py-4 first:pt-0 sm:flex-row sm:gap-6"
-                      : "flex flex-col gap-1.5 py-4 first:pt-0 sm:flex-row sm:gap-6"
-                  }
-                >
-                  <dt className="w-full shrink-0 text-body-sm font-medium text-ink-primary sm:w-56">{item.label}</dt>
-                  <dd className="min-w-0 break-words text-body-sm text-ink-secondary">{item.text}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          <DescriptionList items={ACCESSIBILITY_GUIDANCE.map((item) => ({ label: item.label, value: item.text }))} />
         </div>
       </SectionShell>
 
