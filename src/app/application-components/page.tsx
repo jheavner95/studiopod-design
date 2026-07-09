@@ -62,6 +62,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/foundation-components">
               Foundation components
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/foundation-layout">
+              Foundation layout primitives
+            </Button>
           </div>
         </div>
       </Card>
