@@ -32,6 +32,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/templates">
               Platform templates
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workspace-framework">
+              Workspace framework
+            </Button>
           </div>
         </div>
       </Card>

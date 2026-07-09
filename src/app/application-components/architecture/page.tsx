@@ -36,7 +36,7 @@ export default function ArchitecturePage() {
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider>
+      <SectionShell id="dependency-map" spacing="lg" divider className="scroll-mt-24">
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Dependency map</Eyebrow>}
