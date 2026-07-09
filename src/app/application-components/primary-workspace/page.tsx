@@ -2,17 +2,18 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
+import { ResponsiveRulesTable } from "@/components/table";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
 import { PrimaryWorkspaceAnatomyExplorer } from "./_components/PrimaryWorkspaceAnatomyExplorer";
-import { ResponsiveRulesTable } from "./_components/ResponsiveRulesTable";
 import { PlatformExampleCard } from "./_components/PlatformExampleCard";
 import { WORKSPACE_MODES } from "./_data/modes";
 import { PRIMARY_WORKSPACE_PRINCIPLES } from "./_data/principles";
 import { ACCESSIBILITY_GUIDANCE } from "./_data/accessibility";
 import { FUTURE_WORKSPACE_TYPES } from "./_data/future-types";
 import { PLATFORM_EXAMPLES } from "./_data/platform-examples";
+import { PRIMARY_WORKSPACE_RESPONSIVE_RULES } from "./_data/responsive-rules";
 
 function CrossLinks() {
   return (
@@ -154,7 +155,10 @@ export default function PrimaryWorkspacePage() {
             description="Five dimensions of behavior across three conceptual breakpoints — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
             descriptionMaxWidth={false}
           />
-          <ResponsiveRulesTable />
+          <ResponsiveRulesTable
+            caption="Responsive rules: how five dimensions of Primary Workspace behavior change across desktop, tablet, and mobile."
+            rows={PRIMARY_WORKSPACE_RESPONSIVE_RULES}
+          />
         </div>
       </SectionShell>
 

@@ -13,4 +13,9 @@ export const TABLE_FUTURE_EXTENSIONS: TableFutureExtension[] = [
   { title: "Saved Columns", description: "Persisting a user's chosen column visibility/order/width across sessions." },
   { title: "Pinned Columns", description: "Keeping specific columns (usually Selection or an identifying Text column) visible while the rest of a wide table scrolls horizontally." },
   { title: "Inline Editing", description: "Editing a cell's value directly in the table, without opening the record in an Inspector — the highest-complexity extension on this list." },
+  {
+    title: "Responsive Row Collapse",
+    description:
+      "Not speculative — confirmed twice by real, failed migration attempts. DS-2.1.7.3 (MaturityTable, 3 columns) needed horizontal scroll at 640px against a 333px mobile viewport; DS-2.1.7.4 (InventoryTable, 5 columns) failed the same way, worse — 774px against 333px, clipping a Status badge and hiding Source and Priority entirely. Both hand-rolled originals instead stacked each row into a labeled card below sm:. Table's ScrollArea handles overflow correctly but has no mechanism to switch to a stacked layout below a breakpoint. Both migrations were reverted rather than shipped with a visible regression. This is now the leading candidate for Table's next real capability, not a hypothetical one.",
+  },
 ];

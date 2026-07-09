@@ -2,17 +2,18 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
+import { ResponsiveRulesTable } from "@/components/table";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
 import { WidthModeExplorer } from "./_components/WidthModeExplorer";
 import { DensityCard } from "./_components/DensityCard";
 import { RegionLayoutCard } from "./_components/RegionLayoutCard";
-import { ResponsiveRulesTable } from "./_components/ResponsiveRulesTable";
 import { ScrollingDiagram } from "./_components/ScrollingDiagram";
 import { HeightComparison } from "./_components/HeightComparison";
 import { DENSITY_LEVELS } from "./_data/density";
 import { REGION_LAYOUTS } from "./_data/region-layouts";
+import { RESPONSIVE_RULES } from "./_data/responsive-rules";
 import { SCROLL_CONCEPTS } from "./_data/scrolling";
 import { SPACING_RULES, SPACING_SCALE_NOTE } from "./_data/spacing";
 import { LAYOUT_PRINCIPLES } from "./_data/principles";
@@ -149,7 +150,10 @@ export default function WorkspaceLayoutPage() {
             description="Seven dimensions of behavior across three conceptual breakpoints — see Workspace Header's Responsive Behavior section for what this looks like on an actual header."
             descriptionMaxWidth={false}
           />
-          <ResponsiveRulesTable />
+          <ResponsiveRulesTable
+            caption="Responsive rules: how seven dimensions of workspace behavior change across desktop, tablet, and mobile."
+            rows={RESPONSIVE_RULES}
+          />
         </div>
       </SectionShell>
 

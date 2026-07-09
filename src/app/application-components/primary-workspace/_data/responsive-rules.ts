@@ -3,6 +3,8 @@ export interface PrimaryWorkspaceResponsiveRule {
   desktop: string;
   tablet: string;
   mobile: string;
+  /** Structural compatibility with ResponsiveRulesTableRow's index signature. */
+  [key: string]: string;
 }
 
 /** Five dimensions of responsive Primary Workspace behavior, each stated as a rule per breakpoint — conceptual, not tied to a literal pixel breakpoint. */

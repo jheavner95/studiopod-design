@@ -12,7 +12,7 @@ import { StatesDemo } from "./_components/StatesDemo";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { TABLE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { TABLE_PROMOTION_CANDIDATES, totalPromotionLines } from "./_data/promotion-candidates";
+import { TABLE_PROMOTION_CANDIDATES, TABLE_RESOLVED_MIGRATIONS, totalPromotionLines } from "./_data/promotion-candidates";
 import { TABLE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
@@ -167,7 +167,7 @@ export default function FoundationTablePage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
-            description={`Every hand-rolled <table> implementation found in this codebase today — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined. None have been migrated yet, per this work package's own scope.`}
+            description={`Every hand-rolled <table> implementation still remaining in this codebase — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined. One category has been migrated already; see below.`}
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -191,6 +191,22 @@ export default function FoundationTablePage() {
               </Card>
             ))}
           </CardGrid>
+          {TABLE_RESOLVED_MIGRATIONS.map((migration) => (
+            <Card key={migration.id} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
+                <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
+                  Adoption In Progress
+                </Badge>
+              </div>
+              <Caption className="text-ink-tertiary">
+                {migration.filesRemoved} files removed ({migration.linesRemoved} lines) · {migration.linesAdded} lines added · {migration.resolvedIn}
+              </Caption>
+              <Body size="sm" muted>
+                {migration.note}
+              </Body>
+            </Card>
+          ))}
         </div>
       </SectionShell>
 

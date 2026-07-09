@@ -20,8 +20,8 @@ export const MIGRATION_PLAN: MigrationStep[] = [
     scope: "3 near-byte-identical files (workspace-toolbar, primary-workspace, workspace-layout), 126 combined lines",
     effort: "Low",
     reasoning:
-      "The purest possible first move: zero design judgment required, collapses 3 files into 1, and proves the Table system end-to-end on real (if simple) content before anything harder attempts it. If this migration surfaces a problem with Table itself, it's cheap to discover here and expensive everywhere else.",
-    status: "Not started",
+      "The purest possible first move: zero design judgment required, collapses 3 files into 1, and proves the Table system end-to-end on real (if simple) content before anything harder attempts it. If this migration surfaces a problem with Table itself, it's cheap to discover here and expensive everywhere else. Completed in DS-2.1.7.2: it did surface a real gap (no sticky-left-column support), which TableHead now closes with an optional sticky prop rather than a local workaround. Zero visual regression at any breakpoint; sticky-column behavior verified by measuring the row-header cell's position before and after scrolling.",
+    status: "Completed",
   },
   {
     order: 2,

@@ -2,16 +2,17 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
+import { ResponsiveRulesTable } from "@/components/table";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
 import { ToolbarAnatomyExplorer } from "./_components/ToolbarAnatomyExplorer";
 import { VariantCard } from "./_components/VariantCard";
-import { ResponsiveRulesTable } from "./_components/ResponsiveRulesTable";
 import { TOOLBAR_VARIANTS } from "./_data/variants";
 import { TOOLBAR_PRINCIPLES } from "./_data/principles";
 import { TOOLBAR_MISTAKES } from "./_data/mistakes";
 import { TOOLBAR_IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
+import { TOOLBAR_RESPONSIVE_RULES } from "./_data/responsive-rules";
 import { TOOLBAR_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
@@ -128,7 +129,10 @@ export default function WorkspaceToolbarPage() {
             description="Five dimensions of behavior across three conceptual breakpoints — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
             descriptionMaxWidth={false}
           />
-          <ResponsiveRulesTable />
+          <ResponsiveRulesTable
+            caption="Responsive rules: how five dimensions of toolbar behavior change across desktop, tablet, and mobile."
+            rows={TOOLBAR_RESPONSIVE_RULES}
+          />
         </div>
       </SectionShell>
 

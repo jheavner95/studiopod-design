@@ -11,3 +11,8 @@ export { TableActionCell } from "./TableActionCell";
 export { TableEmptyState } from "./TableEmptyState";
 export { TableLoadingState } from "./TableLoadingState";
 export { TableToolbar } from "./TableToolbar";
+export {
+  ResponsiveRulesTable,
+  type ResponsiveRulesTableColumn,
+  type ResponsiveRulesTableRow,
+} from "./ResponsiveRulesTable";

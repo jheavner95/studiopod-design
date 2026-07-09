@@ -3,6 +3,8 @@ export interface ResponsiveRule {
   desktop: string;
   tablet: string;
   mobile: string;
+  /** Structural compatibility with ResponsiveRulesTableRow's index signature. */
+  [key: string]: string;
 }
 
 /** Seven dimensions of responsive behavior, each stated as a rule per breakpoint — conceptual, not tied to a literal pixel breakpoint. */

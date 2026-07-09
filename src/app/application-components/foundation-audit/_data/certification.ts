@@ -36,12 +36,20 @@ export const FAMILY_CERTIFICATION: FamilyCertification[] = [
     id: "table",
     family: "Foundation Table",
     level: "Production Ready",
+    adoptionStatus: "Adoption In Progress",
     reasoning: [
       "13 real components with the richest accessibility wiring of any family (scope, aria-sort, aria-selected, per-row aria-label) — genuinely safe to build a screen with today.",
       "Composes Layout and ui correctly, never Metadata or Forms.",
-      "Zero real-world consumers: none of the 8 duplicate table implementations it exists to replace has been migrated yet, so it is entirely unproven under real usage.",
+      "DS-2.1.7.2 closed the zero-adoption gap for 6 of the 13 components: Table, TableHeader, TableBody, TableRow, TableHead, and TableCell now compose the shared ResponsiveRulesTable, used by 3 real pages, re-verified with zero visual regression at desktop, tablet, and mobile, and with sticky-column behavior confirmed by measurement, not just visual inspection. This is real, not projected: Foundation Table's first production adoption.",
+      "Still not Certified: 7 components (TableSelectionCell, TableStatusCell, TableActionCell, TableEmptyState, TableLoadingState, TableToolbar, TableFooter) and the sortable-header interaction remain unexercised in real usage, and no per-component accessibility checklist has been run.",
+      "DS-2.1.7.3 attempted MaturityTable next and reverted it: migrating a 40-row, 3-column table onto Table produced a measured mobile regression (640px natural width against a 333px viewport), because Table has no equivalent to MaturityTable's original stacked-card mobile layout. This is a real, confirmed capability gap, not every remaining candidate is safely migratable today — recorded honestly rather than shipped broken or worked around locally.",
+      "DS-2.1.7.4 attempted InventoryTable next, expecting a genuine <table> unlike MaturityTable — direct code review found the opposite (the identical div/grid + stack-below-sm: pattern), and the migration failed the same way, worse (774px against a 333px viewport, clipping Status and hiding Source/Priority entirely). Two independent failures for the identical reason is a pattern, not a fluke — Foundation Table's next real capability investment is now well-evidenced, not speculative.",
     ],
-    blockers: ["Migrate at least one real hand-rolled table onto it (the ResponsiveRulesTable step is the lowest-risk candidate)."],
+    blockers: [
+      "Migrate CoverageMatrix, ScorecardTable, or CertificationMatrix (each confirmed to be a genuine <table>) to exercise selection, status, and action cells in real usage.",
+      "Add a responsive row-collapse capability to Table before attempting MaturityTable again (see Foundation Table's Future Extensions) — do not local-workaround it.",
+      "Run and record a per-component accessibility checklist, not just the family-level compliance grep.",
+    ],
   },
   {
     id: "metadata",
@@ -87,4 +95,4 @@ export const FAMILY_CERTIFICATION: FamilyCertification[] = [
 ];
 
 export const CERTIFICATION_HEADLINE =
-  "All four built families, plus the catalog that tracks them, land at Production Ready. None reaches Certified — the maturity model's own bar (accessibility pass, responsive verification, and real-screen usage) isn't cleared by any of them, primarily because real-screen usage is at zero across the board. This is stated plainly rather than rounded up: the Foundation Layer is real and well-built, but unproven.";
+  "All four built families, plus the catalog that tracks them, land at Production Ready. Two — Metadata and Table — now show real, verified adoption in progress (DescriptionList in DS-2.1.7.1, ResponsiveRulesTable in DS-2.1.7.2), each closing one specific real-screen-usage gap. Neither reaches Certified: each pilot exercised only a slice of its family's full component surface, and no family has a recorded per-component accessibility checklist yet. This is stated plainly rather than rounded up: the Foundation Layer is real, well-built, and — for two families — starting to prove itself under real usage, but not yet fully proven.";
