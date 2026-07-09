@@ -2,7 +2,7 @@ export interface RuleReview {
   id: string;
   rule: string;
   source: string;
-  verdict: "Followed" | "Violated" | "Needs clarification";
+  verdict: "Followed" | "Violated" | "Partially resolved" | "Needs clarification";
   detail: string;
 }
 
@@ -32,8 +32,8 @@ export const DESIGN_RULES_REVIEW: RuleReview[] = [
     id: "operational-compose-not-reinvent",
     rule: "\"Operational components compose foundations; they do not reinvent them\"",
     source: "Foundation Component Catalog design rules",
-    verdict: "Violated",
-    detail: "Actively violated today by every duplication finding in Section 4 — 8 duplicate tables, 9 duplicate description lists, 19 duplicate Panel/Surface wrappers, 5 duplicate ControlDocks, all still un-migrated. Important nuance: DS-2.1.2 through DS-2.1.5 each explicitly instructed \"do not refactor existing pages yet\" — so this is an accepted, temporary, intentional violation tracked by design, not a surprise regression.",
+    verdict: "Partially resolved",
+    detail: "Originally violated by every duplication finding in Section 4 — 8 duplicate tables, 9 duplicate description lists, 19 duplicate Panel/Surface wrappers, 5 duplicate ControlDocks. The description lists (DS-2.1.7.1) and all 8 original duplicate tables (3 ResponsiveRulesTable copies plus ScorecardTable, CertificationMatrix, and CoverageMatrix, DS-2.1.7.2/7.5–7.7) are now fully migrated onto their Foundation primitives; 2 table-shaped candidates remain, correctly blocked on a real capability gap rather than un-migrated by neglect. Panel/Surface (19) and ControlDock (5) remain fully un-migrated. Important nuance: DS-2.1.2 through DS-2.1.5 each explicitly instructed \"do not refactor existing pages yet\" — so the parts still un-migrated are an accepted, temporary, intentional state tracked by design, not a surprise regression.",
   },
   {
     id: "forms-accessible-by-default",

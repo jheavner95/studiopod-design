@@ -85,6 +85,7 @@ const BOOLEAN_VERDICT_TONE: Record<string, "success" | "warning" | "error"> = {
   "Not verified": "error",
   Followed: "success",
   "Needs clarification": "warning",
+  "Partially resolved": "warning",
   Violated: "error",
   Ready: "success",
   "Partially ready": "warning",
@@ -389,7 +390,7 @@ export default function FoundationAuditPage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Section 6 · Certification</Eyebrow>}
             title="Foundation certification"
-            description="Applying the design system's own five-level maturity model to each family. No component in any family is rated Certified or Locked — that's a finding, not an oversight, and it isn't fabricated to look better."
+            description="Applying the design system's own five-level maturity model to each family. Foundation Table reached Certified in DS-2.1.8 — the first family to do so; the rest remain Production Ready, which is itself a finding, not an oversight, and isn't fabricated to look better."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -413,14 +414,20 @@ export default function FoundationAuditPage() {
                   ))}
                 </ul>
                 <div className="flex flex-col gap-2">
-                  <Caption className="text-ink-tertiary">To reach Certified</Caption>
-                  <Cluster gap="xs">
-                    {entry.blockers.map((blocker) => (
-                      <Badge key={blocker} tone="warning" size="sm">
-                        {blocker}
-                      </Badge>
-                    ))}
-                  </Cluster>
+                  <Caption className="text-ink-tertiary">{entry.blockers.length > 0 ? "To reach Certified" : "Certification"}</Caption>
+                  {entry.blockers.length > 0 ? (
+                    <Cluster gap="xs">
+                      {entry.blockers.map((blocker) => (
+                        <Badge key={blocker} tone="warning" size="sm">
+                          {blocker}
+                        </Badge>
+                      ))}
+                    </Cluster>
+                  ) : (
+                    <Badge tone="success" size="sm" className="w-fit">
+                      No blockers
+                    </Badge>
+                  )}
                 </div>
               </Card>
             ))}

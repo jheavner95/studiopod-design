@@ -34,8 +34,8 @@ export const FOUNDATION_LAYER_INVENTORY: FamilyInventoryRow[] = [
     fileCount: 13,
     primitiveCount: 13,
     status: "Exists",
-    maturity: "Production Ready",
-    note: "13 components — the richest accessibility wiring of any family (scope on th, aria-sort, aria-selected, per-checkbox aria-label). Zero real-world consumers today; the 8 hand-rolled tables it exists to replace haven't been migrated.",
+    maturity: "Certified",
+    note: "13 components — the richest accessibility wiring of any family (scope on th, aria-sort, aria-selected, per-checkbox aria-label). Certified in DS-2.1.8 after four real migrations (ResponsiveRulesTable, ScorecardTable, CertificationMatrix, CoverageMatrix — 7 of 13 components, 5 real pages), a verified per-component accessibility pass, and a stable API across three consecutive zero-change releases.",
   },
   {
     id: "metadata",
@@ -45,7 +45,7 @@ export const FOUNDATION_LAYER_INVENTORY: FamilyInventoryRow[] = [
     primitiveCount: 16,
     status: "Exists",
     maturity: "Production Ready",
-    note: "16 components. Verified by direct grep: zero onChange/input/button/select/textarea/contentEditable anywhere in the family except one sanctioned navigational Link in RelationshipList. Zero real-world consumers today.",
+    note: "16 components. Verified by direct grep: zero onChange/input/button/select/textarea/contentEditable anywhere in the family except one sanctioned navigational Link in RelationshipList. DescriptionList (1 of 16) has real consumers as of DS-2.1.7.1, across 9 pages; the other 15 remain unadopted and the family hasn't run its own accessibility pass yet.",
   },
   {
     id: "forms",

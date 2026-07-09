@@ -55,8 +55,13 @@ export default function FoundationTablePage() {
         <PageIntro
           eyebrow="package · application components · foundation table"
           title="Foundation table system"
-          description="The canonical StudioPOD table — Publishing Queue, Commerce Orders, Products, Assets, Styles, Ratios, Integrations, Users, Audit Log, Diagnostics all build from this one system. Documentation, reusable foundation components, and an interactive demonstration. Existing pages are not refactored yet — migration is a later work package."
+          description="The canonical StudioPOD table — Publishing Queue, Commerce Orders, Products, Assets, Styles, Ratios, Integrations, Users, Audit Log, Diagnostics all build from this one system. Documentation, reusable foundation components, and an interactive demonstration. Certified in DS-2.1.8 after four real migrations, a verified accessibility pass, and a stable API across three consecutive zero-change releases."
         >
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <Badge tone="success" size="sm" className="w-fit">
+              Certified — DS-2.1.8
+            </Badge>
+          </div>
           <div className="pt-2">
             <CrossLinks />
           </div>
@@ -196,7 +201,7 @@ export default function FoundationTablePage() {
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
                 <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                  Adoption In Progress
+                  Certified
                 </Badge>
               </div>
               <Caption className="text-ink-tertiary">

@@ -38,7 +38,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
     system: "Operational Components",
     verdict: "Partially ready",
     reasoning:
-      "Table, Metadata, and Forms give real, composable building blocks for asset cards, property editing, and status displays — the core of what Operational Components need. But DS-2.2/2.4/2.5's own readiness blockers still include several Needed items (Chip, Avatar, Toast, Menu, Dropdown Button, Alert, List, Popover) plus Partial Spinner. Just as material: zero workspace or operational page has ever consumed Table, Metadata, or Forms, so there's no proven integration pattern for how an Operational Component should actually wire them together — that's a readiness gap independent of raw component existence.",
+      "Table, Metadata, and Forms give real, composable building blocks for asset cards, property editing, and status displays — the core of what Operational Components need. But DS-2.2/2.4/2.5's own readiness blockers still include several Needed items (Chip, Avatar, Toast, Menu, Dropdown Button, Alert, List, Popover) plus Partial Spinner. Table and Metadata now have a proven integration pattern — 4 and 7 of the 9 Workspace Architecture pages consume them, respectively (DS-2.1.7.1/7.2/7.5/7.6) — but Forms remains completely unconsumed by any workspace or operational page, so there's still no proven pattern for wiring an editing surface into a real screen specifically.",
     blockingComponents: ["Chip", "Avatar", "Toast", "Menu", "Dropdown Button", "Alert", "List", "Popover"],
   },
   {
@@ -60,4 +60,4 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
 ];
 
 export const READINESS_SUMMARY =
-  "Nothing downstream is fully ready today. The Foundation Layer itself (Layout/Table/Metadata/Forms) is real and Production Ready, which is a genuine precondition for Operational Components specifically — but Overlay, Navigation, and Feedback each have real component gaps of their own that the Foundation Layer doesn't close, and zero real integration pattern exists yet for how any downstream system should actually consume Table, Metadata, or Forms.";
+  "Nothing downstream is fully ready today. The Foundation Layer itself (Layout/Table/Metadata/Forms) is real, and Table is now Certified (DS-2.1.8) — a genuine precondition for Operational Components specifically. But Overlay, Navigation, and Feedback each have real component gaps of their own that the Foundation Layer doesn't close, and Forms specifically still has no proven integration pattern for how a downstream system should consume it — unlike Table and Metadata, which now have real, measured usage across the Workspace Architecture pages.";
