@@ -38,6 +38,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/workspace-header">
               Workspace header
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workspace-layout">
+              Workspace layout
+            </Button>
           </div>
         </div>
       </Card>

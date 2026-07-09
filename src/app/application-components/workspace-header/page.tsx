@@ -21,12 +21,19 @@ export default function WorkspaceHeaderPage() {
           title="Workspace header framework"
           description="The standard header used by every StudioPOD platform — this page is the design contract for all future workspace headers. Documentation and an interactive demonstration only; this doesn't touch the production application."
         >
-          <div className="pt-2">
+          <div className="flex flex-wrap gap-4 pt-2">
             <Link
               href="/application-components/workspace-framework"
               className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
             >
               Part of the Workspace Framework
+              <ArrowUpRight className="size-3.5" aria-hidden />
+            </Link>
+            <Link
+              href="/application-components/workspace-layout"
+              className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+            >
+              Workspace Layout rules
               <ArrowUpRight className="size-3.5" aria-hidden />
             </Link>
           </div>

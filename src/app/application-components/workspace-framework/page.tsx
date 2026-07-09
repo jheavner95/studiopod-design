@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
@@ -16,7 +18,24 @@ export default function WorkspaceFrameworkPage() {
           eyebrow="package · application components · workspace framework"
           title="Workspace shell anatomy"
           description="Every StudioPOD platform — Publishing, Commerce, Production, and beyond — shares one workspace anatomy: seven regions, always in the same place. Documentation and an interactive demonstration only; this doesn't touch the production application."
-        />
+        >
+          <div className="flex flex-wrap gap-4 pt-2">
+            <Link
+              href="/application-components/workspace-header"
+              className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+            >
+              Workspace Header framework
+              <ArrowUpRight className="size-3.5" aria-hidden />
+            </Link>
+            <Link
+              href="/application-components/workspace-layout"
+              className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+            >
+              Workspace Layout rules
+              <ArrowUpRight className="size-3.5" aria-hidden />
+            </Link>
+          </div>
+        </PageIntro>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
