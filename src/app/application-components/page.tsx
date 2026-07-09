@@ -53,6 +53,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/inspector-workspace">
               Inspector workspace
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/status-workspace">
+              Status workspace
+            </Button>
           </div>
         </div>
       </Card>
