@@ -4,25 +4,23 @@ import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
-import { TableAnatomyExplorer } from "./_components/TableAnatomyExplorer";
-import { VariantGallery } from "./_components/VariantGallery";
-import { CellTypesTable } from "./_components/CellTypesTable";
-import { SelectionDemo } from "./_components/SelectionDemo";
-import { StatesDemo } from "./_components/StatesDemo";
-import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
-import { TABLE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
-import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { TABLE_PROMOTION_CANDIDATES, totalPromotionLines } from "./_data/promotion-candidates";
-import { TABLE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
+import { MetadataAnatomyExplorer } from "./_components/MetadataAnatomyExplorer";
+import { ComponentGallery } from "./_components/ComponentGallery";
+import { PatternGallery } from "./_components/PatternGallery";
+import { HierarchyDemo } from "./_components/HierarchyDemo";
+import { INFORMATION_HIERARCHY } from "./_data/hierarchy";
+import { METADATA_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
+import { METADATA_GUIDANCE } from "./_data/implementation-guidance";
+import { METADATA_PROMOTION_CANDIDATES, totalPromotionFiles } from "./_data/promotion-candidates";
+import { METADATA_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
   const links = [
     { label: "Foundation Components", href: "/application-components/foundation-components" },
     { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Workspace Layout", href: "/application-components/workspace-layout" },
-    { label: "Asset Workspace", href: "/application-components/asset-workspace" },
+    { label: "Foundation Table System", href: "/application-components/foundation-table" },
     { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
+    { label: "Operational Status Workspace", href: "/application-components/status-workspace" },
   ];
   return (
     <div className="flex flex-wrap gap-4">
@@ -46,14 +44,14 @@ const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
   High: "accent",
 };
 
-export default function FoundationTablePage() {
+export default function FoundationMetadataPage() {
   return (
     <PageShell background={<SystemGrid />}>
       <SectionShell spacing="xl">
         <PageIntro
-          eyebrow="package · application components · foundation table"
-          title="Foundation table system"
-          description="The canonical StudioPOD table — Publishing Queue, Commerce Orders, Products, Assets, Styles, Ratios, Integrations, Users, Audit Log, Diagnostics all build from this one system. Documentation, reusable foundation components, and an interactive demonstration. Existing pages are not refactored yet — migration is a later work package."
+          eyebrow="package · application components · foundation metadata"
+          title="Foundation metadata system"
+          description="The canonical information presentation system used throughout StudioPOD — Inspector Workspace, Asset Cards, Health Panels, Validation Panels, Status Workspace, and dashboard summaries all build from this one system. Metadata presents information; it does not edit it — editing belongs to the Foundation Form System. Reusable foundation components, documentation, and an interactive demonstration. Existing pages are not refactored yet."
         >
           <div className="pt-2">
             <CrossLinks />
@@ -65,87 +63,71 @@ export default function FoundationTablePage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Table anatomy"
-            description="Seven regions, top to bottom — select one to see the component that owns it."
+            title="Metadata anatomy"
+            description="Eight regions, top to bottom — select one to see the component that owns it."
             descriptionMaxWidth={false}
           />
-          <TableAnatomyExplorer />
+          <MetadataAnatomyExplorer />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Variants</Eyebrow>}
-            title="Table variants"
-            description="Nine named variants, each a real, live table built from the same underlying components."
+            eyebrow={<Eyebrow tone="accent">Component gallery</Eyebrow>}
+            title="Component gallery"
+            description="Ten components, each with a live example plus when — and when not — to reach for it."
             descriptionMaxWidth={false}
           />
-          <VariantGallery />
+          <ComponentGallery />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Cell types</Eyebrow>}
-            title="Cell types"
-            description="Eleven cell types, each with its own alignment, wrapping, truncation, and accessibility rules."
+            eyebrow={<Eyebrow tone="accent">Presentation patterns</Eyebrow>}
+            title="Presentation patterns"
+            description="Seven ways the same components can be arranged, with the advantages and tradeoffs of each."
             descriptionMaxWidth={false}
           />
-          <CellTypesTable />
+          <PatternGallery />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Selection</Eyebrow>}
-            title="Selection"
-            description="Single click toggles a row, shift-click selects a range, the header checkbox selects or clears all, and the Toolbar becomes a bulk-action bar the moment anything is selected."
+            eyebrow={<Eyebrow tone="accent">Information hierarchy</Eyebrow>}
+            title="Information hierarchy"
+            description="Four tiers, in visual-weight order — the rule that keeps a fully-populated metadata block from turning into visual noise."
             descriptionMaxWidth={false}
           />
-          <SelectionDemo />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Six states a table can be in, switched live on one shared table below."
-            descriptionMaxWidth={false}
-          />
-          <StatesDemo />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={3}>
-            {BREAKPOINT_NOTES.map((item) => (
-              <Card key={item.breakpoint} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{item.breakpoint}</span>
+          <CardGrid columns={4}>
+            {INFORMATION_HIERARCHY.map((tier) => (
+              <Card key={tier.id} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{tier.name}</span>
                 <Body size="sm" muted>
-                  {item.note}
+                  {tier.description}
                 </Body>
+                <div className="mt-auto flex flex-wrap gap-1.5 border-t border-border-subtle pt-3">
+                  {tier.components.map((component) => (
+                    <Badge key={component} tone="neutral" size="sm">
+                      {component}
+                    </Badge>
+                  ))}
+                </div>
               </Card>
             ))}
           </CardGrid>
-          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
+          <HierarchyDemo />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
-          <DescriptionList items={TABLE_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={METADATA_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
 
@@ -156,7 +138,16 @@ export default function FoundationTablePage() {
             title="Implementation guidance"
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <CardGrid columns={4}>
+            {METADATA_GUIDANCE.map((rule) => (
+              <Card key={rule.title} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{rule.title}</span>
+                <Body size="sm" muted>
+                  {rule.explanation}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
         </div>
       </SectionShell>
 
@@ -165,14 +156,14 @@ export default function FoundationTablePage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
-            description={`Every hand-rolled <table> implementation found in this codebase today — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined. None have been migrated yet, per this work package's own scope.`}
+            description={`Real, grep-verifiable repeated metadata patterns found in this codebase today — ${METADATA_PROMOTION_CANDIDATES.length} categories, ${totalPromotionFiles()} files combined.`}
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
-            {TABLE_PROMOTION_CANDIDATES.map((candidate) => (
+            {METADATA_PROMOTION_CANDIDATES.map((candidate) => (
               <Card key={candidate.id} className="flex flex-col gap-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <code className="min-w-0 break-words text-metadata text-ink-secondary">{candidate.file}</code>
+                  <span className="text-body-md font-medium text-ink-primary">{candidate.title}</span>
                   <Badge tone={EFFORT_TONE[candidate.migrationEffort]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
                     {candidate.migrationEffort} effort
                   </Badge>
@@ -180,8 +171,23 @@ export default function FoundationTablePage() {
                 <Body size="sm" muted>
                   {candidate.description}
                 </Body>
-                <div className="flex items-center gap-2">
-                  <Caption className="text-ink-tertiary">{candidate.lineCount} lines</Caption>
+                <div className="flex flex-col gap-1">
+                  <Caption className="text-ink-tertiary">
+                    {candidate.count} file{candidate.count === 1 ? "" : "s"} · verified with
+                  </Caption>
+                  <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
+                    {candidate.findingCommand}
+                  </code>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {candidate.files.slice(0, 5).map((file) => (
+                    <span
+                      key={file}
+                      className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
+                    >
+                      {file}
+                    </span>
+                  ))}
                 </div>
                 <Body size="sm" muted className="border-t border-border-subtle pt-3">
                   {candidate.migrationNote}
@@ -200,8 +206,8 @@ export default function FoundationTablePage() {
             description="Room the current system leaves for later — reserved, not scoped or committed."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {TABLE_FUTURE_EXTENSIONS.map((extension) => (
+          <CardGrid columns={4}>
+            {METADATA_FUTURE_EXTENSIONS.map((extension) => (
               <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
                 <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
                 <Body size="sm" muted>

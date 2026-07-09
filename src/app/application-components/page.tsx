@@ -68,6 +68,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/foundation-table">
               Foundation table system
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/foundation-metadata">
+              Foundation metadata system
+            </Button>
           </div>
         </div>
       </Card>
