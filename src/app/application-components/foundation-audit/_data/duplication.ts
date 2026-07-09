@@ -27,15 +27,17 @@ export const DUPLICATION_GROUPS: DuplicationGroup[] = [
   {
     id: "tables",
     group: "Tables",
-    fileCount: 5,
-    lineCount: 345,
+    fileCount: 2,
+    lineCount: 130,
     effort: "Medium",
     findings: [
-      "5 hand-rolled table-shaped implementations remain, 345 combined lines: CoverageMatrix (56), ScorecardTable (70), CertificationMatrix (89), InventoryTable (82), MaturityTable (48).",
-      "2 of the 5 (InventoryTable, MaturityTable) are actually div/grid layouts, not native <table> markup — the promotion-candidates.ts header comment's stated discovery method (\"grepping for <table\") doesn't literally find them; they were added by manual judgment, which the audit confirms is still architecturally correct even though the stated method doesn't reproduce it. Both share the identical responsive strategy: a hidden sm:grid header and rows that stack into labeled cards below sm: — not a coincidence, one was very likely copied from the other.",
+      "2 hand-rolled table-shaped implementations remain, 130 combined lines: InventoryTable (82), MaturityTable (48). Both are div/grid layouts, not native <table> markup — the promotion-candidates.ts header comment's stated discovery method (\"grepping for <table\") doesn't literally find them; they were added by manual judgment, which the audit confirms is still architecturally correct even though the stated method doesn't reproduce it. Both share the identical responsive strategy: a hidden sm:grid header and rows that stack into labeled cards below sm: — not a coincidence, one was very likely copied from the other.",
       "RESOLVED in DS-2.1.7.2: the 3 near-byte-identical ResponsiveRulesTable.tsx copies (workspace-toolbar, primary-workspace, workspace-layout — 126 combined lines) are gone, replaced by one generic src/components/table/ResponsiveRulesTable.tsx. Re-verified all 3 were still identical via diff immediately before migrating — zero drift from the original finding. This is Foundation Table's first production adoption.",
       "ATTEMPTED and REVERTED in DS-2.1.7.3: MaturityTable looked like the simplest remaining candidate (plain text and Badge cells only), but it isn't a native <table> — it's a CSS grid that deliberately stacks each of its 40 rows into a labeled card below the sm: breakpoint. Migrating it onto Table produced a measured regression (640px natural table width against a 333px mobile viewport, hiding two of three columns behind a horizontal scroll the original never needed), so the migration was reverted rather than shipped. Not every remaining candidate is safely migratable with Table's current capabilities — this is real evidence of that, not an assumption.",
       "ATTEMPTED and REVERTED in DS-2.1.7.4: InventoryTable was explicitly expected to be a genuine tabular presentation, unlike MaturityTable — direct code review found the opposite: byte-for-byte the same div/grid + stack-below-sm: pattern, just 5 columns instead of 3, with genuinely long Purpose (prose) and Source (file path plus note) content. Migrating it onto Table failed the same way, worse: 774px natural width against a 333px viewport, clipping the Status badge and hiding Source and Priority entirely. Two independent tables have now failed for the identical, confirmed reason — Table has no responsive row-collapse capability.",
+      "RESOLVED in DS-2.1.7.5: ScorecardTable (70 lines) is gone, replaced by a 48-line composition of Table, TableHeader, TableHead, TableBody, TableRow, TableCell, and TableStatusCell. An explicit Phase 0 architecture check ran before any code was touched — confirmed a genuine native <table> matching ResponsiveRulesTable's proven-safe shape, unlike MaturityTable/InventoryTable's div/grid pattern. Required zero new Table API surface (the DS-2.1.7.2 sticky prop was fully sufficient), and re-verified zero visual regression at desktop, tablet, and mobile.",
+      "RESOLVED in DS-2.1.7.6: CertificationMatrix (89 lines) is gone, replaced by a 68-line composition of the same six primitives as ScorecardTable, plus TableStatusCell for its three badge columns (two boolean, one phase). Phase 0 confirmed the identical genuine-<table> architecture. Required zero new Foundation Table API surface — the second migration in a row to need none, further evidence the DS-2.1.7.2 sticky-column extension is durable, reusable infrastructure. Zero visual regression at desktop, tablet, and mobile.",
+      "RESOLVED in DS-2.1.7.7: CoverageMatrix (56 lines) is gone, replaced by a 41-line composition of Table, TableHeader, TableHead, TableBody, TableRow, and TableStatusCell — the simplest of the three real-table migrations, since every data cell is a status Badge. Third migration in a row requiring zero new Foundation Table API surface. This completes the Foundation Table Adoption Pilot for genuine native tables: every real <table> candidate identified by this audit has now been migrated, leaving only the two div/grid candidates (InventoryTable, MaturityTable) blocked on the responsive row-collapse gap.",
     ],
   },
   {
@@ -78,14 +80,14 @@ export const DUPLICATION_GROUPS: DuplicationGroup[] = [
   {
     id: "workspace",
     group: "Workspace",
-    fileCount: 22,
+    fileCount: 19,
     lineCount: null,
     effort: "High",
     findings: [
-      "Whole-tree scan (application-components/, foundation-* pages excluded): 19 files with the Panel/Surface bordered-card pattern, 3 files with hand-rolled <table> markup — 22 files total, spanning 8 of 9 workspace pages plus 5 shared _components (CoverageMatrix, DependencyMap, MaturityTable, architecture/page.tsx, InventoryTable). The 7 workspace-page dl/dt/dd blocks resolved in DS-2.1.7.1 and the 3 ResponsiveRulesTable copies resolved in DS-2.1.7.2 are both zero now.",
-      "Every workspace page still composes Foundation Layout only at the page-shell level (PageShell/SectionShell/CardGrid) — none import Panel or Surface from that module. 7 pages now import DescriptionList from @/components/metadata (DS-2.1.7.1), and 3 now import ResponsiveRulesTable from @/components/table (DS-2.1.7.2) — the first real cracks in the \"page-shell only\" pattern this audit originally found, though still zero adoption of Panel, Surface, or Forms.",
+      "Whole-tree scan (application-components/, foundation-* pages excluded): 19 files with the Panel/Surface bordered-card pattern, 0 files with hand-rolled <table> markup — 19 files total, spanning 8 of 9 workspace pages plus shared _components (MaturityTable, InventoryTable, both div/grid rather than <table>). The 7 workspace-page dl/dt/dd blocks resolved in DS-2.1.7.1, the 3 ResponsiveRulesTable copies resolved in DS-2.1.7.2, and ScorecardTable's, CertificationMatrix's, and CoverageMatrix's raw <table> markup resolved in DS-2.1.7.5, DS-2.1.7.6, and DS-2.1.7.7 are all zero now — no hand-rolled <table> markup remains anywhere in application-components/.",
+      "Every workspace page still composes Foundation Layout only at the page-shell level (PageShell/SectionShell/CardGrid) — none import Panel or Surface from that module. 7 pages now import DescriptionList from @/components/metadata (DS-2.1.7.1), and 5 now import Table primitives from @/components/table (DS-2.1.7.2, DS-2.1.7.5, DS-2.1.7.6, DS-2.1.7.7) — the first real cracks in the \"page-shell only\" pattern this audit originally found, though still zero adoption of Panel, Surface, or Forms.",
       "workspace-framework is the one clean outlier: page-shell composition only, zero hand-rolled Panel/dl/table hits.",
-      "workspace-certification carries the heaviest remaining table duplication: 3 Panel wrappers plus 2 full hand-rolled <table> implementations (CertificationMatrix, ScorecardTable), and no dl/dt/dd usage at all.",
+      "workspace-certification carries the heaviest remaining Panel duplication (3 wrappers) but has zero remaining hand-rolled <table> markup — ScorecardTable and CertificationMatrix both import Table primitives from @/components/table (DS-2.1.7.5, DS-2.1.7.6) — and no dl/dt/dd usage at all.",
     ],
   },
 ];

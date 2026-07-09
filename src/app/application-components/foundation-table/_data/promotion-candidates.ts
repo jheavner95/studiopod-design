@@ -9,38 +9,17 @@ export interface TablePromotionCandidate {
 
 /**
  * Every hand-rolled <table> implementation in this codebase today,
- * found by grepping for <table across application-components/ — five
- * files, ~345 lines total, down from the original eight (~471 lines).
- * The three ResponsiveRulesTable copies below have been migrated — see
- * TABLE_RESOLVED_MIGRATIONS. The remaining five have not; this page
- * only documents and builds the replacement system for them, per the
- * work package's own instruction not to refactor existing pages yet.
+ * found by grepping for <table across application-components/ — down
+ * to zero: the three ResponsiveRulesTable copies, ScorecardTable,
+ * CertificationMatrix, and CoverageMatrix have all been migrated — see
+ * TABLE_RESOLVED_MIGRATIONS. The two candidates remaining below
+ * (InventoryTable, MaturityTable, 130 lines combined) were never native
+ * <table> markup in the first place — both are CSS-grid layouts that
+ * this grep never matched, added to this list by manual judgment, and
+ * both are blocked on a real Table capability gap (see Future
+ * Extensions), not simply unattempted.
  */
 export const TABLE_PROMOTION_CANDIDATES: TablePromotionCandidate[] = [
-  {
-    id: "coverage-matrix",
-    file: "src/app/application-components/_components/CoverageMatrix.tsx",
-    lineCount: 56,
-    description: "The platform coverage matrix — sticky first column, Badge cells for Used/Partial/Planned.",
-    migrationEffort: "Medium",
-    migrationNote: "Maps directly onto Table + TableHeader (sticky) + TableStatusCell for each state cell — the closest 1:1 fit of any candidate here.",
-  },
-  {
-    id: "scorecard-table",
-    file: "src/app/application-components/workspace-certification/_components/ScorecardTable.tsx",
-    lineCount: 70,
-    description: "The DS-1.9 certification scorecard — Link-wrapped row headers, Badge weight cells, computed contribution percentages.",
-    migrationEffort: "Medium",
-    migrationNote: "The Link-in-<th> pattern needs a small TableHead adjustment (or just children as-is, since TableHead accepts any ReactNode); otherwise a direct swap.",
-  },
-  {
-    id: "certification-matrix",
-    file: "src/app/application-components/workspace-certification/_components/CertificationMatrix.tsx",
-    lineCount: 89,
-    description: "The platform certification matrix — multiple Badge tones per row, boolean and percentage cells side by side.",
-    migrationEffort: "Medium",
-    migrationNote: "More cell-type variety than Coverage Matrix (boolean Badge, percentage text, phase Badge) but no structural surprises — TableCell and TableStatusCell cover all of it.",
-  },
   {
     id: "inventory-table",
     file: "src/app/application-components/inventory/_components/InventoryTable.tsx",
@@ -88,5 +67,32 @@ export const TABLE_RESOLVED_MIGRATIONS: ResolvedTableMigration[] = [
     linesAdded: 67,
     resolvedIn: "DS-2.1.7.2",
     note: "The three near-byte-identical ResponsiveRulesTable.tsx copies (workspace-toolbar, primary-workspace, workspace-layout — 42 lines each) are gone, replaced by one generic src/components/table/ResponsiveRulesTable.tsx composed from Table, TableHeader, TableHead, TableBody, TableRow, and TableCell. Re-verified all three were still substantially identical via diff immediately before migrating — zero drift from the original finding. Required one real Foundation Table API extension: TableHead gained an optional sticky prop for a pinned left column (the header's own sticky prop only pins the top row). Zero visual regression at desktop, tablet, and mobile — sticky-column behavior verified by scrolling the table and confirming the row-header cell's bounding rect doesn't move. This is Foundation Table's first production adoption.",
+  },
+  {
+    id: "scorecard-table",
+    title: "ScorecardTable migration",
+    filesRemoved: 0,
+    linesRemoved: 62,
+    linesAdded: 40,
+    resolvedIn: "DS-2.1.7.5",
+    note: "First verified this was a genuine architectural match before touching code (Phase 0): a native <table>, horizontal-scroll-only, sticky-left Category column — the same proven-safe shape as ResponsiveRulesTable, not the div/grid pattern that sank MaturityTable and InventoryTable. Migrated onto Table, TableHeader (sticky={false} — only the Category column needs sticky-left, not the header row itself), TableHead (reusing the sticky prop from DS-2.1.7.2), TableBody, TableRow, TableCell, and TableStatusCell. 70 lines down to 48. Required zero new Foundation Table API surface — the sticky-left capability added for ResponsiveRulesTable covered this migration completely, the first evidence that API extension is reusable, general infrastructure rather than a one-off fix. Zero visual regression at desktop, tablet, and mobile; sticky-column behavior reconfirmed by scroll measurement. An initial DOM collision sweep flagged 7 false-positive overlaps against the global nav bar — traced to the sweep running right after a scrollIntoView call, which coincidentally left the table header sitting at the top of the viewport; re-run at a clean scroll position (both desktop and tablet) confirmed zero real overlaps.",
+  },
+  {
+    id: "certification-matrix",
+    title: "CertificationMatrix migration",
+    filesRemoved: 0,
+    linesRemoved: 65,
+    linesAdded: 44,
+    resolvedIn: "DS-2.1.7.6",
+    note: "Phase 0 confirmed the same genuine native-<table>, horizontal-scroll, sticky-left-column architecture as ResponsiveRulesTable and ScorecardTable, so migration proceeded. Migrated onto Table, TableHeader (sticky={false}), TableHead (sticky, reused from DS-2.1.7.2), TableBody, TableRow, TableCell, and TableStatusCell — the boolean-badge cells (Architecture defined, Workspace certified) and the phase-badge cell mapped directly onto TableStatusCell, replacing a local BoolBadge helper with a plain tone function. 89 lines down to 68. Required zero new Foundation Table API surface, the second migration in a row to need none. Zero visual regression at desktop, tablet, and mobile; sticky-column behavior reconfirmed by scroll measurement; an initial DOM collision sweep repeated the same scroll-position false positive seen in DS-2.1.7.5 (this time against the page's own section heading) and cleared at a reset scroll position.",
+  },
+  {
+    id: "coverage-matrix",
+    title: "CoverageMatrix migration",
+    filesRemoved: 0,
+    linesRemoved: 43,
+    linesAdded: 28,
+    resolvedIn: "DS-2.1.7.7",
+    note: "Phase 0 confirmed the same genuine architecture as the two prior successful migrations, so it proceeded. The simplest of the three real-table migrations — every data cell is a status Badge across a dynamically-generated PLATFORMS column set — mapped directly onto Table, TableHeader (sticky={false}), TableHead (sticky, reused from DS-2.1.7.2), TableBody, TableRow, and TableStatusCell alone; no TableCell needed at all. 56 lines down to 41. Required zero new Foundation Table API surface, the third migration in a row to need none — conclusive evidence the DS-2.1.7.2 sticky-column extension generalizes across this whole class of matrix-shaped table. Zero visual regression at desktop, tablet, and mobile; sticky-column behavior reconfirmed by scroll measurement; a DOM collision sweep was clean at a stable scroll position on the first attempt. This completes the Foundation Table Adoption Pilot: every genuine native-<table> candidate in the codebase has now been migrated. The two remaining promotion candidates (InventoryTable, MaturityTable) are not native tables and remain blocked on a real, twice-confirmed Table capability gap, not unattempted.",
   },
 ];

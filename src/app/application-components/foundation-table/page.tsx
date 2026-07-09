@@ -167,7 +167,7 @@ export default function FoundationTablePage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
-            description={`Every hand-rolled <table> implementation still remaining in this codebase — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined. One category has been migrated already; see below.`}
+            description={`Every hand-rolled <table> implementation still remaining in this codebase — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined, neither a native <table>. Four categories have been migrated already, completing every genuine native-table candidate; see below.`}
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
