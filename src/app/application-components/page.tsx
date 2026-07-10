@@ -116,6 +116,15 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/workflow-framework">
               Workflow framework
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workflow-stepper">
+              Workflow stepper
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workflow-timeline">
+              Workflow timeline
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/approval-review">
+              Approval & review
+            </Button>
             <Button variant="secondary" size="sm" href="/application-components/operational-certification">
               Operational certification
             </Button>
