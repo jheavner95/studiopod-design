@@ -89,6 +89,12 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/data-grid">
               Data grid
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/inspector-panel">
+              Inspector panel
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/property-panel">
+              Property panel
+            </Button>
           </div>
         </div>
       </Card>

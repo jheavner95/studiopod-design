@@ -927,6 +927,32 @@ export const FOUNDATION_COMPONENTS: FoundationComponent[] = [
     accessibility: ["Native <table> semantics throughout (real <th scope>, aria-sort, aria-selected)", "Required caption prop for a real accessible name", "Focus never trapped — only DataGridColumnPicker's Popover opens a floating surface"],
     reuseTargets: ["Publishing Queue", "Commerce Orders", "Inventory", "Products", "Assets", "Diagnostics", "Metrics"],
   },
+  {
+    id: "inspector-panel",
+    name: "Inspector Panel",
+    groupId: "operational",
+    purpose: "The standard inspector shell for a single selected object — header identity, collapsible property sections, validation, status, history, and object-level actions.",
+    status: "Exists",
+    source: "src/components/operational/ — built in DS-2.5.2, the second Operational Component built on the certified Foundation Layer. Composes Foundation Metadata (IdentityBlock, PropertyGroup, MetadataField, PropertySection), Foundation Forms (any field component as an edit-mode child), Foundation Feedback (ValidationSummary, StatusIndicator, LoadingState, EmptyState), Foundation Navigation (Tabs), and Foundation Layout (Surface, ScrollArea, Inline) end to end. Not yet adopted by any real screen — a dedicated audit found no full inspector implementation anywhere in src/app (Production, Publishing, Commerce, Products, QA, Settings all clean), but did find a real, grep-verified duplicate one level down: src/platforms/components/PlatformDetailsPanel.tsx, src/capabilities/components/CapabilityDetails.tsx, and src/workflows/components/WorkflowStepDetails.tsx all hand-roll the same expandable-detail-panel shell InspectorSection/InspectorGroup now generalize (see the Inspector Panel docs page's own Promotion Candidates section) — not migrated in this package, which only builds new components.",
+    priority: "High",
+    requiredStates: ["Loading", "Empty", "Read-only", "Editing", "Validation Errors", "Warnings", "Success", "Busy"],
+    requiredVariants: ["Simple", "Asset", "Publishing", "Commerce", "Validation", "History", "Read-only", "Multi-section (tabbed)"],
+    accessibility: ["Section headings are real buttons with aria-expanded, not decorative labels", "Inherits Navigation's full ARIA tabs pattern unchanged for InspectorTabs", "Validation announcements come from Feedback's ValidationSummary live region, not a second one layered on top"],
+    reuseTargets: ["Production", "Publishing", "Commerce", "Products", "QA", "Settings", "src/platforms/components/PlatformDetailsPanel.tsx", "src/capabilities/components/CapabilityDetails.tsx", "src/workflows/components/WorkflowStepDetails.tsx"],
+  },
+  {
+    id: "property-panel",
+    name: "Property Panel",
+    groupId: "operational",
+    purpose: "The standard property-editing experience for a single selected object — labeled rows switching between a read-only value and a real editor, grouped and sectioned.",
+    status: "Exists",
+    source: "src/components/operational/ — built in DS-2.5.3, the third Operational Component built on the certified Foundation Layer. Reuses Inspector Panel's own shell/section/group/action components directly (PropertyPanel/PropertySection/PropertyGroup/PropertyActions are thin re-exports of InspectorPanel/InspectorSection/InspectorGroup/InspectorActions, and Header/Footer are Inspector Panel's InspectorHeader/InspectorFooter with no new file at all) rather than a second copy of the same chrome. New composition: PropertyRow/PropertyLabel/PropertyValue (Foundation Metadata's MetadataLabel/MetadataValue) plus PropertyToggle/PropertySelect/PropertyNumber (thin presets over Foundation Forms' SwitchField/SelectField/InputField) and PropertyEditor (a single-field type dispatcher, distinct in scope from src/components/form/PropertyEditor.tsx's own multi-field FormRow grid). PropertyColor is a genuinely new component — Foundation Forms has no color field yet, a real gap this package surfaces rather than works around silently. Not yet adopted by any real screen — a dedicated audit found no hand-rolled property-editing panel anywhere in src/app across all six named domains; the only stale finding was the DS-0.2 inventory's own \"Property Editor\" entry still marked status: \"Needed\" despite src/components/form/PropertyEditor.tsx already existing (see the Property Panel docs page's own Promotion Candidates section).",
+    priority: "High",
+    requiredStates: ["Read-only", "Editing", "Modified", "Unsaved", "Error", "Warning", "Disabled", "Loading"],
+    requiredVariants: ["Basic Properties", "Grouped Properties", "Appearance", "Publishing", "Commerce", "Advanced Settings", "Read-only", "Mixed Editors"],
+    accessibility: ["Every editor is a real, natively focusable/operable control (native button/select/number/color inputs)", "Labels are always real, associated <label> elements, never a placeholder standing in for one", "PropertyReset carries a real aria-label, not an icon-only control with no accessible name"],
+    reuseTargets: ["Production", "Publishing", "Commerce", "Products", "QA", "Settings"],
+  },
 ];
 
 export function maturityFor(component: FoundationComponent): MaturityLevel {
