@@ -9,7 +9,7 @@ export { FeatureCard } from "./FeatureCard";
 export { GlassPanel } from "./GlassPanel";
 export { SurfacePanel } from "./SurfacePanel";
 export { CTAGroup } from "./CTAGroup";
-export { Skeleton } from "./Skeleton";
+export { Skeleton, type SkeletonVariant } from "./Skeleton";
 export { Expandable } from "./Expandable";
 export { Display, Heading, Body, Caption, Metadata } from "./Typography";
 export { TextInput, type TextInputProps, type FieldStatus } from "./TextInput";
