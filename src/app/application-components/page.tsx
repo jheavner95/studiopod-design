@@ -98,6 +98,18 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/asset-browser">
               Asset browser
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/filter-search">
+              Filter & search system
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/bulk-actions">
+              Bulk actions system
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/status-health">
+              Status & health panels
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/queue-jobs">
+              Queue & job components
+            </Button>
           </div>
         </div>
       </Card>

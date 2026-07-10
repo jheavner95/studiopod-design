@@ -1,6 +1,6 @@
 import { Pagination, type PaginationVariant } from "@/components/navigation";
-import { Caption } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { ResultSummary } from "./ResultSummary";
 
 interface AssetPaginationProps {
   page: number;
@@ -13,11 +13,11 @@ interface AssetPaginationProps {
 }
 
 /**
- * A "X–Y of Z" summary paired with Foundation Navigation's own Pagination —
- * for AssetGrid's card layout, which sits outside any <table>. Data Grid's
- * own DataGridPagination renders a real <tfoot>, the wrong shape here;
- * AssetList (built on Data Grid directly) uses DataGridPagination instead
- * of this component, since it really is inside a table there.
+ * A ResultSummary paired with Foundation Navigation's own Pagination — for
+ * AssetGrid's card layout, which sits outside any <table>. Data Grid's own
+ * DataGridPagination renders a real <tfoot>, the wrong shape here; AssetList
+ * (built on Data Grid directly) uses DataGridPagination instead of this
+ * component, since it really is inside a table there.
  */
 export function AssetPagination({ page, pageCount, pageSize, totalCount, onPageChange, variant = "numbered", className }: AssetPaginationProps) {
   const start = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
@@ -25,9 +25,7 @@ export function AssetPagination({ page, pageCount, pageSize, totalCount, onPageC
 
   return (
     <div className={cn("flex flex-wrap items-center justify-between gap-3", className)}>
-      <Caption className="text-ink-tertiary">
-        {start}–{end} of {totalCount}
-      </Caption>
+      <ResultSummary totalCount={totalCount} range={{ start, end }} />
       <Pagination page={page} pageCount={pageCount} onPageChange={onPageChange} variant={variant} />
     </div>
   );
