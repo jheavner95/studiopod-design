@@ -113,3 +113,16 @@ export { JobError } from "./JobError";
 export { JobRetry } from "./JobRetry";
 export { JobResults } from "./JobResults";
 export { QueueEmptyState, type QueueEmptyVariant } from "./QueueEmptyState";
+
+export { DashboardGrid } from "./DashboardGrid";
+export { DashboardSection } from "./DashboardSection";
+export { MetricCard, renderMetricTrend, type MetricTrendDirection } from "./MetricCard";
+export { KPIWidget, type KPIWidgetItem } from "./KPIWidget";
+export { TrendWidget } from "./TrendWidget";
+export { ChartWidget, type ChartWidgetDatum } from "./ChartWidget";
+export { StatusWidget, type StatusWidgetItem } from "./StatusWidget";
+export { ActivityWidget } from "./ActivityWidget";
+export { QueueWidget } from "./QueueWidget";
+export { HealthWidget } from "./HealthWidget";
+export { RecommendationWidget, type RecommendationEntry } from "./RecommendationWidget";
+export { DashboardEmptyState } from "./DashboardEmptyState";

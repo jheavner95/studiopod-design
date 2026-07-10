@@ -110,6 +110,15 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/queue-jobs">
               Queue & job components
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/dashboard-widgets">
+              Dashboard widgets
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workflow-framework">
+              Workflow framework
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/operational-certification">
+              Operational certification
+            </Button>
           </div>
         </div>
       </Card>

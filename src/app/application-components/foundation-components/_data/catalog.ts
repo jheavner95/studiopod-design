@@ -9,7 +9,8 @@ export type FoundationGroupId =
   | "navigation"
   | "data-display"
   | "layout-primitives"
-  | "operational";
+  | "operational"
+  | "workflow";
 
 export interface FoundationGroupDef {
   id: FoundationGroupId;
@@ -26,6 +27,7 @@ export const FOUNDATION_GROUPS: FoundationGroupDef[] = [
   { id: "data-display", title: "Data Display", description: "Presenting structured content and information at rest." },
   { id: "layout-primitives", title: "Layout Primitives", description: "The composition building blocks every other component is arranged with." },
   { id: "operational", title: "Operational Components", description: "Composed, ready-to-use components built on top of the certified Foundation Layer for real operational screens — not new primitives themselves." },
+  { id: "workflow", title: "Workflow Components", description: "The reusable structure multi-step business workflows compose from — built on top of the certified Foundation and Operational layers, framework only, no workflow-specific business logic." },
 ];
 
 export interface FoundationComponent {
@@ -1017,6 +1019,32 @@ export const FOUNDATION_COMPONENTS: FoundationComponent[] = [
     requiredVariants: ["Publishing Queue", "Production Queue", "Commerce Queue", "Retry Queue", "Failed Jobs", "Completed Jobs", "Live Queue", "Job Detail"],
     accessibility: ["QueueFilters inherits Foundation Navigation's SegmentedControl roving-tabindex radiogroup unchanged", "JobProgress's role=\"progressbar\" and aria-valuenow come from Foundation Feedback's own ProgressBar (via BulkProgress) unchanged", "JobRetry's confirmation dialog inherits BulkActionConfirmation's focus-trap-in/restore-on-close guarantee"],
     reuseTargets: ["Publishing", "Production", "Commerce", "Automation", "Operations"],
+  },
+  {
+    id: "dashboard-widget-system",
+    name: "Dashboard Widget System",
+    groupId: "operational",
+    purpose: "The standard dashboard framework for every platform — a responsive widget grid of metric, trend, chart, status, activity, queue, health, and recommendation tiles, plus the titled sections and empty state that hold them.",
+    status: "Exists",
+    source: "src/components/operational/ — built in DS-2.5.9, the ninth Operational Component built on the certified Foundation Layer. Composes Foundation Layout (Grid in auto-fit mode underneath DashboardGrid, Panel as every widget's shell), Foundation Metadata (StatGroup for multi-metric widgets), and Foundation Feedback (EmptyState underneath DashboardEmptyState, LoadingState underneath DashboardSection's refresh state) end to end, plus Operational Status & Health (HealthScore/HealthIssueList/HealthIndicator/HealthRecommendation composed directly by HealthWidget/StatusWidget/RecommendationWidget) and Queue & Job (JobTimeline composed by ActivityWidget; Queue composed by QueueWidget) directly. MetricCard/KPIWidget/TrendWidget add a tone-aware trend renderer and TrendWidget/ChartWidget add minimal inline-SVG chart marks — genuinely new capability, since no trend vocabulary or charting primitive existed anywhere in the codebase before this package. Not yet adopted by any real screen — a dedicated audit across six named domains found no duplicate widget-grid implementation, only a narrow, already-documented overlap with Production's own HealthDashboardDiagram (see this package's own Promotion Candidates section).",
+    priority: "High",
+    requiredStates: ["Loading", "Refreshing", "Healthy", "Warning", "Critical", "Empty", "Error", "Read-only"],
+    requiredVariants: ["Executive Dashboard", "Production Dashboard", "Publishing Dashboard", "Commerce Dashboard", "Operations Dashboard", "Health Dashboard", "Queue Dashboard", "Analytics Dashboard"],
+    accessibility: ["ChartWidget pairs its SVG bars with a role=\"img\" aria-label summarizing every label/value pair, never relying on the graphic alone", "MetricCard's/TrendWidget's trend direction is conveyed by an arrow icon and the value's own sign, not color alone", "DashboardEmptyState/DashboardSection's loading state inherit EmptyState's/LoadingState's own role=\"status\" unchanged"],
+    reuseTargets: ["Production", "Publishing", "Commerce", "Operations", "Intelligence", "Admin"],
+  },
+  {
+    id: "workflow-framework",
+    name: "Workflow Framework",
+    groupId: "workflow",
+    purpose: "The reusable structure every business workflow composes from — a header/sidebar/stage/step/transition/progress/summary/actions/footer shell, with no workflow-specific business logic of its own.",
+    status: "Exists",
+    source: "src/components/workflow/ — built in DS-3.1, the first package of the new Workflow Component Library tier sitting on top of the certified Operational layer. Composes Foundation Metadata (IdentityBlock underneath WorkflowHeader, StatGroup underneath WorkflowSummary), Foundation Feedback (StatusIndicator underneath WorkflowStatus, ProgressBar underneath WorkflowProgress), Foundation Layout (Grid underneath WorkflowStageGroup, Surface/ScrollArea underneath WorkflowSidebar), and Operational Inspector Panel (InspectorPanel composed directly by the root Workflow component; InspectorFooter/InspectorActions re-exported verbatim as WorkflowFooter/WorkflowActions) directly. WorkflowStage/WorkflowStep/WorkflowTransition are genuinely new — Foundation Navigation's own Stepper was evaluated and ruled out as a base, since its single current-index/error-index model can't represent eight independently-statused steps at once. Not yet adopted by any real screen — a dedicated audit (including a direct read of the pre-existing Workflow Diagram Library's own eight components) found no duplicate stage/step/transition implementation anywhere in the codebase across all six named domains (see this package's own Promotion Candidates section). WorkflowStep and WorkflowProgress share names with pre-existing, differently-scoped exports in src/workflows/ and src/compositions/ — documented explicitly in each file's own doc comment rather than renamed, since nothing is actually duplicated.",
+    priority: "High",
+    requiredStates: ["Not Started", "Ready", "Running", "Waiting", "Blocked", "Completed", "Failed", "Cancelled"],
+    requiredVariants: ["Linear Workflow", "Branching Workflow", "Approval Workflow", "Publishing Workflow", "Production Workflow", "Commerce Workflow", "Long-running Workflow", "Read-only Workflow"],
+    accessibility: ["WorkflowStep renders a real <button> only when onClick is supplied, never a div-with-onClick", "WorkflowStatus always pairs its dot with a text label, never color alone", "WorkflowProgress's role=\"progressbar\" and aria-valuenow come from Foundation Feedback's own ProgressBar unchanged"],
+    reuseTargets: ["Production", "Publishing", "Commerce", "Intelligence", "Planning", "Automation"],
   },
 ];
 

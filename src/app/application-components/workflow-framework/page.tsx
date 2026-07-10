@@ -4,23 +4,25 @@ import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { PageIntro } from "../_components/PageIntro";
-import { StatusHealthGallery } from "./_components/StatusHealthGallery";
-import { HEALTH_ANATOMY } from "./_data/anatomy";
-import { HEALTH_STATES } from "./_data/states";
+import { WorkflowFrameworkGallery } from "./_components/WorkflowFrameworkGallery";
+import { WORKFLOW_ANATOMY } from "./_data/anatomy";
+import { WORKFLOW_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
-import { HEALTH_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
+import { WORKFLOW_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { HEALTH_PROMOTION_CANDIDATES, HEALTH_CLEAN_FINDINGS } from "./_data/promotion-candidates";
-import { HEALTH_FUTURE_EXTENSIONS } from "./_data/future-extensions";
+import { WORKFLOW_PROMOTION_CANDIDATES, WORKFLOW_CLEAN_FINDINGS, WORKFLOW_NAMING_NOTE } from "./_data/promotion-candidates";
+import { WORKFLOW_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
   const links = [
     { label: "Foundation Components", href: "/application-components/foundation-components" },
+    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
     { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
     { label: "Foundation Feedback System", href: "/application-components/foundation-feedback" },
-    { label: "Foundation Table System", href: "/application-components/foundation-table" },
+    { label: "Foundation Navigation System", href: "/application-components/foundation-navigation" },
     { label: "Inspector Panel", href: "/application-components/inspector-panel" },
-    { label: "Data Grid", href: "/application-components/data-grid" },
+    { label: "Status & Health Panels", href: "/application-components/status-health" },
+    { label: "Operational Certification", href: "/application-components/operational-certification" },
   ];
   return (
     <div className="flex flex-wrap gap-4">
@@ -38,18 +40,18 @@ function CrossLinks() {
   );
 }
 
-export default function StatusHealthPage() {
+export default function WorkflowFrameworkPage() {
   return (
     <PageShell background={<SystemGrid />}>
       <SectionShell spacing="xl">
         <PageIntro
-          eyebrow="package · application components · status & health"
-          title="Status & health panels"
-          description="The canonical StudioPOD Status & Health System — the standard operational health surface for every StudioPOD platform. Composes Foundation Metadata/Feedback/Table end to end, and Operational Inspector Panel and Data Grid directly, rather than duplicating any of them. Built in DS-2.5.7; not yet adopted by any real screen."
+          eyebrow="package · application components · workflow framework"
+          title="Workflow framework"
+          description="The canonical StudioPOD Workflow Framework — the reusable structure every business workflow (Production, Publishing, Commerce, Intelligence, Planning, and beyond) composes from. Composes Foundation Layout/Metadata/Feedback/Navigation end to end, and Operational Inspector Panel and Status & Health directly, rather than duplicating either. Built in DS-3.1, the first package of the Workflow Component Library; not yet adopted by any real screen."
         >
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Badge tone="warning" size="sm" className="w-fit">
-              Production Ready — DS-2.5.7
+              Production Ready — DS-3.1
             </Badge>
           </div>
           <div className="pt-2">
@@ -61,13 +63,13 @@ export default function StatusHealthPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Eight regions, one system"
-            description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component."
+            eyebrow={<Eyebrow tone="accent">Workflow anatomy</Eyebrow>}
+            title="Nine regions, one framework"
+            description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component. This package defines the framework only; no workflow-specific business logic lives here."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={2}>
-            {HEALTH_ANATOMY.map((region) => (
+          <CardGrid columns={3}>
+            {WORKFLOW_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>
                 <Body size="sm" muted>
@@ -84,11 +86,11 @@ export default function StatusHealthPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
-            title="Eight health surfaces, live"
-            description="Each demo below is a real, working composition with real local state — not a static screenshot. Try Sync Status's advance button."
+            title="Eight workflow patterns, live"
+            description="Each demo below is a real, working composition with real local state — not a static screenshot. Try the Approval Workflow's Approve/Reject buttons, the Publishing Workflow's sidebar toggle, and the Long-running Workflow's advancing progress."
             descriptionMaxWidth={false}
           />
-          <StatusHealthGallery />
+          <WorkflowFrameworkGallery />
         </div>
       </SectionShell>
 
@@ -100,7 +102,7 @@ export default function StatusHealthPage() {
             description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={HEALTH_STATES.map((item) => ({ label: item.state, value: item.note }))} />
+          <DescriptionList items={WORKFLOW_STATES.map((item) => ({ label: item.state, value: item.note }))} />
         </div>
       </SectionShell>
 
@@ -128,7 +130,7 @@ export default function StatusHealthPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
-          <DescriptionList items={HEALTH_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={WORKFLOW_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
 
@@ -151,17 +153,17 @@ export default function StatusHealthPage() {
             description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
             descriptionMaxWidth={false}
           />
-          {HEALTH_PROMOTION_CANDIDATES.length === 0 ? (
+          {WORKFLOW_PROMOTION_CANDIDATES.length === 0 ? (
             <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
               <span className="text-body-sm font-medium text-ink-primary">Zero real candidates found</span>
               <Body size="sm" muted>
-                No existing hand-rolled health/status dashboard was found anywhere in the codebase across all six named domains, including a deep read of Production&rsquo;s own three existing health files. See the clean findings below for what was actually checked.
+                No existing hand-rolled stage/step/transition workflow UI was found anywhere in the codebase across all six named domains, including a direct read of the pre-existing Workflow Diagram Library&rsquo;s own eight components. See the clean findings below for what was actually checked.
               </Body>
             </Card>
           ) : null}
           <div className="flex flex-col gap-3">
             <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {HEALTH_CLEAN_FINDINGS.map((finding) => (
+            {WORKFLOW_CLEAN_FINDINGS.map((finding) => (
               <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
                 <Body size="sm" muted>
                   {finding}
@@ -169,10 +171,16 @@ export default function StatusHealthPage() {
               </Card>
             ))}
           </div>
+          <Card className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
+            <span className="text-body-sm font-medium text-ink-primary">Naming overlap, documented rather than migrated</span>
+            <Body size="sm" muted>
+              {WORKFLOW_NAMING_NOTE}
+            </Body>
+          </Card>
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider>
+      <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
@@ -181,7 +189,7 @@ export default function StatusHealthPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {HEALTH_FUTURE_EXTENSIONS.map((extension) => (
+            {WORKFLOW_FUTURE_EXTENSIONS.map((extension) => (
               <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
                 <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
                 <Body size="sm" muted>
