@@ -86,6 +86,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/foundation-audit">
               Foundation layer audit
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/data-grid">
+              Data grid
+            </Button>
           </div>
         </div>
       </Card>

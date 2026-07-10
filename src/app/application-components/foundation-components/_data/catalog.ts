@@ -8,7 +8,8 @@ export type FoundationGroupId =
   | "overlays"
   | "navigation"
   | "data-display"
-  | "layout-primitives";
+  | "layout-primitives"
+  | "operational";
 
 export interface FoundationGroupDef {
   id: FoundationGroupId;
@@ -24,6 +25,7 @@ export const FOUNDATION_GROUPS: FoundationGroupDef[] = [
   { id: "navigation", title: "Navigation", description: "Moving between views, pages, sections, or steps." },
   { id: "data-display", title: "Data Display", description: "Presenting structured content and information at rest." },
   { id: "layout-primitives", title: "Layout Primitives", description: "The composition building blocks every other component is arranged with." },
+  { id: "operational", title: "Operational Components", description: "Composed, ready-to-use components built on top of the certified Foundation Layer for real operational screens — not new primitives themselves." },
 ];
 
 export interface FoundationComponent {
@@ -909,6 +911,21 @@ export const FOUNDATION_COMPONENTS: FoundationComponent[] = [
     requiredVariants: ["Horizontal", "Vertical"],
     accessibility: ["role=\"separator\" when it carries semantic meaning beyond decoration"],
     reuseTargets: ["SectionShell's own divider prop, once generalized"],
+  },
+
+  // Operational
+  {
+    id: "data-grid",
+    name: "Data Grid",
+    groupId: "operational",
+    purpose: "A composed, ready-to-use grid — search, filters, sortable columns, row selection, bulk actions, and pagination — for any operational screen with rows to manage.",
+    status: "Exists",
+    source: "src/components/operational/ — built in DS-2.5.1, the first Operational Component built on the certified Foundation Layer. Composes Foundation Table (Table/TableHeader/TableBody/TableRow/TableHead/TableCell/TableSelectionCell/TableEmptyState/TableLoadingState/TableToolbar/TableFooter), Foundation Forms (SearchInput, Select), Foundation Navigation (Pagination), and the Overlay System (Popover, for DataGridColumnPicker) end to end rather than reimplementing any of them. Not yet adopted by any real screen — a dedicated audit (see the Data Grid docs page's own Promotion Candidates section) found zero existing hand-rolled operational grids anywhere in the codebase for Publishing Queue, Commerce Orders, Inventory, Products, Assets, Diagnostics, or Metrics; this is genuinely new capability, not a migration target.",
+    priority: "High",
+    requiredStates: ["Loading", "Empty", "Filtered", "Selected", "Error", "Read Only", "Busy"],
+    requiredVariants: ["Simple", "Selectable", "Filterable", "Searchable", "Bulk action", "Dense", "Inspector (compact/sortable)", "Large dataset (paginated)"],
+    accessibility: ["Native <table> semantics throughout (real <th scope>, aria-sort, aria-selected)", "Required caption prop for a real accessible name", "Focus never trapped — only DataGridColumnPicker's Popover opens a floating surface"],
+    reuseTargets: ["Publishing Queue", "Commerce Orders", "Inventory", "Products", "Assets", "Diagnostics", "Metrics"],
   },
 ];
 

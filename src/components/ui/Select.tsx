@@ -47,6 +47,7 @@ export function Select({
   id,
   disabled,
   required,
+  value,
   ...domProps
 }: SelectProps) {
   const generatedId = useId();
@@ -67,7 +68,8 @@ export function Select({
           id={selectId}
           disabled={disabled}
           required={required}
-          defaultValue={placeholder ? "" : undefined}
+          value={value}
+          defaultValue={value === undefined && placeholder ? "" : undefined}
           aria-invalid={status === "error" || undefined}
           aria-describedby={helperId}
           className={cn(
