@@ -7,6 +7,8 @@ export interface SegmentedControlOption<T extends string> {
   value: T;
   label: ReactNode;
   disabled?: boolean;
+  /** Accessible name for icon-only labels — the button has no other text content to compute one from. */
+  "aria-label"?: string;
 }
 
 export interface SegmentedControlProps<T extends string> {
@@ -81,6 +83,7 @@ export function SegmentedControl<T extends string>({
             type="button"
             role="radio"
             aria-checked={isActive}
+            aria-label={option["aria-label"]}
             disabled={isDisabled}
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(option.value)}

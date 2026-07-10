@@ -953,6 +953,19 @@ export const FOUNDATION_COMPONENTS: FoundationComponent[] = [
     accessibility: ["Every editor is a real, natively focusable/operable control (native button/select/number/color inputs)", "Labels are always real, associated <label> elements, never a placeholder standing in for one", "PropertyReset carries a real aria-label, not an icon-only control with no accessible name"],
     reuseTargets: ["Production", "Publishing", "Commerce", "Products", "QA", "Settings"],
   },
+  {
+    id: "asset-browser",
+    name: "Asset Browser",
+    groupId: "operational",
+    purpose: "The canonical browsing experience for any asset library — search, filter, grid/list toggle, selection, pagination, and an optional inspector slot for the selected item.",
+    status: "Exists",
+    source: "src/components/operational/ — built in DS-2.5.4, the fourth Operational Component built on the certified Foundation Layer. Composes Foundation Layout (Grid), Foundation Table (via Data Grid, for list view), Foundation Metadata, Foundation Forms, Foundation Feedback, Foundation Navigation (SegmentedControl, Pagination), and Foundation Overlay end to end, plus Operational Data Grid (AssetList delegates directly to DataGrid), Inspector Panel, and Property Panel (composed live in the docs gallery's List View demo, passed through the inspector slot). AssetSearch/AssetFilters/AssetBrowserToolbar are thin re-exports of Data Grid's own Search/Filters/Toolbar; useAssetSelection/AssetSelectionSummary are renamed re-exports of Data Grid's selection hook/summary. Not yet adopted by any real screen — a dedicated audit found zero existing hand-rolled asset/library browsing UI anywhere in the codebase across all eight named domains, including a specific check (and disproof) of this repo's own four MS-2.x Library Playground pages, which are pure diagram galleries with no search/filter/selection code (see the Asset Browser docs page's own Promotion Candidates section).",
+    priority: "High",
+    requiredStates: ["Loading", "Empty", "Searching", "Filtered", "Selected", "Busy", "Error", "Read-only"],
+    requiredVariants: ["Image Library", "Artwork Library", "Product Library", "Style Library", "Document Library", "Mixed Assets", "Grid View (paginated)", "List View (with Inspector)"],
+    accessibility: ["View toggle inherits Navigation's full ARIA radiogroup pattern via SegmentedControl unchanged", "Selection checkboxes are always visible (never hover-only), keyboard- and touch-discoverable", "List view inherits Data Grid's native <table> semantics unchanged; grid view cards are real role=\"button\" elements with Enter/Space activation when clickable"],
+    reuseTargets: ["Production", "Publishing", "Commerce", "Products", "Styles", "Blueprints", "Overlays", "Recipes"],
+  },
 ];
 
 export function maturityFor(component: FoundationComponent): MaturityLevel {

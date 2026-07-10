@@ -95,6 +95,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/property-panel">
               Property panel
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/asset-browser">
+              Asset browser
+            </Button>
           </div>
         </div>
       </Card>
