@@ -1,0 +1,14 @@
+export interface ProductImplementationGuidance {
+  label: string;
+  text: string;
+}
+
+export const IMPLEMENTATION_GUIDANCE: ProductImplementationGuidance[] = [
+  { label: "Platform composition", text: "Every one of these 12 components is a pure re-export over an already-certified Workflow or Operational component — checked directly against Platform Rules (defined in DS-4.1) before writing each file, and in every case an existing component's prop surface already covered the need with no Product-specific field required. Unlike Production Platform Components (DS-4.2), this package needed zero new wrapper code at all." },
+  { label: "Workflow integration", text: "ProductValidationPanel composes Pipeline Components directly for gate-decision rendering; ProductInspector composes State Machine directly for a single product's own lifecycle; ProductProviderMappings composes Dependency & Relationship Views directly for the provider/marketplace mapping graph. Three different Workflow systems, each reused for the sub-concern it was actually built for." },
+  { label: "Operational integration", text: "ProductLibrary composes Operational's own AssetBrowser directly — real search, filter, grid/list toggle, and selection inherited unchanged. ProductCatalog composes Operational's own DataGrid directly for tabular listing. ProductVariantPanel composes Operational's own PropertyPanel directly for structured in-place editing." },
+  { label: "Catalog flow", text: "ProductCatalog does not implement sorting, filtering, or pagination logic of its own — it renders whatever columns and rows the caller supplies through Data Grid's own controlled props. Whether a product actually belongs in the catalog is Business Feature logic, not something this platform component decides." },
+  { label: "Variant management", text: "ProductVariantPanel's own children slot is where PropertyRow/PropertySelect/PropertyEditor content belongs for a product's SKU/size/color combinations — the same \"children slot for extra context\" pattern every Property/Inspector Panel in this tier already uses, rather than a second variant-specific editor." },
+  { label: "Provider mapping", text: "ProductProviderMappings renders whatever RelationshipNode/RelationshipEdge graph the caller supplies — it does not implement real provider synchronization, marketplace API calls, or mapping persistence. RelationshipEdge's own bidirectional default matches a product-provider mapping's own two-way \"this product is listed on that provider\" shape more closely than a strict one-way dependency." },
+  { label: "Validation flow", text: "ProductValidationPanel does not implement a gate-decision engine — it renders whatever ApprovalStateValue the caller supplies through PipelineGate. Whether a product actually passes its validation/listing gate is Business Feature logic, not something this platform component decides." },
+];

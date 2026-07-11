@@ -10,7 +10,8 @@ export type FoundationGroupId =
   | "data-display"
   | "layout-primitives"
   | "operational"
-  | "workflow";
+  | "workflow"
+  | "platform";
 
 export interface FoundationGroupDef {
   id: FoundationGroupId;
@@ -28,6 +29,7 @@ export const FOUNDATION_GROUPS: FoundationGroupDef[] = [
   { id: "layout-primitives", title: "Layout Primitives", description: "The composition building blocks every other component is arranged with." },
   { id: "operational", title: "Operational Components", description: "Composed, ready-to-use components built on top of the certified Foundation Layer for real operational screens — not new primitives themselves." },
   { id: "workflow", title: "Workflow Components", description: "The reusable structure multi-step business workflows compose from — built on top of the certified Foundation and Operational layers, framework only, no workflow-specific business logic." },
+  { id: "platform", title: "Platform Components", description: "Domain-specific reusable components, scoped to one business platform, composed entirely from the certified Foundation, Operational, and Workflow layers — no platform business logic of its own." },
 ];
 
 export interface FoundationComponent {
@@ -1136,6 +1138,32 @@ export const FOUNDATION_COMPONENTS: FoundationComponent[] = [
     requiredVariants: ["Production Workflow", "Publishing Workflow", "Commerce Workflow", "Dependency Graph", "Pipeline View", "State Machine View", "Cross-platform Workflow", "Large Workflow"],
     accessibility: ["WorkflowNode renders a real <button> only when onClick is supplied, never a div-with-onClick", "WorkflowInspector's own InspectorHeader carries a real status label/tone pair, inherited unchanged from Foundation Metadata's IdentityBlock", "WorkflowNode never relies on marker color alone — each status pairs its tone with a distinct icon, and Filtered also strikes the label"],
     reuseTargets: ["Production", "Publishing", "Commerce", "Planning", "Automation", "Intelligence"],
+  },
+  {
+    id: "production-platform",
+    name: "Production Platform Components",
+    groupId: "platform",
+    purpose: "The canonical Production Platform Component Library — the first domain-specific Platform-tier library, built entirely on top of the certified Foundation, Operational, and Workflow layers per Platform Component Architecture's own layering rules. Provides the reusable job/artifact UI a real Production screen needs (workspace shell, canvas, stage/gate progression, artifact inspection, queue monitoring, metrics) without implementing any Production business logic — real print-vendor integration, file-format conversion, and color management stay in Business Features, per this package's own explicit scope boundary.",
+    status: "Exists",
+    source: "src/components/platform/production/ — built in DS-4.2, the second package of the Platform Component Library (after Platform Component Architecture's own DS-4.1). 11 of the 12 components are pure re-exports of already-certified lower-tier components, checked directly against Platform Component Architecture's own Production template (workspaceModel/workflowUsage/operationalUsage/foundationUsage) before composing: ProductionWorkspace re-exports Workflow Framework's own Workflow; ProductionHeader/ProductionSidebar re-export WorkflowHeader/WorkflowSidebar; ProductionStagePanel re-exports Pipeline Components' own PipelineStage (a titled group requiring real WorkflowStep children, not a single-item status row — confirmed by tsc during this package's own build); ProductionInspector re-exports State Machine's own StateInspector; ProductionPipeline re-exports Pipeline Components' own Pipeline; ProductionQueue re-exports Operational's own Queue; ProductionValidationPanel re-exports Pipeline Components' own PipelineGate, chosen over inventing a new status type after checking all three existing vocabularies (WorkflowStateValue/StateValue/ApprovalStateValue) directly and finding \"Validated\" is semantically ApprovalStateValue's own \"approved\" gate outcome, not a missing lifecycle state; ProductionMetrics/ProductionSummary re-export Pipeline Components' own PipelineMetrics/PipelineSummary; ProductionActions re-exports Workflow Framework's own WorkflowActions. Only ProductionCanvas required new code — a thin wrapper over Workflow Visualization's own WorkflowViewport (the real inner scrollable surface; WorkflowCanvas itself is a pure re-export of the outer Workflow shell and would have double-nested it), adding no props beyond what WorkflowViewport itself exposes. A dedicated six-subdomain audit (Composition, Generation, Validation, Pipeline, Queue, QA) found zero real duplicated Production-platform logic anywhere in the repo — Composition and Generation don't exist as real code at all, and Validation/Pipeline/Queue/QA all resolve to the same already-certified Workflow/Operational reuse targets this package's own components already compose (see this package's own Promotion Candidates section).",
+    priority: "High",
+    requiredStates: ["Draft", "Ready", "Running", "Waiting", "Blocked", "Validated", "Completed", "Failed"],
+    requiredVariants: ["Artwork Production", "AI Generation", "Validation Workflow", "Batch Production", "Queue Monitoring", "Production Dashboard", "Production Review", "Completed Production"],
+    accessibility: ["ProductionCanvas's WorkflowViewport wraps Foundation Layout's own ScrollArea, inheriting its real keyboard-scrollable region rather than a div with overflow alone", "ProductionInspector inherits StateInspector's own InspectorHeader status label/tone pair unchanged, never color alone", "ProductionStagePanel's WorkflowStep children each carry their own real status icon+tone pair, inherited unchanged through Pipeline Components' own accessibility pass"],
+    reuseTargets: ["Product", "Publishing", "Commerce", "Intelligence", "Operations", "Admin", "Integrations"],
+  },
+  {
+    id: "product-platform",
+    name: "Product Platform Components",
+    groupId: "platform",
+    purpose: "The canonical Product Platform Component Library — the third Platform-tier library, built entirely on the certified Foundation, Operational, and Workflow layers. Provides the reusable UI a real Product management screen needs (workspace shell, browsable library, tabular catalog, variant editing, provider mappings, validation, inspection, metrics) without implementing any Product business logic — real catalog persistence, provider synchronization, and pricing logic stay in Business Features.",
+    status: "Exists",
+    source: "src/components/platform/product/ — built in DS-4.3, the third package of the Platform Component Library. All 12 components are pure re-exports of already-certified lower-tier components — the most re-export-heavy Platform package yet, needing zero new wrapper code at all (unlike Production Platform's own ProductionCanvas). ProductWorkspace/ProductHeader/ProductSidebar re-export Workflow Framework's own Workflow/WorkflowHeader/WorkflowSidebar. ProductLibrary re-exports Operational's own AssetBrowser, checked directly against its full generic prop surface (rows/render/viewMode/search/filters/selection/pagination/inspector slot) and found to cover \"a library of products\" with zero structural gap. ProductCatalog re-exports Operational's own DataGrid for tabular listing. ProductVariantPanel re-exports Operational's own PropertyPanel (itself InspectorPanel), composed with PropertyRow/PropertySelect for SKU/size/color editing in place. ProductProviderMappings re-exports Dependency & Relationship Views' own RelationshipView rather than DependencyGraph, chosen because RelationshipEdge's own bidirectional default matches a product-provider mapping's peer relationship shape more closely than a strict one-way dependency. ProductInspector re-exports State Machine's own StateInspector. ProductValidationPanel re-exports Pipeline Components' own PipelineGate, the same ApprovalStateValue composition Production Platform's own ProductionValidationPanel already established. ProductMetrics/ProductSummary re-export Pipeline Components' own PipelineMetrics/PipelineSummary. ProductActions re-exports Workflow Framework's own WorkflowActions. A dedicated seven-subdomain audit (Product platform, Catalog, Variants, Provider mappings, Validation, Drafts, Library) found zero real duplicated Product-platform logic anywhere in the repo — no src/product/ directory exists at all, and every subdomain resolved to either a naming false-positive (Variants/CVA, Provider/React context), a diagram-layer-only prior package, or an already-certified generic component this package's own components re-export directly (see this package's own Promotion Candidates section). Four of this package's own eight documented states (Draft/Published/Archived/Retired) have no match in any existing status vocabulary — a genuine, disclosed gap (a content publish lifecycle is structurally different from every existing pipeline-execution or approval-decision vocabulary) rendered through Foundation's own free-text Badge rather than forced onto a wrong-fit value or an unjustified new type.",
+    priority: "High",
+    requiredStates: ["Draft", "Ready", "Published", "Archived", "Validation Required", "Validated", "Failed", "Retired"],
+    requiredVariants: ["Product Library", "Catalog Management", "Variant Management", "Provider Mapping", "Product Validation", "Product Dashboard", "Product Review", "Completed Product"],
+    accessibility: ["ProductProviderMappings' RelationshipNode renders a real <button> only when onClick is supplied, inherited unchanged from Dependency & Relationship Views", "ProductInspector inherits StateInspector's own InspectorHeader status label/tone pair unchanged, never color alone", "The four disclosed free-text states (Draft/Published/Archived/Retired) pair tone with a real text label by construction, since Foundation Badge's own children are always the visible label, never color alone"],
+    reuseTargets: ["Publishing", "Commerce", "Intelligence", "Operations", "Admin", "Integrations"],
   },
 ];
 

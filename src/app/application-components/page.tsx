@@ -140,6 +140,18 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/operational-certification">
               Operational certification
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workflow-certification">
+              Workflow certification
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/platform-architecture">
+              Platform architecture
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/production-platform">
+              Production platform
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/product-platform">
+              Product platform
+            </Button>
           </div>
         </div>
       </Card>
