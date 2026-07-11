@@ -35,7 +35,7 @@ export const FOUNDATION_LAYER_INVENTORY: FamilyInventoryRow[] = [
     primitiveCount: 13,
     status: "Exists",
     maturity: "Certified",
-    note: "13 components — the richest accessibility wiring of any family (scope on th, aria-sort, aria-selected, per-checkbox aria-label). Certified after four real migrations (ResponsiveRulesTable, ScorecardTable, CertificationMatrix, CoverageMatrix — 7 of 13 components, 5 real pages), a verified per-component accessibility pass, and a stable API across three consecutive zero-change releases.",
+    note: "13 components — leans on native <table>/<th scope> semantics plus a handful of ARIA attributes (aria-sort, aria-selected, per-checkbox aria-label) rather than custom interaction code: grep-verified zero onKeyDown handlers and zero explicit role= attributes anywhere in components/table/, the least custom interaction wiring of any family (Overlay and Navigation each implement multiple custom keyboard-navigable patterns — focus traps, roving tabindex, arrow-key handling). That's a deliberate strength, not a gap: it means Table's a11y surface is exactly as large as it needs to be. Certified after four real migrations (ResponsiveRulesTable, ScorecardTable, CertificationMatrix, CoverageMatrix — 7 of 13 components, 5 real pages), a verified per-component accessibility pass, and a stable API across three consecutive zero-change releases.",
   },
   {
     id: "metadata",

@@ -43,6 +43,21 @@ const LABEL_TONE: Record<StateValue, string> = {
   terminal: "text-ink-primary",
 };
 
+/**
+ * Screen-reader-only status text — the marker's status is otherwise
+ * conveyed solely by icon + color, both unavailable to assistive tech (the
+ * icon is aria-hidden). "active" and "initial" are omitted: active is
+ * covered by aria-current below, and initial is the unannounced default.
+ */
+const STATUS_LABEL: Partial<Record<StateValue, string>> = {
+  waiting: "Waiting",
+  blocked: "Blocked",
+  completed: "Completed",
+  failed: "Failed",
+  cancelled: "Cancelled",
+  terminal: "Terminal",
+};
+
 /** The marker alone, standalone so StateLegend can reuse the exact same rendering rather than a second marker implementation. */
 export function StateNodeMarker({ status, className }: { status: StateValue; className?: string }) {
   const Icon = MARKER_ICON[status];
@@ -74,17 +89,26 @@ export function StateNode({ label, description, status, onClick, className }: St
     <>
       <StateNodeMarker status={status} className="mt-0.5" />
       <div className="flex min-w-0 flex-col gap-0.5">
-        <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>{label}</span>
+        <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>
+          {label}
+          {STATUS_LABEL[status] ? <span className="sr-only"> ({STATUS_LABEL[status]})</span> : null}
+        </span>
         {description ? <Caption className="text-ink-tertiary">{description}</Caption> : null}
       </div>
     </>
   );
+
+  // A state machine's states aren't a linear sequence the way a wizard's steps are,
+  // so this marks the active state with the generic aria-current="true" rather than
+  // the step-specific "step" token WorkflowStepperStep/ApprovalStep use.
+  const ariaCurrent = status === "active" ? "true" : undefined;
 
   if (onClick) {
     return (
       <button
         type="button"
         onClick={onClick}
+        aria-current={ariaCurrent}
         className={cn("focus-ring flex items-start gap-3 rounded-md py-1.5 text-left transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:bg-surface-hover", className)}
       >
         {content}
@@ -92,5 +116,9 @@ export function StateNode({ label, description, status, onClick, className }: St
     );
   }
 
-  return <div className={cn("flex items-start gap-3 rounded-md py-1.5", className)}>{content}</div>;
+  return (
+    <div className={cn("flex items-start gap-3 rounded-md py-1.5", className)} aria-current={ariaCurrent}>
+      {content}
+    </div>
+  );
 }

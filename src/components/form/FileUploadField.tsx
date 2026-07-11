@@ -46,6 +46,7 @@ export function FileUploadField({
 }: FileUploadFieldProps) {
   const generatedId = useId();
   const fieldId = id ?? generatedId;
+  const messageId = error || helperText ? `${fieldId}-message` : undefined;
   const [dragOver, setDragOver] = useState(false);
 
   function handleDrop(event: DragEvent<HTMLLabelElement>) {
@@ -93,6 +94,7 @@ export function FileUploadField({
           accept={accept}
           multiple={multiple}
           disabled={disabled}
+          aria-describedby={messageId}
           onChange={(event) => {
             const selected = Array.from(event.target.files ?? []);
             onChange(multiple ? [...files, ...selected] : selected.slice(0, 1));
@@ -120,7 +122,13 @@ export function FileUploadField({
         </Stack>
       ) : null}
 
-      {error ? <FieldError>{error}</FieldError> : helperText ? <p className="text-caption text-ink-tertiary">{helperText}</p> : null}
+      {error ? (
+        <FieldError id={messageId}>{error}</FieldError>
+      ) : helperText ? (
+        <p id={messageId} className="text-caption text-ink-tertiary">
+          {helperText}
+        </p>
+      ) : null}
     </Stack>
   );
 }

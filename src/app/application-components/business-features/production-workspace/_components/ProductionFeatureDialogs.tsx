@@ -46,13 +46,15 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
 
   if (dialog.type === "validation") {
     return (
-      <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="md" labelledBy="validation-dialog-title">
+      <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="md" labelledBy="validation-dialog-title" describedBy="validation-dialog-desc">
         <span id="validation-dialog-title" className="text-body-md font-medium text-ink-primary">
           Advance validation — {artwork.name}
         </span>
-        <Body size="sm" muted>
-          Move this artwork from {VALIDATION_FLOW_LABEL[artwork.validationStatus]} to {nextValidationLabel(artwork)}.
-        </Body>
+        <div id="validation-dialog-desc">
+          <Body size="sm" muted>
+            Move this artwork from {VALIDATION_FLOW_LABEL[artwork.validationStatus]} to {nextValidationLabel(artwork)}.
+          </Body>
+        </div>
         {openIssues.length > 0 ? (
           <Alert tone="warning" title={`${openIssues.length} open issue${openIssues.length === 1 ? "" : "s"}`}>
             Advancing validation does not resolve open issues automatically — resolve them in the Validation panel first if this gate should block.
@@ -72,13 +74,15 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
 
   if (dialog.type === "delete") {
     return (
-      <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="sm" labelledBy="delete-dialog-title">
+      <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="sm" labelledBy="delete-dialog-title" describedBy="delete-dialog-desc">
         <span id="delete-dialog-title" className="text-body-md font-medium text-ink-primary">
           Delete {artwork.name}?
         </span>
-        <Body size="sm" muted>
-          This removes the artwork from the pilot&rsquo;s own mock repository. This can&rsquo;t be undone from this dialog, though the feature&rsquo;s own Undo command still reverses it.
-        </Body>
+        <div id="delete-dialog-desc">
+          <Body size="sm" muted>
+            This removes the artwork from the pilot&rsquo;s own mock repository. This can&rsquo;t be undone from this dialog, though the feature&rsquo;s own Undo command still reverses it.
+          </Body>
+        </div>
         <div className="flex justify-end gap-2 pt-2">
           <Button variant="ghost" size="sm" onClick={onClose}>
             Cancel
@@ -94,19 +98,21 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
   if (dialog.type === "publish") {
     const notValidated = artwork.validationStatus !== "validated" && artwork.validationStatus !== "complete";
     return (
-      <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="md" labelledBy="publish-dialog-title">
+      <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="md" labelledBy="publish-dialog-title" describedBy="publish-dialog-desc">
         <span id="publish-dialog-title" className="text-body-md font-medium text-ink-primary">
           Publish {artwork.name}?
         </span>
-        {notValidated ? (
-          <Alert tone="warning" title="Not yet validated">
-            This artwork is still {VALIDATION_FLOW_LABEL[artwork.validationStatus]}. Publishing marks it Complete regardless — this pilot doesn&rsquo;t enforce the gate, it only shows the warning.
-          </Alert>
-        ) : (
-          <Body size="sm" muted>
-            Marks the artwork Complete and flags it as published in the mock repository.
-          </Body>
-        )}
+        <div id="publish-dialog-desc">
+          {notValidated ? (
+            <Alert tone="warning" title="Not yet validated">
+              This artwork is still {VALIDATION_FLOW_LABEL[artwork.validationStatus]}. Publishing marks it Complete regardless — this pilot doesn&rsquo;t enforce the gate, it only shows the warning.
+            </Alert>
+          ) : (
+            <Body size="sm" muted>
+              Marks the artwork Complete and flags it as published in the mock repository.
+            </Body>
+          )}
+        </div>
         <div className="flex justify-end gap-2 pt-2">
           <Button variant="ghost" size="sm" onClick={onClose}>
             Cancel
@@ -144,13 +150,15 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
   }
 
   return (
-    <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="sm" labelledBy="confirm-dialog-title">
+    <Dialog open onOpenChange={(open) => (!open ? onClose() : undefined)} size="sm" labelledBy="confirm-dialog-title" describedBy="confirm-dialog-desc">
       <span id="confirm-dialog-title" className="text-body-md font-medium text-ink-primary">
         Advance stage?
       </span>
-      <Body size="sm" muted>
-        Move {artwork.name} from {PRODUCTION_STAGES.find((s) => s.id === artwork.stage)?.label} to {nextStageLabel(artwork)}.
-      </Body>
+      <div id="confirm-dialog-desc">
+        <Body size="sm" muted>
+          Move {artwork.name} from {PRODUCTION_STAGES.find((s) => s.id === artwork.stage)?.label} to {nextStageLabel(artwork)}.
+        </Body>
+      </div>
       <div className="flex justify-end gap-2 pt-2">
         <Button variant="ghost" size="sm" onClick={onClose}>
           Cancel

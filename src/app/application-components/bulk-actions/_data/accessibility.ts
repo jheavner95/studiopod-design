@@ -18,7 +18,7 @@ export const BULK_ACCESSIBILITY_TOPICS: BulkAccessibilityTopic[] = [
   },
   {
     label: "Selection announcements",
-    text: "BulkSelectionSummary's \"N selected\" text updates in the DOM on every toggle — a screen that needs it announced to screen readers wraps it in an aria-live=\"polite\" region itself, the same opt-in ValidationSummary's own live region already establishes.",
+    text: "BulkSelectionSummary's \"N selected\" text updates in the DOM on every toggle, and the underlying useDataGridSelection hook it's paired with (re-exported unchanged from Data Grid) now also announces the count changing (\"3 items selected\", \"Selection cleared\") through the shared LiveRegionProvider mounted at the app root — no longer an opt-in region a screen has to add itself.",
   },
   {
     label: "Confirmation dialogs",
@@ -26,6 +26,6 @@ export const BULK_ACCESSIBILITY_TOPICS: BulkAccessibilityTopic[] = [
   },
   {
     label: "Progress updates",
-    text: "BulkProgress's label text (\"Processing 12 of 40\") is real DOM content inside the progressbar's accessible name path, not an image or canvas — a screen reader can already read the current count without a separate live region, though one can be added at the call site for continuous updates.",
+    text: "BulkProgress's label text (\"Processing 12 of 40\") is real DOM content inside the progressbar's accessible name path, not an image or canvas — a screen reader can already read the current count without a separate live region. BulkStatus now announces the operation's own start (\"Bulk action started\") and finish (\"Bulk action completed\"/\"partial success\"/\"failed\", the last as assertive) through the shared LiveRegionProvider whenever its value prop transitions, so a screen reader is told the run began and ended even without watching the progress bar directly.",
   },
 ];

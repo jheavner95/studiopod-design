@@ -14,7 +14,7 @@ import {
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useMotion, useMotionEnabled, useOutsideClick, useEscapeKey } from "@/hooks";
+import { useMotion, useMotionEnabled, useOutsideClick, useEscapeKey, useFocusTrap } from "@/hooks";
 import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 import { useAnchoredPosition, type AnchorPlacement, type AnchorAlign } from "./useAnchoredPosition";
@@ -68,24 +68,17 @@ export function Menu({ open, onOpenChange, triggerRef, children, placement = "bo
 
   useOutsideClick(contentRef as unknown as RefObject<HTMLElement | null>, close, open);
   useEscapeKey(close, open);
+  // Handles initial focus (the roving-tabindex item with tabIndex 0, i.e. index 0 on
+  // open — see the reset below), Tab-trapping so focus can't leak out of this portaled
+  // list, and focus restoration on close — the same machinery Dialog/Drawer/Popover
+  // already share, rather than the hand-rolled previouslyFocusedRef this used to keep
+  // separately (which tracked focus but never actually trapped Tab).
+  useFocusTrap(contentRef as unknown as RefObject<HTMLElement | null>, open);
 
   if (open !== wasOpen) {
     setWasOpen(open);
     if (open) setHighlightedIndex(0);
   }
-
-  const hasMountedRef = useRef(false);
-  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
-  useEffect(() => {
-    if (open) {
-      previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
-      const container = contentRef.current;
-      container?.querySelectorAll<HTMLLIElement>('[role="menuitem"]')[0]?.focus();
-    } else if (hasMountedRef.current) {
-      previouslyFocusedRef.current?.focus();
-    }
-    hasMountedRef.current = true;
-  }, [open]);
 
   useEffect(() => {
     const container = contentRef.current;

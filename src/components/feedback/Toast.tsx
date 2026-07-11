@@ -67,12 +67,16 @@ export function ToastProvider({ children }: ToastProviderProps) {
     ]);
   }, []);
 
+  // The newest toast (prepended in `show`) decides the region's urgency — an error
+  // toast arriving while a polite one is still visible should still interrupt.
+  const politeness = toasts[0]?.tone === "error" ? "assertive" : "polite";
+
   return (
     <ToastContext.Provider value={{ show }}>
       {children}
       <Portal>
         <div
-          aria-live="polite"
+          aria-live={politeness}
           aria-atomic="false"
           role="region"
           aria-label="Notifications"

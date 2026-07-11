@@ -10,7 +10,7 @@ export const HEALTH_ACCESSIBILITY_TOPICS: HealthAccessibilityTopic[] = [
   },
   {
     label: "Announcements",
-    text: "This family has no live region of its own — a screen that needs a HealthIndicator's state change announced to screen readers wraps it in an aria-live=\"polite\" region itself, the same opt-in convention this whole session's status-adjacent components already follow.",
+    text: "HealthIndicator now announces its own state changing (e.g. \"Status changed to Critical.\") through the shared LiveRegionProvider mounted at the app root whenever its value prop transitions — critical assertively, everything else politely — no longer an opt-in region a screen has to wrap it in itself.",
   },
   {
     label: "Status changes",

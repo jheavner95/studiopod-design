@@ -1,7 +1,9 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useRef, type ReactNode } from "react";
 import { Inline } from "@/components/layout";
 import { Body } from "@/components/ui";
-import { LoadingState } from "@/components/feedback";
+import { LoadingState, useAnnounce } from "@/components/feedback";
 import { cn } from "@/lib/utils";
 
 interface DashboardSectionProps {
@@ -15,8 +17,27 @@ interface DashboardSectionProps {
   className?: string;
 }
 
-/** One titled region of a dashboard — a header row (title/description/actions) above a widget collection, distinct from DashboardGrid itself so a dashboard can stack several titled sections, each with its own grid. */
+/**
+ * One titled region of a dashboard — a header row (title/description/actions) above a widget
+ * collection, distinct from DashboardGrid itself so a dashboard can stack several titled sections,
+ * each with its own grid. LoadingState's role="status" already announces a refresh starting; this
+ * also announces a refresh finishing (loading going back to false) through the shared
+ * LiveRegionProvider, since nothing else signals that live metrics just updated once LoadingState
+ * unmounts and the real content swaps back in.
+ */
 export function DashboardSection({ title, description, actions, loading, loadingLabel, children, className }: DashboardSectionProps) {
+  const announce = useAnnounce();
+  const wasLoading = useRef(false);
+
+  useEffect(() => {
+    if (loading) {
+      wasLoading.current = true;
+    } else if (wasLoading.current) {
+      wasLoading.current = false;
+      announce(typeof title === "string" ? `${title} refreshed.` : "Dashboard refreshed.");
+    }
+  }, [loading, title, announce]);
+
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       <div className="flex flex-wrap items-start justify-between gap-3">

@@ -10,6 +10,8 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   helperText?: ReactNode;
   /** Visually mixed state (e.g. a "select all" driving mixed children) — sets the DOM indeterminate property, which HTML has no attribute for. */
   indeterminate?: boolean;
+  /** Overrides aria-describedby — used by CheckboxField to point at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /** Standard checkbox — a native, fully-accessible input under a custom visual box, so keyboard/screen-reader behavior is never reimplemented. */
@@ -18,6 +20,7 @@ export function Checkbox({
   label,
   helperText,
   indeterminate = false,
+  describedBy,
   id,
   disabled,
   ...domProps
@@ -34,7 +37,7 @@ export function Checkbox({
             id={checkboxId}
             type="checkbox"
             disabled={disabled}
-            aria-describedby={helperId}
+            aria-describedby={describedBy ?? helperId}
             ref={(el) => {
               if (el) el.indeterminate = indeterminate;
             }}

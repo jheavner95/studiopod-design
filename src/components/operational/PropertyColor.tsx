@@ -23,6 +23,7 @@ interface PropertyColorProps {
 export function PropertyColor({ label, value, onChange, error, disabled, className }: PropertyColorProps) {
   const id = useId();
   const helperId = error ? `${id}-error` : undefined;
+  const hexLabelId = `${id}-hex-label`;
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
@@ -38,10 +39,14 @@ export function PropertyColor({ label, value, onChange, error, disabled, classNa
           onChange={(event) => onChange(event.target.value)}
           className="size-9 shrink-0 cursor-pointer rounded-md border border-border bg-surface p-1 disabled:cursor-not-allowed disabled:opacity-40"
         />
+        <span id={hexLabelId} className="sr-only">
+          {label} hex value
+        </span>
         <input
           type="text"
           value={value}
           disabled={disabled}
+          aria-labelledby={hexLabelId}
           aria-describedby={helperId}
           onChange={(event) => onChange(event.target.value)}
           className="min-w-0 flex-1 rounded-md border border-border bg-surface px-3 py-2 text-body-sm text-ink-primary outline-none transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] focus-visible:ring-2 focus-visible:ring-accent-500/30 disabled:cursor-not-allowed disabled:opacity-40"

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ProductionInspector } from "@/components/platform/production";
 import { WorkflowFooter, type StateInspectorProperty } from "@/components/workflow";
 import { InlineMessage } from "@/components/feedback";
@@ -18,8 +19,36 @@ interface ProductionFeatureInspectorProps {
  * `validationStatus` maps into Workflow's own StateValue vocabulary.
  */
 export function ProductionFeatureInspector({ artwork, onOpenDialog }: ProductionFeatureInspectorProps) {
+  // Deleting the selected artwork (confirmDialog's "delete" case in
+  // useProductionWorkspace) nulls selectedId in the same commit that removes
+  // the artwork, which unmounts this component's own Delete/Publish/etc.
+  // trigger buttons before Dialog's shared useFocusTrap cleanup runs its
+  // `previouslyFocused?.focus()` restoration (src/hooks/useFocusTrap.ts) —
+  // focus()'ing an already-detached node is a no-op, so focus silently
+  // drops to <body>. Moving focus to this empty-state message ourselves,
+  // only on the had-a-selection -> lost-it transition (not on first mount,
+  // where nothing was ever focused), keeps a keyboard/screen-reader user's
+  // place after a delete instead of losing it.
+  const emptyStateRef = useRef<HTMLDivElement>(null);
+  const hadArtworkRef = useRef(false);
+
+  useEffect(() => {
+    if (artwork) {
+      hadArtworkRef.current = true;
+      return;
+    }
+    if (hadArtworkRef.current) {
+      hadArtworkRef.current = false;
+      emptyStateRef.current?.focus();
+    }
+  }, [artwork]);
+
   if (!artwork) {
-    return <InlineMessage tone="info">Select an artwork from the pipeline to inspect it.</InlineMessage>;
+    return (
+      <div ref={emptyStateRef} tabIndex={-1} className="focus-ring rounded-md">
+        <InlineMessage tone="info">Select an artwork from the pipeline to inspect it.</InlineMessage>
+      </div>
+    );
   }
 
   const stage = PRODUCTION_STAGES.find((s) => s.id === artwork.stage);

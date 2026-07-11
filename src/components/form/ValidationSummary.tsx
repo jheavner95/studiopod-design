@@ -1,7 +1,11 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useRef, type ReactNode } from "react";
 import { AlertCircle, AlertTriangle } from "lucide-react";
 import { Surface, Stack } from "@/components/layout";
 import { Body } from "@/components/ui";
+import { feedbackRole } from "@/components/feedback/Alert";
+import { useAnnounce } from "@/components/feedback/LiveRegion";
 
 export interface ValidationSummaryItem {
   field: string;
@@ -24,13 +28,31 @@ const SEVERITY_COLOR = { error: "text-error", warning: "text-warning" };
  * An aggregate list of every field's own error/warning, surfaced once
  * at the top of the form — built on Surface directly rather than a
  * bespoke Alert (Alert itself is still "Needed" in the Foundation
- * Component Catalog).
+ * Component Catalog). Its role="alert"/"status" root is itself an implicit
+ * live region, so new items appearing are already announced without extra
+ * wiring — but there's nothing left mounted to announce the opposite
+ * transition, so a useAnnounce() call below covers items going back to
+ * empty (validation passing) via the shared LiveRegionProvider instead.
  */
 export function ValidationSummary({ items, title = "Please review the following", className }: ValidationSummaryProps) {
+  const announce = useAnnounce();
+  const hadItems = useRef(false);
+
+  useEffect(() => {
+    if (items.length === 0) {
+      if (hadItems.current) announce("Validation passed — no errors remain.");
+      hadItems.current = false;
+    } else {
+      hadItems.current = true;
+    }
+  }, [items.length, announce]);
+
   if (items.length === 0) return null;
 
   const errorCount = items.filter((item) => item.severity === "error").length;
-  const role = errorCount > 0 ? "alert" : "status";
+  // Reuses Alert's shared error-is-assertive/rest-are-polite rule (same one FieldError already
+  // consolidates onto) instead of re-deriving the alert/status split locally.
+  const role = feedbackRole(errorCount > 0 ? "error" : "warning");
 
   return (
     <div role={role} className={className}>

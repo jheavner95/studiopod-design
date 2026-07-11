@@ -18,7 +18,7 @@ export const WORKFLOW_ACCESSIBILITY_TOPICS: WorkflowAccessibilityTopic[] = [
   },
   {
     label: "Status announcements",
-    text: "This family has no live region of its own — a screen that needs a WorkflowStatus change announced to screen readers wraps it in an aria-live=\"polite\" region itself, the same opt-in convention every prior operational package (Queue & Job, Status & Health, Dashboard Widgets) already follows, and the same gap already flagged elsewhere in this design system as systemic rather than specific to this component family.",
+    text: "WorkflowStatus now announces its own transition (e.g. \"Workflow status: Blocked.\") through the shared LiveRegionProvider mounted at the app root whenever its value prop changes — blocked/failed assertively, everything else politely — the same fix its sibling presets (Queue & Job's QueueStatus, Status & Health's HealthIndicator) picked up, closing the gap that was previously flagged as systemic across this design system.",
   },
   {
     label: "Progress updates",

@@ -18,7 +18,7 @@ export const WORKFLOW_VIZ_ACCESSIBILITY_TOPICS: WorkflowVizAccessibilityTopic[] 
   },
   {
     label: "Selection announcements",
-    text: "No built-in aria-live region announces a node being selected or a bulk-selection count changing — the same opt-in convention every prior Workflow Component Library package already follows, and a systemic gap already flagged during certification review of the whole library rather than fixed ad hoc in one package.",
+    text: "WorkflowSelection's underlying useWorkflowSelection hook is Data Grid's own useDataGridSelection reused unchanged, which now announces its selection count changing (\"3 items selected\", \"Selection cleared\") through the shared LiveRegionProvider mounted at the app root — no longer an opt-in convention left to each screen, since the fix lives in the shared hook every one of this family's selection demos already calls.",
   },
   {
     label: "Canvas semantics",

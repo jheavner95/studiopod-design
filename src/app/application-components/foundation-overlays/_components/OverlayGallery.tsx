@@ -99,7 +99,7 @@ function PopoverDemo() {
           Filter
         </Button>
       </span>
-      <Popover open={open} onOpenChange={setOpen} triggerRef={triggerRef}>
+      <Popover open={open} onOpenChange={setOpen} triggerRef={triggerRef} aria-label="Filter by status">
         <div className="flex flex-col gap-2">
           <Caption className="text-ink-tertiary">Status</Caption>
           <Body size="sm">Used, Partial, and Planned filters would live here.</Body>
@@ -147,8 +147,12 @@ function TooltipDemo() {
         Revealed on hover or focus — never hover-only, so tabbing to the trigger shows the same label.
       </Body>
       <Tooltip label="Additional information about this field">
-        <button type="button" className="focus-ring flex size-8 items-center justify-center rounded-full border border-border text-ink-tertiary hover:text-ink-primary">
-          <Info className="size-4" />
+        <button
+          type="button"
+          aria-label="Additional information about this field"
+          className="focus-ring flex size-8 items-center justify-center rounded-full border border-border text-ink-tertiary hover:text-ink-primary"
+        >
+          <Info className="size-4" aria-hidden />
         </button>
       </Tooltip>
     </Card>

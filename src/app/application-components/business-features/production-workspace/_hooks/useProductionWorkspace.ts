@@ -2,11 +2,13 @@
 
 import { useCallback, useMemo, useState } from "react";
 import type { StatGroupItem } from "@/components/metadata";
+import { useAnnounce } from "@/components/feedback";
 import {
   INITIAL_ARTWORKS,
   INITIAL_QUEUE_JOBS,
   PRODUCTION_STAGES,
   VALIDATION_FLOW_ORDER,
+  VALIDATION_FLOW_LABEL,
   advanceProductionStage,
   advanceValidationStatus,
   toggleIssueResolved,
@@ -40,6 +42,11 @@ export function useProductionWorkspace() {
   const [selectedId, setSelectedId] = useState<string | null>(INITIAL_ARTWORKS[2]?.id ?? null);
   const [view, setView] = useState<ProductionView>("pipeline");
   const [dialog, setDialog] = useState<ProductionDialogState | null>(null);
+  // Announces this feature's own selection/workflow/validation transitions through the shared
+  // LiveRegionProvider mounted at the app root — this hook is the feature's Services layer, the one
+  // place that already knows what changed and why, so the announcement lives here rather than
+  // scattered across the presentation-only components it hands state down to.
+  const announce = useAnnounce();
 
   const [past, setPast] = useState<ProductionArtwork[][]>([]);
   const [future, setFuture] = useState<ProductionArtwork[][]>([]);
@@ -65,11 +72,39 @@ export function useProductionWorkspace() {
     [artworks, commit],
   );
 
-  const selectArtwork = useCallback((id: string | null) => setSelectedId(id), []);
+  const selectArtwork = useCallback(
+    (id: string | null) => {
+      setSelectedId(id);
+      const artwork = id ? artworks.find((a) => a.id === id) : null;
+      announce(artwork ? `${artwork.name} selected.` : "Selection cleared.");
+    },
+    [artworks, announce],
+  );
 
-  const advanceStage = useCallback((id: string) => updateArtwork(id, advanceProductionStage), [updateArtwork]);
+  const advanceStage = useCallback(
+    (id: string) => {
+      const artwork = artworks.find((a) => a.id === id);
+      updateArtwork(id, advanceProductionStage);
+      if (artwork) {
+        const nextStageId = advanceProductionStage(artwork).stage;
+        const stageLabel = PRODUCTION_STAGES.find((s) => s.id === nextStageId)?.label ?? nextStageId;
+        announce(`${artwork.name} moved to ${stageLabel}.`);
+      }
+    },
+    [artworks, updateArtwork, announce],
+  );
 
-  const advanceValidation = useCallback((id: string) => updateArtwork(id, advanceValidationStatus), [updateArtwork]);
+  const advanceValidation = useCallback(
+    (id: string) => {
+      const artwork = artworks.find((a) => a.id === id);
+      updateArtwork(id, advanceValidationStatus);
+      if (artwork) {
+        const nextStatus = advanceValidationStatus(artwork).validationStatus;
+        announce(`${artwork.name} validation: ${VALIDATION_FLOW_LABEL[nextStatus]}.`);
+      }
+    },
+    [artworks, updateArtwork, announce],
+  );
 
   const toggleIssue = useCallback(
     (artworkId: string, issueId: string) => updateArtwork(artworkId, (artwork) => toggleIssueResolved(artwork, issueId)),
@@ -81,25 +116,35 @@ export function useProductionWorkspace() {
 
   const confirmDialog = useCallback(() => {
     if (!dialog) return;
+    const artwork = artworks.find((a) => a.id === dialog.artworkId);
+    const name = artwork?.name ?? "Artwork";
     switch (dialog.type) {
       case "delete":
         removeArtwork(dialog.artworkId);
+        announce(`${name} deleted.`);
         break;
       case "publish":
         updateArtwork(dialog.artworkId, publishArtwork);
+        announce(`${name} published.`);
         break;
       case "export":
         updateArtwork(dialog.artworkId, exportArtwork);
+        announce(`${name} exported.`);
         break;
       case "validation":
         updateArtwork(dialog.artworkId, advanceValidationStatus);
+        if (artwork) announce(`${name} validation: ${VALIDATION_FLOW_LABEL[advanceValidationStatus(artwork).validationStatus]}.`);
         break;
       case "confirm":
         updateArtwork(dialog.artworkId, advanceProductionStage);
+        if (artwork) {
+          const stageLabel = PRODUCTION_STAGES.find((s) => s.id === advanceProductionStage(artwork).stage)?.label;
+          announce(`${name} moved to ${stageLabel ?? "next stage"}.`);
+        }
         break;
     }
     setDialog(null);
-  }, [dialog, removeArtwork, updateArtwork]);
+  }, [dialog, artworks, removeArtwork, updateArtwork, announce]);
 
   const undo = useCallback(() => {
     setPast((prevPast) => {

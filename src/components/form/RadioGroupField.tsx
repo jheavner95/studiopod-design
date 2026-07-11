@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { Stack } from "@/components/layout";
 import { RadioGroup, type RadioGroupProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
@@ -13,6 +13,7 @@ interface RadioGroupFieldProps extends Omit<RadioGroupProps, "label" | "helperTe
 
 /** RadioGroup plus an accessibly-announced error message. */
 export function RadioGroupField({ label, helperText, error, required = false, ...radioGroupProps }: RadioGroupFieldProps) {
+  const errorId = useId();
   return (
     <Stack gap="xs">
       <RadioGroup
@@ -25,9 +26,10 @@ export function RadioGroupField({ label, helperText, error, required = false, ..
           ) : undefined
         }
         helperText={error ? undefined : helperText}
+        describedBy={error ? errorId : undefined}
         {...radioGroupProps}
       />
-      {error ? <FieldError>{error}</FieldError> : null}
+      {error ? <FieldError id={errorId}>{error}</FieldError> : null}
     </Stack>
   );
 }

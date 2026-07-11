@@ -20,6 +20,8 @@ export interface RadioGroupProps {
   onChange?: (value: string) => void;
   orientation?: "horizontal" | "vertical";
   disabled?: boolean;
+  /** Overrides aria-describedby (applied to every option) — used by RadioGroupField to point at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /** A set of mutually-exclusive native radio inputs under custom dot styling. */
@@ -34,6 +36,7 @@ export function RadioGroup({
   onChange,
   orientation = "vertical",
   disabled = false,
+  describedBy,
 }: RadioGroupProps) {
   const generatedName = useId();
   const groupName = name ?? generatedName;
@@ -71,7 +74,7 @@ export function RadioGroup({
                   checked={value !== undefined ? value === option.value : undefined}
                   defaultChecked={value === undefined ? defaultValue === option.value : undefined}
                   onChange={() => onChange?.(option.value)}
-                  aria-describedby={helperId}
+                  aria-describedby={describedBy ?? helperId}
                   className={cn(
                     "peer absolute inset-0 size-5 cursor-pointer appearance-none rounded-full border border-border bg-surface transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
                     "checked:border-accent-500",

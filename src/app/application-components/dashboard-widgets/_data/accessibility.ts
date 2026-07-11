@@ -18,7 +18,7 @@ export const DASHBOARD_ACCESSIBILITY_TOPICS: DashboardAccessibilityTopic[] = [
   },
   {
     label: "Announcements",
-    text: "This family has no live region of its own — a screen that needs a metric or status change announced to screen readers wraps that widget in an aria-live=\"polite\" region itself, the same opt-in convention Status & Health's own components already follow.",
+    text: "DashboardSection now announces its own refresh completing (\"Company overview refreshed.\") through the shared LiveRegionProvider mounted at the app root whenever its loading prop goes back to false, since LoadingState's role=\"status\" already covers the refresh starting but nothing previously signaled it finishing. A widget-level metric or status change still relies on the underlying component that announces it (HealthIndicator, QueueStatus), the same reuse this family's other widgets already lean on.",
   },
   {
     label: "Charts",

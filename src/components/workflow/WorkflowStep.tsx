@@ -42,6 +42,20 @@ const LABEL_TONE: Record<WorkflowStateValue, string> = {
 };
 
 /**
+ * Screen-reader-only status text — the marker's status is otherwise
+ * conveyed solely by icon + color, both unavailable to assistive tech (the
+ * icon is aria-hidden). "running" is omitted: it's covered by aria-current
+ * below. "not-started"/"ready" are omitted as unannounced default states.
+ */
+const STATUS_LABEL: Partial<Record<WorkflowStateValue, string>> = {
+  waiting: "Waiting",
+  blocked: "Blocked",
+  completed: "Completed",
+  failed: "Failed",
+  cancelled: "Cancelled",
+};
+
+/**
  * One step within a WorkflowStage — a status marker keyed to this
  * framework's own 8-state WorkflowStateValue, the same circle-marker idiom
  * Foundation Navigation's own Stepper already establishes, but with an
@@ -60,17 +74,24 @@ export function WorkflowStep({ label, description, status, onClick, className }:
         {Icon ? <Icon className="size-3.5" aria-hidden /> : null}
       </span>
       <div className="flex min-w-0 flex-col gap-0.5">
-        <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>{label}</span>
+        <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>
+          {label}
+          {STATUS_LABEL[status] ? <span className="sr-only"> ({STATUS_LABEL[status]})</span> : null}
+        </span>
         {description ? <Caption className="text-ink-tertiary">{description}</Caption> : null}
       </div>
     </>
   );
+
+  // "step" is the ARIA-defined value for the current step in a multi-step process.
+  const ariaCurrent = status === "running" ? "step" : undefined;
 
   if (onClick) {
     return (
       <button
         type="button"
         onClick={onClick}
+        aria-current={ariaCurrent}
         className={cn("focus-ring flex items-start gap-3 rounded-md py-1.5 text-left transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:bg-surface-hover", className)}
       >
         {content}
@@ -78,5 +99,9 @@ export function WorkflowStep({ label, description, status, onClick, className }:
     );
   }
 
-  return <div className={cn("flex items-start gap-3 rounded-md py-1.5", className)}>{content}</div>;
+  return (
+    <div className={cn("flex items-start gap-3 rounded-md py-1.5", className)} aria-current={ariaCurrent}>
+      {content}
+    </div>
+  );
 }

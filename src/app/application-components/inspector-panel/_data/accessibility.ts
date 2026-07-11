@@ -22,6 +22,6 @@ export const INSPECTOR_ACCESSIBILITY_TOPICS: InspectorAccessibilityTopic[] = [
   },
   {
     label: "Validation announcements",
-    text: "A validation error appearing after an edit is announced because InspectorValidation's underlying ValidationSummary is a live region (role=\"alert\" for errors) — there's no separate toast or aria-live region layered on top for the same event.",
+    text: "A validation error appearing after an edit is announced because InspectorValidation's underlying ValidationSummary is a live region (role=\"alert\" for errors) — there's no separate toast or aria-live region layered on top for the same event. The reverse transition (the last error being fixed, so ValidationSummary unmounts) is now announced too, via a useAnnounce() call in ValidationSummary itself that fires through the shared LiveRegionProvider whenever its items go back to empty.",
   },
 ];

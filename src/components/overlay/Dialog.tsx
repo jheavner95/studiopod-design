@@ -3,7 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useMotion, useMotionEnabled, useFocusTrap, useEscapeKey } from "@/hooks";
+import { useMotion, useMotionEnabled, useFocusTrap, useEscapeKey, useBodyLock } from "@/hooks";
 import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 
@@ -42,8 +42,13 @@ export function Dialog({ open, onOpenChange, children, size = "md", labelledBy, 
     onOpenChange(false);
   }
 
-  useFocusTrap(panelRef, open);
   useEscapeKey(close, open);
+  // useBodyLock must run before useFocusTrap so its cleanup (removing #app-root's
+  // inert attribute) fires before focus-trap's cleanup tries to restore focus — an
+  // element inside an inert subtree cannot receive focus, so the reverse order
+  // silently drops focus restoration to <body>.
+  useBodyLock(open);
+  useFocusTrap(panelRef, open);
 
   return (
     <Portal>

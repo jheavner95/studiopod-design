@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Menu, MenuItem } from "@/components/overlay";
@@ -26,6 +27,7 @@ interface BreadcrumbsProps {
 export function Breadcrumbs({ items, maxVisible = 4, className }: BreadcrumbsProps) {
   const [overflowOpen, setOverflowOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
   const lastIndex = items.length - 1;
 
   const needsTruncation = items.length > maxVisible;
@@ -73,7 +75,11 @@ export function Breadcrumbs({ items, maxVisible = 4, className }: BreadcrumbsPro
             </button>
             <Menu open={overflowOpen} onOpenChange={setOverflowOpen} triggerRef={triggerRef}>
               {hiddenItems.map((item) => (
-                <MenuItem key={item.label} onSelect={() => {}}>
+                // onSelect is what actually navigates on keyboard Enter/Space (Menu.tsx calls
+                // it, not the nested Link's own click handler) — router.push here, not a no-op,
+                // is what makes a keyboard user's Enter do the same thing a mouse click on the
+                // rendered Link already did.
+                <MenuItem key={item.label} onSelect={() => item.href && router.push(item.href)}>
                   {item.href ? <Link href={item.href}>{item.label}</Link> : item.label}
                 </MenuItem>
               ))}

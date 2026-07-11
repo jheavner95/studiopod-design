@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Body, Button } from "@/components/ui";
+import { useAnnounce } from "@/components/feedback";
 
 export function toggleSelection(selected: Set<string>, id: string): Set<string> {
   const next = new Set(selected);
@@ -30,10 +31,30 @@ interface UseDataGridSelectionResult {
   clear: () => void;
 }
 
-/** Uncontrolled selection state for a standalone DataGrid — pass selectedIds/onSelectionChange directly to DataGrid instead if the caller already owns this state one level up (e.g. to sync with a page-level bulk-action bar). */
+/**
+ * Uncontrolled selection state for a standalone DataGrid — pass selectedIds/onSelectionChange directly to
+ * DataGrid instead if the caller already owns this state one level up (e.g. to sync with a page-level
+ * bulk-action bar). Reused unchanged as the selection model for Asset Browser (AssetSelection.tsx),
+ * Workflow Selection (WorkflowSelection.tsx), Bulk Actions' own demos, and Queue & Job's selection —
+ * so announcing the count here via the shared LiveRegionProvider covers every one of those call sites
+ * from a single place rather than needing a separate announce() at each.
+ */
 export function useDataGridSelection(): UseDataGridSelectionResult {
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-  const clear = useCallback(() => setSelectedIds(new Set()), []);
+  const [selectedIds, setSelectedIdsState] = useState<Set<string>>(new Set());
+  const announce = useAnnounce();
+  const previousSize = useRef(0);
+
+  const setSelectedIds = useCallback(
+    (ids: Set<string>) => {
+      setSelectedIdsState(ids);
+      if (ids.size !== previousSize.current) {
+        previousSize.current = ids.size;
+        announce(ids.size === 0 ? "Selection cleared" : `${ids.size} item${ids.size === 1 ? "" : "s"} selected`);
+      }
+    },
+    [announce],
+  );
+  const clear = useCallback(() => setSelectedIds(new Set()), [setSelectedIds]);
   return { selectedIds, setSelectedIds, clear };
 }
 

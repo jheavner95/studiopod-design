@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { MotionProvider } from "@/providers";
 import { GlobalNav } from "@/components/layout";
+import { LiveRegionProvider } from "@/components/feedback";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,8 +32,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink-primary antialiased">
         <MotionProvider>
-          <GlobalNav />
-          {children}
+          <LiveRegionProvider>
+            <div id="app-root">
+              <GlobalNav />
+              {children}
+            </div>
+          </LiveRegionProvider>
         </MotionProvider>
       </body>
     </html>

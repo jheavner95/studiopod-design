@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type KeyboardEvent } from "react";
 import { Image as ImageIcon } from "lucide-react";
 import { Card, Body, Badge } from "@/components/ui";
 import {
@@ -74,6 +74,7 @@ function GlobalSearchDemo() {
   const [query, setQuery] = useState("");
   const [scope, setScope] = useState<"all" | "name" | "type">("all");
   const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const suggestions = useMemo(
     () =>
       query
@@ -81,6 +82,37 @@ function GlobalSearchDemo() {
         : [],
     [query],
   );
+
+  function selectSuggestion(suggestion: { id: string; label: string }) {
+    setQuery(suggestion.label);
+    setOpen(false);
+    setActiveId(null);
+  }
+
+  // SearchSuggestions is a listbox with no keyboard model of its own (by design — see
+  // its own docstring): the caller owns ArrowUp/ArrowDown/Enter/Escape. Native keydown
+  // events bubble from SearchField's <input> up through this wrapper, so handling them
+  // here reaches the real input without SearchField itself exposing an onKeyDown prop.
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (!open || suggestions.length === 0) return;
+    const index = suggestions.findIndex((suggestion) => suggestion.id === activeId);
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveId(suggestions[(index + 1) % suggestions.length].id);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveId(suggestions[(index - 1 + suggestions.length) % suggestions.length].id);
+    } else if (event.key === "Enter") {
+      const active = suggestions.find((suggestion) => suggestion.id === activeId);
+      if (active) {
+        event.preventDefault();
+        selectSuggestion(active);
+      }
+    } else if (event.key === "Escape") {
+      setOpen(false);
+      setActiveId(null);
+    }
+  }
 
   return (
     <GalleryCard title="Global Search" description="Search with a scope selector and a live suggestions dropdown — type to see completions.">
@@ -94,16 +126,17 @@ function GlobalSearchDemo() {
             { value: "type", label: "Type" },
           ]}
         />
-        <div className="relative">
+        <div className="relative" onKeyDown={handleKeyDown}>
           <SearchField
             value={query}
             onChange={(value) => {
               setQuery(value);
               setOpen(true);
+              setActiveId(null);
             }}
             placeholder="Search StudioPOD"
           />
-          <SearchSuggestions open={open && query.length > 0} suggestions={suggestions} onSelect={(s) => { setQuery(s.label as string); setOpen(false); }} />
+          <SearchSuggestions open={open && query.length > 0} suggestions={suggestions} activeId={activeId} onSelect={(s) => selectSuggestion({ id: s.id, label: s.label as string })} />
         </div>
       </div>
     </GalleryCard>

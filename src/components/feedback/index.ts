@@ -5,6 +5,7 @@ export { ValidationSummary, type ValidationSummaryItem } from "./ValidationSumma
 
 export { ToastProvider, useToast, type ToastOptions } from "./Toast";
 export { Notification, type NotificationProps } from "./Notification";
+export { LiveRegionProvider, useAnnounce } from "./LiveRegion";
 
 export { EmptyState, type EmptyStateProps, type EmptyStateTone } from "./EmptyState";
 export { LoadingState } from "./LoadingState";

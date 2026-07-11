@@ -10,7 +10,7 @@ export const QUEUE_ACCESSIBILITY_TOPICS: QueueAccessibilityTopic[] = [
   },
   {
     label: "Status announcements",
-    text: "This family has no live region of its own — a screen that needs a QueueStatus change announced to screen readers wraps it in an aria-live=\"polite\" region itself, the same opt-in convention Status & Health's own components already follow.",
+    text: "QueueStatus now announces a job's status changing (e.g. \"Job status: Failed.\") through the shared LiveRegionProvider mounted at the app root whenever its value prop transitions — failed assertively, everything else politely — no longer an opt-in region a screen has to wrap it in itself, the same fix Status & Health's own HealthIndicator and Bulk Actions' own BulkStatus also picked up.",
   },
   {
     label: "Progress updates",

@@ -4,7 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent as Reac
 import { motion, AnimatePresence } from "framer-motion";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMotion, useMotionEnabled, useEscapeKey } from "@/hooks";
+import { useMotion, useMotionEnabled, useEscapeKey, useFocusTrap, useBodyLock } from "@/hooks";
 import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 
@@ -35,6 +35,7 @@ export function CommandPalette({ open, onOpenChange, items, placeholder = "Searc
   const [activeIndex, setActiveIndex] = useState(0);
   const [wasOpen, setWasOpen] = useState(open);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   if (open !== wasOpen) {
     setWasOpen(open);
@@ -52,6 +53,13 @@ export function CommandPalette({ open, onOpenChange, items, placeholder = "Searc
   }
 
   useEscapeKey(close, open);
+  // A full-screen, backdrop-blocking overlay needs the same trap/restore machinery as
+  // Dialog/Drawer — it focuses the input (the panel's only focusable descendant) on
+  // open and restores the trigger's focus on close, replacing the old requestAnimationFrame
+  // effect below that focused the input but never trapped Tab or declared dialog semantics.
+  // useBodyLock must run before useFocusTrap — see Dialog.tsx for why the order matters.
+  useBodyLock(open);
+  useFocusTrap(panelRef, open);
 
   useEffect(() => {
     function handleShortcut(event: KeyboardEvent) {
@@ -63,10 +71,6 @@ export function CommandPalette({ open, onOpenChange, items, placeholder = "Searc
     document.addEventListener("keydown", handleShortcut);
     return () => document.removeEventListener("keydown", handleShortcut);
   }, [onOpenChange, shortcutKey]);
-
-  useEffect(() => {
-    if (open) requestAnimationFrame(() => inputRef.current?.focus());
-  }, [open]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -122,6 +126,11 @@ export function CommandPalette({ open, onOpenChange, items, placeholder = "Searc
             />
             <div className="absolute inset-x-0 top-24 flex justify-center px-4">
               <motion.div
+                ref={panelRef}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Command palette"
+                tabIndex={-1}
                 initial={motionEnabled ? { opacity: 0, scale: 0.97, y: -8 } : undefined}
                 animate={motionEnabled ? { opacity: 1, scale: 1, y: 0 } : undefined}
                 exit={motionEnabled ? { opacity: 0, scale: 0.97, y: -8 } : undefined}

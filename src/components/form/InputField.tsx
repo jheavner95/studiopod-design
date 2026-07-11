@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { Stack } from "@/components/layout";
 import { TextInput, type TextInputProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
@@ -14,6 +14,7 @@ interface InputFieldProps extends Omit<TextInputProps, "label" | "helperText" | 
 
 /** TextInput plus the description line and accessibly-announced error message it doesn't own by itself. */
 export function InputField({ label, description, helperText, error, required = false, ...inputProps }: InputFieldProps) {
+  const errorId = useId();
   return (
     <Stack gap="xs">
       {description ? <p className="text-caption text-ink-tertiary">{description}</p> : null}
@@ -28,9 +29,10 @@ export function InputField({ label, description, helperText, error, required = f
         }
         status={error ? "error" : "default"}
         helperText={error ? undefined : helperText}
+        describedBy={error ? errorId : undefined}
         {...inputProps}
       />
-      {error ? <FieldError>{error}</FieldError> : null}
+      {error ? <FieldError id={errorId}>{error}</FieldError> : null}
     </Stack>
   );
 }

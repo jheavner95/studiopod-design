@@ -18,11 +18,11 @@ export const STEPPER_ACCESSIBILITY_TOPICS: StepperAccessibilityTopic[] = [
   },
   {
     label: "Progress announcements",
-    text: "WorkflowStepperProgress's label text (\"Step 3 of 7\") changes as the wizard advances, but this family adds no live region of its own — a screen that needs the new step count announced wraps WorkflowStepperProgress in an aria-live=\"polite\" region itself, the same opt-in convention every prior Operational and Workflow Framework package already follows.",
+    text: "WorkflowStepperProgress's label text (\"Step 3 of 7\") changes as the wizard advances, and now announces that transition itself through the shared LiveRegionProvider mounted at the app root whenever currentStep changes — no longer an opt-in region a screen has to wrap it in.",
   },
   {
     label: "Status announcements",
-    text: "Same opt-in convention for WorkflowStepperStep's own status changes (e.g. Current moving to the next step) — no built-in aria-live, consistent with a systemic gap already flagged across the whole library's own accessibility review rather than fixed ad hoc in one package.",
+    text: "WorkflowStepperStep's own per-step status (e.g. Current moving to the next step) is still conveyed visually plus via aria-current/STATUS_LABEL text rather than a separate live-region announcement of its own — the wizard-level transition is already covered by WorkflowStepperProgress's announcement above, so a second announcement per step would be redundant with it rather than additive.",
   },
   {
     label: "Color independence",

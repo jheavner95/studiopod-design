@@ -12,6 +12,8 @@ export interface ToggleSwitchProps {
   helperText?: ReactNode;
   disabled?: boolean;
   id?: string;
+  /** Overrides aria-describedby — used by SwitchField to point at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /**
@@ -19,7 +21,7 @@ export interface ToggleSwitchProps {
  * rather than a checkbox — the ARIA APG switch pattern, and it gets
  * Enter/Space toggling for free from button semantics.
  */
-export function ToggleSwitch({ className, checked, onChange, label, helperText, disabled = false, id }: ToggleSwitchProps) {
+export function ToggleSwitch({ className, checked, onChange, label, helperText, disabled = false, id, describedBy }: ToggleSwitchProps) {
   const generatedId = useId();
   const switchId = id ?? generatedId;
   const helperId = helperText ? `${switchId}-helper` : undefined;
@@ -33,7 +35,7 @@ export function ToggleSwitch({ className, checked, onChange, label, helperText, 
           type="button"
           role="switch"
           aria-checked={checked}
-          aria-describedby={helperId}
+          aria-describedby={describedBy ?? helperId}
           disabled={disabled}
           onClick={() => onChange(!checked)}
           className={cn(

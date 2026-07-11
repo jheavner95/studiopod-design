@@ -3,7 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useMotion, useMotionEnabled, useFocusTrap, useEscapeKey } from "@/hooks";
+import { useMotion, useMotionEnabled, useFocusTrap, useEscapeKey, useBodyLock } from "@/hooks";
 import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 
@@ -44,8 +44,10 @@ export function Drawer({ open, onOpenChange, children, edge = "right", labelledB
     onOpenChange(false);
   }
 
-  useFocusTrap(panelRef, open);
   useEscapeKey(close, open);
+  // useBodyLock must run before useFocusTrap — see Dialog.tsx for why the order matters.
+  useBodyLock(open);
+  useFocusTrap(panelRef, open);
 
   return (
     <Portal>

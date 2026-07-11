@@ -54,19 +54,27 @@ export function ProductionFeatureCanvas({ view, artworksByStage, queueJobs, sele
               {artworks.length === 0 ? (
                 <p className="px-2 py-1 text-body-sm text-ink-tertiary">No artwork in this stage.</p>
               ) : (
-                artworks.map((artwork) => (
-                  <div
-                    key={artwork.id}
-                    className={cn("rounded-md", selectedId === artwork.id && "ring-2 ring-accent-400")}
-                  >
-                    <WorkflowStep
-                      label={artwork.name}
-                      description={`${artwork.sku} · ${artwork.assignee}`}
-                      status={stepStatus(artwork)}
-                      onClick={() => onSelect(artwork.id)}
-                    />
-                  </div>
-                ))
+                artworks.map((artwork) => {
+                  const isSelected = selectedId === artwork.id;
+                  return (
+                    <div
+                      key={artwork.id}
+                      className={cn("rounded-md", isSelected && "ring-2 ring-accent-400")}
+                    >
+                      <WorkflowStep
+                        label={
+                          <>
+                            {artwork.name}
+                            {isSelected ? <span className="sr-only"> (selected)</span> : null}
+                          </>
+                        }
+                        description={`${artwork.sku} · ${artwork.assignee}`}
+                        status={stepStatus(artwork)}
+                        onClick={() => onSelect(artwork.id)}
+                      />
+                    </div>
+                  );
+                })
               )}
             </ProductionStagePanel>
           );

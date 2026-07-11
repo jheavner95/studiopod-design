@@ -119,6 +119,10 @@ const ACCESSIBILITY_TOPICS = [
     label: "Undo / Redo state",
     text: "The Undo and Redo buttons disable themselves directly from the hook's own canUndo/canRedo history flags, so assistive technology sees the same enabled or disabled state a sighted user does.",
   },
+  {
+    label: "State-change announcements",
+    text: "useProductionWorkspace announces its own selection changes (\"Sunset ridge tee — front print selected.\"), stage advances (\"...moved to Generation.\"), and validation transitions (\"...validation: Validated.\"), plus publish/export/delete completions, through the shared LiveRegionProvider mounted at the app root — the hook is this feature's Services layer and already knows exactly what changed, so the announcement is wired there rather than re-derived in each presentation-only component it hands state down to.",
+  },
 ];
 
 export default function ProductionWorkspaceFeaturePage() {

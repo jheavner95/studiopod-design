@@ -16,6 +16,8 @@ export interface SliderProps {
   /** Formats the current value for display next to the label — e.g. `(v) => \`${v}%\`` . Defaults to the raw number. */
   formatValue?: (value: number) => ReactNode;
   id?: string;
+  /** Overrides aria-describedby — used by SliderField to point at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /** A native range input — arrow keys, Home/End, and Page Up/Down all work automatically — styled with the accent token via `accent-*`. */
@@ -31,6 +33,7 @@ export function Slider({
   disabled = false,
   formatValue,
   id,
+  describedBy,
 }: SliderProps) {
   const generatedId = useId();
   const sliderId = id ?? generatedId;
@@ -58,7 +61,7 @@ export function Slider({
         value={value}
         disabled={disabled}
         onChange={(event) => onChange(Number(event.target.value))}
-        aria-describedby={helperId}
+        aria-describedby={describedBy ?? helperId}
         aria-valuetext={formatValue ? String(formatValue(value)) : undefined}
         className={cn(
           "focus-ring h-1.5 w-full cursor-pointer appearance-none rounded-full bg-surface-active accent-accent-500",

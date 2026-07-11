@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { Stack } from "@/components/layout";
 import { Checkbox, type CheckboxProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
@@ -13,6 +13,7 @@ interface CheckboxFieldProps extends Omit<CheckboxProps, "label" | "helperText">
 
 /** Checkbox plus an accessibly-announced error message — Checkbox's own label sits inline next to the box, so the required asterisk appends to that label rather than a separate one above. */
 export function CheckboxField({ label, helperText, error, required = false, ...checkboxProps }: CheckboxFieldProps) {
+  const errorId = useId();
   return (
     <Stack gap="xs">
       <Checkbox
@@ -23,9 +24,14 @@ export function CheckboxField({ label, helperText, error, required = false, ...c
           </>
         }
         helperText={error ? undefined : helperText}
+        describedBy={error ? errorId : undefined}
         {...checkboxProps}
       />
-      {error ? <FieldError className="pl-[30px]">{error}</FieldError> : null}
+      {error ? (
+        <FieldError id={errorId} className="pl-[30px]">
+          {error}
+        </FieldError>
+      ) : null}
     </Stack>
   );
 }

@@ -30,6 +30,8 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
   status?: FieldStatus;
   options: SelectOption[];
   placeholder?: string;
+  /** Overrides aria-describedby — used by SelectField to point at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /**
@@ -44,6 +46,7 @@ export function Select({
   status = "default",
   options,
   placeholder,
+  describedBy,
   id,
   disabled,
   required,
@@ -71,7 +74,7 @@ export function Select({
           value={value}
           defaultValue={value === undefined && placeholder ? "" : undefined}
           aria-invalid={status === "error" || undefined}
-          aria-describedby={helperId}
+          aria-describedby={describedBy ?? helperId}
           className={cn(
             "w-full appearance-none rounded-md border bg-surface py-2 pl-3 pr-9 text-body-sm text-ink-primary outline-none transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] focus-visible:ring-2 focus-visible:ring-accent-500/30 disabled:cursor-not-allowed disabled:opacity-40",
             statusBorderStyles[status],

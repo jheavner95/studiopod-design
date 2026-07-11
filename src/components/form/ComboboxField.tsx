@@ -50,6 +50,7 @@ export function ComboboxField({
   const generatedId = useId();
   const fieldId = id ?? generatedId;
   const listId = `${fieldId}-listbox`;
+  const messageId = error || helperText ? `${fieldId}-message` : undefined;
   const [query, setQuery] = useState(() => options.find((option) => option.value === value)?.label ?? "");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -99,6 +100,7 @@ export function ComboboxField({
           aria-controls={listId}
           aria-activedescendant={activeIndex >= 0 ? `${listId}-${activeIndex}` : undefined}
           aria-autocomplete="list"
+          aria-describedby={messageId}
           autoComplete="off"
           disabled={disabled}
           value={query}
@@ -150,7 +152,13 @@ export function ComboboxField({
           </div>
         ) : null}
       </div>
-      {error ? <FieldError>{error}</FieldError> : helperText ? <p className="text-caption text-ink-tertiary">{helperText}</p> : null}
+      {error ? (
+        <FieldError id={messageId}>{error}</FieldError>
+      ) : helperText ? (
+        <p id={messageId} className="text-caption text-ink-tertiary">
+          {helperText}
+        </p>
+      ) : null}
     </Stack>
   );
 }

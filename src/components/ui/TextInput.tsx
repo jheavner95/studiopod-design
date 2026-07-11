@@ -25,6 +25,8 @@ export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElemen
   leadingIcon?: ReactNode;
   /** A trailing slot — a clear button, a password-reveal toggle, a unit label. */
   trailingAction?: ReactNode;
+  /** Overrides aria-describedby — used by *Field wrappers to point the input at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /**
@@ -38,6 +40,7 @@ export function TextInput({
   status = "default",
   leadingIcon,
   trailingAction,
+  describedBy,
   id,
   disabled,
   required,
@@ -75,7 +78,7 @@ export function TextInput({
           disabled={disabled}
           required={required}
           aria-invalid={status === "error" || undefined}
-          aria-describedby={helperId}
+          aria-describedby={describedBy ?? helperId}
           className="min-w-0 flex-1 bg-transparent py-2 text-body-sm text-ink-primary outline-none placeholder:text-ink-tertiary disabled:cursor-not-allowed"
           {...domProps}
         />

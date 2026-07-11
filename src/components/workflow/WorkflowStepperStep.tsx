@@ -47,6 +47,23 @@ const LABEL_TONE: Record<WorkflowStepperStateValue, string> = {
 };
 
 /**
+ * Screen-reader-only status text — the marker's status (completed/blocked/
+ * skipped/etc.) is otherwise conveyed solely by icon + color, both
+ * unavailable to assistive tech (the icon is aria-hidden). "current" and
+ * "not-started" are omitted here: current is covered by aria-current="step"
+ * below, and not-started is the unannounced default a screen reader infers
+ * from the absence of any other status.
+ */
+const STATUS_LABEL: Partial<Record<WorkflowStepperStateValue, string>> = {
+  completed: "Completed",
+  blocked: "Blocked",
+  waiting: "Waiting",
+  skipped: "Skipped",
+  failed: "Failed",
+  cancelled: "Cancelled",
+};
+
+/**
  * One step in a guided wizard — a numbered/iconized circular marker plus a
  * label, in Foundation Navigation's own Stepper visual idiom (circular
  * marker, horizontal/vertical orientation), but with this package's own
@@ -68,18 +85,25 @@ export function WorkflowStepperStep({ index, label, description, status, onClick
   );
   const text = (
     <div className={cn("flex flex-col gap-0.5", orientation === "horizontal" ? "items-center text-center" : "min-w-0")}>
-      <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>{label}</span>
+      <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>
+        {label}
+        {STATUS_LABEL[status] ? <span className="sr-only"> ({STATUS_LABEL[status]})</span> : null}
+      </span>
       {description ? <Caption className="text-ink-tertiary">{description}</Caption> : null}
     </div>
   );
 
   const layoutClass = orientation === "horizontal" ? "flex flex-col items-center gap-2" : "flex items-start gap-3";
+  // "step" is the ARIA-defined value for exactly this case — the current step in a
+  // multi-step process — so a screen reader announces it without any sr-only text.
+  const ariaCurrent = status === "current" ? "step" : undefined;
 
   if (onClick) {
     return (
       <button
         type="button"
         onClick={onClick}
+        aria-current={ariaCurrent}
         className={cn(layoutClass, "focus-ring rounded-md p-1 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:bg-surface-hover", className)}
       >
         {marker}
@@ -89,7 +113,7 @@ export function WorkflowStepperStep({ index, label, description, status, onClick
   }
 
   return (
-    <div className={cn(layoutClass, className)}>
+    <div className={cn(layoutClass, className)} aria-current={ariaCurrent}>
       {marker}
       {text}
     </div>

@@ -28,6 +28,17 @@ interface TreeNavigationProps {
  */
 export function TreeNavigation({ nodes, activeId, onSelect, defaultExpandedIds = [], "aria-label": ariaLabel = "Tree", className }: TreeNavigationProps) {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set(defaultExpandedIds));
+  // Single-tab-stop roving tabindex per the ARIA tree pattern: only the "current" item
+  // (the one the user last moved to, or the active selection) is a real Tab stop —
+  // every other treeitem gets tabIndex=-1 and is reached by arrow keys, not Tab.
+  const [focusedId, setFocusedId] = useState<string | undefined>(activeId ?? nodes[0]?.id);
+  // Adjust state during render (per React docs) instead of an effect, so an
+  // activeId change is reflected in the same commit rather than a follow-up render.
+  const [prevActiveId, setPrevActiveId] = useState(activeId);
+  if (activeId !== prevActiveId) {
+    setPrevActiveId(activeId);
+    if (activeId) setFocusedId(activeId);
+  }
 
   function toggle(id: string) {
     setExpandedIds((prev) => {
@@ -36,6 +47,13 @@ export function TreeNavigation({ nodes, activeId, onSelect, defaultExpandedIds =
       else next.add(id);
       return next;
     });
+  }
+
+  function focusElement(element: HTMLElement | null | undefined) {
+    if (!element) return;
+    element.focus();
+    const id = element.dataset.nodeId;
+    if (id) setFocusedId(id);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>, node: TreeNode) {
@@ -50,7 +68,7 @@ export function TreeNavigation({ nodes, activeId, onSelect, defaultExpandedIds =
       } else if (hasChildren && expanded) {
         const li = treeItem.parentElement;
         const firstChild = li?.querySelector<HTMLElement>(':scope > ul[role="group"] > li > [role="treeitem"]');
-        firstChild?.focus();
+        focusElement(firstChild);
       }
     } else if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -59,7 +77,7 @@ export function TreeNavigation({ nodes, activeId, onSelect, defaultExpandedIds =
       } else {
         const parentGroup = treeItem.closest('ul[role="group"]');
         const parentItem = parentGroup?.parentElement?.querySelector<HTMLElement>(':scope > [role="treeitem"]');
-        parentItem?.focus();
+        focusElement(parentItem);
       }
     } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
@@ -68,10 +86,11 @@ export function TreeNavigation({ nodes, activeId, onSelect, defaultExpandedIds =
       const allItems = Array.from(tree.querySelectorAll<HTMLElement>('[role="treeitem"]'));
       const currentIndex = allItems.indexOf(treeItem);
       const nextIndex = event.key === "ArrowDown" ? Math.min(currentIndex + 1, allItems.length - 1) : Math.max(currentIndex - 1, 0);
-      allItems[nextIndex]?.focus();
+      focusElement(allItems[nextIndex]);
     } else if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       onSelect?.(node.id);
+      setFocusedId(node.id);
       if (hasChildren) toggle(node.id);
     }
   }
@@ -87,9 +106,11 @@ export function TreeNavigation({ nodes, activeId, onSelect, defaultExpandedIds =
           role="treeitem"
           aria-expanded={hasChildren ? expanded : undefined}
           aria-selected={active}
-          tabIndex={0}
+          tabIndex={node.id === focusedId ? 0 : -1}
+          data-node-id={node.id}
           onClick={() => {
             onSelect?.(node.id);
+            setFocusedId(node.id);
             if (hasChildren) toggle(node.id);
           }}
           onKeyDown={(event) => handleKeyDown(event, node)}

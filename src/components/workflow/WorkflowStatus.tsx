@@ -1,4 +1,7 @@
-import { StatusIndicator, type SystemStatus } from "@/components/feedback";
+"use client";
+
+import { useEffect, useRef } from "react";
+import { StatusIndicator, type SystemStatus, useAnnounce } from "@/components/feedback";
 
 export type WorkflowStateValue = "not-started" | "ready" | "running" | "waiting" | "blocked" | "completed" | "failed" | "cancelled";
 
@@ -27,9 +30,22 @@ interface WorkflowStatusProps {
  * started, is it waiting on something, is it blocked) rather than a system
  * health axis (HealthStatusValue) or a job-queue axis (QueueStatusValue) —
  * neither existing type maps onto "Not Started"/"Ready"/"Waiting" cleanly,
- * confirmed by direct comparison before adding this one.
+ * confirmed by direct comparison before adding this one. Also announces a
+ * stage/step transition (e.g. Running -> Blocked) through the shared
+ * LiveRegionProvider whenever value changes, the same fix its two sibling
+ * presets (HealthIndicator, QueueStatus) picked up — blocked/failed
+ * assertively, everything else politely.
  */
 export function WorkflowStatus({ value, className }: WorkflowStatusProps) {
   const { status, label } = STATUS_MAP[value];
+  const announce = useAnnounce();
+  const previousValue = useRef(value);
+
+  useEffect(() => {
+    if (previousValue.current === value) return;
+    previousValue.current = value;
+    announce(`Workflow status: ${label}.`, value === "blocked" || value === "failed" ? "assertive" : "polite");
+  }, [value, label, announce]);
+
   return <StatusIndicator status={status} label={label} className={className} />;
 }

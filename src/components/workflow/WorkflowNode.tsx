@@ -44,6 +44,19 @@ const LABEL_TONE: Record<WorkflowNodeStatus, string> = {
   failed: "text-ink-primary",
 };
 
+/**
+ * Screen-reader-only status text — the marker's status is otherwise
+ * conveyed solely by icon + color, both unavailable to assistive tech (the
+ * icon is aria-hidden). "running" is omitted: it's covered by aria-current
+ * below. "idle" is omitted as the unannounced default state.
+ */
+const STATUS_LABEL: Partial<Record<WorkflowNodeStatus, string>> = {
+  paused: "Paused",
+  blocked: "Blocked",
+  completed: "Completed",
+  failed: "Failed",
+};
+
 /** The marker alone, standalone so WorkflowLegend and WorkflowMiniMap can both reuse the exact same rendering rather than a second marker implementation — the same split StateNode/StateNodeMarker and DependencyNode/DependencyNodeMarker already established. */
 export function WorkflowNodeMarker({ status, className }: { status: WorkflowNodeStatus; className?: string }) {
   const Icon = MARKER_ICON[status];
@@ -83,7 +96,11 @@ export function WorkflowNode({ label, description, status, selected, filtered, o
     <>
       <WorkflowNodeMarker status={status} className="mt-0.5" />
       <div className="flex min-w-0 flex-col gap-0.5">
-        <span className={cn("text-body-sm font-medium", filtered ? "text-ink-tertiary line-through" : LABEL_TONE[status])}>{label}</span>
+        <span className={cn("text-body-sm font-medium", filtered ? "text-ink-tertiary line-through" : LABEL_TONE[status])}>
+          {label}
+          {STATUS_LABEL[status] ? <span className="sr-only"> ({STATUS_LABEL[status]})</span> : null}
+          {filtered ? <span className="sr-only"> (Filtered)</span> : null}
+        </span>
         {description ? <Caption className="text-ink-tertiary">{description}</Caption> : null}
       </div>
     </>
@@ -96,11 +113,17 @@ export function WorkflowNode({ label, description, status, selected, filtered, o
     className,
   );
 
+  // "step" is the ARIA-defined value for the current step in a multi-step process —
+  // a running node is the workflow's own currently-active point.
+  const ariaCurrent = status === "running" ? "step" : undefined;
+
   if (onClick) {
     return (
       <button
         type="button"
         onClick={onClick}
+        aria-current={ariaCurrent}
+        aria-pressed={selected}
         className={cn(sharedClassName, "focus-ring text-left transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:bg-surface-hover")}
       >
         {content}
@@ -108,5 +131,9 @@ export function WorkflowNode({ label, description, status, selected, filtered, o
     );
   }
 
-  return <div className={sharedClassName}>{content}</div>;
+  return (
+    <div className={sharedClassName} aria-current={ariaCurrent}>
+      {content}
+    </div>
+  );
 }

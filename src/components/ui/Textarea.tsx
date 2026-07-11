@@ -24,6 +24,8 @@ export interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaE
   status?: FieldStatus;
   /** Allows the user to drag-resize vertically. Defaults to fixed (no resize handle). */
   resizable?: boolean;
+  /** Overrides aria-describedby — used by TextareaField to point at a separately-rendered FieldError instead of this component's own helperText paragraph. */
+  describedBy?: string;
 }
 
 /** Standard multi-line text input, sharing TextInput's label/status/helper-text conventions. */
@@ -33,6 +35,7 @@ export function Textarea({
   helperText,
   status = "default",
   resizable = false,
+  describedBy,
   id,
   disabled,
   required,
@@ -58,7 +61,7 @@ export function Textarea({
         disabled={disabled}
         required={required}
         aria-invalid={status === "error" || undefined}
-        aria-describedby={helperId}
+        aria-describedby={describedBy ?? helperId}
         className={cn(
           "rounded-md border bg-surface px-3 py-2 text-body-sm text-ink-primary outline-none transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] placeholder:text-ink-tertiary focus-visible:ring-2 focus-visible:ring-accent-500/30 disabled:cursor-not-allowed disabled:opacity-40",
           resizable ? "resize-y" : "resize-none",

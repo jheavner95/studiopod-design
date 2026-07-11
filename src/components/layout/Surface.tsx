@@ -12,6 +12,7 @@ interface SurfaceProps {
   border?: boolean;
   padding?: SurfacePadding;
   as?: ElementType;
+  role?: string;
 }
 
 const elevationMap: Record<SurfaceElevation, string> = {
@@ -30,9 +31,10 @@ const paddingMap: Record<SurfacePadding, string> = {
 };
 
 /** The base elevated-background treatment every panel-like component sits on — Card, Panel, and the rest of the design system's own surfaces all reduce to this. */
-export function Surface({ children, className, elevation = "none", border = true, padding = "none", as: Component = "div" }: SurfaceProps) {
+export function Surface({ children, className, elevation = "none", border = true, padding = "none", as: Component = "div", role }: SurfaceProps) {
   return (
     <Component
+      role={role}
       className={cn(
         "rounded-lg bg-surface",
         border && "border border-border-subtle",

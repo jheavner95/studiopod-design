@@ -46,6 +46,25 @@ const LABEL_TONE: Record<DependencyStatusValue, string> = {
   hidden: "text-ink-tertiary line-through",
 };
 
+/**
+ * Screen-reader-only status text — unlike the sequential-process node types
+ * in this package (WorkflowStep, StateNode, etc.), a dependency graph has no
+ * "current" item to cover with aria-current, and no unmarked "default"
+ * status either, so every value gets an sr-only label — the marker's status
+ * is otherwise conveyed solely by icon + color, both unavailable to
+ * assistive tech (the icon is aria-hidden).
+ */
+const STATUS_LABEL: Record<DependencyStatusValue, string> = {
+  connected: "Connected",
+  disconnected: "Disconnected",
+  blocked: "Blocked",
+  healthy: "Healthy",
+  warning: "Warning",
+  critical: "Critical",
+  circular: "Circular dependency",
+  hidden: "Hidden",
+};
+
 /** The marker alone, standalone so DependencyLegend can reuse the exact same rendering rather than a second marker implementation — the same split StateNode/StateNodeMarker already established. */
 export function DependencyNodeMarker({ status, className }: { status: DependencyStatusValue; className?: string }) {
   const Icon = MARKER_ICON[status];
@@ -73,7 +92,10 @@ export function DependencyNode({ label, description, status, onClick, className 
     <>
       <DependencyNodeMarker status={status} className="mt-0.5" />
       <div className="flex min-w-0 flex-col gap-0.5">
-        <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>{label}</span>
+        <span className={cn("text-body-sm font-medium", LABEL_TONE[status])}>
+          {label}
+          <span className="sr-only"> ({STATUS_LABEL[status]})</span>
+        </span>
         {description ? <Caption className="text-ink-tertiary">{description}</Caption> : null}
       </div>
     </>

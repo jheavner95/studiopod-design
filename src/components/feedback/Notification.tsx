@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Surface } from "@/components/layout";
 import { Body, Caption } from "@/components/ui";
-import { FEEDBACK_TONE_ICON, FEEDBACK_TONE_TEXT, type FeedbackTone } from "./Alert";
+import { FEEDBACK_TONE_ICON, FEEDBACK_TONE_TEXT, feedbackRole, type FeedbackTone } from "./Alert";
 
 export interface NotificationProps {
   tone?: FeedbackTone;
@@ -24,7 +24,7 @@ export interface NotificationProps {
 export function Notification({ tone = "info", title, message, timestamp, action, onDismiss, className }: NotificationProps) {
   const Icon = FEEDBACK_TONE_ICON[tone];
   return (
-    <Surface border elevation="floating" padding="sm" className={cn("flex items-start gap-3", className)}>
+    <Surface border elevation="floating" padding="sm" role={feedbackRole(tone)} className={cn("flex items-start gap-3", className)}>
       <Icon className={cn("mt-0.5 size-4 shrink-0", FEEDBACK_TONE_TEXT[tone])} aria-hidden />
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         {title ? <span className="text-body-sm font-medium text-ink-primary">{title}</span> : null}

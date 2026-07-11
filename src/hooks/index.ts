@@ -6,3 +6,4 @@ export { useMotionControls } from "./useMotionControls";
 export { useFocusTrap } from "./useFocusTrap";
 export { useOutsideClick } from "./useOutsideClick";
 export { useEscapeKey } from "./useEscapeKey";
+export { useBodyLock } from "./useBodyLock";

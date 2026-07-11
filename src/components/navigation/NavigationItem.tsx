@@ -73,9 +73,16 @@ export function NavigationItem({
 
   const style = level > 0 ? { paddingLeft: `${12 + level * 16}px` } : undefined;
 
+  const tooltipLabel = tooltip ?? (typeof children === "string" ? children : undefined);
+  // Collapsed mode renders icon-only (content omits the label span above), so without an
+  // explicit aria-label the link/button would have no accessible name at all — the Tooltip
+  // below only adds a hover/focus description, it doesn't supply a name. Wire it directly
+  // rather than relying on the tooltip text alone.
+  const accessibleLabel = isCollapsed ? tooltipLabel : undefined;
+
   const element =
     href && !disabled ? (
-      <Link href={href} aria-current={active ? "page" : undefined} className={sharedClassName} style={style}>
+      <Link href={href} aria-current={active ? "page" : undefined} aria-label={accessibleLabel} className={sharedClassName} style={style}>
         {content}
       </Link>
     ) : (
@@ -84,6 +91,7 @@ export function NavigationItem({
         onClick={onClick}
         disabled={disabled}
         aria-current={active ? "page" : undefined}
+        aria-label={accessibleLabel}
         className={sharedClassName}
         style={style}
       >
@@ -91,7 +99,6 @@ export function NavigationItem({
       </button>
     );
 
-  const tooltipLabel = tooltip ?? (typeof children === "string" ? children : undefined);
   if (isCollapsed && tooltipLabel) {
     return <Tooltip label={tooltipLabel}>{element}</Tooltip>;
   }

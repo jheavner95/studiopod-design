@@ -56,6 +56,7 @@ export function DocsTableOfContents({ selector = "[data-toc-heading]", className
           <li key={item.id}>
             <a
               href={`#${item.id}`}
+              aria-current={activeId === item.id ? "location" : undefined}
               className={cn(
                 "focus-ring block text-caption transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
                 activeId === item.id ? "font-medium text-accent-400" : "text-ink-tertiary hover:text-ink-secondary",

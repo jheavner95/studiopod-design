@@ -15,6 +15,10 @@ interface PopoverProps {
   children: ReactNode;
   placement?: AnchorPlacement;
   align?: AnchorAlign;
+  /** Points at an id already in `children` (a heading, a field label) — same convention as Dialog/Drawer's own labelledBy. Prefer this when the content already has visible text that names it. */
+  labelledBy?: string;
+  /** For content with no natural heading to point labelledBy at — a plain string name for the popover, same role a Dialog title fills. Every real Popover use in this codebase (a filter's checkbox list, a column picker) needs one or the other, since role="dialog" with neither leaves screen readers announcing an unnamed dialog. */
+  "aria-label"?: string;
   className?: string;
 }
 
@@ -24,7 +28,17 @@ interface PopoverProps {
  * (open/onOpenChange), matching the rest of this design system's controlled-component
  * convention rather than managing hidden internal state the caller can't see.
  */
-export function Popover({ open, onOpenChange, triggerRef, children, placement = "bottom", align = "start", className }: PopoverProps) {
+export function Popover({
+  open,
+  onOpenChange,
+  triggerRef,
+  children,
+  placement = "bottom",
+  align = "start",
+  labelledBy,
+  "aria-label": ariaLabel,
+  className,
+}: PopoverProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const motionEnabled = useMotionEnabled();
   const { speed } = useMotion();
@@ -46,6 +60,9 @@ export function Popover({ open, onOpenChange, triggerRef, children, placement = 
           <motion.div
             ref={contentRef}
             role="dialog"
+            aria-modal="true"
+            aria-labelledby={labelledBy}
+            aria-label={labelledBy ? undefined : ariaLabel}
             tabIndex={-1}
             style={{ position: "fixed", top: position.top, left: position.left, zIndex: "var(--z-overlay)" }}
             initial={motionEnabled ? { opacity: 0, scale: 0.96 } : undefined}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { cloneElement, isValidElement, useId, useRef, useState, type ReactElement, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useMotion, useMotionEnabled } from "@/hooks";
@@ -28,6 +28,7 @@ export function Tooltip({ label, children, placement = "top", className }: Toolt
   const contentRef = useRef<HTMLDivElement>(null);
   const motionEnabled = useMotionEnabled();
   const { speed } = useMotion();
+  const contentId = useId();
 
   const position = useAnchoredPosition(triggerRef, contentRef, visible, { placement, align: "center", offset: 6 });
 
@@ -37,6 +38,18 @@ export function Tooltip({ label, children, placement = "top", className }: Toolt
   function hide() {
     setVisible(false);
   }
+
+  // The visible tooltip text is the trigger's only description as far as assistive tech is
+  // concerned — role="tooltip" on the portalled content alone doesn't reach it, since the
+  // two elements aren't in the same DOM subtree. Clone the (single) trigger element to add
+  // aria-describedby so screen readers announce the label, same as sighted hover/focus users get it.
+  const existingDescribedBy = isValidElement(children)
+    ? (children.props as { "aria-describedby"?: string })["aria-describedby"]
+    : undefined;
+  const describedBy = [existingDescribedBy, contentId].filter(Boolean).join(" ");
+  const trigger = isValidElement(children)
+    ? cloneElement(children as ReactElement<{ "aria-describedby"?: string }>, { "aria-describedby": describedBy })
+    : children;
 
   return (
     <>
@@ -51,13 +64,14 @@ export function Tooltip({ label, children, placement = "top", className }: Toolt
           if (event.key === "Escape") hide();
         }}
       >
-        {children}
+        {trigger}
       </span>
       <Portal>
         <AnimatePresence>
           {visible ? (
             <motion.div
               ref={contentRef}
+              id={contentId}
               role="tooltip"
               style={{ position: "fixed", top: position.top, left: position.left, zIndex: "var(--z-tooltip)" }}
               initial={motionEnabled ? { opacity: 0 } : undefined}
