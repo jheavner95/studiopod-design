@@ -158,6 +158,18 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/commerce-platform">
               Commerce platform
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/intelligence-platform">
+              Intelligence platform
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/operations-platform">
+              Operations platform
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/admin-platform">
+              Admin platform
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/integrations-platform">
+              Integrations platform
+            </Button>
           </div>
         </div>
       </Card>
