@@ -125,6 +125,18 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/approval-review">
               Approval & review
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/pipeline-components">
+              Pipeline components
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/state-machine">
+              State machine
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/dependency-relationships">
+              Dependency & relationships
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/workflow-visualization">
+              Workflow visualization
+            </Button>
             <Button variant="secondary" size="sm" href="/application-components/operational-certification">
               Operational certification
             </Button>
