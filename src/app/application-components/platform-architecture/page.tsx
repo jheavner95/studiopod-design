@@ -11,7 +11,7 @@ import { LAYER_STACK, LAYERING_STATEMENT } from "./_data/layers";
 import { OWNERSHIP_MODEL, BUSINESS_FEATURES_NOTE } from "./_data/ownership";
 import { PLATFORM_RULES } from "./_data/rules";
 import { CERTIFICATION_LEVELS, CERTIFICATION_MODEL_NOTE } from "./_data/certification";
-import { ADOPTION_TARGETS, ADOPTION_SUMMARY, PLATFORM_LIST_DISCREPANCY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
+import { ADOPTION_TARGETS, ADOPTION_SUMMARY, ADOPTION_TARGETS_STALENESS_NOTE, PLATFORM_LIST_DISCREPANCY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
 import { PLATFORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 function CrossLinks() {
@@ -271,6 +271,12 @@ export default function PlatformArchitecturePage() {
             description={ADOPTION_SUMMARY}
             descriptionMaxWidth={false}
           />
+          <Card className="flex flex-col gap-2 border-accent-500/30 bg-accent-soft/40">
+            <span className="text-body-sm font-medium text-ink-primary">Updated at DS-4.10</span>
+            <Body size="sm" muted>
+              {ADOPTION_TARGETS_STALENESS_NOTE}
+            </Body>
+          </Card>
           <div className="flex flex-col gap-3">
             {ADOPTION_TARGETS.map((entry) => (
               <Card key={entry.platform} className="flex flex-col gap-2">

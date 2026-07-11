@@ -33,6 +33,6 @@ export const PLATFORM_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   },
   {
     label: "Certification goals",
-    text: "The same four-level ladder DS-1.9 and DS-3.9 already established (Prototype → Production Ready → Certified → Enterprise Certified) applies to Platform, with one structural difference this package documents honestly: every one of the eight platforms audited in this package has zero real components today (see Adoption Targets) — so no platform can be more than a documented architecture until DS-4.2 and beyond actually build one. This page itself certifies the architecture, not any platform built on it.",
+    text: "The same four-level ladder DS-1.9 and DS-3.9 already established (Prototype → Production Ready → Certified → Enterprise Certified) applies to Platform. At the time this page was first written, every one of the eight platforms audited had zero real components (see Adoption Targets) — a structural fact, not a defect, since no platform can be more than a documented architecture until it's actually built. DS-4.2 through DS-4.9 have since built all eight, and DS-4.10 — the capstone this page's own architecture set the bar for — independently certified all eight Platform Ready. This page itself certified the architecture in advance; DS-4.10 certifies what was built against it.",
   },
 ];

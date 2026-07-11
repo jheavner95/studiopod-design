@@ -52,4 +52,4 @@ export const CERTIFICATION_LEVELS: CertificationLevel[] = [
 ];
 
 export const CERTIFICATION_MODEL_NOTE =
-  "No platform can be more than \"Defined\" (this page's own architecture, not a certification level at all) until a future DS-4.x package actually builds one — Adoption Targets below confirms zero real Platform components exist anywhere in the codebase today. This ladder is published now so the first platform built has a bar to clear from day one, the same way DS-1's own certification model existed before DS-2's Foundation Layer was built against it.";
+  "This ladder was published before any Platform component existed, so the first platform built would have a bar to clear from day one — the same way DS-1's own certification model existed before DS-2's Foundation Layer was built against it. DS-4.2 through DS-4.9 have since built all eight named platforms, and DS-4.10, the DS-4 capstone, independently certified every one of them Platform Ready against exactly this ladder. See the Platform Component Library Certification page for the per-platform verdicts.";

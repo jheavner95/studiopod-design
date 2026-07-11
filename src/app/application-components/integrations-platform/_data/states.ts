@@ -8,9 +8,13 @@ export interface IntegrationsStateNote {
  * (WorkflowStateValue, StateValue, ApprovalStateValue, DependencyStatusValue,
  * QueueStatusValue, HealthStatusValue, WorkflowNodeStatus) before writing
  * this file — the same discipline every prior Platform package's own
- * states.ts already established. Connecting is the only genuine, disclosed
- * gap; every other state carries at least one verbatim match, the strongest
- * verbatim-match ratio of any Platform package to date.
+ * states.ts already established. Six of eight states carry at least one
+ * verbatim match, the strongest ratio of any Platform package to date;
+ * Connecting (close analog only) and Archived (no analog at all — the same
+ * disclosed gap Product, Publishing, Commerce, and Admin already found) are
+ * the two genuine, disclosed gaps. (Corrected at DS-4.10 certification: an
+ * earlier draft of this comment miscounted Archived as verbatim and called
+ * Connecting "the only" gap, contradicted by the Archived row below.)
  */
 export const INTEGRATIONS_STATES: IntegrationsStateNote[] = [
   { state: "Disconnected", note: "Maps to DependencyStatusValue's own \"disconnected\" verbatim — the same structural-graph vocabulary Dependency & Relationship Views already established for connectivity concepts." },

@@ -170,6 +170,9 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/integrations-platform">
               Integrations platform
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/platform-certification">
+              Platform certification
+            </Button>
           </div>
         </div>
       </Card>

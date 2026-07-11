@@ -99,7 +99,7 @@ export default function IntegrationsPlatformPage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
-            description="Eight states this platform recognizes. Connecting is the only genuine, disclosed gap — every other state carries at least one verbatim match, the strongest verbatim-match ratio of any Platform package to date."
+            description={"Eight states this platform recognizes. Six carry at least one verbatim match, the strongest ratio of any Platform package to date — Connecting (close analog only) and Archived (no analog at all) are the two genuine, disclosed gaps. (Corrected at DS-4.10 certification: an earlier draft of this description miscounted Archived as verbatim and called Connecting \"the only\" gap.)"}
             descriptionMaxWidth={false}
           />
           <DescriptionList items={INTEGRATIONS_STATES.map((item) => ({ label: item.state, value: item.note }))} />

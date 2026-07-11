@@ -9,12 +9,12 @@ export interface LayerDefinition {
 
 /**
  * Foundation → Operational → Workflow → Platform → Business Features, in
- * composition order. The first three rows are not proposals — they're the
+ * composition order. The first four rows are not proposals — they're the
  * actual certification status of already-shipped work (DS-1/DS-2/DS-3, all
- * independently certified at their own capstones). Platform is this
- * package's own contribution: defined today, built by nothing yet.
- * Business Features has no certification page at all — it's the tier real
- * product screens live in, outside this design system's own scope.
+ * independently certified at their own capstones, and DS-4, certified
+ * Platform Ready at DS-4.10). Business Features has no certification page
+ * at all — it's the tier real product screens live in, outside this design
+ * system's own scope, and remains genuinely unbuilt.
  */
 export const LAYER_STACK: LayerDefinition[] = [
   {
@@ -44,10 +44,10 @@ export const LAYER_STACK: LayerDefinition[] = [
   {
     id: "platform",
     name: "Platform",
-    status: "defined",
-    owns: "Domain-specific reusable components — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI, scoped to exactly one platform, composed entirely from Foundation/Operational/Workflow.",
+    status: "certified-production-ready",
+    owns: "Domain-specific reusable components — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI, scoped to exactly one platform, composed entirely from Foundation/Operational/Workflow. All eight named platforms (96 components total) built DS-4.2–DS-4.9, certified Certified at DS-4.10.",
     composesFrom: "Foundation, Operational, Workflow",
-    certificationRef: null,
+    certificationRef: { label: "Platform Component Library Certification", href: "/application-components/platform-certification" },
   },
   {
     id: "business-features",

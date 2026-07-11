@@ -99,7 +99,7 @@ export default function AdminPlatformPage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
-            description="Eight states this platform recognizes. Configured and Archived have no match or close analog anywhere — the first Platform package with two genuine, disclosed vocabulary gaps — while Disabled and Auditing are disclosed close analogs only."
+            description={"Eight states this platform recognizes. Configured and Archived have no match or close analog anywhere — two genuine, disclosed vocabulary gaps, the same count Commerce Platform's own Draft/Archived pair already established and fewer than Product Platform's own four — while Disabled and Auditing are disclosed close analogs only. (Corrected at DS-4.10 certification: an earlier draft of this description incorrectly called Admin \"the first\" package with two gaps.)"}
             descriptionMaxWidth={false}
           />
           <DescriptionList items={ADMIN_STATES.map((item) => ({ label: item.state, value: item.note }))} />

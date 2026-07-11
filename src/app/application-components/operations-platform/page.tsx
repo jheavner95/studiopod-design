@@ -100,7 +100,7 @@ export default function OperationsPlatformPage() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
-            description="Eight states this platform recognizes. Unlike every prior Platform package, all eight have at least one verbatim vocabulary match — the first Platform package with zero disclosed vocabulary gaps — though Monitoring is a disclosed close analog rather than an exact one."
+            description="Eight states this platform recognizes. Seven of eight have at least one verbatim vocabulary match — the strongest ratio of any Platform package up to this one — with Monitoring the sole disclosed gap, a close analog rather than an exact match (corrected at DS-4.10 certification: an earlier draft of this description overstated the ratio as zero gaps)."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={OPERATIONS_STATES.map((item) => ({ label: item.state, value: item.note }))} />
