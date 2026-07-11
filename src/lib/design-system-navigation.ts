@@ -42,7 +42,8 @@ export type NavGroupId =
   | "workflow-systems"
   | "platform-systems"
   | "certification"
-  | "diagram-libraries";
+  | "diagram-libraries"
+  | "business-features";
 
 export type NavStatus = "certified" | "established" | "placeholder" | "legacy";
 
@@ -105,6 +106,7 @@ export const NAV_GROUPS: NavGroup[] = [
   { id: "platform-systems", section: "application-components", title: "Platform Systems", href: "/docs/platform", description: "DS-4 — eight domain-specific component libraries, plus the architecture that governs them." },
   { id: "certification", section: "application-components", title: "Certification", href: "/docs/certification", description: "The five capstone certification and audit reviews, one per tier." },
   { id: "diagram-libraries", section: "application-components", title: "Diagram Libraries", href: "/application-components", description: "Pre-DS-4 illustration-canvas playgrounds — distinct from, and predating, their same-named Platform-tier counterparts." },
+  { id: "business-features", section: "application-components", title: "Business Features", href: "/application-components/business-features/production-workspace", description: "DS-5.4+ — real Business Feature pilots composing only certified Platform/Workflow/Operational/Foundation components, validating the DS-5.x composition model end to end." },
 ];
 
 /**
@@ -227,6 +229,11 @@ export const NAV_REGISTRY: NavEntry[] = [
   { id: "platforms-library", title: "Platform Architecture Library (legacy)", href: "/platforms", section: "application-components", group: "diagram-libraries", order: 0, description: "The pre-DS-4 illustration-canvas Platform Architecture playground — diagram data, not real components.", status: "legacy", related: ["platform-architecture"], aliases: ["Same-name collision with /application-components/platform-architecture — see this package's own Naming Review"] },
   { id: "production-library", title: "Production & Validation Library (legacy)", href: "/production", section: "application-components", group: "diagram-libraries", order: 1, description: "The pre-DS-4 illustration-canvas production/validation playground — diagram data, not real components.", status: "legacy", related: ["production-platform"], aliases: ["Same-name collision with /application-components/production-platform — see this package's own Naming Review"] },
   { id: "capabilities-library", title: "Capability Library (legacy)", href: "/capabilities", section: "application-components", group: "diagram-libraries", order: 2, description: "The pre-DS-4 illustration-canvas capability/provider playground — diagram data, not real components.", status: "legacy", related: ["integrations-platform"] },
+
+  // ---------------------------------------------------------------------
+  // Application Components — Business Features (DS-5.4+, real feature pilots)
+  // ---------------------------------------------------------------------
+  { id: "production-workspace-feature", title: "Production Workspace Feature", href: "/application-components/business-features/production-workspace", section: "application-components", group: "business-features", order: 0, description: "The DS-5.4 pilot — the first real Business Feature, composing only certified Platform/Workflow/Operational/Foundation components with local state and mock data.", status: "established", related: ["production-platform", "business-feature-templates", "application-composition"] },
 
   // ---------------------------------------------------------------------
   // Workflow Patterns
