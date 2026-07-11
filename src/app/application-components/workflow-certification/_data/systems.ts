@@ -34,7 +34,7 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     componentCount: 10,
     readiness: "Production Ready",
     composesFrom: ["Workflow Framework", "Foundation Navigation", "Foundation Metadata", "Foundation Feedback"],
-    keyGaps: ["WorkflowStepperStep never sets aria-current=\"step\" on the current step — a real, verified regression from the exact Foundation Navigation Stepper pattern it claims its visual idiom from, which does implement aria-current"],
+    keyGaps: [],
   },
   {
     code: "03",

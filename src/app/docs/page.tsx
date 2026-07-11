@@ -17,13 +17,14 @@ const primaryEntryPoints = landingEntries.filter((e) =>
 const relatedGroups = [getGroup("foundations")!, getGroup("core-components")!, getGroup("workflow-patterns")!];
 
 // Real counts verified against src/lib/design-system-navigation.ts: the six canonical Application
-// Components groups hold 53 pages total (10 Workspace + 10 Foundation + 11 Operational + 10 Workflow +
-// 11 Platform + 1 Certification index). Five of those tiers — Workspace, Foundation, Operational,
+// Components groups hold 55 pages total (10 Workspace + 10 Foundation + 11 Operational + 10 Workflow +
+// 11 Platform + 3 Certification: the index plus the Accessibility & Interaction Quality and Enterprise
+// Architecture & Adoption audit pages). Five of those tiers — Workspace, Foundation, Operational,
 // Workflow, and Platform — each carry a completed capstone certification entry (status: "certified").
 // Platform Systems scopes 8 domain-specific libraries (Production, Product, Publishing, Commerce,
 // Intelligence, Operations, Admin, Integrations).
 const STATS = [
-  { label: "Pages in this hub", value: "53" },
+  { label: "Pages in this hub", value: "55" },
   { label: "Documentation tiers", value: "6" },
   { label: "Tiers certified", value: "5 of 5" },
   { label: "Platform domains", value: "8" },

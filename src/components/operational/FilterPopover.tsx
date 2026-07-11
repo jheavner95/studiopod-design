@@ -47,7 +47,7 @@ export function FilterPopover({ label, badge, icon, children, className }: Filte
         open={open}
         onOpenChange={setOpen}
         triggerRef={triggerRef}
-        aria-label={typeof label === "string" ? label : undefined}
+        aria-label={typeof label === "string" ? label : "Filter options"}
       >
         {children}
       </Popover>
