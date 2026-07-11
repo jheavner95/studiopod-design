@@ -1,42 +1,15 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { PrimitiveGallery } from "./_components/PrimitiveGallery";
 import { CompositionExamples } from "./_components/CompositionExamples";
 import { PROMOTION_CANDIDATES } from "./_data/promotion-candidates";
 import { LAYOUT_RULES } from "./_data/layout-rules";
 import { LAYOUT_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Workspace Layout", href: "/application-components/workspace-layout" },
-    { label: "Asset Workspace", href: "/application-components/asset-workspace" },
-    { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
-    { label: "Foundation Table System", href: "/application-components/foundation-table" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Form System", href: "/application-components/foundation-forms" },
-    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
+const entry = getEntry("foundation-layout")!;
 
 const ACCESSIBILITY_TOPICS = [
   { label: "Reading order", note: "Every primitive renders its children in the same order they're passed — layout never reorders content visually in a way that diverges from DOM order." },
@@ -48,22 +21,12 @@ const ACCESSIBILITY_TOPICS = [
 
 export default function FoundationLayoutPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · foundation layout"
-          title="Foundation layout primitives"
-          description="The nine structural primitives every higher-level StudioPOD component is composed from — eliminating repeated flex/grid implementations across Web and App. Documentation, inventory, and an interactive demonstration only; this doesn't touch the production application."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>} title="Primitives vs. components" descriptionMaxWidth={false} />
+          <SectionHeader id="overview" eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>} title="Primitives vs. components" descriptionMaxWidth={false} />
           <CardGrid columns={2}>
             <Card className="flex flex-col gap-2">
               <span className="text-body-sm font-medium text-ink-primary">Components compose primitives</span>
@@ -87,6 +50,7 @@ export default function FoundationLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="gallery"
             eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
             title="Interactive gallery"
             description="Select a primitive for its purpose, a live example, usage guidance, and common mistakes."
@@ -99,6 +63,7 @@ export default function FoundationLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition examples"
             description="Five recognizable shapes, each assembled entirely from the primitives above — no business logic, no fetched data."
@@ -111,6 +76,7 @@ export default function FoundationLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description="Real, grep-verifiable counts of repeated implementations across this design system — not estimates."
@@ -150,7 +116,7 @@ export default function FoundationLayoutPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Layout rules</Eyebrow>} title="Layout rules" descriptionMaxWidth={false} />
+          <SectionHeader id="layout-rules" eyebrow={<Eyebrow tone="accent">Layout rules</Eyebrow>} title="Layout rules" descriptionMaxWidth={false} />
           <CardGrid columns={3}>
             {LAYOUT_RULES.map((rule) => (
               <Card key={rule.title} className="flex flex-col gap-2">
@@ -166,7 +132,7 @@ export default function FoundationLayoutPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={ACCESSIBILITY_TOPICS.map((item) => ({ label: item.label, value: item.note }))} />
         </div>
       </SectionShell>
@@ -174,6 +140,7 @@ export default function FoundationLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current nine primitives leave for later — reserved, not scoped or committed."
@@ -191,6 +158,6 @@ export default function FoundationLayoutPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { AssetWorkspaceAnatomyExplorer } from "./_components/AssetWorkspaceAnatomyExplorer";
 import { AssetCardDemo } from "./_components/AssetCardDemo";
 import { SELECTION_BEHAVIORS } from "./_data/selection-model";
@@ -28,87 +28,25 @@ const APPLIES_TO = [
   "Future business objects",
 ];
 
-function CrossLinks() {
-  return (
-    <div className="flex flex-wrap gap-4">
-      <Link
-        href="/application-components/workspace-framework"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Framework
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-layout"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Layout
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-toolbar"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Toolbar
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/primary-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Primary Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/inspector-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Inspector Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/status-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Operational Status workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-certification"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Architecture Certification
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-    </div>
-  );
-}
+const entry = getEntry("asset-workspace")!;
 
 export default function AssetWorkspacePage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · asset workspace"
-          title="Asset workspace framework"
-          description="The standard object-browsing experience used throughout StudioPOD — discovering, browsing, selecting, organizing, and preparing business objects for work. Documentation and an interactive demonstration only; this doesn't touch the production application."
-        >
-          <div className="flex flex-col gap-4 pt-2">
-            <CrossLinks />
-            <div className="flex flex-wrap gap-2">
-              {APPLIES_TO.map((object) => (
-                <Badge key={object} tone="neutral" size="sm">
-                  {object}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
+
+      <div className="flex flex-wrap gap-2">
+        {APPLIES_TO.map((object) => (
+          <Badge key={object} tone="neutral" size="sm">
+            {object}
+          </Badge>
+        ))}
+      </div>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="anatomy"
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
             title="Asset workspace anatomy"
             description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
@@ -121,6 +59,7 @@ export default function AssetWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="asset-card"
             eyebrow={<Eyebrow tone="accent">Asset card</Eyebrow>}
             title="Asset card anatomy"
             description="A real, interactive card — hover it, tab to it, click to select, or use Quick Actions and More. Every part is documented alongside it."
@@ -133,6 +72,7 @@ export default function AssetWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="selection-model"
             eyebrow={<Eyebrow tone="accent">Selection model</Eyebrow>}
             title="Selection model"
             descriptionMaxWidth={false}
@@ -153,6 +93,7 @@ export default function AssetWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="empty-states"
             eyebrow={<Eyebrow tone="accent">Empty states</Eyebrow>}
             title="Empty states"
             description="Eight distinct reasons an Asset Workspace can show nothing — each needs its own messaging, not one generic empty state."
@@ -192,6 +133,7 @@ export default function AssetWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="principles"
             eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>}
             title="Workspace principles"
             descriptionMaxWidth={false}
@@ -211,7 +153,7 @@ export default function AssetWorkspacePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList
             items={ACCESSIBILITY_GUIDANCE.map((item) => ({
               label: item.label,
@@ -242,6 +184,7 @@ export default function AssetWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the asset workspace anatomy leaves for later — reserved, not scoped or committed."
@@ -274,6 +217,6 @@ export default function AssetWorkspacePage() {
           </Caption>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

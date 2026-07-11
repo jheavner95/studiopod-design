@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { FormAnatomyExplorer } from "./_components/FormAnatomyExplorer";
 import { FieldGallery } from "./_components/FieldGallery";
 import { FieldStatesDemo } from "./_components/FieldStatesDemo";
@@ -15,55 +13,23 @@ import { FORM_GUIDANCE } from "./_data/implementation-guidance";
 import { FORM_PROMOTION_CANDIDATES, totalPromotionLines } from "./_data/promotion-candidates";
 import { FORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
-    { label: "Primary Workspace", href: "/application-components/primary-workspace" },
-    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
   Low: "success",
   Medium: "warning",
   High: "accent",
 };
 
+const entry = getEntry("foundation-forms")!;
+
 export default function FoundationFormsPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · foundation forms"
-          title="Foundation form system"
-          description="The canonical editing system for StudioPOD — Settings, Inspector editing, Provider configuration, Style/Recipe editors, Publishing settings, Commerce configuration, and Workspace preferences all build from this one system. Forms edit information; Foundation Metadata presents it. Reusable foundation components, documentation, and an interactive demonstration. Existing pages are not refactored yet."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="anatomy"
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
             title="Form anatomy"
             description="Eight regions, top to bottom — select one to see the component that owns it."
@@ -76,6 +42,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="field-gallery"
             eyebrow={<Eyebrow tone="accent">Field gallery</Eyebrow>}
             title="Field gallery"
             description="Ten fields, each with a live, working example plus when — and when not — to reach for it."
@@ -88,6 +55,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="field-states"
             eyebrow={<Eyebrow tone="accent">Field states</Eyebrow>}
             title="Field states"
             description="Eleven states every field can be in — three of them live below, the rest documented alongside."
@@ -110,6 +78,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="validation"
             eyebrow={<Eyebrow tone="accent">Validation</Eyebrow>}
             title="Validation"
             description="A real, working form — Validate runs a blocking Form-level check; fixing a flagged field re-validates it immediately (progressive validation), and every problem is aggregated once in the Validation Summary above the fields."
@@ -122,6 +91,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="property-editing"
             eyebrow={<Eyebrow tone="accent">Property editing</Eyebrow>}
             title="Property editing"
             description="Four ways PropertyEditor composes into a real editing surface."
@@ -133,7 +103,7 @@ export default function FoundationFormsPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={FORM_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
@@ -141,6 +111,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             descriptionMaxWidth={false}
@@ -161,6 +132,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description={`Real, grep-verifiable form patterns found in this codebase today — ${FORM_PROMOTION_CANDIDATES.length} categories, ${totalPromotionLines()} lines combined across the two that measure in lines.`}
@@ -209,6 +181,7 @@ export default function FoundationFormsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current system leaves for later — reserved, not scoped or committed."
@@ -226,6 +199,6 @@ export default function FoundationFormsPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

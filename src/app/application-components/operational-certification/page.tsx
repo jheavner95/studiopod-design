@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { StatusWidget, MetricCard, HealthWidget } from "@/components/operational";
-import { PageIntro } from "../_components/PageIntro";
 import { Scorecard } from "./_components/Scorecard";
 import { OPERATIONAL_SYSTEMS, TOTAL_COMPONENT_COUNT } from "./_data/systems";
 import { DIMENSION_TALLIES, computeQualityTotals, computeAdoptionTotals } from "./_data/scorecard";
@@ -17,62 +17,26 @@ import { CERTIFICATION_LEVELS, CERTIFICATION_DECISION, CERTIFICATION_JUSTIFICATI
 import { OPERATIONAL_ROADMAP } from "./_data/roadmap";
 import { DS25_WORK_PACKAGES, EXECUTIVE_SUMMARY_STRENGTHS, EXECUTIVE_SUMMARY_WEAKNESSES, DS25_COMPLETION_SUMMARY } from "./_data/executive-summary";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
-    { label: "Workspace Certification", href: "/application-components/workspace-certification" },
-    ...OPERATIONAL_SYSTEMS.map((system) => ({ label: system.name, href: system.href })),
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 const READINESS_TONE: Record<string, "success" | "warning" | "error"> = {
   Ready: "success",
   "Mostly ready": "warning",
   "Not ready": "error",
 };
 
+const entry = getEntry("operational-certification")!;
 const decisionLevel = CERTIFICATION_LEVELS.find((l) => l.id === CERTIFICATION_DECISION)!;
 const qualityTotals = computeQualityTotals();
 const adoptionTotals = computeAdoptionTotals();
 
 export default function OperationalCertificationPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · operational certification"
-          title="Operational Component Library certification"
-          description="The DS-2.5 capstone — a final review of all nine operational systems (113 components) against API consistency, composition, Foundation reuse, accessibility, and adoption readiness. A certification and audit package: no new components, no migrations, just a verified record of where the library actually stands."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="warning" size="sm" className="w-fit">
-              DS-2.5.10 — Certification Review
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Nine systems, ${TOTAL_COMPONENT_COUNT} components`}
             description="Every system built across DS-2.5.1–2.5.9, each independently re-audited for this certification rather than trusting its own docs page."
@@ -103,6 +67,7 @@ export default function OperationalCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="verify"
             eyebrow={<Eyebrow tone="accent">Verify</Eyebrow>}
             title="Certification scorecard"
             description="Every system against all eleven verification dimensions — the full matrix behind each system's readiness label above."
@@ -135,6 +100,7 @@ export default function OperationalCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="foundation-compliance"
             eyebrow={<Eyebrow tone="accent">Foundation compliance</Eyebrow>}
             title="Zero duplicated Forms, Tables, Metadata, Navigation, Feedback, Overlay, or Layout"
             description={`${VIOLATIONS_FOUND} violations found across all nine systems — every composition point below was confirmed by reading the actual import, not the docs comment claiming it.`}
@@ -157,7 +123,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility review</Eyebrow>} title="Accessibility review" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility-review" eyebrow={<Eyebrow tone="accent">Accessibility review</Eyebrow>} title="Accessibility review" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             <span className="text-body-sm font-medium text-ink-primary">Verified strengths</span>
             <DescriptionList items={ACCESSIBILITY_STRENGTHS.map((t) => ({ label: t.label, value: t.text }))} />
@@ -172,6 +138,7 @@ export default function OperationalCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="dependency-review"
             eyebrow={<Eyebrow tone="accent">Dependency review</Eyebrow>}
             title="Foundation → Operational → Platform Components"
             description={LAYERING_NOTE}
@@ -198,6 +165,7 @@ export default function OperationalCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-review"
             eyebrow={<Eyebrow tone="accent">Promotion review</Eyebrow>}
             title="Every real duplication finding across DS-2.5, reclassified"
             description={PROMOTION_METHODOLOGY_NOTE}
@@ -250,7 +218,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Readiness</Eyebrow>} title="Readiness" descriptionMaxWidth={false} />
+          <SectionHeader id="readiness" eyebrow={<Eyebrow tone="accent">Readiness</Eyebrow>} title="Readiness" descriptionMaxWidth={false} />
           <CardGrid columns={2}>
             {READINESS_ASSESSMENT.map((row) => (
               <Card key={row.label} className="flex flex-col gap-2">
@@ -271,7 +239,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Certification decision</Eyebrow>} title="Certification ledger" descriptionMaxWidth={false} />
+          <SectionHeader id="certification-decision" eyebrow={<Eyebrow tone="accent">Certification decision</Eyebrow>} title="Certification ledger" descriptionMaxWidth={false} />
           <Card padding="lg" className="flex flex-col gap-6 border-accent-500/30 bg-accent-soft/40">
             <div className="flex flex-wrap items-center gap-4">
               <ShieldCheck className="size-6 text-accent-400" aria-hidden />
@@ -312,7 +280,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Operational roadmap</Eyebrow>} title="Where DS-2.5 sits in the larger plan" descriptionMaxWidth={false} />
+          <SectionHeader id="operational-roadmap" eyebrow={<Eyebrow tone="accent">Operational roadmap</Eyebrow>} title="Where DS-2.5 sits in the larger plan" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             {OPERATIONAL_ROADMAP.map((stage) => (
               <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
@@ -333,7 +301,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="DS-2.5 completion summary" descriptionMaxWidth={false} />
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="DS-2.5 completion summary" descriptionMaxWidth={false} />
           <Body size="md" muted className="max-w-[var(--container-narrow)]">
             {DS25_COMPLETION_SUMMARY}
           </Body>
@@ -384,6 +352,6 @@ export default function OperationalCertificationPage() {
           </div>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

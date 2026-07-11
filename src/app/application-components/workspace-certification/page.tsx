@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight, ArrowDown, ShieldCheck } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { BlueprintDiagram } from "./_components/BlueprintDiagram";
 import { ScorecardTable } from "./_components/ScorecardTable";
 import { CertificationMatrix } from "./_components/CertificationMatrix";
@@ -15,52 +15,13 @@ import { CERTIFICATION_LEVELS } from "./_data/certification-levels";
 import { ARCHITECTURE_ROADMAP } from "./_data/roadmap";
 import { DS1_WORK_PACKAGES } from "./_data/completion-summary";
 
-function CrossLinks() {
-  const links = [
-    { label: "Workspace Framework", href: "/application-components/workspace-framework" },
-    { label: "Workspace Header", href: "/application-components/workspace-header" },
-    { label: "Workspace Layout", href: "/application-components/workspace-layout" },
-    { label: "Workspace Toolbar", href: "/application-components/workspace-toolbar" },
-    { label: "Asset Workspace", href: "/application-components/asset-workspace" },
-    { label: "Primary Workspace", href: "/application-components/primary-workspace" },
-    { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
-    { label: "Operational Status Workspace", href: "/application-components/status-workspace" },
-    { label: "Foundation Component Catalog", href: "/application-components/foundation-components" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
+const entry = getEntry("workspace-certification")!;
 const example = computeExampleTotal();
 
 export default function WorkspaceCertificationPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · workspace certification"
-          title="Workspace architecture certification"
-          description="The capstone of DS-1 — the governance standard every current and future StudioPOD workspace is evaluated against before implementation. Documentation and an interactive demonstration only; this doesn't touch the production application."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div id="blueprint" className="flex scroll-mt-24 flex-col gap-10">
@@ -77,6 +38,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="scorecard"
             eyebrow={<Eyebrow tone="accent">Scorecard</Eyebrow>}
             title="Workspace certification scorecard"
             description={`A weighted model across ${SCORECARD_CATEGORIES.length} categories, ${TOTAL_POSSIBLE_POINTS} points total. Category weights are raw points, not percentages — they don't sum to 100.`}
@@ -133,6 +95,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="review-checklist"
             eyebrow={<Eyebrow tone="accent">Review checklist</Eyebrow>}
             title="Workspace design review checklist"
             description="Ten questions a reviewer works through for any workspace under review."
@@ -172,6 +135,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-certification"
             eyebrow={<Eyebrow tone="accent">Platform certification</Eyebrow>}
             title="Platform certification matrix"
             description="Every current StudioPOD platform, scored honestly against today's state — no platform has completed a formal Scorecard review yet, since this page is what defines that review. Product has no architecture or coverage tracking anywhere yet, which this matrix surfaces rather than hides."
@@ -184,6 +148,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="governance"
             eyebrow={<Eyebrow tone="accent">Governance</Eyebrow>}
             title="Workspace evolution process"
             description="How the architecture itself is allowed to change, in order."
@@ -212,6 +177,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="principles"
             eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>}
             title="Architecture principles"
             description="The DS-1 philosophy, in eight statements."
@@ -242,6 +208,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="certification-levels"
             eyebrow={<Eyebrow tone="accent">Certification levels</Eyebrow>}
             title="Certification levels"
             description="Five stages, ascending — the Scorecard percentage above decides where a workspace lands."
@@ -290,6 +257,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="roadmap"
             eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>}
             title="Future architecture roadmap"
             description="DS-1 establishes the architectural foundation everything below it builds on."
@@ -328,6 +296,7 @@ export default function WorkspaceCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="ds-1-complete"
             eyebrow={<Eyebrow tone="accent">DS-1 complete</Eyebrow>}
             title="DS-1 completion summary"
             description="Every work package this certification depends on."
@@ -359,6 +328,6 @@ export default function WorkspaceCertificationPage() {
           </Card>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

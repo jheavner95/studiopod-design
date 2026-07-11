@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { PipelineGallery } from "./_components/PipelineGallery";
 import { PIPELINE_ANATOMY } from "./_data/anatomy";
 import { PIPELINE_STATES } from "./_data/states";
@@ -13,56 +11,17 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { PIPELINE_PROMOTION_CANDIDATES, PIPELINE_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { PIPELINE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Feedback System", href: "/application-components/foundation-feedback" },
-    { label: "Workflow Framework", href: "/application-components/workflow-framework" },
-    { label: "Workflow Timeline", href: "/application-components/workflow-timeline" },
-    { label: "Approval & Review", href: "/application-components/approval-review" },
-    { label: "Queue & Job Components", href: "/application-components/queue-jobs" },
-    { label: "Status & Health Panels", href: "/application-components/status-health" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
+const entry = getEntry("pipeline-components")!;
 
 export default function PipelineComponentsPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · pipeline components"
-          title="Pipeline components"
-          description="The canonical StudioPOD Pipeline System — the standard representation of business pipelines across Production, Publishing, Commerce, Planning, Intelligence, and Automation, composing the Workflow Framework, Workflow Timeline, Approval & Review, and Operational Queue & Job/Status & Health directly rather than duplicating any of them. Built in DS-3.5, the fifth package of the Workflow Component Library; not yet adopted by any real screen."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="warning" size="sm" className="w-fit">
-              Production Ready — DS-3.5
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="pipeline-anatomy"
             eyebrow={<Eyebrow tone="accent">Pipeline anatomy</Eyebrow>}
             title="Nine regions, twelve components"
             description="Every component in this family maps to one of the regions below — five of twelve delegate directly to Workflow Framework's own components (re-exported, not rebuilt), one composes Approval & Review's own ApprovalDecision, and one composes Workflow Timeline directly; Step, Connector, Status, Branch, and Metrics are genuinely new."
@@ -85,6 +44,7 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="gallery"
             eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
             title="Eight pipeline patterns, live"
             description="Each demo below is a real, working composition with real local state — not a static screenshot. Try the Linear Pipeline's Advance button and the Publishing Pipeline's gate Approve button."
@@ -97,6 +57,7 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="states"
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
             description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
@@ -109,6 +70,7 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             descriptionMaxWidth={false}
@@ -129,7 +91,7 @@ export default function PipelineComponentsPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={PIPELINE_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
@@ -137,6 +99,7 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             descriptionMaxWidth={false}
@@ -148,6 +111,7 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description="Real, grep-verified findings from building this system — including, for the first time in this session, genuine pre-existing pipeline models this package deliberately does not replace."
@@ -183,6 +147,7 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current system leaves for later — reserved, not scoped or committed."
@@ -200,6 +165,6 @@ export default function PipelineComponentsPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

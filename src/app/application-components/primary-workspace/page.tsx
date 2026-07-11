@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { ResponsiveRulesTable } from "@/components/table";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { PrimaryWorkspaceAnatomyExplorer } from "./_components/PrimaryWorkspaceAnatomyExplorer";
 import { PlatformExampleCard } from "./_components/PlatformExampleCard";
 import { WORKSPACE_MODES } from "./_data/modes";
@@ -15,80 +14,17 @@ import { FUTURE_WORKSPACE_TYPES } from "./_data/future-types";
 import { PLATFORM_EXAMPLES } from "./_data/platform-examples";
 import { PRIMARY_WORKSPACE_RESPONSIVE_RULES } from "./_data/responsive-rules";
 
-function CrossLinks() {
-  return (
-    <div className="flex flex-wrap gap-4">
-      <Link
-        href="/application-components/workspace-framework"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Framework
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-layout"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Layout
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-toolbar"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Toolbar
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/asset-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Asset Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/inspector-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Inspector Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/status-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Operational Status workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-certification"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Architecture Certification
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-    </div>
-  );
-}
+const entry = getEntry("primary-workspace")!;
 
 export default function PrimaryWorkspacePage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · primary workspace"
-          title="Primary workspace region"
-          description="The central working surface of every StudioPOD platform. Unlike the Asset Workspace, which focuses on discovery and selection, the Primary Workspace focuses on creation, editing, review, execution, and decision-making. Documentation and an interactive demonstration only; this doesn't touch the production application."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="anatomy"
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
             title="Primary workspace anatomy"
             description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
@@ -101,6 +37,7 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="modes"
             eyebrow={<Eyebrow tone="accent">Modes</Eyebrow>}
             title="Workspace modes"
             description="Nine canonical modes a Primary Workspace can be in — purpose, typical UI, and how each transitions to the next."
@@ -133,7 +70,7 @@ export default function PrimaryWorkspacePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Workspace principles" descriptionMaxWidth={false} />
+          <SectionHeader id="principles" eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Workspace principles" descriptionMaxWidth={false} />
           <CardGrid columns={4}>
             {PRIMARY_WORKSPACE_PRINCIPLES.map((principle) => (
               <Card key={principle.title} className="flex flex-col gap-2">
@@ -150,6 +87,7 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             description="Five dimensions of behavior across three conceptual breakpoints — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
@@ -164,7 +102,7 @@ export default function PrimaryWorkspacePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={ACCESSIBILITY_GUIDANCE.map((item) => ({ label: item.label, value: item.text }))} />
         </div>
       </SectionShell>
@@ -172,6 +110,7 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-workspace-types"
             eyebrow={<Eyebrow tone="accent">Future workspace types</Eyebrow>}
             title="Future workspace types"
             description="Room the anatomy leaves for later — reserved, not scoped or committed."
@@ -193,6 +132,7 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-examples"
             eyebrow={<Eyebrow tone="accent">Platform examples</Eyebrow>}
             title="Platform examples"
             description="Six named screens, each paired with the Primary Working Surface type suited to that specific task — a platform can and does use more than one type across its different screens."
@@ -212,6 +152,6 @@ export default function PrimaryWorkspacePage() {
           </Caption>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

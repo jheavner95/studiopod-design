@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, Stack, Cluster } from "@/components/layout";
+import { SectionShell, CardGrid, Stack, Cluster } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { StatGroup } from "@/components/metadata";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { AuditMatrix, type AuditMatrixColumn } from "./_components/AuditMatrix";
 import { BarRow } from "./_components/BarRow";
 import { MaturityLadder } from "./_components/MaturityLadder";
@@ -39,31 +37,6 @@ import {
   computeReadinessScore,
   CERTIFICATION_RECOMMENDATION,
 } from "./_data/executive-summary";
-
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Table System", href: "/application-components/foundation-table" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Form System", href: "/application-components/foundation-forms" },
-    { label: "Workspace Certification", href: "/application-components/workspace-certification" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
 
 const STATUS_TONE: Record<string, "success" | "warning" | "neutral"> = {
   Exists: "success",
@@ -180,24 +153,17 @@ const readinessColumns: AuditMatrixColumn<ReadinessRow>[] = [
 
 const readinessScore = computeReadinessScore();
 
+const entry = getEntry("foundation-audit")!;
+
 export default function FoundationAuditPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · foundation audit"
-          title="Foundation layer audit & certification"
-          description="A comprehensive architectural review of the Foundation Layer — Layout, Tables, Metadata, Forms, the Component Catalog, and Workspace Architecture — evaluated as one cohesive system, as if preparing it for public release. This is an architectural review, not a feature implementation: no new components are built here, and no existing pages are migrated yet."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider id="inventory">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="inventory"
             eyebrow={<Eyebrow tone="accent">Section 1 · Inventory</Eyebrow>}
             title="Foundation inventory"
             description="Every figure below is computed live from the Foundation Component Catalog, cross-checked against real directory listings for the four built packages."
@@ -264,6 +230,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="api-consistency">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="api-consistency"
             eyebrow={<Eyebrow tone="accent">Section 2 · API consistency</Eyebrow>}
             title="API consistency review"
             description="Every public component across all four families, read in full — naming, props, composition, variants, accessibility, state naming, and responsive behavior."
@@ -302,6 +269,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="composition">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="composition"
             eyebrow={<Eyebrow tone="accent">Section 3 · Composition</Eyebrow>}
             title="Composition review"
             description="A dependency read of the whole layer, built from real import grep — not assumed from folder structure."
@@ -318,6 +286,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="duplication">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="duplication"
             eyebrow={<Eyebrow tone="accent">Section 4 · Duplication</Eyebrow>}
             title="Duplication review"
             description="Real, grep-verified duplication still present in the codebase, grouped by family — including a re-run of every family's own promotion-candidates findingCommand to check for drift."
@@ -355,6 +324,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="migration-plan">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="migration-plan"
             eyebrow={<Eyebrow tone="accent">Section 5 · Migration plan</Eyebrow>}
             title="Migration plan"
             description="The recommended sequence — not a priority ranking by importance, a sequencing by risk and dependency. Each step explains why it sits where it does relative to its neighbors."
@@ -388,6 +358,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="certification">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="certification"
             eyebrow={<Eyebrow tone="accent">Section 6 · Certification</Eyebrow>}
             title="Foundation certification"
             description="Applying the design system's own five-level maturity model to each family. Foundation Table reached Certified in DS-2.1.8 — the first family to do so; the rest remain Production Ready, which is itself a finding, not an oversight, and isn't fabricated to look better."
@@ -441,6 +412,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="design-rules">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="design-rules"
             eyebrow={<Eyebrow tone="accent">Section 7 · Design rules</Eyebrow>}
             title="Design rules review"
             description="Which rules the Foundation Layer actually follows, which it violates today, and which need clarification before more families are built on top of it."
@@ -464,6 +436,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="readiness">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="readiness"
             eyebrow={<Eyebrow tone="accent">Section 8 · Readiness</Eyebrow>}
             title="Readiness assessment"
             description="Whether the Foundation Layer is ready to support each of the six systems planned next."
@@ -479,6 +452,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" divider id="roadmap">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="roadmap"
             eyebrow={<Eyebrow tone="accent">Section 9 · Roadmap</Eyebrow>}
             title="Roadmap adjustments"
             description="Recommended changes to DS-2, and the one genuinely new opportunity this audit surfaced — deliberately not padded with unnecessary work."
@@ -505,6 +479,7 @@ export default function FoundationAuditPage() {
       <SectionShell spacing="lg" id="executive-summary">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="executive-summary"
             eyebrow={<Eyebrow tone="accent">Section 10 · Executive summary</Eyebrow>}
             title="Executive summary"
             descriptionMaxWidth={false}
@@ -585,6 +560,6 @@ export default function FoundationAuditPage() {
           </Card>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

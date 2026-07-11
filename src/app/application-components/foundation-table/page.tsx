@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { TableAnatomyExplorer } from "./_components/TableAnatomyExplorer";
 import { VariantGallery } from "./_components/VariantGallery";
 import { CellTypesTable } from "./_components/CellTypesTable";
@@ -15,62 +13,23 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { TABLE_PROMOTION_CANDIDATES, TABLE_RESOLVED_MIGRATIONS, totalPromotionLines } from "./_data/promotion-candidates";
 import { TABLE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Workspace Layout", href: "/application-components/workspace-layout" },
-    { label: "Asset Workspace", href: "/application-components/asset-workspace" },
-    { label: "Inspector Workspace", href: "/application-components/inspector-workspace" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Form System", href: "/application-components/foundation-forms" },
-    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
   Low: "success",
   Medium: "warning",
   High: "accent",
 };
 
+const entry = getEntry("foundation-table")!;
+
 export default function FoundationTablePage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · foundation table"
-          title="Foundation table system"
-          description="The canonical StudioPOD table — Publishing Queue, Commerce Orders, Products, Assets, Styles, Ratios, Integrations, Users, Audit Log, Diagnostics all build from this one system. Documentation, reusable foundation components, and an interactive demonstration. Certified in DS-2.1.8 after four real migrations, a verified accessibility pass, and a stable API across three consecutive zero-change releases."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="success" size="sm" className="w-fit">
-              Certified — DS-2.1.8
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="anatomy"
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
             title="Table anatomy"
             description="Seven regions, top to bottom — select one to see the component that owns it."
@@ -83,6 +42,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="variants"
             eyebrow={<Eyebrow tone="accent">Variants</Eyebrow>}
             title="Table variants"
             description="Nine named variants, each a real, live table built from the same underlying components."
@@ -95,6 +55,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="cell-types"
             eyebrow={<Eyebrow tone="accent">Cell types</Eyebrow>}
             title="Cell types"
             description="Eleven cell types, each with its own alignment, wrapping, truncation, and accessibility rules."
@@ -107,6 +68,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="selection"
             eyebrow={<Eyebrow tone="accent">Selection</Eyebrow>}
             title="Selection"
             description="Single click toggles a row, shift-click selects a range, the header checkbox selects or clears all, and the Toolbar becomes a bulk-action bar the moment anything is selected."
@@ -119,6 +81,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="states"
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
             description="Six states a table can be in, switched live on one shared table below."
@@ -131,6 +94,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             descriptionMaxWidth={false}
@@ -151,7 +115,7 @@ export default function FoundationTablePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={TABLE_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
@@ -159,6 +123,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             descriptionMaxWidth={false}
@@ -170,6 +135,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description={`Every hand-rolled <table> implementation still remaining in this codebase — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined, neither a native <table>. Four categories have been migrated already, completing every genuine native-table candidate; see below.`}
@@ -218,6 +184,7 @@ export default function FoundationTablePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current system leaves for later — reserved, not scoped or committed."
@@ -235,6 +202,6 @@ export default function FoundationTablePage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

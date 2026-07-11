@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight, ArrowDown, ShieldCheck } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { PLATFORM_ARCHITECTURE_TOPICS } from "./_data/architecture";
 import { PLATFORM_ANATOMY } from "./_data/anatomy";
 import { PLATFORM_TEMPLATES } from "./_data/templates";
@@ -14,27 +14,7 @@ import { CERTIFICATION_LEVELS, CERTIFICATION_MODEL_NOTE } from "./_data/certific
 import { ADOPTION_TARGETS, ADOPTION_SUMMARY, ADOPTION_TARGETS_STALENESS_NOTE, PLATFORM_LIST_DISCREPANCY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
 import { PLATFORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Operational Certification", href: "/application-components/operational-certification" },
-    { label: "Workflow Certification", href: "/application-components/workflow-certification" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
+const entry = getEntry("platform-architecture")!;
 
 const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "accent" | "neutral"> = {
   certified: "success",
@@ -58,27 +38,13 @@ const ADOPTION_TONE: Record<AdoptionVerdict, "warning" | "neutral"> = {
 
 export default function PlatformArchitecturePage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · platform architecture"
-          title="Platform component architecture"
-          description="The DS-4 opener — defining the architecture, boundaries, composition rules, and certification model for Platform Components, the layer sitting above the just-certified Workflow Component Library. An architecture and documentation package: no platform-specific components, no migrations, just the blueprint the first real platform will be built against."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="accent" size="sm" className="w-fit">
-              DS-4.1 — Architecture Defined
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-architecture"
             eyebrow={<Eyebrow tone="accent">Platform architecture</Eyebrow>}
             title="Why Platform exists, and what it owns"
             descriptionMaxWidth={false}
@@ -90,6 +56,7 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-anatomy"
             eyebrow={<Eyebrow tone="accent">Platform anatomy</Eyebrow>}
             title="Six regions, two layers"
             description="Four regions belong to Platform itself; the last two belong to Business Features, the layer this page defines the boundary against."
@@ -116,6 +83,7 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-templates"
             eyebrow={<Eyebrow tone="accent">Platform templates</Eyebrow>}
             title="Eight platforms, one composition plan each"
             description="Every field below is a forward-looking architecture proposal, not existing code — Adoption Targets confirms zero real components exist for any of these eight platforms today. Workflow/Operational/Foundation usage cites real, already-certified systems by name."
@@ -155,6 +123,7 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="layer-composition"
             eyebrow={<Eyebrow tone="accent">Layer composition</Eyebrow>}
             title="Foundation → Operational → Workflow → Platform → Business Features"
             description={LAYERING_STATEMENT}
@@ -195,7 +164,7 @@ export default function PlatformArchitecturePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Component ownership</Eyebrow>} title="Component ownership" descriptionMaxWidth={false} />
+          <SectionHeader id="component-ownership" eyebrow={<Eyebrow tone="accent">Component ownership</Eyebrow>} title="Component ownership" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             {OWNERSHIP_MODEL.map((entry) => (
               <Card key={entry.layer} className="flex flex-col gap-2">
@@ -222,7 +191,7 @@ export default function PlatformArchitecturePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Platform rules</Eyebrow>} title="Platform rules" descriptionMaxWidth={false} />
+          <SectionHeader id="platform-rules" eyebrow={<Eyebrow tone="accent">Platform rules</Eyebrow>} title="Platform rules" descriptionMaxWidth={false} />
           <DescriptionList items={PLATFORM_RULES.map((r) => ({ label: r.category, value: r.rule }))} />
         </div>
       </SectionShell>
@@ -230,6 +199,7 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="certification-model"
             eyebrow={<Eyebrow tone="accent">Certification model</Eyebrow>}
             title="A four-level ladder, consistent with Foundation and Workflow"
             description={CERTIFICATION_MODEL_NOTE}
@@ -266,6 +236,7 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="adoption-targets"
             eyebrow={<Eyebrow tone="accent">Adoption targets</Eyebrow>}
             title="Eight platforms audited, zero real candidates found"
             description={ADOPTION_SUMMARY}
@@ -304,6 +275,7 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current architecture leaves for later — reserved, not scoped or committed."
@@ -321,6 +293,6 @@ export default function PlatformArchitecturePage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

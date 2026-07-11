@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { InspectorPanelGallery } from "./_components/InspectorPanelGallery";
 import { INSPECTOR_ANATOMY } from "./_data/anatomy";
 import { INSPECTOR_STATES } from "./_data/states";
@@ -13,57 +11,17 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { INSPECTOR_PROMOTION_CANDIDATES, INSPECTOR_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { INSPECTOR_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Form System", href: "/application-components/foundation-forms" },
-    { label: "Foundation Feedback System", href: "/application-components/foundation-feedback" },
-    { label: "Foundation Navigation System", href: "/application-components/foundation-navigation" },
-    { label: "Foundation Overlay System", href: "/application-components/foundation-overlays" },
-    { label: "Data Grid", href: "/application-components/data-grid" },
-    { label: "Inspector Workspace Framework", href: "/application-components/inspector-workspace" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
+const entry = getEntry("inspector-panel")!;
 
 export default function InspectorPanelPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · inspector panel"
-          title="Inspector panel"
-          description="The canonical StudioPOD Inspector Panel — the standard inspector used across all StudioPOD platforms. Composes Foundation Layout, Foundation Metadata, Foundation Forms, Foundation Feedback, Foundation Navigation, and the Overlay System end to end rather than duplicating any of their functionality. Built in DS-2.5.2; not yet adopted by any real screen."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="warning" size="sm" className="w-fit">
-              Production Ready — DS-2.5.2
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="inspector-anatomy"
             eyebrow={<Eyebrow tone="accent">Inspector anatomy</Eyebrow>}
             title="Ten regions, one inspector"
             description="Every Inspector* component maps to exactly one region below — most delegate directly to an already-certified Foundation component."
@@ -86,6 +44,7 @@ export default function InspectorPanelPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="gallery"
             eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
             title="Eight inspector variants, live"
             description="Each demo below is a real, working inspector with real local state — not a static screenshot. Try Asset/Commerce Inspector's editable fields, History Inspector's show-more, and Multi-section Inspector's tabs."
@@ -98,6 +57,7 @@ export default function InspectorPanelPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="states"
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
             description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
@@ -110,6 +70,7 @@ export default function InspectorPanelPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             descriptionMaxWidth={false}
@@ -130,7 +91,7 @@ export default function InspectorPanelPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={INSPECTOR_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
@@ -138,6 +99,7 @@ export default function InspectorPanelPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             descriptionMaxWidth={false}
@@ -149,6 +111,7 @@ export default function InspectorPanelPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
@@ -195,6 +158,7 @@ export default function InspectorPanelPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current system leaves for later — reserved, not scoped or committed."
@@ -212,6 +176,6 @@ export default function InspectorPanelPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

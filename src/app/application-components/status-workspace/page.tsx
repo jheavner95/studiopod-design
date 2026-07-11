@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { CheckCircle2 } from "lucide-react";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { StatusAnatomyExplorer } from "./_components/StatusAnatomyExplorer";
 import { VariantCard } from "./_components/VariantCard";
 import { PlatformExampleCard } from "./_components/PlatformExampleCard";
@@ -16,73 +16,17 @@ import { STATUS_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 import { PLATFORM_EXAMPLES } from "./_data/platform-examples";
 import { DESIGN_CONTRACT } from "./_data/design-contract";
 
-function CrossLinks() {
-  return (
-    <div className="flex flex-wrap gap-4">
-      <Link
-        href="/application-components/workspace-framework"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Framework
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-layout"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Layout
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-toolbar"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Toolbar
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/primary-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Primary Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/inspector-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Inspector Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-certification"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Certification
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-    </div>
-  );
-}
+const entry = getEntry("status-workspace")!;
 
 export default function StatusWorkspacePage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · status workspace"
-          title="Operational status workspace"
-          description="The standard ambient-awareness anatomy used throughout StudioPOD — background jobs, notifications, activity, and platform health, all visible without interrupting the Primary Workspace. Documentation and an interactive demonstration only; this doesn't touch the production application."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="anatomy"
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
             title="Operational status anatomy"
             description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
@@ -95,6 +39,7 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="variants"
             eyebrow={<Eyebrow tone="accent">Variants</Eyebrow>}
             title="Status workspace variants"
             description="The same seven regions, weighted differently depending on what the platform actually operates."
@@ -110,7 +55,7 @@ export default function StatusWorkspacePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Workspace principles" descriptionMaxWidth={false} />
+          <SectionHeader id="principles" eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Workspace principles" descriptionMaxWidth={false} />
           <CardGrid columns={4}>
             {STATUS_PRINCIPLES.map((principle) => (
               <Card key={principle.title} className="flex flex-col gap-2">
@@ -127,6 +72,7 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             description="Five presentation modes, each appropriate at a different breakpoint — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
@@ -156,7 +102,7 @@ export default function StatusWorkspacePage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={ACCESSIBILITY_GUIDANCE.map((item) => ({ label: item.label, value: item.text }))} />
         </div>
       </SectionShell>
@@ -164,6 +110,7 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future status extensions"
             description="Room the anatomy leaves for later — reserved, not scoped or committed."
@@ -185,6 +132,7 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-examples"
             eyebrow={<Eyebrow tone="accent">Platform examples</Eyebrow>}
             title="Platform examples"
             description="Six named status workspaces, each built from the same seven regions with a different emphasis."
@@ -201,6 +149,7 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="design-contract"
             eyebrow={<Eyebrow tone="accent">Design contract</Eyebrow>}
             title="Operational status design contract"
             description="The official checklist every future Operational Status implementation must satisfy."
@@ -253,6 +202,6 @@ export default function StatusWorkspacePage() {
           </Caption>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

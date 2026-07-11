@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { ResponsiveRulesTable } from "@/components/table";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { ToolbarAnatomyExplorer } from "./_components/ToolbarAnatomyExplorer";
 import { VariantCard } from "./_components/VariantCard";
 import { TOOLBAR_VARIANTS } from "./_data/variants";
@@ -15,87 +15,17 @@ import { TOOLBAR_IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance
 import { TOOLBAR_RESPONSIVE_RULES } from "./_data/responsive-rules";
 import { TOOLBAR_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  return (
-    <div className="flex flex-wrap gap-4">
-      <Link
-        href="/application-components/workspace-framework"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Framework
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-header"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Header
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-layout"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Layout
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/asset-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Asset Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/primary-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Primary Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/inspector-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Inspector Workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/status-workspace"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Operational Status workspace
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-      <Link
-        href="/application-components/workspace-certification"
-        className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-      >
-        Workspace Architecture Certification
-        <ArrowUpRight className="size-3.5" aria-hidden />
-      </Link>
-    </div>
-  );
-}
+const entry = getEntry("workspace-toolbar")!;
 
 export default function WorkspaceToolbarPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · workspace toolbar"
-          title="Workspace toolbar framework"
-          description="The standard command surface used throughout StudioPOD. The Workspace Header provides context; the Workspace Toolbar provides interaction — search, filter, sort, select, and act. Documentation and an interactive demonstration only; this doesn't touch the production application."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="anatomy"
             eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
             title="Toolbar anatomy"
             description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
@@ -108,6 +38,7 @@ export default function WorkspaceToolbarPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="variants"
             eyebrow={<Eyebrow tone="accent">Variants</Eyebrow>}
             title="Toolbar variants"
             description="The same eight regions, adapted to whatever mode the Primary Workspace is in — see Workspace Header's own variants for the header half of each pairing."
@@ -124,6 +55,7 @@ export default function WorkspaceToolbarPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             description="Five dimensions of behavior across three conceptual breakpoints — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
@@ -138,7 +70,7 @@ export default function WorkspaceToolbarPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Toolbar principles" descriptionMaxWidth={false} />
+          <SectionHeader id="principles" eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Toolbar principles" descriptionMaxWidth={false} />
           <CardGrid columns={4}>
             {TOOLBAR_PRINCIPLES.map((principle) => (
               <Card key={principle.title} className="flex flex-col gap-2">
@@ -155,6 +87,7 @@ export default function WorkspaceToolbarPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="common-mistakes"
             eyebrow={<Eyebrow tone="accent">Common mistakes</Eyebrow>}
             title="Common mistakes"
             description="Every one of these has shipped somewhere before — the anatomy above exists specifically to make them harder to repeat."
@@ -176,6 +109,7 @@ export default function WorkspaceToolbarPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             description="A reference checklist for whoever builds the first real Workspace Toolbar."
@@ -211,6 +145,7 @@ export default function WorkspaceToolbarPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the toolbar anatomy leaves for later — reserved, not scoped or committed."
@@ -243,6 +178,6 @@ export default function WorkspaceToolbarPage() {
           </Caption>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

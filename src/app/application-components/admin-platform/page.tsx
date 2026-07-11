@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { AdminPlatformGallery } from "./_components/AdminPlatformGallery";
 import { ADMIN_ANATOMY } from "./_data/anatomy";
 import { ADMIN_STATES } from "./_data/states";
@@ -13,56 +11,17 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { ADMIN_PROMOTION_CANDIDATES, ADMIN_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { ADMIN_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Platform Architecture", href: "/application-components/platform-architecture" },
-    { label: "Production Platform", href: "/application-components/production-platform" },
-    { label: "Commerce Platform", href: "/application-components/commerce-platform" },
-    { label: "Operations Platform", href: "/application-components/operations-platform" },
-    { label: "State Machine", href: "/application-components/state-machine" },
-    { label: "Approval & Review", href: "/application-components/approval-review" },
-    { label: "Property Panel", href: "/application-components/property-panel" },
-    { label: "Data Grid", href: "/application-components/data-grid" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
+const entry = getEntry("admin-platform")!;
 
 export default function AdminPlatformPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · admin platform"
-          title="Admin platform components"
-          description="The canonical Admin Platform Component Library — the eighth Platform-tier library, built entirely on Foundation, Operational, and Workflow. All 12 components are pure re-exports of already-certified lower-tier components; this package implements zero Admin business logic of its own. Built in DS-4.8, the eighth package of the Platform Component Library."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="warning" size="sm" className="w-fit">
-              Platform Ready — DS-4.8
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="platform-anatomy"
             eyebrow={<Eyebrow tone="accent">Platform anatomy</Eyebrow>}
             title="Eleven regions, twelve components"
             description="Every component in this family maps to one of the regions below — this package's own AdminEnrollment is the first Platform-tier reuse of Approval & Review's own ApprovalStage, checked directly against Pipeline Components' own PipelineStage before composing."
@@ -85,6 +44,7 @@ export default function AdminPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="gallery"
             eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
             title="Eight admin patterns, live"
             description="Each demo below is a real, working composition with real props — not a static screenshot. Try the Configuration demo's live toggle and role select."
@@ -97,6 +57,7 @@ export default function AdminPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="states"
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
             description={"Eight states this platform recognizes. Configured and Archived have no match or close analog anywhere — two genuine, disclosed vocabulary gaps, the same count Commerce Platform's own Draft/Archived pair already established and fewer than Product Platform's own four — while Disabled and Auditing are disclosed close analogs only. (Corrected at DS-4.10 certification: an earlier draft of this description incorrectly called Admin \"the first\" package with two gaps.)"}
@@ -109,6 +70,7 @@ export default function AdminPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             descriptionMaxWidth={false}
@@ -129,7 +91,7 @@ export default function AdminPlatformPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={ADMIN_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
@@ -137,6 +99,7 @@ export default function AdminPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             descriptionMaxWidth={false}
@@ -148,6 +111,7 @@ export default function AdminPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description="Real, grep-verified findings across the six subdomains this package's own work order named — Admin platform, Users, Permissions, Configuration, Audit, Enrollment — plus Governance, not estimated or carried over from memory."
@@ -182,6 +146,7 @@ export default function AdminPlatformPage() {
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current system leaves for later — reserved, not scoped or committed."
@@ -199,6 +164,6 @@ export default function AdminPlatformPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

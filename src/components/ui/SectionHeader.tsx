@@ -10,6 +10,8 @@ interface SectionHeaderProps {
   align?: "left" | "center";
   className?: string;
   descriptionMaxWidth?: boolean;
+  /** When set, also marks the heading `data-toc-heading` so DocsTableOfContents can index it. */
+  id?: string;
 }
 
 /** Composes eyebrow + heading + description with consistent spacing/alignment. */
@@ -20,12 +22,13 @@ export function SectionHeader({
   align = "left",
   className,
   descriptionMaxWidth = true,
+  id,
 }: SectionHeaderProps) {
   const isCentered = align === "center";
   return (
     <div className={cn("flex flex-col gap-4", isCentered && "items-center text-center", className)}>
       {eyebrow}
-      <Heading level={2}>{title}</Heading>
+      <Heading level={2} id={id}>{title}</Heading>
       {description ? (
         <p
           className={cn(

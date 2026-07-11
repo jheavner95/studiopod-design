@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { DashboardWidgetsGallery } from "./_components/DashboardWidgetsGallery";
 import { DASHBOARD_ANATOMY } from "./_data/anatomy";
 import { DASHBOARD_STATES } from "./_data/states";
@@ -13,56 +11,17 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { DASHBOARD_PROMOTION_CANDIDATES, DASHBOARD_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { DASHBOARD_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Foundation Components", href: "/application-components/foundation-components" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Feedback System", href: "/application-components/foundation-feedback" },
-    { label: "Data Grid", href: "/application-components/data-grid" },
-    { label: "Status & Health Panels", href: "/application-components/status-health" },
-    { label: "Queue & Job Components", href: "/application-components/queue-jobs" },
-    { label: "Filter & Search System", href: "/application-components/filter-search" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
+const entry = getEntry("dashboard-widgets")!;
 
 export default function DashboardWidgetsPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · dashboard widgets"
-          title="Dashboard widgets"
-          description="The canonical StudioPOD Dashboard Widget System — the standard dashboard framework for every platform, built entirely from certified Foundation and Operational component libraries. Composes Foundation Layout/Metadata/Feedback end to end, and Operational Data Grid, Status & Health, Queue & Job, and Filter & Search directly, rather than duplicating any of them. Built in DS-2.5.9; not yet adopted by any real screen."
-        >
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Badge tone="warning" size="sm" className="w-fit">
-              Production Ready — DS-2.5.9
-            </Badge>
-          </div>
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="dashboard-anatomy"
             eyebrow={<Eyebrow tone="accent">Dashboard anatomy</Eyebrow>}
             title="Six regions, one system"
             description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component."
@@ -85,6 +44,7 @@ export default function DashboardWidgetsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="gallery"
             eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
             title="Eight dashboard patterns, live"
             description="Each demo below is a real, working composition with real local state — not a static screenshot. Try Executive Dashboard's Refresh button for the loading/refreshing state."
@@ -97,6 +57,7 @@ export default function DashboardWidgetsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="states"
             eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
             title="States"
             description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
@@ -109,6 +70,7 @@ export default function DashboardWidgetsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="responsive-behavior"
             eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
             title="Responsive behavior"
             descriptionMaxWidth={false}
@@ -129,7 +91,7 @@ export default function DashboardWidgetsPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
           <DescriptionList items={DASHBOARD_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
@@ -137,6 +99,7 @@ export default function DashboardWidgetsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="implementation-guidance"
             eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
             title="Implementation guidance"
             descriptionMaxWidth={false}
@@ -148,6 +111,7 @@ export default function DashboardWidgetsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="promotion-candidates"
             eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
             title="Promotion candidates"
             description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
@@ -177,6 +141,7 @@ export default function DashboardWidgetsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the current system leaves for later — reserved, not scoped or committed."
@@ -194,6 +159,6 @@ export default function DashboardWidgetsPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

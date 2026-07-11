@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { CatalogExplorer } from "./_components/CatalogExplorer";
 import { catalogSummary } from "./_data/catalog";
 import { FOUNDATION_BLOCKERS, resolveBlockers } from "./_data/readiness";
@@ -13,53 +11,19 @@ import { buildBacklog } from "./_data/backlog";
 import { FOUNDATION_DESIGN_RULES } from "./_data/design-rules";
 import { FOUNDATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-function CrossLinks() {
-  const links = [
-    { label: "Application Components", href: "/application-components" },
-    { label: "Workspace Certification", href: "/application-components/workspace-certification" },
-    { label: "Foundation Layout Primitives", href: "/application-components/foundation-layout" },
-    { label: "Foundation Table System", href: "/application-components/foundation-table" },
-    { label: "Foundation Metadata System", href: "/application-components/foundation-metadata" },
-    { label: "Foundation Form System", href: "/application-components/foundation-forms" },
-    { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-4">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="focus-ring flex items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-        >
-          {link.label}
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 const summary = catalogSummary();
 const backlog = buildBacklog();
+const entry = getEntry("foundation-components")!;
 
 export default function FoundationComponentsPage() {
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · foundation components"
-          title="Foundation component catalog"
-          description="The primitive UI layer every StudioPOD operational component builds on — the official catalog for Web and App alike. Documentation, inventory, and planning only; this doesn't touch the production application."
-        >
-          <div className="pt-2">
-            <CrossLinks />
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="summary"
             eyebrow={<Eyebrow tone="accent">Summary</Eyebrow>}
             title="Catalog summary"
             description="Every number below is computed live from the catalog — nothing here is hand-typed."
@@ -111,6 +75,7 @@ export default function FoundationComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="catalog"
             eyebrow={<Eyebrow tone="accent">Catalog</Eyebrow>}
             title="Component catalog"
             description="Filter by group or status, then select any component for its full spec."
@@ -123,6 +88,7 @@ export default function FoundationComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="readiness"
             eyebrow={<Eyebrow tone="accent">Readiness</Eyebrow>}
             title="Foundation readiness"
             description="Which foundation components block each not-yet-built DS-2.x package — none of these four packages exist yet."
@@ -153,6 +119,7 @@ export default function FoundationComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="certification-model"
             eyebrow={<Eyebrow tone="accent">Certification model</Eyebrow>}
             title="Certification model"
             description="The same five levels Workspace Architecture Certification defined — reused directly, not restated."
@@ -172,6 +139,7 @@ export default function FoundationComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="backlog"
             eyebrow={<Eyebrow tone="accent">Backlog</Eyebrow>}
             title="Implementation backlog"
             description="Filtered live from the catalog above, in priority order."
@@ -207,7 +175,7 @@ export default function FoundationComponentsPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader eyebrow={<Eyebrow tone="accent">Design rules</Eyebrow>} title="Design rules" descriptionMaxWidth={false} />
+          <SectionHeader id="design-rules" eyebrow={<Eyebrow tone="accent">Design rules</Eyebrow>} title="Design rules" descriptionMaxWidth={false} />
           <CardGrid columns={3}>
             {FOUNDATION_DESIGN_RULES.map((rule) => (
               <Card key={rule.title} className="flex flex-col gap-2">
@@ -224,6 +192,7 @@ export default function FoundationComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="future-extensions"
             eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
             title="Future extensions"
             description="Room the foundation layer leaves for later — reserved, not scoped or committed."
@@ -241,6 +210,6 @@ export default function FoundationComponentsPage() {
           </CardGrid>
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

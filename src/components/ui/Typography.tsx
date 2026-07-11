@@ -21,6 +21,8 @@ export function Display({ children, className, as = "h1" }: TypographyProps) {
 
 interface HeadingProps extends TypographyProps {
   level?: 1 | 2 | 3 | 4;
+  /** When set, also marks the element `data-toc-heading` so DocsTableOfContents can index it. */
+  id?: string;
 }
 
 const headingStyles = {
@@ -37,10 +39,14 @@ const headingTags = { 1: "h2", 2: "h2", 3: "h3", 4: "h4" } as const;
  * pass `as` separately if the semantic tag needs to differ (e.g. an
  * h2-styled heading that must render as an h3 for document outline).
  */
-export function Heading({ children, className, as, level = 2 }: HeadingProps) {
+export function Heading({ children, className, as, level = 2, id }: HeadingProps) {
   return createElement(
     as ?? headingTags[level],
-    { className: cn(headingStyles[level], "text-ink-primary", className) },
+    {
+      id,
+      className: cn(headingStyles[level], "text-ink-primary", className),
+      ...(id ? { "data-toc-heading": "" } : null),
+    },
     children,
   );
 }
