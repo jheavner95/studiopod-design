@@ -238,7 +238,8 @@ export const NAV_REGISTRY: NavEntry[] = [
   // Documentation
   // ---------------------------------------------------------------------
   { id: "documentation", title: "Documentation", href: "/documentation", section: "documentation", group: "documentation", order: 0, description: "Where the system's principles, package structure, and contribution workflow are written down.", status: "placeholder", next: "docs-root" },
-  { id: "docs-root", title: "Documentation Home", href: "/docs", section: "documentation", group: "documentation", order: 1, description: "The new documentation IA overlay — Workspace, Foundation, Operational, Workflow, Platform, and Certification, all in one place.", status: "established", previous: "documentation" },
+  { id: "docs-root", title: "Documentation Home", href: "/docs", section: "documentation", group: "documentation", order: 1, description: "The new documentation IA overlay — Workspace, Foundation, Operational, Workflow, Platform, and Certification, all in one place.", status: "established", previous: "documentation", next: "application-composition" },
+  { id: "application-composition", title: "Application Composition Architecture", href: "/docs/application-composition", section: "documentation", group: "documentation", order: 2, description: "The DS-5.1 architecture defining how Business Features compose the certified Foundation → Operational → Workflow → Platform layers into the real StudioPOD application.", status: "established", previous: "docs-root", related: ["platform-architecture", "platform-certification"] },
 ];
 
 // ---------------------------------------------------------------------
