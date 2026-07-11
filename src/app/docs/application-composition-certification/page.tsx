@@ -48,7 +48,7 @@ export default function ApplicationCompositionCertificationPage() {
             description="Every Application Composition package independently re-audited against its own actual source for this certification, rather than trusting each package's own report."
             descriptionMaxWidth={false}
           />
-          <div className="flex flex-col gap-3">
+          <CardGrid columns={2}>
             {REVIEWED_PACKAGES.map((pkg) => (
               <Card key={pkg.code} className="flex flex-col gap-2">
                 <div className="flex flex-wrap items-center justify-between gap-2">
@@ -62,7 +62,7 @@ export default function ApplicationCompositionCertificationPage() {
                 </Body>
               </Card>
             ))}
-          </div>
+          </CardGrid>
         </div>
       </SectionShell>
 

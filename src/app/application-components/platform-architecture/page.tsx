@@ -285,7 +285,7 @@ export default function PlatformArchitecturePage() {
                 {ADOPTION_TARGETS_STALENESS_NOTE}
               </Body>
             </Card>
-            <div className="flex flex-col gap-3">
+            <CardGrid columns={2}>
               {ADOPTION_TARGETS.map((target) => (
                 <Card key={target.platform} className="flex flex-col gap-2">
                   <div className="flex items-center justify-between gap-2">
@@ -299,7 +299,7 @@ export default function PlatformArchitecturePage() {
                   </Body>
                 </Card>
               ))}
-            </div>
+            </CardGrid>
             <Card className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
               <span className="text-body-sm font-medium text-ink-primary">Platform-list discrepancy</span>
               <Body size="sm" muted>

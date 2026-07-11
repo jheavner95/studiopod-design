@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { CardGrid } from "@/components/layout";
 import { Card, Body, Caption } from "@/components/ui";
 
 function Chip({ children }: { children: string }) {
@@ -29,7 +30,7 @@ function MockupFrame({ label, caption, children }: { label: string; caption: str
  */
 export function ResponsiveMockups() {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <CardGrid columns={3} gap="sm">
       <MockupFrame
         label="Desktop"
         caption="All four regions visible at once: full Identity with description, up to three Status badges, and the full Actions hierarchy."
@@ -96,6 +97,6 @@ export function ResponsiveMockups() {
           <Chip>Primary</Chip>
         </div>
       </MockupFrame>
-    </div>
+    </CardGrid>
   );
 }

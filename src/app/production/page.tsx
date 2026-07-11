@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { PageShell, SectionShell } from "@/components/layout";
 import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
@@ -50,7 +50,7 @@ export default function ProductionPlaygroundPage() {
               description="Where this diagram library's subject matter is implemented as real, certified components."
               descriptionMaxWidth={false}
             />
-            <CardGrid columns={3}>
+            <div className="flex flex-col gap-4 sm:max-w-sm">
               {relatedComponents.map((related) => (
                 <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
                   <Card interactive className="flex h-full flex-col gap-2">
@@ -61,7 +61,7 @@ export default function ProductionPlaygroundPage() {
                   </Card>
                 </Link>
               ))}
-            </CardGrid>
+            </div>
           </div>
         </SectionShell>
 

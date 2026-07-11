@@ -47,7 +47,7 @@ export default function WorkflowVisualizationPage() {
             description="Every component in this family maps to one of the regions below — two of twelve delegate directly to Workflow Framework's own components (re-exported, not rebuilt), two more re-export Dependency & Relationship Views' own Edge/Group, one composes a bulk-selection pattern reused from Operational, and one composes Operational Inspector Panel directly; Viewport, Node, Toolbar, Overview, MiniMap, Legend, and Controls are genuinely new."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
+          <CardGrid columns={4}>
             {WORKFLOW_VIZ_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

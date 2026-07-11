@@ -110,12 +110,12 @@ export default function BusinessFeaturesPage() {
               description="The canonical tree every Business Feature's own source code follows — ownership for every part is pulled directly from Application Composition Architecture's own Application Boundaries, not re-derived."
               descriptionMaxWidth={false}
             />
-            <div className="flex flex-col gap-3">
+            <CardGrid columns={2}>
               {FEATURE_STRUCTURE.map((part) => (
                 <Card key={part.name} className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-body-md font-medium text-ink-primary">{part.name}</span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <Badge tone="accent" size="sm">
                         {part.owner}
                       </Badge>
@@ -129,7 +129,7 @@ export default function BusinessFeaturesPage() {
                   </Body>
                 </Card>
               ))}
-            </div>
+            </CardGrid>
           </div>
 
           <div className="flex flex-col gap-10">
@@ -235,7 +235,7 @@ export default function BusinessFeaturesPage() {
             description="Where Feature Architecture is the abstract ownership tree, this is the concrete part list a real feature is built against — each grounded in a representative already-certified component."
             descriptionMaxWidth={false}
           />
-          <div className="flex flex-col gap-3">
+          <CardGrid columns={2}>
             {FEATURE_TEMPLATE.map((part) => (
               <Card key={part.name} className="flex flex-col gap-2">
                 <span className="text-body-sm font-medium text-ink-primary">{part.name}</span>
@@ -245,7 +245,7 @@ export default function BusinessFeaturesPage() {
                 <Caption className="text-ink-tertiary">Composes from: {part.composesFrom}</Caption>
               </Card>
             ))}
-          </div>
+          </CardGrid>
         </div>
       </SectionShell>
 
@@ -283,12 +283,12 @@ export default function BusinessFeaturesPage() {
               description={CANDIDATE_SUMMARY}
               descriptionMaxWidth={false}
             />
-            <div className="flex flex-col gap-3">
+            <CardGrid columns={2}>
               {CANDIDATE_FEATURES.map((candidate) => (
                 <Card key={candidate.name} className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-body-sm font-medium text-ink-primary">{candidate.name}</span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <Badge tone="neutral" size="sm">
                         {FEATURE_CATEGORIES.find((c) => c.id === candidate.suggestedCategory)?.name ?? candidate.suggestedCategory}
                       </Badge>
@@ -302,7 +302,7 @@ export default function BusinessFeaturesPage() {
                   </Body>
                 </Card>
               ))}
-            </div>
+            </CardGrid>
           </div>
 
           <div className="flex flex-col gap-10">

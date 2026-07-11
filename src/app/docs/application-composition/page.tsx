@@ -185,7 +185,7 @@ export default function ApplicationCompositionPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader id="application-boundaries" title="Nine ownership questions, answered" descriptionMaxWidth={false} />
-            <div className="flex flex-col gap-3">
+            <CardGrid columns={2}>
               {APPLICATION_BOUNDARIES.map((boundary) => (
                 <Card key={boundary.concern} className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -199,7 +199,7 @@ export default function ApplicationCompositionPage() {
                   </Body>
                 </Card>
               ))}
-            </div>
+            </CardGrid>
           </div>
         </div>
       </SectionShell>
@@ -213,7 +213,7 @@ export default function ApplicationCompositionPage() {
             description="Five internal UI regions, one internal non-UI region, and four composition points — the same “what does this own, what does it compose” shape Platform Architecture used one tier down."
             descriptionMaxWidth={false}
           />
-          <div className="flex flex-col gap-3">
+          <CardGrid columns={2}>
             {FEATURE_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
@@ -227,7 +227,7 @@ export default function ApplicationCompositionPage() {
                 </Body>
               </Card>
             ))}
-          </div>
+          </CardGrid>
         </div>
       </SectionShell>
 
@@ -265,7 +265,7 @@ export default function ApplicationCompositionPage() {
               description={ADOPTION_SUMMARY}
               descriptionMaxWidth={false}
             />
-            <div className="flex flex-col gap-3">
+            <CardGrid columns={2}>
               {ADOPTION_TARGETS.map((target) => (
                 <Card key={target.candidate} className="flex flex-col gap-2">
                   <div className="flex items-center justify-between gap-2">
@@ -279,7 +279,7 @@ export default function ApplicationCompositionPage() {
                   </Body>
                 </Card>
               ))}
-            </div>
+            </CardGrid>
           </div>
 
           <div className="flex flex-col gap-10">

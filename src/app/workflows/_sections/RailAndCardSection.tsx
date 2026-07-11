@@ -1,3 +1,4 @@
+import { CardGrid } from "@/components/layout";
 import { WorkflowRail, WorkflowCard } from "@/workflows";
 import { publishing } from "@/workflows/examples";
 import { DemoLabel } from "../_components/preview-primitives";
@@ -14,11 +15,11 @@ export function RailAndCardSection() {
       </div>
       <div className="flex flex-col gap-3">
         <DemoLabel>Cards</DemoLabel>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <CardGrid columns={4} gap="sm">
           {publishing.steps.map((step) => (
             <WorkflowCard key={step.id} step={step} />
           ))}
-        </div>
+        </CardGrid>
       </div>
     </div>
   );

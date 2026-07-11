@@ -220,7 +220,7 @@ export default function FoundationTablePage() {
               description="Room the current system leaves for later — reserved, not scoped or committed."
               descriptionMaxWidth={false}
             />
-            <CardGrid columns={3}>
+            <CardGrid columns={4}>
               {TABLE_FUTURE_EXTENSIONS.map((extension) => (
                 <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
                   <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>

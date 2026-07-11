@@ -181,8 +181,15 @@ export default function FoundationAuditPage() {
             ]}
           />
           <CardGrid columns={2}>
-            {FOUNDATION_LAYER_INVENTORY.map((row) => (
-              <Card key={row.id} className="flex flex-col gap-3">
+            {FOUNDATION_LAYER_INVENTORY.map((row, index) => (
+              <Card
+                key={row.id}
+                className={
+                  index === FOUNDATION_LAYER_INVENTORY.length - 1 && FOUNDATION_LAYER_INVENTORY.length % 2 === 1
+                    ? "flex flex-col gap-3 sm:col-span-2"
+                    : "flex flex-col gap-3"
+                }
+              >
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <span className="text-body-md font-medium text-ink-primary">{row.family}</span>
                   <Cluster gap="xs">
@@ -236,10 +243,23 @@ export default function FoundationAuditPage() {
             description="Every public component across all four families, read in full — naming, props, composition, variants, accessibility, state naming, and responsive behavior."
             descriptionMaxWidth={false}
           />
-          <AuditMatrix caption="API consistency matrix across the four Foundation Layer families" columns={consistencyColumns} rows={API_CONSISTENCY_MATRIX} rowKey={(row) => row.id} />
+          <AuditMatrix
+            caption="API consistency matrix across the four Foundation Layer families"
+            columns={consistencyColumns}
+            rows={API_CONSISTENCY_MATRIX}
+            rowKey={(row) => row.id}
+            minWidth="960px"
+          />
           <CardGrid columns={2}>
-            {CONSISTENCY_FINDINGS.map((finding) => (
-              <Card key={finding.id} className="flex flex-col gap-2">
+            {CONSISTENCY_FINDINGS.map((finding, index) => (
+              <Card
+                key={finding.id}
+                className={
+                  index === CONSISTENCY_FINDINGS.length - 1 && CONSISTENCY_FINDINGS.length % 2 === 1
+                    ? "flex flex-col gap-2 sm:col-span-2"
+                    : "flex flex-col gap-2"
+                }
+              >
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <span className="text-body-sm font-medium text-ink-primary">{finding.title}</span>
                   <Badge tone={SEVERITY_TONE[finding.severity]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
@@ -365,8 +385,15 @@ export default function FoundationAuditPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
-            {FAMILY_CERTIFICATION.map((entry) => (
-              <Card key={entry.id} className="flex flex-col gap-4">
+            {FAMILY_CERTIFICATION.map((entry, index) => (
+              <Card
+                key={entry.id}
+                className={
+                  index === FAMILY_CERTIFICATION.length - 1 && FAMILY_CERTIFICATION.length % 2 === 1
+                    ? "flex flex-col gap-4 sm:col-span-2"
+                    : "flex flex-col gap-4"
+                }
+              >
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <span className="text-body-md font-medium text-ink-primary">{entry.family}</span>
                   {entry.adoptionStatus ? (
@@ -418,7 +445,13 @@ export default function FoundationAuditPage() {
             description="Which rules the Foundation Layer actually follows, which it violates today, and which need clarification before more families are built on top of it."
             descriptionMaxWidth={false}
           />
-          <AuditMatrix caption="Design rule compliance across the Foundation Layer" columns={designRulesColumns} rows={DESIGN_RULES_REVIEW} rowKey={(row) => row.id} />
+          <AuditMatrix
+            caption="Design rule compliance across the Foundation Layer"
+            columns={designRulesColumns}
+            rows={DESIGN_RULES_REVIEW}
+            rowKey={(row) => row.id}
+            minWidth="840px"
+          />
           <div className="flex flex-col gap-3">
             <span className="text-body-sm font-medium text-ink-primary">Recommended additions</span>
             <ul className="flex flex-col gap-2">

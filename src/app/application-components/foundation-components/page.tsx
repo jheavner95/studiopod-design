@@ -217,10 +217,7 @@ export default function FoundationComponentsPage() {
               description="The same five levels Workspace Certification defined — reused directly here, not restated."
               descriptionMaxWidth={false}
             />
-            <DescriptionList
-              labelWidth="sm:w-44"
-              items={MATURITY_LEVELS.map((entry) => ({ label: entry.level, value: entry.description }))}
-            />
+            <DescriptionList items={MATURITY_LEVELS.map((entry) => ({ label: entry.level, value: entry.description }))} />
             <Caption className="text-ink-tertiary">
               No component in this catalog has been marked Certified or Locked — neither level can be reached from
               status alone, and no foundation component has gone through that review yet.

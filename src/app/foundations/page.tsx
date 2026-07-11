@@ -141,21 +141,38 @@ export default function FoundationsPage() {
             description="The remaining page in Foundations, not yet built out beyond pointing into the Design System Overview's own token sections."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={remainingEntries.length > 2 ? 3 : 2} gap="md">
-            {remainingEntries.map((item) => (
-              <Link key={item.id} href={item.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-body-md font-medium text-ink-primary">{item.title}</span>
-                    <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-                  </div>
-                  <Body size="sm" muted>
-                    {item.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          {remainingEntries.length === 1 ? (
+            // A single leftover entry inside a multi-column CardGrid would
+            // occupy one cell and leave a large empty gutter beside it —
+            // constrain it to a narrow standalone card instead.
+            <Link href={remainingEntries[0].href} className="focus-ring block w-full max-w-sm rounded-lg">
+              <Card interactive className="flex h-full flex-col gap-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-body-md font-medium text-ink-primary">{remainingEntries[0].title}</span>
+                  <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
+                </div>
+                <Body size="sm" muted>
+                  {remainingEntries[0].description}
+                </Body>
+              </Card>
+            </Link>
+          ) : (
+            <CardGrid columns={remainingEntries.length > 4 ? 4 : 3} gap="md">
+              {remainingEntries.map((item) => (
+                <Link key={item.id} href={item.href} className="focus-ring block rounded-lg">
+                  <Card interactive className="flex h-full flex-col gap-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-body-md font-medium text-ink-primary">{item.title}</span>
+                      <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
+                    </div>
+                    <Body size="sm" muted>
+                      {item.description}
+                    </Body>
+                  </Card>
+                </Link>
+              ))}
+            </CardGrid>
+          )}
         </div>
       </SectionShell>
     </PageShell>

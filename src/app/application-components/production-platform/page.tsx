@@ -29,7 +29,7 @@ export default function ProductionPlatformPage() {
             description="Every component in this family maps to one of the regions below — all 12 are re-exports or thin wrappers over already-certified Workflow Framework, Pipeline Components, State Machine, Workflow Visualization, and Operational components, checked directly against each one's own prop surface before composing rather than rebuilding it."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
+          <CardGrid columns={4}>
             {PRODUCTION_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

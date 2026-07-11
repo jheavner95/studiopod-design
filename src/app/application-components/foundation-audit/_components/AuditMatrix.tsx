@@ -13,6 +13,8 @@ interface AuditMatrixProps<T> {
   columns: AuditMatrixColumn<T>[];
   rows: T[];
   rowKey: (row: T) => string;
+  /** Overrides Table's 640px default floor — matrices with many columns or long-text cells need more room before horizontal scroll kicks in. */
+  minWidth?: string;
 }
 
 /**
@@ -20,9 +22,9 @@ interface AuditMatrixProps<T> {
  * matrices are built on it rather than a one-off hand-rolled table, which is exactly the adoption
  * this audit finds missing everywhere else.
  */
-export function AuditMatrix<T>({ caption, columns, rows, rowKey }: AuditMatrixProps<T>) {
+export function AuditMatrix<T>({ caption, columns, rows, rowKey, minWidth }: AuditMatrixProps<T>) {
   return (
-    <Table caption={caption}>
+    <Table caption={caption} minWidth={minWidth}>
       <TableHeader>
         <TableRow>
           {columns.map((column) => (

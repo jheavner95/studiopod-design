@@ -116,14 +116,16 @@ export default function WorkflowCertificationPage() {
           <DescriptionList items={COMPLIANCE_FINDINGS.map((f) => ({ label: f.system, value: f.finding }))} />
           <div className="flex flex-col gap-3">
             <span className="text-body-sm font-medium text-ink-primary">Genuinely new code, and why it&rsquo;s justified</span>
-            {NEW_CODE_JUSTIFICATIONS.map((f) => (
-              <Card key={f.system} className="flex flex-col gap-1">
-                <Caption className="text-ink-tertiary">{f.system}</Caption>
-                <Body size="sm" muted>
-                  {f.finding}
-                </Body>
-              </Card>
-            ))}
+            <CardGrid columns={2}>
+              {NEW_CODE_JUSTIFICATIONS.map((f) => (
+                <Card key={f.system} className="flex flex-col gap-1">
+                  <Caption className="text-ink-tertiary">{f.system}</Caption>
+                  <Body size="sm" muted>
+                    {f.finding}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
           </div>
         </div>
       </SectionShell>

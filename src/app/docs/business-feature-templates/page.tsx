@@ -70,7 +70,7 @@ export default function BusinessFeatureTemplatesPage() {
           {FEATURE_TEMPLATES.map((template) => (
             <div key={template.id} className="flex flex-col gap-6">
               <SectionHeader id={template.id} title={template.name} description={template.purpose} descriptionMaxWidth={false} />
-              <div className="flex flex-col gap-3">
+              <CardGrid columns={3}>
                 {template.layout.map((part) => (
                   <Card key={part.name} className="flex flex-col gap-2">
                     <span className="text-body-sm font-medium text-ink-primary">{part.name}</span>
@@ -79,7 +79,7 @@ export default function BusinessFeatureTemplatesPage() {
                     </Body>
                   </Card>
                 ))}
-              </div>
+              </CardGrid>
             </div>
           ))}
         </div>

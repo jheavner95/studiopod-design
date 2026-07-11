@@ -33,7 +33,7 @@ export default function PropertyPanelPage() {
             description="Nine regions, top to bottom — every Property* component maps to exactly one, and Header/Footer are Inspector Panel's own components, reused directly with no new file."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={2}>
+          <CardGrid columns={3}>
             {PROPERTY_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

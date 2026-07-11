@@ -29,7 +29,7 @@ export default function DependencyRelationshipsPage() {
             description="Every component in this family maps to one of the regions below — four of twelve delegate directly to Workflow Framework's own components (re-exported, not rebuilt), one composes Operational Inspector Panel directly, and Relationships is its own sibling node/edge pair built on the same primitives; Node, Edge, Group, and Filters are genuinely new."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
+          <CardGrid columns={2}>
             {DEPENDENCY_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

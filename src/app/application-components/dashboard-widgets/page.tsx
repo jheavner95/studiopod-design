@@ -29,7 +29,7 @@ export default function DashboardWidgetsPage() {
             description="Every component in this family maps to exactly one region below — most delegate directly to an already-established Foundation or Operational component."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={2}>
+          <CardGrid columns={3}>
             {DASHBOARD_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

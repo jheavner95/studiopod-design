@@ -119,10 +119,7 @@ export default function WorkspaceLayoutPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader id="spacing" title="Spacing system" description="Six relationships, described relative to each other rather than as pixel values." descriptionMaxWidth={false} />
-            <DescriptionList
-              labelWidth="sm:w-52"
-              items={SPACING_RULES.map((rule) => ({ label: rule.label, value: rule.text }))}
-            />
+            <DescriptionList items={SPACING_RULES.map((rule) => ({ label: rule.label, value: rule.text }))} />
             <Caption className="text-ink-tertiary">{SPACING_SCALE_NOTE}</Caption>
           </div>
 

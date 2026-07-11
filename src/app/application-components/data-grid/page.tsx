@@ -32,7 +32,7 @@ export default function DataGridPage() {
             description="Ten regions, top to bottom — every DataGrid* component below maps to exactly one, most delegating directly to a Foundation component underneath."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={2}>
+          <CardGrid columns={4}>
             {GRID_ANATOMY.map((region) => (
               <Card key={region.name} className="flex flex-col gap-2">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

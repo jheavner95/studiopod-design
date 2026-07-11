@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CardGrid } from "@/components/layout";
 import { ArtifactLifecycleDiagram, ArtifactCard } from "@/production";
 import { artifactLifecycle } from "@/production/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
@@ -27,11 +28,11 @@ export function ArtifactLifecycleSection() {
 
         <div className="flex flex-col gap-3">
           <DemoLabel>Artifact cards</DemoLabel>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <CardGrid columns={3} gap="sm">
             {artifactLifecycle.map((artifact) => (
               <ArtifactCard key={artifact.id} artifact={artifact} />
             ))}
-          </div>
+          </CardGrid>
         </div>
       </div>
     </PreviewSection>

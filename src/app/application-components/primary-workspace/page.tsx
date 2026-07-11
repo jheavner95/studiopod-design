@@ -136,7 +136,7 @@ export default function PrimaryWorkspacePage() {
             description="How each region composes with — or reuses — components defined elsewhere in the design system, rather than reinventing the same idea locally."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={2}>
+          <CardGrid columns={4}>
             {PRIMARY_WORKSPACE_REGIONS.map((region) => (
               <Card key={region.id} className="flex flex-col gap-3">
                 <span className="text-body-md font-medium text-ink-primary">{region.name}</span>

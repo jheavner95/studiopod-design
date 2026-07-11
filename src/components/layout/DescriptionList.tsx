@@ -14,33 +14,48 @@ interface DescriptionListProps {
   layout?: DescriptionListLayout;
   /** Wraps the list in the same rounded-border card every DS-1.x Accessibility section already uses — turn off to embed the bare <dl> inside a container of your own. */
   bordered?: boolean;
-  /** Overrides the label column's width class at sm: and up. Default (sm:w-56) matches every existing Accessibility-block usage; a couple of pages with shorter labels (e.g. a certification-level name) use a narrower column instead. */
-  labelWidth?: string;
 }
 
-/**
- * Label/value rows — generalizes the dl/dt/dd pattern hand-rolled
- * identically across every DS-1.x page's own Accessibility section since
- * DS-1.2 (see the Promotion Candidates section on this page for the
- * exact count). "responsive" stacks on mobile and goes side-by-side from
- * sm: up; "stacked" always stacks; "two-column" always sits side-by-side.
- */
-export function DescriptionList({ items, className, layout = "responsive", bordered = true, labelWidth = "sm:w-56" }: DescriptionListProps) {
-  const rowDirection = layout === "stacked" ? "flex-col" : layout === "two-column" ? "flex-row" : "flex-col sm:flex-row";
+const ROW_GRID: Record<DescriptionListLayout, string> = {
+  stacked: "grid-cols-1",
+  "two-column": "grid-cols-[auto_minmax(0,1fr)]",
+  responsive: "grid-cols-1 sm:grid-cols-[auto_minmax(0,1fr)]",
+};
 
+/**
+ * DS-6.2 — label/value rows built on `grid-template-columns: auto
+ * minmax(0,1fr)` rather than a fixed-width label column: the label track
+ * sizes to its own content, capped per breakpoint by a max-width on `dt`
+ * itself (110px on tablet, 220px from lg up) so a short label like
+ * "Status" never drags a wide column behind it and a long label wraps
+ * within its own cap instead of pushing the value column to near-zero —
+ * the exact "label starvation" and desktop-squeeze failures the prior
+ * fixed `sm:w-56` column produced. "stacked" always stacks; "two-column"
+ * always sits side-by-side (no mobile stack); "responsive" (default)
+ * stacks below sm: and goes side-by-side from sm: up. `value` accepts any
+ * ReactNode — code, links, badges, or a caller-composed flex-wrap list —
+ * `dd` itself stays a plain block so inline content wraps naturally.
+ */
+export function DescriptionList({ items, className, layout = "responsive", bordered = true }: DescriptionListProps) {
   const list = (
     <dl className={cn("flex flex-col", !bordered && className)}>
       {items.map((item, index) => (
         <div
           key={index}
           className={cn(
-            "flex gap-1.5 py-4 first:pt-0",
-            rowDirection,
-            layout !== "stacked" && "sm:gap-6",
+            "grid gap-x-6 gap-y-1 py-4 first:pt-0",
+            ROW_GRID[layout],
             index < items.length - 1 && "border-b border-border-subtle",
           )}
         >
-          <dt className={cn("w-full shrink-0 text-body-sm font-medium text-ink-primary", labelWidth)}>{item.label}</dt>
+          <dt
+            className={cn(
+              "min-w-0 text-body-sm font-medium text-ink-primary",
+              layout !== "stacked" && "sm:max-w-[110px] lg:max-w-[220px]",
+            )}
+          >
+            {item.label}
+          </dt>
           <dd className="min-w-0 break-words text-body-sm text-ink-secondary">{item.value}</dd>
         </div>
       ))}

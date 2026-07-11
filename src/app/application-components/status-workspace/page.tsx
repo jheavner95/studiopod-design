@@ -123,7 +123,7 @@ export default function StatusWorkspacePage() {
             description="The same seven regions, weighted differently depending on what the platform actually operates."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
+          <CardGrid columns={4}>
             {STATUS_VARIANTS.map((variant) => (
               <VariantCard key={variant.id} variant={variant} />
             ))}

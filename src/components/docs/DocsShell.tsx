@@ -26,13 +26,16 @@ interface DocsShellProps {
  * TOC) that collapses to a Drawer-based mobile nav below md.
  *
  * DS-6.1 widened this from Container's own 1440px "wide" cap to a
- * docs-specific 1800px one: at that width the content column (flex-1
- * between a 288px sidebar and a 256px TOC) lands at ~1160px, inside this
- * package's own 1100–1300px target — and, not incidentally, gives every
- * DescriptionList on every page enough room that its own fixed 224px label
- * column stops squeezing the value column to single-digit pixels, the
- * recurring collision earlier DS-5.x QA passes kept finding and fixing one
- * page at a time.
+ * docs-specific one; DS-6.2 widened it again to 2160px total, alongside
+ * bumping both the sidebar (SideNavigation's own w-72, 288px) and this
+ * TOC column (w-72, 288px) into the enterprise 280–320px target. At that
+ * outer cap the content column (flex-1 between them) tops out at ~1400px;
+ * at a more typical 1920px desktop viewport it lands at ~1160px — both
+ * inside this package's own 1100–1400px target. No separate max-width
+ * sits on `main` itself: capping the whole row this way keeps sidebar,
+ * content, and TOC centered together as one block past the outer cap,
+ * rather than leaving a lopsided gap between a capped content column and
+ * the TOC.
  */
 export function DocsShell({ entry, children, toc }: DocsShellProps) {
   const [collapsed, setCollapsed] = useState(false);
@@ -40,7 +43,7 @@ export function DocsShell({ entry, children, toc }: DocsShellProps) {
   return (
     <div className="flex flex-col">
       <div className="sticky top-14 z-[var(--z-sticky)] border-b border-border-subtle bg-canvas/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-3 px-[var(--spacing-gutter)] py-3">
+        <div className="mx-auto flex w-full max-w-[2160px] flex-col gap-3 px-[var(--spacing-gutter)] py-3">
           <div className="flex items-center justify-between gap-4">
             <DocsSectionNav className="hidden md:flex" />
             <div className="md:hidden">
@@ -52,7 +55,7 @@ export function DocsShell({ entry, children, toc }: DocsShellProps) {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-[1800px] flex-1 items-start gap-8 px-[var(--spacing-gutter)] py-8">
+      <div className="mx-auto flex w-full max-w-[2160px] flex-1 items-start gap-8 px-[var(--spacing-gutter)] py-8">
         <aside className="sticky top-32 hidden shrink-0 self-start md:block">
           <div className="flex items-center justify-end pb-2">
             <Button
@@ -76,7 +79,7 @@ export function DocsShell({ entry, children, toc }: DocsShellProps) {
           <DocsPageNavigation entry={entry} />
         </main>
 
-        {toc ? <div className="sticky top-32 hidden w-56 shrink-0 xl:block">{toc}</div> : null}
+        {toc ? <div className="sticky top-32 hidden w-72 shrink-0 xl:block">{toc}</div> : null}
       </div>
     </div>
   );

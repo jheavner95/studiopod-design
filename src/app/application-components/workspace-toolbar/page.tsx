@@ -111,7 +111,7 @@ export default function WorkspaceToolbarPage() {
             caption="Responsive rules: how five dimensions of toolbar behavior change across desktop, tablet, and mobile."
             rows={TOOLBAR_RESPONSIVE_RULES}
           />
-          <CardGrid columns={3}>
+          <CardGrid columns={4}>
             {TOOLBAR_MISTAKES.map((mistake) => (
               <Card key={mistake.title} className="flex flex-col gap-2 border-error/30 bg-error-soft/20">
                 <span className="text-body-sm font-medium text-ink-primary">{mistake.title}</span>

@@ -61,11 +61,11 @@ export default function ArchitecturePage() {
             description="Library, Inspector, and Workflow are worth seeing broken down further — each fans out below into the real child components it's assembled from."
             descriptionMaxWidth={false}
           />
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <CardGrid columns={3} gap="sm">
             {DEPENDENCY_FANOUTS.map((fanout) => (
               <DependencyFanoutBlock key={fanout.id} fanout={fanout} />
             ))}
-          </div>
+          </CardGrid>
         </div>
       </SectionShell>
 

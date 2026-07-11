@@ -68,7 +68,7 @@ export default function InspectorWorkspacePage() {
             description="The same eight regions, weighted differently depending on what's selected — seven named variants covering the shapes an Inspector actually takes."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
+          <CardGrid columns={4}>
             {INSPECTOR_VARIANTS.map((variant) => (
               <VariantCard key={variant.id} variant={variant} />
             ))}

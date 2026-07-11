@@ -2,6 +2,7 @@
 
 import { Columns3, Crosshair, Tag, Activity } from "lucide-react";
 import { CardGrid } from "@/components/layout";
+import { Card } from "@/components/ui";
 import { Slide } from "@/motion";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
@@ -22,9 +23,9 @@ export function DiagnosticsSection() {
       title="Developer diagnostics"
       description="Four toggleable overlays, live in the dock above. They're invisible chrome: turning them on never changes a demo's actual layout, only what's drawn on top of it."
     >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <CardGrid columns={2} gap="sm">
         {TOOLS.map(({ icon: Icon, label, description }) => (
-          <div key={label} className="flex gap-4 rounded-lg border border-border bg-surface p-4">
+          <Card key={label} padding="sm" className="flex gap-4">
             <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border bg-canvas-raised text-accent-400">
               <Icon className="size-4" />
             </div>
@@ -32,9 +33,9 @@ export function DiagnosticsSection() {
               <span className="text-body-sm font-medium text-ink-primary">{label}</span>
               <span className="text-caption text-ink-tertiary">{description}</span>
             </div>
-          </div>
+          </Card>
         ))}
-      </div>
+      </CardGrid>
 
       <CardGrid columns={2}>
         <DemoCard label="Try the overlays on this one" timingLabel="normal · enter · medium distance">

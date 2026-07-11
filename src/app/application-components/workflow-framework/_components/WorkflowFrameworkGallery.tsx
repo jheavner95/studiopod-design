@@ -26,7 +26,7 @@ function GalleryCard({ title, description, children }: { title: string; descript
       <Body size="sm" muted>
         {description}
       </Body>
-      <div className="h-[420px] overflow-hidden rounded-lg border border-border-subtle">{children}</div>
+      <div className="min-h-[420px] overflow-hidden rounded-lg border border-border-subtle">{children}</div>
     </Card>
   );
 }
@@ -264,7 +264,7 @@ function ReadOnlyWorkflowDemo() {
 /** Every named gallery variant in this system, each composed from real component props — not a static screenshot. */
 export function WorkflowFrameworkGallery() {
   return (
-    <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6">
       <LinearWorkflowDemo />
       <BranchingWorkflowDemo />
       <ApprovalWorkflowDemo />

@@ -101,34 +101,25 @@ export default function WorkspaceCertificationPage() {
             description="Ten questions a reviewer works through for any workspace under review."
             descriptionMaxWidth={false}
           />
-          <div className="rounded-lg border border-border-subtle bg-surface p-4 sm:p-6">
-            <ul className="flex flex-col">
-              {DESIGN_REVIEW_CHECKLIST.map((item, index) => (
-                <li
-                  key={item.id}
-                  className={
-                    index < DESIGN_REVIEW_CHECKLIST.length - 1
-                      ? "flex flex-col gap-1.5 border-b border-border-subtle py-4 first:pt-0"
-                      : "flex flex-col gap-1.5 py-4 first:pt-0"
-                  }
-                >
-                  <span className="text-body-sm font-medium text-ink-primary">{item.question}</span>
-                  <Body size="sm" muted className="min-w-0 break-words">
-                    {item.explanation}
-                  </Body>
-                  {item.reuseLink ? (
-                    <Link
-                      href={item.reuseLink.href}
-                      className="focus-ring flex w-fit items-center gap-1 rounded-md text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
-                    >
-                      {item.reuseLink.label}
-                      <ArrowUpRight className="size-3.5" aria-hidden />
-                    </Link>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <CardGrid columns={4}>
+            {DESIGN_REVIEW_CHECKLIST.map((item) => (
+              <Card key={item.id} className="flex h-full flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{item.question}</span>
+                <Body size="sm" muted>
+                  {item.explanation}
+                </Body>
+                {item.reuseLink ? (
+                  <Link
+                    href={item.reuseLink.href}
+                    className="focus-ring mt-auto flex w-fit items-center gap-1 rounded-md pt-2 text-caption font-medium text-accent-400 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-300"
+                  >
+                    {item.reuseLink.label}
+                    <ArrowUpRight className="size-3.5" aria-hidden />
+                  </Link>
+                ) : null}
+              </Card>
+            ))}
+          </CardGrid>
         </div>
       </SectionShell>
 

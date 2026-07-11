@@ -23,7 +23,7 @@ export function SideNavigation({ children, collapsed = false, "aria-label": aria
         aria-label={ariaLabel}
         className={cn(
           "flex h-full flex-col gap-4 overflow-y-auto border-r border-border-subtle bg-surface py-4 transition-[width] duration-[var(--duration-base)] ease-[var(--ease-standard)]",
-          collapsed ? "w-16 px-2" : "w-64 px-3",
+          collapsed ? "w-16 px-2" : "w-72 px-3",
           className,
         )}
       >

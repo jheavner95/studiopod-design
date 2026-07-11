@@ -126,7 +126,7 @@ export default function AssetWorkspacePage() {
               description="Eight distinct reasons an Asset Workspace can show nothing — each needs its own messaging, not one generic empty state."
               descriptionMaxWidth={false}
             />
-            <CardGrid columns={4}>
+            <CardGrid columns={3}>
               {EMPTY_STATES.map((state) => (
                 <Card key={state.id} className="flex h-full flex-col gap-3">
                   <span className="text-body-sm font-medium text-ink-primary">{state.name}</span>
