@@ -1,7 +1,7 @@
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { Card, Badge, Body, Caption } from "@/components/ui";
-import { SystemGrid } from "@/components/illustration";
-import { PageIntro } from "../_components/PageIntro";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
 import { CoverageMatrix } from "../_components/CoverageMatrix";
 import { COVERAGE_ROWS, PLATFORMS, type CoverageState } from "../_data/coverage";
 
@@ -17,6 +17,8 @@ const STATE_DESCRIPTIONS: Record<CoverageState, string> = {
   Planned: "Not built, or not yet relevant enough to this platform to prioritize.",
 };
 
+const entry = getEntry("coverage")!;
+
 export default function CoveragePage() {
   const totalCells = COVERAGE_ROWS.length * PLATFORMS.length;
   const counts = (Object.keys(STATE_TONE) as CoverageState[]).map((state) => ({
@@ -28,23 +30,17 @@ export default function CoveragePage() {
   }));
 
   return (
-    <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <PageIntro
-          eyebrow="package · application components · coverage"
-          title="Platform coverage matrix"
-          description="Which of StudioPOD's 8 platforms each reusable component is used on today. Every cell is derived from the component's own inventory status plus which platforms it's domain-relevant to — not hand-typed one at a time."
-        >
-          <div className="flex flex-wrap gap-3 pt-2">
-            {counts.map(({ state, count }) => (
-              <Badge key={state} tone={STATE_TONE[state]} size="md">
-                {count} {state}
-              </Badge>
-            ))}
-            <Caption className="text-ink-tertiary">of {totalCells} cells</Caption>
-          </div>
-        </PageIntro>
-      </SectionShell>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry}>
+        <div className="flex flex-wrap gap-3 pt-2">
+          {counts.map(({ state, count }) => (
+            <Badge key={state} tone={STATE_TONE[state]} size="md">
+              {count} {state}
+            </Badge>
+          ))}
+          <Caption className="text-ink-tertiary">of {totalCells} cells</Caption>
+        </div>
+      </DocsPageHeader>
 
       <SectionShell spacing="md" divider>
         <CardGrid columns={3}>
@@ -67,6 +63,6 @@ export default function CoveragePage() {
           <CoverageMatrix />
         </div>
       </SectionShell>
-    </PageShell>
+    </DocsShell>
   );
 }

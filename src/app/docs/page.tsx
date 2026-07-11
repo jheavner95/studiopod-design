@@ -1,4 +1,4 @@
-import { DocsShell, DocsPageHeader } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
 import { DocsEntryGrid } from "./_components/DocsEntryGrid";
 import { CANONICAL_APPLICATION_GROUPS, getEntry, getGroupEntries } from "@/lib/design-system-navigation";
 
@@ -9,7 +9,7 @@ const landingEntries = CANONICAL_APPLICATION_GROUPS.map((groupId) => getGroupEnt
 
 export default function DocsHomePage() {
   return (
-    <DocsShell entry={entry}>
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
       <DocsPageHeader entry={entry} />
       <DocsEntryGrid entries={landingEntries} />
     </DocsShell>
