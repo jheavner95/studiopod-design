@@ -44,7 +44,7 @@ export const LAYER_STACK: LayerDefinition[] = [
     id: "platform",
     name: "Platform",
     status: "certified-production-ready",
-    owns: "Domain-specific reusable components, scoped to one business platform — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI. All eight named platforms, 96 components, Certified at DS-4.10.",
+    owns: "Domain-specific reusable components, scoped to one business platform — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI. All eight named platforms, 96 components, Certified at Platform Certification.",
     composesFrom: "Foundation, Operational, Workflow",
     certificationRef: { label: "Platform Component Library Certification", href: "/application-components/platform-certification" },
   },
@@ -67,4 +67,4 @@ export const LAYER_STACK: LayerDefinition[] = [
 ];
 
 export const COMPOSITION_MODEL_STATEMENT =
-  "This is a strictly one-directional composition chain — each layer composes only from the layers listed to its left, never from a layer to its right or from a sibling within the same layer. Foundation, Operational, Workflow, and Platform have each already had this independently verified by direct grep at their own certification (zero reverse-dependency violations in any direction across all 4 tiers, most recently reconfirmed for Platform at DS-4.10). Business Features and Application inherit the same rule by definition — see Composition Rules for what \"allowed\" and \"forbidden\" mean concretely at this boundary.";
+  "This is a strictly one-directional composition chain — each layer composes only from the layers listed to its left, never from a layer to its right or from a sibling within the same layer. Foundation, Operational, Workflow, and Platform have each already had this independently verified by direct grep at their own certification (zero reverse-dependency violations in any direction across all 4 tiers, most recently reconfirmed for Platform at Platform Certification). Business Features and Application inherit the same rule by definition — see Composition Rules for what \"allowed\" and \"forbidden\" mean concretely at this boundary.";

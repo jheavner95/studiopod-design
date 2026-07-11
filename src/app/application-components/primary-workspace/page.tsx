@@ -13,8 +13,10 @@ import { ACCESSIBILITY_GUIDANCE } from "./_data/accessibility";
 import { FUTURE_WORKSPACE_TYPES } from "./_data/future-types";
 import { PLATFORM_EXAMPLES } from "./_data/platform-examples";
 import { PRIMARY_WORKSPACE_RESPONSIVE_RULES } from "./_data/responsive-rules";
+import { PRIMARY_WORKSPACE_REGIONS } from "./_data/regions";
 
 const entry = getEntry("primary-workspace")!;
+const relatedComponents = [getEntry("asset-workspace")!, getEntry("inspector-workspace")!, getEntry("workspace-framework")!];
 
 export default function PrimaryWorkspacePage() {
   return (
@@ -24,10 +26,10 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="anatomy"
-            eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Primary workspace anatomy"
-            description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Four regions, top to bottom — select one to see its full purpose, examples, and how it reuses components defined elsewhere in the anatomy."
             descriptionMaxWidth={false}
           />
           <PrimaryWorkspaceAnatomyExplorer />
@@ -37,10 +39,56 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="modes"
-            eyebrow={<Eyebrow tone="accent">Modes</Eyebrow>}
-            title="Workspace modes"
-            description="Nine canonical modes a Primary Workspace can be in — purpose, typical UI, and how each transitions to the next."
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The principles every region, mode, and control in this anatomy follows — and where the line sits against Asset Workspace, which handles discovery and selection rather than the creation, editing, review, and decision-making that happen here."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={4}>
+            {PRIMARY_WORKSPACE_PRINCIPLES.map((principle) => (
+              <Card key={principle.title} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{principle.title}</span>
+                <Body size="sm" muted>
+                  {principle.explanation}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
+            description="Six named screens, each paired with the Primary Working Surface type suited to that specific task — a platform can and does use more than one type across its different screens."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {PLATFORM_EXAMPLES.map((example) => (
+              <PlatformExampleCard key={example.id} example={example} />
+            ))}
+          </CardGrid>
+          <Caption className="text-ink-tertiary">
+            See also{" "}
+            <Link href="/application-components/workspace-framework" className="text-accent-400 hover:text-accent-300">
+              Workspace Framework
+            </Link>
+            &rsquo;s own Platform Examples, which describe each platform&rsquo;s default mode rather than one specific screen.
+          </Caption>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Nine canonical modes a Primary Workspace can be in — purpose, typical UI, and how each transitions to the next — plus how five dimensions of that behavior change across desktop, tablet, and mobile."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -65,34 +113,6 @@ export default function PrimaryWorkspacePage() {
               </Card>
             ))}
           </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="principles" eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Workspace principles" descriptionMaxWidth={false} />
-          <CardGrid columns={4}>
-            {PRIMARY_WORKSPACE_PRINCIPLES.map((principle) => (
-              <Card key={principle.title} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{principle.title}</span>
-                <Body size="sm" muted>
-                  {principle.explanation}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            description="Five dimensions of behavior across three conceptual breakpoints — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
-            descriptionMaxWidth={false}
-          />
           <ResponsiveRulesTable
             caption="Responsive rules: how five dimensions of Primary Workspace behavior change across desktop, tablet, and mobile."
             rows={PRIMARY_WORKSPACE_RESPONSIVE_RULES}
@@ -110,19 +130,32 @@ export default function PrimaryWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="future-workspace-types"
-            eyebrow={<Eyebrow tone="accent">Future workspace types</Eyebrow>}
-            title="Future workspace types"
-            description="Room the anatomy leaves for later — reserved, not scoped or committed."
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How each region composes with — or reuses — components defined elsewhere in the design system, rather than reinventing the same idea locally."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={4}>
-            {FUTURE_WORKSPACE_TYPES.map((type) => (
-              <Card key={type.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{type.title}</span>
+          <CardGrid columns={2}>
+            {PRIMARY_WORKSPACE_REGIONS.map((region) => (
+              <Card key={region.id} className="flex flex-col gap-3">
+                <span className="text-body-md font-medium text-ink-primary">{region.name}</span>
                 <Body size="sm" muted>
-                  {type.description}
+                  {region.reuseNotes}
                 </Body>
+                {region.reuseLinks.length > 0 ? (
+                  <div className="flex flex-wrap gap-4 border-t border-border-subtle pt-3">
+                    {region.reuseLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="focus-ring rounded-md text-caption font-medium text-accent-400 hover:text-accent-300"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
               </Card>
             ))}
           </CardGrid>
@@ -130,26 +163,50 @@ export default function PrimaryWorkspacePage() {
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="platform-examples"
-            eyebrow={<Eyebrow tone="accent">Platform examples</Eyebrow>}
-            title="Platform examples"
-            description="Six named screens, each paired with the Primary Working Surface type suited to that specific task — a platform can and does use more than one type across its different screens."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {PLATFORM_EXAMPLES.map((example) => (
-              <PlatformExampleCard key={example.id} example={example} />
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
-          <Caption className="text-ink-tertiary">
-            See also{" "}
-            <Link href="/application-components/workspace-framework" className="text-accent-400 hover:text-accent-300">
-              Workspace Framework
-            </Link>
-            &rsquo;s own Platform Examples, which describe each platform&rsquo;s default mode rather than one specific screen.
-          </Caption>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the anatomy leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={4}>
+              {FUTURE_WORKSPACE_TYPES.map((type) => (
+                <Card key={type.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{type.title}</span>
+                  <Body size="sm" muted>
+                    {type.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

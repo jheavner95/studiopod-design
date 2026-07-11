@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -12,6 +13,15 @@ import { OPERATIONS_PROMOTION_CANDIDATES, OPERATIONS_CLEAN_FINDINGS } from "./_d
 import { OPERATIONS_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("operations-platform")!;
+const relatedComponents = [getEntry("intelligence-platform")!, getEntry("admin-platform")!, getEntry("status-health")!];
+
+// Where each component's responsibility ends and caller-supplied (Business Feature) logic begins.
+const WHEN_TO_USE_LABELS = ["Monitoring presentation", "Automation workflows", "Alert presentation", "Health organization"];
+// How the 12 components compose from the Workflow and Operational tiers beneath them.
+const COMPOSITION_LABELS = ["Platform composition", "Workflow integration", "Operational integration"];
+
+const whenToUseGuidance = IMPLEMENTATION_GUIDANCE.filter((item) => WHEN_TO_USE_LABELS.includes(item.label));
+const compositionGuidance = IMPLEMENTATION_GUIDANCE.filter((item) => COMPOSITION_LABELS.includes(item.label));
 
 export default function OperationsPlatformPage() {
   return (
@@ -21,10 +31,10 @@ export default function OperationsPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="platform-anatomy"
-            eyebrow={<Eyebrow tone="accent">Platform anatomy</Eyebrow>}
-            title="Eleven regions, twelve components"
-            description="Every component in this family maps to one of the regions below — this package's own OperationsAlerts and OperationsMonitoring are the first Platform-tier reuse of OperationalAlertPanel and ProviderHealthPanel, checked directly against each one's own prop surface before composing rather than rebuilding it."
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Eleven regions, twelve components — every component in this family maps to one of the regions below. OperationsAlerts and OperationsMonitoring are this platform's first reuse of OperationalAlertPanel and ProviderHealthPanel, checked directly against each one's own prop surface before composing rather than rebuilding it."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -44,8 +54,30 @@ export default function OperationsPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="gallery"
-            eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="Four places where a component's job stops at presentation, and the actual decision — whether a system is being monitored, whether an automation step is running, which condition fires an alert, how health is scored — stays outside it as Business Feature logic."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={4}>
+            {whenToUseGuidance.map((topic) => (
+              <Card key={topic.label} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{topic.label}</span>
+                <Body size="sm" muted>
+                  {topic.text}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight operations patterns, live"
             description="Each demo below is a real, working composition with real props — not a static screenshot."
             descriptionMaxWidth={false}
@@ -57,24 +89,13 @@ export default function OperationsPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="states"
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Eight states this platform recognizes. Seven of eight have at least one verbatim vocabulary match — the strongest ratio of any Platform package up to this one — with Monitoring the sole disclosed gap, a close analog rather than an exact match (corrected at DS-4.10 certification: an earlier draft of this description overstated the ratio as zero gaps)."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Eight states this platform recognizes, plus how the layout responds across breakpoints. Seven of eight states have at least one verbatim vocabulary match — the strongest ratio of any Platform package up to this one — with Monitoring the sole disclosed gap, a close analog rather than an exact match. (A prior draft of this description overstated the ratio as zero gaps; this reflects the corrected count.)"
             descriptionMaxWidth={false}
           />
           <DescriptionList items={OPERATIONS_STATES.map((item) => ({ label: item.state, value: item.note }))} />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
           <CardGrid columns={3}>
             {BREAKPOINT_NOTES.map((item) => (
               <Card key={item.breakpoint} className="flex flex-col gap-2">
@@ -99,68 +120,92 @@ export default function OperationsPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How the 12 components in this platform compose from the Workflow and Operational tiers beneath them."
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={compositionGuidance.map((topic) => ({ label: topic.label, value: topic.text }))} />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verified findings across the six subdomains this package's own work order named — Operations platform, Monitoring, Automation, Scheduling, Health, Alerts — plus Administration, not estimated or carried over from memory."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
-          {OPERATIONS_PROMOTION_CANDIDATES.length === 0 ? (
-            <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-              <span className="text-body-sm font-medium text-ink-primary">Zero real candidates found</span>
-              <Body size="sm" muted>
-                No subdomain surfaced real execution logic (a monitoring/polling engine, an automation-orchestration
-                system, a real scheduler, or an alerting engine) that this platform&rsquo;s own components would
-                duplicate. No src/operations/ directory exists at all, and Platform Component Architecture&rsquo;s
-                own adoption audit already confirmed a &ldquo;does-not-exist&rdquo; verdict for the Operations
-                platform as a whole. See the clean findings below for what was actually checked.
-              </Body>
-            </Card>
-          ) : null}
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {OPERATIONS_CLEAN_FINDINGS.map((finding) => (
-              <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <Body size="sm" muted>
-                  {finding}
-                </Body>
-              </Card>
+          <CardGrid columns={3}>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
-          </div>
+          </CardGrid>
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg">
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={3}>
-            {OPERATIONS_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verified findings across the six subdomains this platform covers — Operations, Monitoring, Automation, Scheduling, Health, Alerts — plus Administration, not estimated or carried over from memory."
+              descriptionMaxWidth={false}
+            />
+            {OPERATIONS_PROMOTION_CANDIDATES.length === 0 ? (
+              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                <span className="text-body-sm font-medium text-ink-primary">No real migration targets found</span>
                 <Body size="sm" muted>
-                  {extension.description}
+                  No subdomain surfaced real execution logic (a monitoring/polling engine, an automation-orchestration
+                  system, a real scheduler, or an alerting engine) that this platform&rsquo;s own components would
+                  duplicate. No src/operations/ directory exists at all, and Platform Architecture&rsquo;s own
+                  adoption audit already confirmed a &ldquo;does-not-exist&rdquo; verdict for the Operations
+                  platform as a whole. See the clean findings below for what was actually checked.
                 </Body>
               </Card>
-            ))}
-          </CardGrid>
+            ) : null}
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
+              {OPERATIONS_CLEAN_FINDINGS.map((finding) => (
+                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                  <Body size="sm" muted>
+                    {finding}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {OPERATIONS_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

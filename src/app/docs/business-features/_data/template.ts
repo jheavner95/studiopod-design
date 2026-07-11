@@ -18,12 +18,12 @@ export const FEATURE_TEMPLATE: TemplatePart[] = [
   {
     name: "Workspace",
     description: "The feature's outer shell — the full working environment this template's other twelve parts live inside.",
-    composesFrom: "CommerceWorkspace (Commerce Platform), composing DS-1's own Workspace Architecture blueprint.",
+    composesFrom: "CommerceWorkspace (Commerce Platform), composing Workspace Architecture's own blueprint.",
   },
   {
     name: "Header",
     description: "Feature-level identity, context, and primary actions, scoped to this one feature rather than the whole application.",
-    composesFrom: "CommerceHeader, composing DS-1's own Workspace Header framework.",
+    composesFrom: "CommerceHeader, composing Workspace Architecture's own Workspace Header framework.",
   },
   {
     name: "Navigation",
@@ -73,11 +73,11 @@ export const FEATURE_TEMPLATE: TemplatePart[] = [
   {
     name: "Repositories",
     description: "The data-access layer this feature's Services call into — however this feature talks to its own backend.",
-    composesFrom: "Owned entirely by the feature; see Feature Architecture and DS-5.1's own Application Boundaries.",
+    composesFrom: "Owned entirely by the feature; see Feature Architecture and Application Composition Architecture's own Application Boundaries.",
   },
   {
     name: "API",
     description: "The actual endpoints called and how requests/responses are shaped — the concrete implementation behind Repositories.",
-    composesFrom: "Owned entirely by the feature; see Feature Architecture and DS-5.1's own Application Boundaries.",
+    composesFrom: "Owned entirely by the feature; see Feature Architecture and Application Composition Architecture's own Application Boundaries.",
   },
 ];

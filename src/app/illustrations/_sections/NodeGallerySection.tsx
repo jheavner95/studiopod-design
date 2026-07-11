@@ -8,10 +8,10 @@ const STATUSES: NodeStatus[] = ["idle", "active", "processing", "complete", "war
 export function NodeGallerySection() {
   return (
     <PreviewSection
-      id="node-gallery"
-      eyebrow="node gallery"
+      id="overview"
+      eyebrow="Overview"
       title="IllustrationNode"
-      description="One node primitive. Every status, plus health, badge, selection, and disabled overlays composed on top."
+      description="The first of the engine's three atomic primitives: one node, every status, plus health, badge, selection, and disabled overlays composed on top."
     >
       <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
         {STATUSES.map((status) => (

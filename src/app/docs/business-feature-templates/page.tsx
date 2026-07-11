@@ -1,4 +1,5 @@
-import { SectionShell, DescriptionList } from "@/components/layout";
+import Link from "next/link";
+import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
@@ -7,6 +8,9 @@ import { FEATURE_TEMPLATES } from "./_data/templates";
 import { COMPOSITION_MATRIX } from "./_data/composition-matrix";
 
 const entry = getEntry("business-feature-templates")!;
+const purposeTopic = PHILOSOPHY_TOPICS.find((t) => t.label === "Purpose")!;
+const guidanceTopics = PHILOSOPHY_TOPICS.filter((t) => t.label !== "Purpose");
+const relatedComponents = [getEntry("business-features")!, getEntry("platform-architecture")!, getEntry("platform-certification")!];
 
 function getTemplate(id: string) {
   const template = FEATURE_TEMPLATES.find((t) => t.id === id);
@@ -22,46 +26,72 @@ export default function BusinessFeatureTemplatesPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="template-philosophy"
-            eyebrow={<Eyebrow tone="accent">Template philosophy</Eyebrow>}
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Eight blueprints, one reuse discipline"
+            description="What this catalog is for, and the one Feature Category it deliberately leaves out."
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={PHILOSOPHY_TOPICS.map((t) => ({ label: t.label, value: t.text }))} />
+          <DescriptionList items={[{ label: purposeTopic.label, value: purposeTopic.text }]} />
         </div>
       </SectionShell>
 
-      {FEATURE_TEMPLATES.map((template, index) => (
-        <SectionShell key={template.id} spacing="lg" divider>
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id={template.id}
-              eyebrow={<Eyebrow tone="accent">{`Section ${index + 2}`}</Eyebrow>}
-              title={template.name}
-              description={template.purpose}
-              descriptionMaxWidth={false}
-            />
-            <div className="flex flex-col gap-3">
-              {template.layout.map((part) => (
-                <Card key={part.name} className="flex flex-col gap-2">
-                  <span className="text-body-sm font-medium text-ink-primary">{part.name}</span>
-                  <Body size="sm" muted>
-                    {part.composesFrom}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </SectionShell>
-      ))}
-
-      <SectionShell spacing="lg">
+      <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="composition-matrix"
-            eyebrow={<Eyebrow tone="accent">Composition matrix</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The reuse and consistency rules every template below follows."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {guidanceTopics.map((topic) => (
+              <Card key={topic.label} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{topic.label}</span>
+                <Body size="sm" muted>
+                  {topic.text}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-14">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
+            description="The eight standard layouts below — one per Feature Category — each naming which already-certified Foundation, Operational, Workflow, and Platform components a real feature in that category composes."
+            descriptionMaxWidth={false}
+          />
+          {FEATURE_TEMPLATES.map((template) => (
+            <div key={template.id} className="flex flex-col gap-6">
+              <SectionHeader id={template.id} title={template.name} description={template.purpose} descriptionMaxWidth={false} />
+              <div className="flex flex-col gap-3">
+                {template.layout.map((part) => (
+                  <Card key={part.name} className="flex flex-col gap-2">
+                    <span className="text-body-sm font-medium text-ink-primary">{part.name}</span>
+                    <Body size="sm" muted>
+                      {part.composesFrom}
+                    </Body>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Eight templates, five layers each"
-            description="A rollup of every template's own composition, organized by layer instead of by named part so the eight templates can be compared side by side."
+            description="A rollup of every template's own composition above, organized by layer instead of by named part so the eight templates can be compared side by side."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-6">
@@ -81,8 +111,31 @@ export default function BusinessFeatureTemplatesPage() {
             ))}
           </div>
           <Caption className="text-ink-tertiary">
-            Automation Feature, DS-5.2&rsquo;s ninth Feature Category, has no template or matrix row here — see Template Philosophy, above.
+            Automation Feature, the ninth Feature Category, has no template or matrix row here — see Overview, above.
           </Caption>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-6">
+          <SectionHeader
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
+            ))}
+          </CardGrid>
         </div>
       </SectionShell>
     </DocsShell>

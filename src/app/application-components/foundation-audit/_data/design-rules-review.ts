@@ -33,7 +33,7 @@ export const DESIGN_RULES_REVIEW: RuleReview[] = [
     rule: "\"Operational components compose foundations; they do not reinvent them\"",
     source: "Foundation Component Catalog design rules",
     verdict: "Partially resolved",
-    detail: "Originally violated by every duplication finding in Section 4 — 8 duplicate tables, 9 duplicate description lists, 19 duplicate Panel/Surface wrappers, 5 duplicate ControlDocks. The description lists (DS-2.1.7.1) and all 8 original duplicate tables (3 ResponsiveRulesTable copies plus ScorecardTable, CertificationMatrix, and CoverageMatrix, DS-2.1.7.2/7.5–7.7) are now fully migrated onto their Foundation primitives; 2 table-shaped candidates remain, correctly blocked on a real capability gap rather than un-migrated by neglect. Panel/Surface (19) and ControlDock (5) remain fully un-migrated. Important nuance: DS-2.1.2 through DS-2.1.5 each explicitly instructed \"do not refactor existing pages yet\" — so the parts still un-migrated are an accepted, temporary, intentional state tracked by design, not a surprise regression.",
+    detail: "Originally violated by every duplication finding in Section 4 — 8 duplicate tables, 9 duplicate description lists, 19 duplicate Panel/Surface wrappers, 5 duplicate ControlDocks. The description lists and all 8 original duplicate tables (3 ResponsiveRulesTable copies plus ScorecardTable, CertificationMatrix, and CoverageMatrix) are now fully migrated onto their Foundation primitives; 2 table-shaped candidates remain, correctly blocked on a real capability gap rather than un-migrated by neglect. Panel/Surface (19) and ControlDock (5) remain fully un-migrated. Important nuance: each of the four built Foundation packages explicitly instructed \"do not refactor existing pages yet\" while it was in progress — so the parts still un-migrated are an accepted, temporary, intentional state tracked by design, not a surprise regression.",
   },
   {
     id: "forms-accessible-by-default",
@@ -44,10 +44,10 @@ export const DESIGN_RULES_REVIEW: RuleReview[] = [
   },
   {
     id: "real-findings-not-estimates",
-    rule: "\"Real findings, not estimates\" (the standing methodology every promotion-candidates.ts claims to follow)",
-    source: "Foundation Layout / Metadata / Forms promotion-candidates.ts header comments",
+    rule: "\"Real findings, not estimates\" (the standing methodology every family's duplication-tracking data claims to follow)",
+    source: "Foundation Layout / Metadata / Forms duplication-tracking data header comments",
     verdict: "Violated",
-    detail: "Table's promotion-candidates.ts has no findingCommand field at all, and its stated discovery method (grep for <table) doesn't literally reproduce its own file list — 2 of its 8 candidates contain no <table> element. Layout's and Metadata's description-list and surface/panel findingCommands are self-referentially inflated by their own _data files. The underlying findings are still accurate; the reproducibility claim isn't fully honored.",
+    detail: "Table's own duplication-tracking data has no findingCommand field at all, and its stated discovery method (grep for <table) doesn't literally reproduce its own file list — 2 of its 8 candidates contain no <table> element. Layout's and Metadata's description-list and surface/panel findingCommands are self-referentially inflated by their own _data files. The underlying findings are still accurate; the reproducibility claim isn't fully honored.",
   },
   {
     id: "real-screen-definition",
@@ -74,7 +74,7 @@ export const DESIGN_RULES_REVIEW: RuleReview[] = [
 
 export const RECOMMENDED_ADDITIONS: string[] = [
   "A rule requiring every duplication-finding grep to exclude a family's own _data/*.ts and page.tsx files, since three independent families' commands were found to be self-referentially inflated by the exact same class of bug.",
-  "A rule requiring every new foundation family's promotion-candidates.ts to include a findingCommand field per entry, closing the one gap found in Table's version.",
+  "A rule requiring every new foundation family's duplication-tracking data to include a findingCommand field per entry, closing the one gap found in Table's version.",
   "A rule (or lint check) preventing the same local type from being declared independently in two files of the same family, as happened with CellAlign in Table.",
   "A rule defining when a family's real component count should be reflected as its own catalog group versus folded into an existing one — Metadata's 16 components and Forms' 22 currently collapse into a handful of Data Display / Inputs rows.",
 ];

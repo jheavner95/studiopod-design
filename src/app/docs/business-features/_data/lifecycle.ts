@@ -20,8 +20,8 @@ export const FEATURE_LIFECYCLE: LifecycleStage[] = [
   {
     id: "planning",
     name: "Planning",
-    description: "Choose the Feature Category this feature belongs to, identify which Platform (if any) it composes per DS-5.1's own Adoption Targets, and map its own Feature Template parts to real components by name before any code is written.",
-    gate: "A written composition plan exists naming every Feature Template part and the certified component it composes — the same per-field shape DS-5.1's own Application Templates already model.",
+    description: "Choose the Feature Category this feature belongs to, identify which Platform (if any) it composes per Application Composition Architecture's own Adoption Targets, and map its own Feature Template parts to real components by name before any code is written.",
+    gate: "A written composition plan exists naming every Feature Template part and the certified component it composes — the same per-field shape Application Composition Architecture's own Application Templates already model.",
   },
   {
     id: "composition",
@@ -38,8 +38,8 @@ export const FEATURE_LIFECYCLE: LifecycleStage[] = [
   {
     id: "validation",
     name: "Validation",
-    description: "Verify the finished feature against Composition Rules (zero recreated UI, zero cross-feature or reverse dependencies) and Feature Architecture's own ownership boundaries — the same grep-based duplication and dependency-direction audit every DS-3.x and DS-4.x package ran on itself one and two tiers down.",
-    gate: "A grep-based audit confirms zero forbidden-rule violations, matching the audit methodology DS-2.5.10 through DS-4.10 each ran before certifying.",
+    description: "Verify the finished feature against Composition Rules (zero recreated UI, zero cross-feature or reverse dependencies) and Feature Architecture's own ownership boundaries — the same grep-based duplication and dependency-direction audit every Workflow-tier and Platform-tier certification ran on itself one and two tiers down.",
+    gate: "A grep-based audit confirms zero forbidden-rule violations, matching the audit methodology Operational Certification through Platform Certification each ran before certifying.",
   },
   {
     id: "testing",

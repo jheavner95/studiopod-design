@@ -27,7 +27,7 @@ export const FEATURE_TEMPLATES: FeatureTemplate[] = [
     categoryId: "workspace-feature",
     purpose: "The broadest template — a full working environment for one domain, composing an entire Platform Workspace rather than a single view within it.",
     layout: [
-      { name: "Workspace shell", composesFrom: "A domain's own full Workspace component (e.g. CommerceWorkspace, ProductionWorkspace), composing DS-1's own Workspace Architecture blueprint." },
+      { name: "Workspace shell", composesFrom: "A domain's own full Workspace component (e.g. CommerceWorkspace, ProductionWorkspace), composing Workspace Architecture's own six-tier blueprint." },
       { name: "Navigation", composesFrom: "Foundation Navigation's own Tabs, SideNavigation, or NavigationRail, scoped to this feature's own Views." },
       { name: "Primary content", composesFrom: "The feature's own Primary View, composing a domain's own Platform Catalog/Orders/Library component." },
       { name: "Inspector", composesFrom: "A domain's own Platform Inspector re-export, or Operational's own Inspector Panel where no Platform-tier equivalent exists yet." },

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid } from "@/components/layout";
 import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -9,6 +10,7 @@ import { PLATFORM_EXAMPLES } from "./_data/platform-examples";
 import { FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("workspace-framework")!;
+const relatedComponents = [getEntry("workspace-header")!, getEntry("workspace-layout")!, getEntry("workspace-toolbar")!];
 
 export default function WorkspaceFrameworkPage() {
   return (
@@ -18,10 +20,10 @@ export default function WorkspaceFrameworkPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="anatomy"
-            eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="The seven regions"
-            description="Select a region to see its full purpose, responsibilities, required and optional children, and how it reuses what's already been built."
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Seven regions, top to bottom — select one to see its full purpose, responsibilities, required and optional children, and how it reuses what's already been built."
             descriptionMaxWidth={false}
           />
           <WorkspaceAnatomyExplorer />
@@ -31,9 +33,26 @@ export default function WorkspaceFrameworkPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="principles"
-            eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>}
-            title="Workspace design principles"
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
+            description="The same framework, six ways — each platform picks a Primary Workspace mode and fills the Library with different business objects. The anatomy around them never moves."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {PLATFORM_EXAMPLES.map((example) => (
+              <PlatformPreviewCard key={example.id} example={example} />
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
             description="What holds the anatomy together across platforms that otherwise have nothing in common."
             descriptionMaxWidth={false}
           />
@@ -51,41 +70,50 @@ export default function WorkspaceFrameworkPage() {
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="platform-examples"
-            eyebrow={<Eyebrow tone="accent">Platform examples</Eyebrow>}
-            title="The same framework, six ways"
-            description="Each platform picks a Primary Workspace mode and fills the Library with different objects — the anatomy around them never moves."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {PLATFORM_EXAMPLES.map((example) => (
-              <PlatformPreviewCard key={example.id} example={example} />
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future workspace extensions"
-            description="Room the anatomy leaves for later — reserved, not scoped or committed."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={3}>
-            {FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the anatomy leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

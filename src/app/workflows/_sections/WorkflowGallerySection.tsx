@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Caption } from "@/components/ui";
 import { WorkflowDiagram, WorkflowLegend, WorkflowStepDetails } from "@/workflows";
 import { exampleWorkflows } from "@/workflows/examples";
-import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
+import { DemoLabel } from "../_components/preview-primitives";
 
 function WorkflowGalleryCard({ workflow }: { workflow: (typeof exampleWorkflows)[number] }) {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
@@ -38,17 +38,10 @@ function WorkflowGalleryCard({ workflow }: { workflow: (typeof exampleWorkflows)
 /** Every example workflow, rendered through the same reusable WorkflowDiagram, with click-to-select step details. */
 export function WorkflowGallerySection() {
   return (
-    <PreviewSection
-      id="workflow-gallery"
-      eyebrow="workflow gallery"
-      title="All six workflows"
-      description="Linear, looping, branching, and parallel patterns, all rendered from data through the same WorkflowDiagram component. Click a step to expand its details."
-    >
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
-        {exampleWorkflows.map((workflow) => (
-          <WorkflowGalleryCard key={workflow.id} workflow={workflow} />
-        ))}
-      </div>
-    </PreviewSection>
+    <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+      {exampleWorkflows.map((workflow) => (
+        <WorkflowGalleryCard key={workflow.id} workflow={workflow} />
+      ))}
+    </div>
   );
 }

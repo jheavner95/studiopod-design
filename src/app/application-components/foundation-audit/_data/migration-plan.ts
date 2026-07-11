@@ -20,7 +20,7 @@ export const MIGRATION_PLAN: MigrationStep[] = [
     scope: "3 near-byte-identical files (workspace-toolbar, primary-workspace, workspace-layout), 126 combined lines",
     effort: "Low",
     reasoning:
-      "The purest possible first move: zero design judgment required, collapses 3 files into 1, and proves the Table system end-to-end on real (if simple) content before anything harder attempts it. If this migration surfaces a problem with Table itself, it's cheap to discover here and expensive everywhere else. Completed in DS-2.1.7.2: it did surface a real gap (no sticky-left-column support), which TableHead now closes with an optional sticky prop rather than a local workaround. Zero visual regression at any breakpoint; sticky-column behavior verified by measuring the row-header cell's position before and after scrolling.",
+      "The purest possible first move: zero design judgment required, collapses 3 files into 1, and proves the Table system end-to-end on real (if simple) content before anything harder attempts it. If this migration surfaces a problem with Table itself, it's cheap to discover here and expensive everywhere else. Completed: it did surface a real gap (no sticky-left-column support), which TableHead now closes with an optional sticky prop rather than a local workaround. Zero visual regression at any breakpoint; sticky-column behavior verified by measuring the row-header cell's position before and after scrolling.",
     status: "Completed",
   },
   {
@@ -30,7 +30,7 @@ export const MIGRATION_PLAN: MigrationStep[] = [
     scope: "9 files, including foundation-layout/page.tsx and foundation-components/page.tsx — the two pages that introduce and catalog the component but don't use it themselves",
     effort: "Low",
     reasoning:
-      "The target component already exists, is proven, and is a mechanical 1:1 swap — sequenced second to keep momentum with another low-risk win. Fixing the two foundation docs pages first is close to a prerequisite: a page can't credibly recommend a pattern it doesn't follow. Completed in DS-2.1.7.1: all 9 files migrated, re-verified against the live repository before touching any code, zero visual regressions at desktop/tablet/mobile.",
+      "The target component already exists, is proven, and is a mechanical 1:1 swap — sequenced second to keep momentum with another low-risk win. Fixing the two foundation docs pages first is close to a prerequisite: a page can't credibly recommend a pattern it doesn't follow. Completed: all 9 files migrated, re-verified against the live repository before touching any code, zero visual regressions at desktop/tablet/mobile.",
     status: "Completed",
   },
   {
@@ -40,7 +40,7 @@ export const MIGRATION_PLAN: MigrationStep[] = [
     scope: "The same 7 workspace pages' Accessibility sections, once the dl/dt/dd markup itself is swapped",
     effort: "Low",
     reasoning:
-      "The natural completion of step 2 rather than a separate effort — verifying the surrounding section (heading, spacing, any content beyond the list itself) is fully consistent with DescriptionList's own responsive behavior, not just the markup inside it. Batched with step 2 in practice; listed separately because the check is distinct from the swap. Completed alongside step 2 in DS-2.1.7.1 — DescriptionList's default rendering matched every hand-rolled instance byte-for-byte except two label-width outliers (workspace-layout, foundation-components), which DescriptionList was extended with an optional labelWidth prop to preserve exactly.",
+      "The natural completion of step 2 rather than a separate effort — verifying the surrounding section (heading, spacing, any content beyond the list itself) is fully consistent with DescriptionList's own responsive behavior, not just the markup inside it. Batched with step 2 in practice; listed separately because the check is distinct from the swap. Completed alongside step 2 — DescriptionList's default rendering matched every hand-rolled instance byte-for-byte except two label-width outliers (workspace-layout, foundation-components), which DescriptionList was extended with an optional labelWidth prop to preserve exactly.",
     status: "Completed",
   },
   {

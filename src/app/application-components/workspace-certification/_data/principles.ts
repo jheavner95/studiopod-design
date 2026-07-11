@@ -38,7 +38,7 @@ export const ARCHITECTURE_PRINCIPLES: ArchitecturePrinciple[] = [
   },
   {
     title: "Accessibility is foundational",
-    explanation: "Every DS-1 page documents its own accessibility guidance as a first-class section, not an appendix — the Scorecard weighs it accordingly.",
+    explanation: "Every workspace architecture page documents its own accessibility guidance as a first-class section, not an appendix — the Scorecard weighs it accordingly.",
   },
   {
     title: "Consistency scales better than customization",

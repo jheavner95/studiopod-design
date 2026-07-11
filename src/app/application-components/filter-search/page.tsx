@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -12,6 +13,7 @@ import { SEARCH_PROMOTION_CANDIDATES, SEARCH_CLEAN_FINDINGS } from "./_data/prom
 import { SEARCH_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("filter-search")!;
+const relatedComponents = [getEntry("asset-browser")!, getEntry("bulk-actions")!, getEntry("foundation-forms")!];
 
 export default function FilterSearchPage() {
   return (
@@ -21,10 +23,10 @@ export default function FilterSearchPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="filter-search-anatomy"
-            eyebrow={<Eyebrow tone="accent">Filter & search anatomy</Eyebrow>}
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Eight regions, one system"
-            description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component."
+            description="Every component in this family maps to exactly one region below — most delegate directly to an already-established Foundation or Operational component."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -44,8 +46,8 @@ export default function FilterSearchPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="gallery"
-            eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight discovery patterns, live"
             description="Each demo below is a real, working composition with real local state — not a static screenshot. Try Global Search's suggestions, Saved Filters' save action, and Combined Search + Filter's history dropdown."
             descriptionMaxWidth={false}
@@ -57,35 +59,28 @@ export default function FilterSearchPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="states"
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how the same components rearrange across breakpoints."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={SEARCH_STATES.map((item) => ({ label: item.state, value: item.note }))} />
-        </div>
-      </SectionShell>
 
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={3}>
-            {BREAKPOINT_NOTES.map((item) => (
-              <Card key={item.breakpoint} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{item.breakpoint}</span>
-                <Body size="sm" muted>
-                  {item.note}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
+          <div className="flex flex-col gap-6">
+            <span className="text-body-sm font-medium text-ink-primary">Responsive behavior</span>
+            <CardGrid columns={3}>
+              {BREAKPOINT_NOTES.map((item) => (
+                <Card key={item.breakpoint} className="flex flex-col gap-2">
+                  <span className="text-body-sm font-medium text-ink-primary">{item.breakpoint}</span>
+                  <Body size="sm" muted>
+                    {item.note}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+            <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
+          </div>
         </div>
       </SectionShell>
 
@@ -99,9 +94,10 @@ export default function FilterSearchPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How SearchField, FilterGroup, SortControl, and SavedFilter combine into one working search-and-filter surface."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
@@ -109,54 +105,77 @@ export default function FilterSearchPage() {
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
-            descriptionMaxWidth={false}
-          />
-          {SEARCH_PROMOTION_CANDIDATES.length === 0 ? (
-            <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-              <span className="text-body-sm font-medium text-ink-primary">Zero real candidates found</span>
-              <Body size="sm" muted>
-                No existing hand-rolled search/filter/sort UI was found anywhere in the codebase across all eight named domains, including a fresh re-check of this repo&rsquo;s own four MS-2.x Library Playground pages. See the clean findings below for what was actually checked — and one real, pre-existing code duplication this package itself resolved (Data Grid&rsquo;s and Asset Browser&rsquo;s pagination components each inlined an identical &ldquo;X–Y of Z&rdquo; calculation; both now delegate to this system&rsquo;s own ResultSummary).
-              </Body>
-            </Card>
-          ) : null}
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {SEARCH_CLEAN_FINDINGS.map((finding) => (
-              <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <Body size="sm" muted>
-                  {finding}
-                </Body>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {SEARCH_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
+              descriptionMaxWidth={false}
+            />
+            {SEARCH_PROMOTION_CANDIDATES.length === 0 ? (
+              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                <span className="text-body-sm font-medium text-ink-primary">No reusable duplication found</span>
+                <Body size="sm" muted>
+                  No existing hand-rolled search/filter/sort UI was found anywhere in the codebase across all eight named domains, including a fresh re-check of this repo&rsquo;s own four Library Playground pages. See what was checked below — and one real, pre-existing code duplication this package itself resolved (Data Grid&rsquo;s and Asset Browser&rsquo;s pagination components each inlined an identical &ldquo;X–Y of Z&rdquo; calculation; both now delegate to this system&rsquo;s own ResultSummary).
+                </Body>
+              </Card>
+            ) : null}
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">What was checked</span>
+              {SEARCH_CLEAN_FINDINGS.map((finding) => (
+                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                  <Body size="sm" muted>
+                    {finding}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {SEARCH_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

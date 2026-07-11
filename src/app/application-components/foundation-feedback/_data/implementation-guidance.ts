@@ -34,6 +34,6 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   },
   {
     label: "When not to build a new feedback pattern",
-    text: "This package's own duplication audit came back clean — no hand-rolled feedback UI was found anywhere in src/app to migrate (see Promotion Candidates). Before adding a new one-off status/loading/validation block to a page, check whether Alert, Banner, Toast, EmptyState, or one of its tone presets already covers it.",
+    text: "This system's own duplication audit came back clean — no hand-rolled feedback UI was found anywhere in src/app to migrate (see Migration Notes in Reference). Before adding a new one-off status/loading/validation block to a page, check whether Alert, Banner, Toast, EmptyState, or one of its tone presets already covers it.",
   },
 ];

@@ -38,9 +38,8 @@ export function ConnectionGallerySection() {
   return (
     <PreviewSection
       id="connection-gallery"
-      eyebrow="connection gallery"
       title="IllustrationConnection"
-      description="A connector between two computed anchor points. Every status, style, direction, and weight combination."
+      description="The second atomic primitive: a connector between two computed anchor points. Every status, style, direction, and weight combination."
     >
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
         <ConnectionDemo label="inactive" status="inactive" />

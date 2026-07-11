@@ -17,7 +17,7 @@ export const APPLICATION_BOUNDARIES: BoundaryEntry[] = [
   {
     concern: "Routing",
     owner: "Application",
-    description: "Which URL maps to which Business Feature, and how features link to one another, is owned entirely by the Application shell — no Platform or Workflow component has ever contained a route or a navigation side effect, confirmed at every certification through DS-4.10.",
+    description: "Which URL maps to which Business Feature, and how features link to one another, is owned entirely by the Application shell — no Platform or Workflow component has ever contained a route or a navigation side effect, confirmed at every certification through Platform Certification.",
   },
   {
     concern: "State",

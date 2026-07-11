@@ -18,7 +18,7 @@ export const STATE_ACCESSIBILITY_TOPICS: StateAccessibilityTopic[] = [
   },
   {
     label: "State announcements",
-    text: "No built-in aria-live region announces a state transition firing — the same opt-in convention every prior Workflow Component Library package already follows, and the systemic gap this session's own DS-2.5.10 certification review already flagged across the whole library rather than fixed ad hoc in one package.",
+    text: "No built-in aria-live region announces a state transition firing — the same opt-in convention every prior Workflow Component Library package already follows, consistent with a systemic gap already flagged across the whole library's own accessibility review rather than fixed ad hoc in one package.",
   },
   {
     label: "Transition semantics",

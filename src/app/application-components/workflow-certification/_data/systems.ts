@@ -19,7 +19,7 @@ export interface WorkflowSystem {
  */
 export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
   {
-    code: "DS-3.1",
+    code: "01",
     name: "Workflow Framework",
     href: "/application-components/workflow-framework",
     componentCount: 12,
@@ -28,7 +28,7 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     keyGaps: ["WorkflowProgress (component) and WorkflowStep (type) share names with distinct src/workflows/ (plural Workflow Diagram Library) and src/compositions/WorkflowComposition.tsx exports — disclosed, import-path-distinct, but a real discoverability cost"],
   },
   {
-    code: "DS-3.2",
+    code: "02",
     name: "Workflow Stepper",
     href: "/application-components/workflow-stepper",
     componentCount: 10,
@@ -37,7 +37,7 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     keyGaps: ["WorkflowStepperStep never sets aria-current=\"step\" on the current step — a real, verified regression from the exact Foundation Navigation Stepper pattern it claims its visual idiom from, which does implement aria-current"],
   },
   {
-    code: "DS-3.3",
+    code: "03",
     name: "Workflow Timeline",
     href: "/application-components/workflow-timeline",
     componentCount: 10,
@@ -46,7 +46,7 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     keyGaps: ["WorkflowTimeline shares its exact export name with src/workflows/components/WorkflowTimeline.tsx (plural Workflow Diagram Library) — disclosed, import-path-distinct"],
   },
   {
-    code: "DS-3.4",
+    code: "04",
     name: "Approval & Review",
     href: "/application-components/approval-review",
     componentCount: 12,
@@ -55,16 +55,16 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     keyGaps: [],
   },
   {
-    code: "DS-3.5",
+    code: "05",
     name: "Pipeline Components",
     href: "/application-components/pipeline-components",
     componentCount: 12,
     readiness: "Production Ready",
     composesFrom: ["Workflow Framework", "Workflow Timeline", "Approval & Review", "Foundation Layout", "Foundation Metadata"],
-    keyGaps: ["PipelineStep's collision with src/components/illustration/PipelineStep.tsx is documented, but this audit found a second, undocumented collision: PipelineStage (this system's component) vs. src/illustrations/types/diagram.ts's own PipelineStage interface — same name, never previously flagged in this system's own promotion-candidates or clean-findings data"],
+    keyGaps: ["PipelineStep's collision with src/components/illustration/PipelineStep.tsx is documented, but this audit found a second, undocumented collision: PipelineStage (this system's component) vs. src/illustrations/types/diagram.ts's own PipelineStage interface — same name, never previously flagged in this system's own migration notes or clean-findings data"],
   },
   {
-    code: "DS-3.6",
+    code: "06",
     name: "State Machine",
     href: "/application-components/state-machine",
     componentCount: 12,
@@ -73,7 +73,7 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     keyGaps: [],
   },
   {
-    code: "DS-3.7",
+    code: "07",
     name: "Dependency & Relationship Views",
     href: "/application-components/dependency-relationships",
     componentCount: 12,
@@ -82,7 +82,7 @@ export const WORKFLOW_SYSTEMS: WorkflowSystem[] = [
     keyGaps: [],
   },
   {
-    code: "DS-3.8",
+    code: "08",
     name: "Workflow Visualization",
     href: "/application-components/workflow-visualization",
     componentCount: 12,

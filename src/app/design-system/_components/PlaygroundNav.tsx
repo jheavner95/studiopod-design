@@ -10,13 +10,13 @@ const SECTIONS = [
   { id: "spacing", label: "Spacing" },
   { id: "radius", label: "Radius" },
   { id: "shadows", label: "Shadows" },
-  { id: "motion", label: "Motion" },
-  { id: "illustration", label: "Illustration" },
   { id: "components", label: "Components" },
   { id: "form-controls", label: "Forms & controls" },
+  { id: "illustration", label: "Illustration" },
+  { id: "motion", label: "Motion" },
   { id: "layout", label: "Layout" },
-  { id: "grid-tools", label: "Grid tools" },
   { id: "theme-preview", label: "Theme preview" },
+  { id: "grid-tools", label: "Grid tools" },
 ];
 
 /** Sticky scroll-spy nav for jumping between showcase sections. Hidden below xl — the page is still fully usable via normal scroll. */

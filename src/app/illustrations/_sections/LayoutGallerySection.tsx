@@ -22,8 +22,8 @@ const LAYOUTS: DiagramLayoutKind[] = ["horizontal", "vertical", "grid", "radial"
 export function LayoutGallerySection() {
   return (
     <PreviewSection
-      id="layout-gallery"
-      eyebrow="layout gallery"
+      id="examples"
+      eyebrow="Examples"
       title="Layout engine"
       description="The same five nodes and four connections, laid out five different ways. No node has a hardcoded position: every coordinate below comes from the layout engine."
     >

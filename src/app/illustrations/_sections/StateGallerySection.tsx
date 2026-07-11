@@ -17,8 +17,8 @@ const CONNECTION_COLOR: Record<ConnectionStatus, string> = {
 export function StateGallerySection() {
   return (
     <PreviewSection
-      id="state-gallery"
-      eyebrow="state gallery"
+      id="behavior"
+      eyebrow="Behavior"
       title="The state system"
       description="Three independent state systems, one per object type. A node's status doesn't affect its group's collapsed state, and neither affects a connection's flow."
     >

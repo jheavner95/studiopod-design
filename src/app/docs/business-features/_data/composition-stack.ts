@@ -52,14 +52,14 @@ export const COMPOSITION_STACK: StackLayer[] = [
     id: "business-features",
     name: "Business Features",
     status: "documented",
-    contributes: "The layer this package defines — one user-facing, domain-specific capability that composes everything below it, owning its own business logic, state, and data access. See Feature Architecture, below, for the concrete part list.",
+    contributes: "The layer this page defines — one user-facing, domain-specific capability that composes everything below it, owning its own business logic, state, and data access. See Feature Architecture, below, for the concrete part list.",
     certificationRef: { label: "Application Composition Architecture", href: "/docs/application-composition" },
   },
   {
     id: "application",
     name: "Application",
     status: "future",
-    contributes: "Routing, cross-feature shared state, and installing Business Features into real screens — the only layer with zero design-system documentation today. Future Extensions, below, is the closest this package gets to describing it.",
+    contributes: "Routing, cross-feature shared state, and installing Business Features into real screens — the only layer with zero design-system documentation today. Future Extensions, below, is the closest this page gets to describing it.",
     certificationRef: null,
   },
 ];

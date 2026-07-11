@@ -13,7 +13,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
   {
     label: "Adoption readiness",
     verdict: "Not ready",
-    note: "Zero real screens outside src/app/application-components/ import any Platform-tier component, confirmed by direct grep and independently reconfirmed by all eight per-platform audits. This is structural, not a defect — Business Features, the tier that would consume this library, is DS-5 and beyond, and doesn't exist yet.",
+    note: "Zero real screens outside src/app/application-components/ import any Platform-tier component, confirmed by direct grep and independently reconfirmed by all eight per-platform audits. This is structural, not a defect — Business Features, the tier that would consume this library, is the next major phase and beyond, and doesn't exist yet.",
   },
   {
     label: "API stability",
@@ -23,12 +23,12 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
   {
     label: "Documentation quality",
     verdict: "Ready",
-    note: "Every platform's docs page covers all 8 required sections with real, grep-backed content. Five real documentation defects were found across three platforms plus Platform Architecture during this certification (Operations' self-contradictory gap count, Admin's false \"first\" superlative, Integrations' miscounted verbatim ratio, and Platform Architecture's stale \"zero platforms exist\" claims) — all five were corrected in this same pass, a stronger outcome than DS-3.9's own \"found and left as a tracked gap\" precedent.",
+    note: "Every platform's docs page covers all 8 required sections with real, grep-backed content. Five real documentation defects were found across three platforms plus Platform Architecture during this certification (Operations' self-contradictory gap count, Admin's false \"first\" superlative, Integrations' miscounted verbatim ratio, and Platform Architecture's stale \"zero platforms exist\" claims) — all five were corrected in this same pass, a stronger outcome than the Workflow tier's own \"found and left as a tracked gap\" precedent.",
   },
   {
     label: "Composition quality",
     verdict: "Ready",
-    note: "Foundation reuse, Operational reuse, Workflow reuse, Platform boundary compliance, and Dependencies all scored a clean 8/8 Pass across every platform independently audited — zero Foundation/Operational/Workflow-layer duplication, zero platform-boundary violations (no real business logic anywhere in 96 components), zero reverse-dependency violations in any direction. This is the tier's strongest dimension, matching the pattern DS-2.5.10 and DS-3.9 already established one and two tiers down.",
+    note: "Foundation reuse, Operational reuse, Workflow reuse, Platform boundary compliance, and Dependencies all scored a clean 8/8 Pass across every platform independently audited — zero Foundation/Operational/Workflow-layer duplication, zero platform-boundary violations (no real business logic anywhere in 96 components), zero reverse-dependency violations in any direction. This is the tier's strongest dimension, matching the pattern the Operational and Workflow tiers' own certifications already established one and two tiers down.",
   },
   {
     label: "Maintainability",

@@ -18,7 +18,7 @@ export const WORKFLOW_ACCESSIBILITY_TOPICS: WorkflowAccessibilityTopic[] = [
   },
   {
     label: "Status announcements",
-    text: "This family has no live region of its own — a screen that needs a WorkflowStatus change announced to screen readers wraps it in an aria-live=\"polite\" region itself, the same opt-in convention every prior operational package (Queue & Job, Status & Health, Dashboard Widgets) already follows, and the same gap this session's own DS-2.5.10 certification review flagged as systemic rather than package-specific.",
+    text: "This family has no live region of its own — a screen that needs a WorkflowStatus change announced to screen readers wraps it in an aria-live=\"polite\" region itself, the same opt-in convention every prior operational package (Queue & Job, Status & Health, Dashboard Widgets) already follows, and the same gap already flagged elsewhere in this design system as systemic rather than specific to this component family.",
   },
   {
     label: "Progress updates",

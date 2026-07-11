@@ -59,7 +59,7 @@ export const TABLE_VARIANTS: TableVariant[] = [
   {
     id: "queue",
     name: "Queue Table",
-    purpose: "The DS-0.2 inventory's own Queue Table item — jobs with status, progress, and row-level cancel/retry actions.",
+    purpose: "The component inventory's own Queue Table item — jobs with status, progress, and row-level cancel/retry actions.",
     advantages: ["Combines TableStatusCell, a Progress cell, and TableActionCell in one row shape", "The clearest real target this system was built for"],
     typicalPlatforms: ["Production", "Integrations", "Operations"],
   },

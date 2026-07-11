@@ -26,7 +26,7 @@ export const LAYER_CHECKS: LayerCheck[] = [
   {
     label: "No duplicated ownership",
     verdict: "Pass",
-    result: "The pilot's own Validation flow (Draft → Ready → Validating → Validated → Complete) is the one genuinely new piece of domain logic in DS-5 — it doesn't re-implement Workflow's own ApprovalStateValue vocabulary, it maps into it for rendering. No certified-tier concept is re-owned by the feature.",
+    result: "The pilot's own Validation flow (Draft → Ready → Validating → Validated → Complete) is the one genuinely new piece of domain logic in this tier — it doesn't re-implement Workflow's own ApprovalStateValue vocabulary, it maps into it for rendering. No certified-tier concept is re-owned by the feature.",
   },
   {
     label: "No reusable UI recreated",
@@ -41,4 +41,4 @@ export const LAYER_CHECKS: LayerCheck[] = [
 ];
 
 export const LAYERING_NOTE =
-  "The full Foundation → Operational → Workflow → Platform → Business Feature → Application chain, checked against the one artifact in DS-5 that actually composes components — the Production Workspace Feature pilot — rather than re-reading DS-5.1–5.3's own architecture claims about themselves.";
+  "The full Foundation → Operational → Workflow → Platform → Business Feature → Application chain, checked against the one artifact in this tier that actually composes components — the Production Workspace Feature pilot — rather than re-reading the composition architecture's, the framework's, and the templates' own architecture claims about themselves.";

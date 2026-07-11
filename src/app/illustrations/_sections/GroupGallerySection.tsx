@@ -28,8 +28,8 @@ export function GroupGallerySection() {
 
   return (
     <PreviewSection
-      id="group-gallery"
-      eyebrow="group gallery"
+      id="composition"
+      eyebrow="Composition"
       title="IllustrationGroup"
       description="A bounding region for a cluster of nodes: title, description, badge, metrics, and collapse/expand built directly on the Expand primitive."
     >

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -12,6 +13,7 @@ import { PIPELINE_PROMOTION_CANDIDATES, PIPELINE_CLEAN_FINDINGS } from "./_data/
 import { PIPELINE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("pipeline-components")!;
+const relatedComponents = [getEntry("approval-review")!, getEntry("workflow-timeline")!, getEntry("state-machine")!];
 
 export default function PipelineComponentsPage() {
   return (
@@ -21,10 +23,10 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="pipeline-anatomy"
-            eyebrow={<Eyebrow tone="accent">Pipeline anatomy</Eyebrow>}
-            title="Nine regions, twelve components"
-            description="Every component in this family maps to one of the regions below — five of twelve delegate directly to Workflow Framework's own components (re-exported, not rebuilt), one composes Approval & Review's own ApprovalDecision, and one composes Workflow Timeline directly; Step, Connector, Status, Branch, and Metrics are genuinely new."
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Nine regions, twelve components — five of twelve delegate directly to Workflow Framework's own components (re-exported, not rebuilt), one composes Approval & Review's own ApprovalDecision, and one composes Workflow Timeline directly; Step, Connector, Status, Branch, and Metrics are genuinely new."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -44,8 +46,51 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="gallery"
-            eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="Pipeline is a DOM-composed component library, not a diagram renderer — two other real, pre-existing pipeline models in this codebase sit at a different layer and remain the right tool for their own use case."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={2}>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Reach for Pipeline</span>
+              <Body size="sm" muted>
+                When a screen needs a real, interactive DOM-based stage list with clickable steps, inline gates, and composable actions a
+                user actually works with — not a rendered diagram.
+              </Body>
+            </Card>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Reach for a diagram instead</span>
+              <Body size="sm" muted>
+                When a screen needs an at-a-glance node-and-connection graph — Production&rsquo;s own ProductionPipelineDiagram or the
+                Illustration Library&rsquo;s IllustrationPipeline render that through the illustration-canvas engine, and the two can coexist
+                with Pipeline on the same screen.
+              </Body>
+            </Card>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Reach for PipelineGate</span>
+              <Body size="sm" muted>
+                When a stage needs an actual approval decision, not just a status marker — it composes Approval & Review&rsquo;s own
+                ApprovalDecision directly.
+              </Body>
+            </Card>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Reach for PipelineHistory</span>
+              <Body size="sm" muted>
+                When a run needs the chronological record of every stage transition — it composes Workflow Timeline directly rather than
+                reimplementing its own history list.
+              </Body>
+            </Card>
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight pipeline patterns, live"
             description="Each demo below is a real, working composition with real local state — not a static screenshot. Try the Linear Pipeline's Advance button and the Publishing Pipeline's gate Approve button."
             descriptionMaxWidth={false}
@@ -57,24 +102,13 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="states"
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how the same components respond across breakpoints."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={PIPELINE_STATES.map((item) => ({ label: item.state, value: item.note }))} />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
           <CardGrid columns={3}>
             {BREAKPOINT_NOTES.map((item) => (
               <Card key={item.breakpoint} className="flex flex-col gap-2">
@@ -99,9 +133,10 @@ export default function PipelineComponentsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="Six contracts describing where responsibility sits between this package and the screen composing it."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
@@ -109,60 +144,83 @@ export default function PipelineComponentsPage() {
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verified findings from building this system — including, for the first time in this session, genuine pre-existing pipeline models this package deliberately does not replace."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
-          <div className="flex flex-col gap-3">
-            {PIPELINE_PROMOTION_CANDIDATES.map((candidate) => (
-              <Card key={candidate.id} className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
-                <span className="text-body-sm font-medium text-ink-primary">{candidate.pattern}</span>
-                <Body size="sm" muted>
-                  {candidate.description}
-                </Body>
-                <Caption className="text-ink-tertiary">{candidate.files.join(" · ")}</Caption>
-                <Body size="sm" muted className="border-t border-border-subtle pt-2">
-                  {candidate.migrationNote}
-                </Body>
-              </Card>
+          <CardGrid columns={3}>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
-          </div>
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {PIPELINE_CLEAN_FINDINGS.map((finding) => (
-              <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <Body size="sm" muted>
-                  {finding}
-                </Body>
-              </Card>
-            ))}
-          </div>
+          </CardGrid>
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg">
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={3}>
-            {PIPELINE_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verified findings from building this system — including two genuine pre-existing pipeline models this package deliberately does not replace."
+              descriptionMaxWidth={false}
+            />
+            <div className="flex flex-col gap-3">
+              {PIPELINE_PROMOTION_CANDIDATES.map((candidate) => (
+                <Card key={candidate.id} className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
+                  <span className="text-body-sm font-medium text-ink-primary">{candidate.pattern}</span>
+                  <Body size="sm" muted>
+                    {candidate.description}
+                  </Body>
+                  <Caption className="text-ink-tertiary">{candidate.files.join(" · ")}</Caption>
+                  <Body size="sm" muted className="border-t border-border-subtle pt-2">
+                    {candidate.migrationNote}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
+              {PIPELINE_CLEAN_FINDINGS.map((finding) => (
+                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                  <Body size="sm" muted>
+                    {finding}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {PIPELINE_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

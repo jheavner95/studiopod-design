@@ -39,7 +39,7 @@ export default function OperationalCertificationPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Nine systems, ${TOTAL_COMPONENT_COUNT} components`}
-            description="Every system built across DS-2.5.1–2.5.9, each independently re-audited for this certification rather than trusting its own docs page."
+            description="Every system in the Operational Component Library, each independently re-audited for this certification rather than trusting its own docs page."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -167,7 +167,7 @@ export default function OperationalCertificationPage() {
           <SectionHeader
             id="promotion-review"
             eyebrow={<Eyebrow tone="accent">Promotion review</Eyebrow>}
-            title="Every real duplication finding across DS-2.5, reclassified"
+            title="Every real duplication finding across the Operational library, reclassified"
             description={PROMOTION_METHODOLOGY_NOTE}
             descriptionMaxWidth={false}
           />
@@ -280,7 +280,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader id="operational-roadmap" eyebrow={<Eyebrow tone="accent">Operational roadmap</Eyebrow>} title="Where DS-2.5 sits in the larger plan" descriptionMaxWidth={false} />
+          <SectionHeader id="operational-roadmap" eyebrow={<Eyebrow tone="accent">Operational roadmap</Eyebrow>} title="Where the Operational Component Library sits in the larger plan" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             {OPERATIONAL_ROADMAP.map((stage) => (
               <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
@@ -301,7 +301,7 @@ export default function OperationalCertificationPage() {
 
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="DS-2.5 completion summary" descriptionMaxWidth={false} />
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Operational Component Library completion summary" descriptionMaxWidth={false} />
           <Body size="md" muted className="max-w-[var(--container-narrow)]">
             {DS25_COMPLETION_SUMMARY}
           </Body>
@@ -347,7 +347,7 @@ export default function OperationalCertificationPage() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every DS-2.5 work package</span>
+            <span className="text-body-sm font-medium text-ink-primary">Every system in the Operational Component Library</span>
             <DescriptionList items={DS25_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
           </div>
         </div>

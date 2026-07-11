@@ -40,7 +40,7 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidance[] = [
   },
   {
     label: "Reuse opportunities",
-    text: "Every region maps onto an existing DS-0.3 family or Workspace Framework region — nothing here should be built as a one-off.",
+    text: "Every region maps onto an existing component family or Workspace Framework region — nothing here should be built as a one-off.",
     links: [
       { label: "Component families", href: "/application-components/architecture" },
       { label: "Workspace Framework", href: "/application-components/workspace-framework" },

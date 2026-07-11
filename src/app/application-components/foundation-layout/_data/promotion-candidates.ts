@@ -27,14 +27,14 @@ export const PROMOTION_CANDIDATES: PromotionCandidate[] = [
       "inspector-workspace/page.tsx",
       "status-workspace/page.tsx",
     ],
-    note: "Every DS-1.x Accessibility section since DS-1.2 hand-rolled the identical dl/dt/dd block. This is the clearest promotion candidate in the catalog — now replaced by DescriptionList going forward.",
+    note: "Every Accessibility section across this design system hand-rolled the identical dl/dt/dd block. This is the clearest migration case in the catalog — now replaced by DescriptionList going forward.",
   },
   {
     primitiveId: "inline",
     primitiveName: "Inline",
     occurrenceCount: 10,
     findingCommand: String.raw`grep -rl 'flex flex-wrap gap-4' src/app/application-components/*/page.tsx`,
-    examples: ["Every DS-1.x and DS-1.9 CrossLinks row"],
+    examples: ["Every CrossLinks row across this design system"],
     note: "The CrossLinks pattern at the top of nearly every page in this design system is a flex flex-wrap gap-4 row — exactly what Inline exists to express directly.",
   },
   {

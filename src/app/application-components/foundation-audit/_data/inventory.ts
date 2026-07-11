@@ -4,7 +4,7 @@ export type InventoryStatus = "Exists" | "Partial" | "Needed";
 export interface FamilyInventoryRow {
   id: string;
   family: string;
-  packageCode: string;
+  sourcePath: string;
   fileCount: number;
   primitiveCount: number;
   status: InventoryStatus;
@@ -20,7 +20,7 @@ export const FOUNDATION_LAYER_INVENTORY: FamilyInventoryRow[] = [
   {
     id: "layout",
     family: "Foundation Layout",
-    packageCode: "DS-2.1.2",
+    sourcePath: "components/layout/",
     fileCount: 16,
     primitiveCount: 9,
     status: "Exists",
@@ -30,27 +30,27 @@ export const FOUNDATION_LAYER_INVENTORY: FamilyInventoryRow[] = [
   {
     id: "table",
     family: "Foundation Table",
-    packageCode: "DS-2.1.3",
+    sourcePath: "components/table/",
     fileCount: 13,
     primitiveCount: 13,
     status: "Exists",
     maturity: "Certified",
-    note: "13 components — the richest accessibility wiring of any family (scope on th, aria-sort, aria-selected, per-checkbox aria-label). Certified in DS-2.1.8 after four real migrations (ResponsiveRulesTable, ScorecardTable, CertificationMatrix, CoverageMatrix — 7 of 13 components, 5 real pages), a verified per-component accessibility pass, and a stable API across three consecutive zero-change releases.",
+    note: "13 components — the richest accessibility wiring of any family (scope on th, aria-sort, aria-selected, per-checkbox aria-label). Certified after four real migrations (ResponsiveRulesTable, ScorecardTable, CertificationMatrix, CoverageMatrix — 7 of 13 components, 5 real pages), a verified per-component accessibility pass, and a stable API across three consecutive zero-change releases.",
   },
   {
     id: "metadata",
     family: "Foundation Metadata",
-    packageCode: "DS-2.1.4",
+    sourcePath: "components/metadata/",
     fileCount: 16,
     primitiveCount: 16,
     status: "Exists",
     maturity: "Production Ready",
-    note: "16 components. Verified by direct grep: zero onChange/input/button/select/textarea/contentEditable anywhere in the family except one sanctioned navigational Link in RelationshipList. DescriptionList (1 of 16) has real consumers as of DS-2.1.7.1, across 9 pages; the other 15 remain unadopted and the family hasn't run its own accessibility pass yet.",
+    note: "16 components. Verified by direct grep: zero onChange/input/button/select/textarea/contentEditable anywhere in the family except one sanctioned navigational Link in RelationshipList. DescriptionList (1 of 16) has real consumers across 9 pages; the other 15 remain unadopted and the family hasn't run its own accessibility pass yet.",
   },
   {
     id: "forms",
     family: "Foundation Forms",
-    packageCode: "DS-2.1.5",
+    sourcePath: "components/form/",
     fileCount: 23,
     primitiveCount: 22,
     status: "Exists",
@@ -60,7 +60,7 @@ export const FOUNDATION_LAYER_INVENTORY: FamilyInventoryRow[] = [
   {
     id: "catalog",
     family: "Foundation Component Catalog",
-    packageCode: "DS-2.1.1",
+    sourcePath: "foundation-components/_data/",
     fileCount: 5,
     primitiveCount: 52,
     status: "Exists",

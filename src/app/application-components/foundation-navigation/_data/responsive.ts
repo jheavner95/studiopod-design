@@ -10,7 +10,7 @@ export const BREAKPOINT_NOTES: BreakpointNote[] = [
   },
   {
     breakpoint: "Tablet",
-    note: "The same components remain usable, but SideNavigation is the first candidate for a Collapsed default — this system leaves that choice to the calling page, it doesn't switch automatically.",
+    note: "The same components remain usable, but SideNavigation is the first one worth defaulting to Collapsed — this system leaves that choice to the calling page, it doesn't switch automatically.",
   },
   {
     breakpoint: "Mobile",

@@ -3,11 +3,8 @@ export interface ImplementationGuidanceTopic {
   text: string;
 }
 
-export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
-  {
-    label: "Node ownership",
-    text: "DependencyNode's status is passed directly by the caller, not derived internally — the same controlled-component contract Workflow Framework's own WorkflowStep already established, using this package's own DependencyStatusValue instead.",
-  },
+/** Decisions a caller makes before reaching for this family — which edge direction, how grouping and filtering are wired up, and what impact analysis it does and doesn't do. */
+export const WHEN_TO_USE_TOPICS: ImplementationGuidanceTopic[] = [
   {
     label: "Relationship direction",
     text: "DependencyEdge defaults to forward (a dependency is inherently one-way — \"A needs B\"); RelationshipEdge defaults to bidirectional instead, since a relationship this family renders is more often a two-way peer connection. Both accept the same forward/backward/bidirectional vocabulary, so a caller can override either default when the real-world direction differs.",
@@ -23,6 +20,14 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   {
     label: "Filtering",
     text: "DependencyFilters is a controlled component — it holds no filtering logic itself, only emitting the selected DependencyFilterValue via onChange. Applying that filter (hiding non-matching nodes, or marking them Hidden rather than removing them entirely) is the composing screen's own responsibility, the same controlled-component contract Workflow Timeline's own WorkflowTimelineFilters already established.",
+  },
+];
+
+/** How this family composes with the state and components a caller already owns. */
+export const COMPOSITION_TOPICS: ImplementationGuidanceTopic[] = [
+  {
+    label: "Node ownership",
+    text: "DependencyNode's status is passed directly by the caller, not derived internally — the same controlled-component contract Workflow Framework's own WorkflowStep already established, using this package's own DependencyStatusValue instead.",
   },
   {
     label: "Inspector integration",

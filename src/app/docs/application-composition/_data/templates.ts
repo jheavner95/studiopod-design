@@ -21,7 +21,7 @@ export const APPLICATION_TEMPLATES: ApplicationTemplate[] = [
   {
     id: "workspace-feature",
     name: "Workspace Feature",
-    purpose: "A full working environment for one domain — the broadest template, composing an entire Platform Workspace (DS-1's own Asset/Primary/Inspector regions) rather than a single view within it.",
+    purpose: "A full working environment for one domain — the broadest template, composing an entire Platform Workspace (Workspace Architecture's own Asset/Primary/Inspector regions) rather than a single view within it.",
     platformComposition: "A domain's full Workspace component (e.g. CommerceWorkspace, ProductionWorkspace) as the outer shell.",
     workflowComposition: "Whatever process the domain's own primary object moves through — State Machine or Pipeline Components, composed inside the Platform Workspace's Primary region.",
     operationalComposition: "Data Grid or Asset Browser for the Library region; Inspector Panel for the Inspector region, unless the Platform tier already wraps both.",

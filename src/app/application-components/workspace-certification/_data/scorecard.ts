@@ -85,7 +85,7 @@ export const SCORECARD_CATEGORIES: ScorecardCategory[] = [
     id: "accessibility",
     label: "Accessibility",
     weight: 10,
-    purpose: "Whether the workspace meets the accessibility guidance every DS-1 page documents for its own regions.",
+    purpose: "Whether the workspace meets the accessibility guidance every workspace architecture page documents for its own regions.",
     passingCriteria: "Keyboard access, live regions, reduced motion, and focus behavior verified — not just documented as intent.",
     href: null,
   },

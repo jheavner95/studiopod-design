@@ -14,10 +14,10 @@ export const DEPENDENCY_FINDINGS: DependencyFinding[] = [
   },
   {
     label: "No cross-feature imports",
-    text: "DS-5 has exactly one Business Feature (the pilot), so cross-feature imports are structurally impossible today. The Composition Rules this same pilot follows (DS-5.2's own Forbidden Rules, \"Cross-feature dependencies\") remain untested by real evidence until a second feature exists — disclosed here rather than asserted as proven.",
+    text: "This tier has exactly one Business Feature (the pilot), so cross-feature imports are structurally impossible today. The Composition Rules this same pilot follows (the framework's own Forbidden Rules, \"Cross-feature dependencies\") remain untested by real evidence until a second feature exists — disclosed here rather than asserted as proven.",
   },
   {
     label: "No architecture violations",
-    text: "Zero components import a lower-tier primitive when a higher-tier equivalent already exists (e.g. the pilot uses ProductionInspector, not a hand-rolled panel; PropertyToggle, not a raw checkbox) — confirmed by cross-referencing every pilot import against DS-5.1's own Composition Rules.",
+    text: "Zero components import a lower-tier primitive when a higher-tier equivalent already exists (e.g. the pilot uses ProductionInspector, not a hand-rolled panel; PropertyToggle, not a raw checkbox) — confirmed by cross-referencing every pilot import against the composition architecture's own Composition Rules.",
   },
 ];

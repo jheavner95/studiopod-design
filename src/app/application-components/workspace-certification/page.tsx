@@ -180,7 +180,7 @@ export default function WorkspaceCertificationPage() {
             id="principles"
             eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>}
             title="Architecture principles"
-            description="The DS-1 philosophy, in eight statements."
+            description="The workspace architecture philosophy, in eight statements."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
@@ -260,7 +260,7 @@ export default function WorkspaceCertificationPage() {
             id="roadmap"
             eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>}
             title="Future architecture roadmap"
-            description="DS-1 establishes the architectural foundation everything below it builds on."
+            description="The workspace architecture certified above establishes the foundation everything below it builds on."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col items-stretch gap-1 rounded-xl border border-border-subtle bg-surface/40 p-6 sm:p-10">
@@ -297,18 +297,15 @@ export default function WorkspaceCertificationPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             id="ds-1-complete"
-            eyebrow={<Eyebrow tone="accent">DS-1 complete</Eyebrow>}
-            title="DS-1 completion summary"
-            description="Every work package this certification depends on."
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Workspace architecture components"
+            description="Every component this certification depends on."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
             {DS1_WORK_PACKAGES.map((pkg) => (
               <Link key={pkg.code} href={pkg.href} className="focus-ring block rounded-lg">
                 <Card interactive padding="md" className="flex h-full flex-col gap-1.5">
-                  <Badge tone="neutral" size="sm" className="w-fit">
-                    {pkg.code}
-                  </Badge>
                   <span className="text-body-sm font-medium text-ink-primary">{pkg.title}</span>
                   <Body size="sm" muted className="line-clamp-2">
                     {pkg.oneLiner}
@@ -322,8 +319,8 @@ export default function WorkspaceCertificationPage() {
             <ShieldCheck className="size-8 text-success" aria-hidden />
             <Heading level={3}>Workspace Architecture Certified</Heading>
             <Body muted className="max-w-prose">
-              DS-1 is complete. Every current and future StudioPOD workspace is now evaluated against the blueprint,
-              scorecard, and checklist this page defines.
+              This certification is complete. Every current and future StudioPOD workspace is now evaluated against
+              the blueprint, scorecard, and checklist this page defines.
             </Body>
           </Card>
         </div>

@@ -25,7 +25,7 @@ export const ACCESSIBILITY_STRENGTHS: AccessibilityTopic[] = [
 export const ACCESSIBILITY_GAPS: AccessibilityTopic[] = [
   {
     label: "No first-party announcement pattern",
-    text: "The one gap every platform audit confirmed as inherited, not introduced: no platform in the tier implements a built-in aria-live region for status changes, sync completions, or selection changes — the same systemic gap DS-2.5.10 found across the Operational Component Library and DS-3.9 reconfirmed unresolved across the Workflow Component Library, now confirmed unresolved a third tier up. Every platform's own docs honestly disclose this as an opt-in the consuming screen must add, rather than hiding it.",
+    text: "The one gap every platform audit confirmed as inherited, not introduced: no platform in the tier implements a built-in aria-live region for status changes, sync completions, or selection changes — the same systemic gap the Operational tier's own certification found across the Operational Component Library and the Workflow tier's own certification reconfirmed unresolved across the Workflow Component Library, now confirmed unresolved a third tier up. Every platform's own docs honestly disclose this as an opt-in the consuming screen must add, rather than hiding it.",
   },
   {
     label: "Reduced motion",

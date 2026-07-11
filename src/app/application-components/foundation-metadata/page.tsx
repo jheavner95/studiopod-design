@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -19,6 +20,7 @@ const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
 };
 
 const entry = getEntry("foundation-metadata")!;
+const relatedComponents = [getEntry("foundation-layout")!, getEntry("foundation-forms")!, getEntry("foundation-table")!];
 
 export default function FoundationMetadataPage() {
   return (
@@ -28,9 +30,9 @@ export default function FoundationMetadataPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="anatomy"
-            eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Metadata anatomy"
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
             description="Eight regions, top to bottom — select one to see the component that owns it."
             descriptionMaxWidth={false}
           />
@@ -41,9 +43,31 @@ export default function FoundationMetadataPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="component-gallery"
-            eyebrow={<Eyebrow tone="accent">Component gallery</Eyebrow>}
-            title="Component gallery"
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The rules every region of a metadata block follows — and where the line sits against the Foundation Form System's own editable fields."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={4}>
+            {METADATA_GUIDANCE.map((rule) => (
+              <Card key={rule.title} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{rule.title}</span>
+                <Body size="sm" muted>
+                  {rule.explanation}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
             description="Ten components, each with a live example plus when — and when not — to reach for it."
             descriptionMaxWidth={false}
           />
@@ -54,23 +78,10 @@ export default function FoundationMetadataPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="presentation-patterns"
-            eyebrow={<Eyebrow tone="accent">Presentation patterns</Eyebrow>}
-            title="Presentation patterns"
-            description="Seven ways the same components can be arranged, with the advantages and tradeoffs of each."
-            descriptionMaxWidth={false}
-          />
-          <PatternGallery />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="information-hierarchy"
-            eyebrow={<Eyebrow tone="accent">Information hierarchy</Eyebrow>}
-            title="Information hierarchy"
-            description="Four tiers, in visual-weight order — the rule that keeps a fully-populated metadata block from turning into visual noise."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Four tiers, in visual-weight order — the rule that keeps a fully-populated metadata block from turning into visual noise — plus a real, working example showing all four composed together at once."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
@@ -104,107 +115,122 @@ export default function FoundationMetadataPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="Seven ways the same metadata components can be arranged, with the advantages and tradeoffs of each."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={4}>
-            {METADATA_GUIDANCE.map((rule) => (
-              <Card key={rule.title} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{rule.title}</span>
-                <Body size="sm" muted>
-                  {rule.explanation}
-                </Body>
-              </Card>
+          <PatternGallery />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-6">
+          <SectionHeader
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description={`Real, grep-verifiable repeated metadata patterns found in this codebase today — ${METADATA_PROMOTION_CANDIDATES.length} categories, ${totalPromotionFiles()} files combined.`}
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={2}>
-            {METADATA_PROMOTION_CANDIDATES.map((candidate) => (
-              <Card key={candidate.id} className="flex flex-col gap-3">
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description={`Real, grep-verifiable repeated metadata patterns found in this codebase today — ${METADATA_PROMOTION_CANDIDATES.length} categories, ${totalPromotionFiles()} files combined.`}
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={2}>
+              {METADATA_PROMOTION_CANDIDATES.map((candidate) => (
+                <Card key={candidate.id} className="flex flex-col gap-3">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3">
+                    <span className="text-body-md font-medium text-ink-primary">{candidate.title}</span>
+                    <Badge tone={EFFORT_TONE[candidate.migrationEffort]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
+                      {candidate.migrationEffort} effort
+                    </Badge>
+                  </div>
+                  <Body size="sm" muted>
+                    {candidate.description}
+                  </Body>
+                  <div className="flex flex-col gap-1">
+                    <Caption className="text-ink-tertiary">
+                      {candidate.count} file{candidate.count === 1 ? "" : "s"} · verified with
+                    </Caption>
+                    <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
+                      {candidate.findingCommand}
+                    </code>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {candidate.files.slice(0, 5).map((file) => (
+                      <span
+                        key={file}
+                        className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
+                      >
+                        {file}
+                      </span>
+                    ))}
+                  </div>
+                  <Body size="sm" muted className="border-t border-border-subtle pt-3">
+                    {candidate.migrationNote}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+            {METADATA_RESOLVED_MIGRATIONS.map((migration) => (
+              <Card key={migration.id} className="flex flex-col gap-2 border-success/30 bg-success-soft">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <span className="text-body-md font-medium text-ink-primary">{candidate.title}</span>
-                  <Badge tone={EFFORT_TONE[candidate.migrationEffort]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    {candidate.migrationEffort} effort
+                  <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
+                  <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
+                    Adoption In Progress
                   </Badge>
                 </div>
+                <Caption className="text-ink-tertiary">
+                  {migration.filesMigrated} files migrated in {migration.resolvedIn}
+                </Caption>
                 <Body size="sm" muted>
-                  {candidate.description}
-                </Body>
-                <div className="flex flex-col gap-1">
-                  <Caption className="text-ink-tertiary">
-                    {candidate.count} file{candidate.count === 1 ? "" : "s"} · verified with
-                  </Caption>
-                  <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
-                    {candidate.findingCommand}
-                  </code>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {candidate.files.slice(0, 5).map((file) => (
-                    <span
-                      key={file}
-                      className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
-                    >
-                      {file}
-                    </span>
-                  ))}
-                </div>
-                <Body size="sm" muted className="border-t border-border-subtle pt-3">
-                  {candidate.migrationNote}
+                  {migration.note}
                 </Body>
               </Card>
             ))}
-          </CardGrid>
-          {METADATA_RESOLVED_MIGRATIONS.map((migration) => (
-            <Card key={migration.id} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
-                <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                  Adoption In Progress
-                </Badge>
-              </div>
-              <Caption className="text-ink-tertiary">
-                {migration.filesMigrated} files migrated in {migration.resolvedIn}
-              </Caption>
-              <Body size="sm" muted>
-                {migration.note}
-              </Body>
-            </Card>
-          ))}
-        </div>
-      </SectionShell>
+          </div>
 
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={4}>
-            {METADATA_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={4}>
+              {METADATA_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

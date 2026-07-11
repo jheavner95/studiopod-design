@@ -6,7 +6,7 @@ export interface ImplementationGuidanceTopic {
 export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   {
     label: "Platform composition",
-    text: "Every one of these 12 components is a pure re-export or a thin wrapper over an already-certified Workflow or Operational component — checked directly against Platform Rules (defined in DS-4.1) before writing each file, and in every case an existing component's prop surface already covered the need with no Production-specific field required.",
+    text: "Every one of these 12 components is a pure re-export or a thin wrapper over an already-certified Workflow or Operational component — checked directly against the Platform Rules defined on the Platform Architecture page before writing each file, and in every case an existing component's prop surface already covered the need with no Production-specific field required.",
   },
   {
     label: "Workflow integration",

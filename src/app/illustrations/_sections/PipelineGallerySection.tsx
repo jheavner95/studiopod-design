@@ -67,7 +67,6 @@ export function PipelineGallerySection() {
   return (
     <PreviewSection
       id="pipeline-gallery"
-      eyebrow="pipeline gallery"
       title="IllustrationPipeline"
       description="Ordered stages, a parallel stage, branching, and a loop, each compiled to a plain Diagram and rendered through IllustrationCanvas. No custom rendering logic anywhere."
     >

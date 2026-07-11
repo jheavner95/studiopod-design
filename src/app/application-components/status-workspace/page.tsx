@@ -17,6 +17,7 @@ import { PLATFORM_EXAMPLES } from "./_data/platform-examples";
 import { DESIGN_CONTRACT } from "./_data/design-contract";
 
 const entry = getEntry("status-workspace")!;
+const relatedComponents = [getEntry("inspector-workspace")!, getEntry("workspace-toolbar")!, getEntry("workspace-layout")!];
 
 export default function StatusWorkspacePage() {
   return (
@@ -26,10 +27,10 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="anatomy"
-            eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
-            title="Operational status anatomy"
-            description="Select a region to see its full purpose, examples, and the rules that keep it from overlapping the others."
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Seven regions, top to bottom — select one to see its full purpose, examples, and the rules that keep it from overlapping the others."
             descriptionMaxWidth={false}
           />
           <StatusAnatomyExplorer />
@@ -39,23 +40,12 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="variants"
-            eyebrow={<Eyebrow tone="accent">Variants</Eyebrow>}
-            title="Status workspace variants"
-            description="The same seven regions, weighted differently depending on what the platform actually operates."
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The seven principles every region in this anatomy follows — when status should stay passive, and when it needs the user's attention."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {STATUS_VARIANTS.map((variant) => (
-              <VariantCard key={variant.id} variant={variant} />
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="principles" eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Workspace principles" descriptionMaxWidth={false} />
           <CardGrid columns={4}>
             {STATUS_PRINCIPLES.map((principle) => (
               <Card key={principle.title} className="flex flex-col gap-2">
@@ -72,10 +62,27 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            description="Five presentation modes, each appropriate at a different breakpoint — see Workspace Layout's own Responsive Rules for how this coordinates with the rest of the anatomy."
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
+            description="Six named status workspaces, each built from the same seven regions with a different emphasis."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {PLATFORM_EXAMPLES.map((example) => (
+              <PlatformExampleCard key={example.id} example={example} />
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Five presentation modes, each appropriate at a different breakpoint — see Workspace Layout's own responsive rules for how this coordinates with the rest of the anatomy."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -110,96 +117,119 @@ export default function StatusWorkspacePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future status extensions"
-            description="Room the anatomy leaves for later — reserved, not scoped or committed."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={4}>
-            {STATUS_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="platform-examples"
-            eyebrow={<Eyebrow tone="accent">Platform examples</Eyebrow>}
-            title="Platform examples"
-            description="Six named status workspaces, each built from the same seven regions with a different emphasis."
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="The same seven regions, weighted differently depending on what the platform actually operates."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {PLATFORM_EXAMPLES.map((example) => (
-              <PlatformExampleCard key={example.id} example={example} />
+            {STATUS_VARIANTS.map((variant) => (
+              <VariantCard key={variant.id} variant={variant} />
             ))}
           </CardGrid>
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="design-contract"
-            eyebrow={<Eyebrow tone="accent">Design contract</Eyebrow>}
-            title="Operational status design contract"
-            description="The official checklist every future Operational Status implementation must satisfy."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
-          <div className="rounded-lg border border-accent-500/30 bg-accent-soft/10 p-4 sm:p-6">
-            <ul className="flex flex-col">
-              {DESIGN_CONTRACT.map((item, index) => (
-                <li
-                  key={item.label}
-                  className={
-                    index < DESIGN_CONTRACT.length - 1
-                      ? "flex items-start gap-3 border-b border-border-subtle py-4 first:pt-0"
-                      : "flex items-start gap-3 py-4 first:pt-0"
-                  }
-                >
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" aria-hidden />
-                  <div className="flex min-w-0 flex-col gap-1">
-                    <span className="text-body-sm font-medium text-ink-primary">{item.label}</span>
-                    <Body size="sm" muted className="min-w-0 break-words">
-                      {item.note}
-                    </Body>
-                  </div>
-                </li>
-              ))}
-            </ul>
+          <CardGrid columns={3}>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="design-considerations"
+              title="Design considerations"
+              description="The checklist every Operational Status implementation is expected to satisfy — each item traces back to a specific region or principle documented above."
+              descriptionMaxWidth={false}
+            />
+            <div className="rounded-lg border border-accent-500/30 bg-accent-soft/10 p-4 sm:p-6">
+              <ul className="flex flex-col">
+                {DESIGN_CONTRACT.map((item, index) => (
+                  <li
+                    key={item.label}
+                    className={
+                      index < DESIGN_CONTRACT.length - 1
+                        ? "flex items-start gap-3 border-b border-border-subtle py-4 first:pt-0"
+                        : "flex items-start gap-3 py-4 first:pt-0"
+                    }
+                  >
+                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" aria-hidden />
+                    <div className="flex min-w-0 flex-col gap-1">
+                      <span className="text-body-sm font-medium text-ink-primary">{item.label}</span>
+                      <Body size="sm" muted className="min-w-0 break-words">
+                        {item.note}
+                      </Body>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Caption className="text-ink-tertiary">
+              See also{" "}
+              <Link href="/application-components/workspace-framework" className="text-accent-400 hover:text-accent-300">
+                Workspace Framework
+              </Link>
+              ,{" "}
+              <Link href="/application-components/workspace-layout" className="text-accent-400 hover:text-accent-300">
+                Workspace Layout
+              </Link>
+              ,{" "}
+              <Link href="/application-components/workspace-toolbar" className="text-accent-400 hover:text-accent-300">
+                Workspace Toolbar
+              </Link>
+              ,{" "}
+              <Link href="/application-components/primary-workspace" className="text-accent-400 hover:text-accent-300">
+                Primary Workspace
+              </Link>
+              , and{" "}
+              <Link href="/application-components/inspector-workspace" className="text-accent-400 hover:text-accent-300">
+                Inspector Workspace
+              </Link>{" "}
+              for how Operational Status fits into the full workspace anatomy.
+            </Caption>
           </div>
-          <Caption className="text-ink-tertiary">
-            See also{" "}
-            <Link href="/application-components/workspace-framework" className="text-accent-400 hover:text-accent-300">
-              Workspace Framework
-            </Link>
-            ,{" "}
-            <Link href="/application-components/workspace-layout" className="text-accent-400 hover:text-accent-300">
-              Workspace Layout
-            </Link>
-            ,{" "}
-            <Link href="/application-components/workspace-toolbar" className="text-accent-400 hover:text-accent-300">
-              Workspace Toolbar
-            </Link>
-            ,{" "}
-            <Link href="/application-components/primary-workspace" className="text-accent-400 hover:text-accent-300">
-              Primary Workspace
-            </Link>
-            , and{" "}
-            <Link href="/application-components/inspector-workspace" className="text-accent-400 hover:text-accent-300">
-              Inspector Workspace
-            </Link>{" "}
-            for how Operational Status fits into the full workspace anatomy.
-          </Caption>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the anatomy leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={4}>
+              {STATUS_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

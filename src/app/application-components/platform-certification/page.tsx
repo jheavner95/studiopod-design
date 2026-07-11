@@ -47,14 +47,13 @@ export default function PlatformCertificationPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Nine packages, ${TOTAL_COMPONENT_COUNT} components`}
-            description="Platform Architecture (the blueprint) plus every domain platform built across DS-4.2–DS-4.9, each independently re-audited for this certification rather than trusting its own docs page."
+            description="Platform Architecture (the blueprint) plus every domain platform built on top of it, each independently re-audited for this certification rather than trusting its own docs page."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
             {PLATFORM_SYSTEMS.map((system) => (
               <Card key={system.code} className="flex flex-col gap-3">
                 <div className="flex items-center justify-between gap-2">
-                  <Caption className="text-ink-tertiary">{system.code}</Caption>
                   <Badge tone={system.readiness === "Certified" ? "success" : "neutral"} size="sm">
                     {system.readiness === "Certified" ? "Certified" : "Architecture"}
                   </Badge>
@@ -80,7 +79,7 @@ export default function PlatformCertificationPage() {
             id="verify"
             eyebrow={<Eyebrow tone="accent">Verify</Eyebrow>}
             title="Certification scorecard"
-            description="Every domain platform against all thirteen verification dimensions — the full matrix behind each platform's Certified label above. Platform Architecture is excluded from this scorecard (it is documentation, not a component library) and reviewed instead in the Layering Review below. Thirteen dimensions rather than DS-3.9's twelve: this tier composes from three lower tiers at once (Foundation, Operational, Workflow) plus a Platform-specific boundary check."
+            description="Every domain platform against all thirteen verification dimensions — the full matrix behind each platform's Certified label above. Platform Architecture is excluded from this scorecard (it is documentation, not a component library) and reviewed instead in the Layering Review below. Thirteen dimensions rather than the Workflow tier's twelve: this tier composes from three lower tiers at once (Foundation, Operational, Workflow) plus a Platform-specific boundary check."
             descriptionMaxWidth={false}
           />
           <Scorecard />
@@ -177,7 +176,7 @@ export default function PlatformCertificationPage() {
           <SectionHeader
             id="promotion-review"
             eyebrow={<Eyebrow tone="accent">Promotion review</Eyebrow>}
-            title="Every real duplication finding across DS-4, reclassified"
+            title="Every real duplication finding across the platform tier, reclassified"
             description={PROMOTION_METHODOLOGY_NOTE}
             descriptionMaxWidth={false}
           />
@@ -325,7 +324,7 @@ export default function PlatformCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader id="platform-roadmap" eyebrow={<Eyebrow tone="accent">Platform roadmap</Eyebrow>} title="Where DS-4 sits in the larger plan" descriptionMaxWidth={false} />
+          <SectionHeader id="platform-roadmap" eyebrow={<Eyebrow tone="accent">Platform roadmap</Eyebrow>} title="Where the platform tier sits in the larger plan" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             {PLATFORM_ROADMAP.map((stage) => (
               <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
@@ -346,7 +345,7 @@ export default function PlatformCertificationPage() {
 
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="DS-4 completion summary" descriptionMaxWidth={false} />
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Platform tier completion summary" descriptionMaxWidth={false} />
           <Body size="md" muted className="max-w-[var(--container-narrow)]">
             {DS4_COMPLETION_SUMMARY}
           </Body>
@@ -392,8 +391,8 @@ export default function PlatformCertificationPage() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every DS-4 work package</span>
-            <DescriptionList items={DS4_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
+            <span className="text-body-sm font-medium text-ink-primary">Every package in this review</span>
+            <DescriptionList items={DS4_WORK_PACKAGES.map((pkg) => ({ label: pkg.title, value: pkg.oneLiner }))} />
           </div>
         </div>
       </SectionShell>

@@ -50,7 +50,7 @@ export const DEPENDENCY_PROMOTION_CANDIDATES: DependencyPromotionCandidate[] = [
 
 export const DEPENDENCY_CLEAN_FINDINGS: string[] = [
   "Production: ProductionArtifact (src/production/types/production.ts) has source/destination fields for pipeline-flow position, not artifact-to-artifact dependency edges — a full grep of src/production/ for \"dependen\" returns zero matches anywhere in file contents. ArtifactLifecycleDiagram renders a linear lifecycle chain (Creative Brief → … → Commercial Performance) via the Workflow Diagram Library, not a dependency graph. This package's own \"Artwork Dependencies\" gallery demo has no prior art to reuse or collide with — genuinely new ground.",
-  "Publishing, Commerce: PublishingDiagram.tsx/CommerceDiagram.tsx are category-scoped views of the same CapabilityRegistry covered above — no publishing- or commerce-specific dependency UI beyond what's already documented as a Promotion Candidate.",
+  "Publishing, Commerce: PublishingDiagram.tsx/CommerceDiagram.tsx are category-scoped views of the same CapabilityRegistry covered above — no publishing- or commerce-specific dependency UI beyond what's already documented above under Migration Notes.",
   "Planning: no src/planning/ directory or component exists anywhere in the repo — reconfirmed via a full directory search.",
   "Intelligence: the only \"intelligence\"-named file remains a static PlatformArchitecture example using only data-flow edges (Observe→Analyze→Recommend→Automate) — no dependency-typed edges touch Intelligence specifically, reconfirmed unchanged since prior audits.",
   "Automation: no src/automation/ directory exists anywhere in the repo — reconfirmed via a full directory search.",

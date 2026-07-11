@@ -41,10 +41,10 @@ export const LAYER_CHECKS: LayerCheck[] = [
   },
   {
     label: "Platform Architecture's own rules, followed by the real platforms",
-    result: "DS-4.1's own composition rules (compose, don't reimplement; one platform, one owner; extension through props, never forking) were independently confirmed followed by all eight real platforms — verified directly via the same grep, not by trusting DS-4.1's own now-corrected \"zero platforms exist\" narrative.",
+    result: "Platform Architecture's own composition rules (compose, don't reimplement; one platform, one owner; extension through props, never forking) were independently confirmed followed by all eight real platforms — verified directly via the same grep, not by trusting Platform Architecture's own now-corrected \"zero platforms exist\" narrative.",
     verdict: "Pass",
   },
 ];
 
 export const LAYERING_NOTE =
-  "Foundation → Operational → Workflow → Platform → Business Features is a strictly one-directional dependency graph today, confirmed by direct grep rather than assumed from the architecture diagram. \"Business Features\" (the tier that would consume this library, and everything below it, in a real StudioPOD screen) does not exist yet — that is the subject of DS-5 and beyond, not a violation of this review.";
+  "Foundation → Operational → Workflow → Platform → Business Features is a strictly one-directional dependency graph today, confirmed by direct grep rather than assumed from the architecture diagram. \"Business Features\" (the tier that would consume this library, and everything below it, in a real StudioPOD screen) does not exist yet — that is the subject of the next tier and beyond, not a violation of this review.";

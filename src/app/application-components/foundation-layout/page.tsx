@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
@@ -10,6 +11,7 @@ import { LAYOUT_RULES } from "./_data/layout-rules";
 import { LAYOUT_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("foundation-layout")!;
+const relatedComponents = [getEntry("foundation-components")!, getEntry("foundation-table")!, getEntry("foundation-metadata")!];
 
 const ACCESSIBILITY_TOPICS = [
   { label: "Reading order", note: "Every primitive renders its children in the same order they're passed — layout never reorders content visually in a way that diverges from DOM order." },
@@ -50,13 +52,42 @@ export default function FoundationLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="gallery"
-            eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="Five rules for choosing a primitive over a hand-written layout — the line every arrangement in this system is expected to follow."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {LAYOUT_RULES.map((rule) => (
+              <Card key={rule.title} className="flex flex-col gap-2">
+                <span className="text-body-sm font-medium text-ink-primary">{rule.title}</span>
+                <Body size="sm" muted>
+                  {rule.explanation}
+                </Body>
+              </Card>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Interactive gallery"
             description="Select a primitive for its purpose, a live example, usage guidance, and common mistakes."
             descriptionMaxWidth={false}
           />
           <PrimitiveGallery />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <DescriptionList items={ACCESSIBILITY_TOPICS.map((item) => ({ label: item.label, value: item.note }))} />
         </div>
       </SectionShell>
 
@@ -74,88 +105,88 @@ export default function FoundationLayoutPage() {
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verifiable counts of repeated implementations across this design system — not estimates."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={2}>
-            {PROMOTION_CANDIDATES.map((candidate) => (
-              <Card key={candidate.primitiveId} className="flex flex-col gap-3">
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-body-md font-medium text-ink-primary">{candidate.primitiveName}</span>
-                  <span className="shrink-0 text-body-sm text-accent-400">{candidate.occurrenceCount}×</span>
-                </div>
-                <Body size="sm" muted>
-                  {candidate.note}
-                </Body>
-                <div className="flex flex-col gap-1">
-                  <Caption className="text-ink-tertiary">Verified with</Caption>
-                  <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
-                    {candidate.findingCommand}
-                  </code>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {candidate.examples.slice(0, 5).map((example) => (
-                    <span
-                      key={example}
-                      className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
-                    >
-                      {example}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="layout-rules" eyebrow={<Eyebrow tone="accent">Layout rules</Eyebrow>} title="Layout rules" descriptionMaxWidth={false} />
-          <CardGrid columns={3}>
-            {LAYOUT_RULES.map((rule) => (
-              <Card key={rule.title} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{rule.title}</span>
-                <Body size="sm" muted>
-                  {rule.explanation}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
-          <DescriptionList items={ACCESSIBILITY_TOPICS.map((item) => ({ label: item.label, value: item.note }))} />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current nine primitives leave for later — reserved, not scoped or committed."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {LAYOUT_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verifiable counts of repeated hand-written layout patterns across this design system — not estimates."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={2}>
+              {PROMOTION_CANDIDATES.map((candidate) => (
+                <Card key={candidate.primitiveId} className="flex flex-col gap-3">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-body-md font-medium text-ink-primary">{candidate.primitiveName}</span>
+                    <span className="shrink-0 text-body-sm text-accent-400">{candidate.occurrenceCount}×</span>
+                  </div>
+                  <Body size="sm" muted>
+                    {candidate.note}
+                  </Body>
+                  <div className="flex flex-col gap-1">
+                    <Caption className="text-ink-tertiary">Verified with</Caption>
+                    <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
+                      {candidate.findingCommand}
+                    </code>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {candidate.examples.slice(0, 5).map((example) => (
+                      <span
+                        key={example}
+                        className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
+                      >
+                        {example}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current nine primitives leave for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {LAYOUT_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

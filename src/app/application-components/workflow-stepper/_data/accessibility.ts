@@ -22,7 +22,7 @@ export const STEPPER_ACCESSIBILITY_TOPICS: StepperAccessibilityTopic[] = [
   },
   {
     label: "Status announcements",
-    text: "Same opt-in convention for WorkflowStepperStep's own status changes (e.g. Current moving to the next step) — no built-in aria-live, consistent with the systemic gap this session's own DS-2.5.10 certification review already flagged across the whole library rather than fixed ad hoc in one package.",
+    text: "Same opt-in convention for WorkflowStepperStep's own status changes (e.g. Current moving to the next step) — no built-in aria-live, consistent with a systemic gap already flagged across the whole library's own accessibility review rather than fixed ad hoc in one package.",
   },
   {
     label: "Color independence",

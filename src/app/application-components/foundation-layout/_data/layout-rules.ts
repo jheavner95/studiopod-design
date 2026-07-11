@@ -6,7 +6,7 @@ export interface LayoutRule {
 export const LAYOUT_RULES: LayoutRule[] = [
   {
     title: "Prefer Stack before a custom flex-column",
-    explanation: "flex flex-col gap-N is the single most repeated exact className in this codebase — see Promotion Candidates below. If it's vertical composition with a gap, it's a Stack.",
+    explanation: "flex flex-col gap-N is the single most repeated exact className in this codebase — see Migration Notes in Reference below. If it's vertical composition with a gap, it's a Stack.",
   },
   {
     title: "Prefer Inline before a custom flex-row",

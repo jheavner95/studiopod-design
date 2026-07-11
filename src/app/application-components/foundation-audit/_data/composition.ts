@@ -53,7 +53,7 @@ export const COMPOSITION_RULES: ComplianceCheck[] = [
     rule: "Operational components can compose these foundations",
     verdict: "Partially verified",
     evidence:
-      "Structurally nothing prevents it — all three sibling families are self-contained and depend only on Layout + ui. Table and Metadata now have real evidence: 4 of the 9 Workspace Architecture pages (workspace-layout, workspace-toolbar, primary-workspace, workspace-certification) import Table primitives (DS-2.1.7.2, DS-2.1.7.5, DS-2.1.7.6), and 7 of the 9 import DescriptionList from Metadata (DS-2.1.7.1). Forms remains unverified: zero workspace or operational page imports anything from it, and no page imports Panel or Surface from Layout either.",
+      "Structurally nothing prevents it — all three sibling families are self-contained and depend only on Layout + ui. Table and Metadata now have real evidence: 4 of the 9 Workspace Architecture pages (workspace-layout, workspace-toolbar, primary-workspace, workspace-certification) import Table primitives, and 7 of the 9 import DescriptionList from Metadata. Forms remains unverified: zero workspace or operational page imports anything from it, and no page imports Panel or Surface from Layout either.",
   },
 ];
 
@@ -107,9 +107,9 @@ export const DEPENDENCY_LAYERS: DependencyLayer[] = [
     label: "Workspace Architecture (9 pages)",
     members: ["workspace-layout", "workspace-header", "workspace-toolbar", "asset-workspace", "primary-workspace", "inspector-workspace", "status-workspace", "workspace-certification", "workspace-framework"],
     dependsOn: ["layout (outer shell only: PageShell, SectionShell, CardGrid)"],
-    note: "Every page still imports the same 3 names from Layout's page-shell level and nothing else from that module — zero pages import Panel or Surface. But 7 of the 9 now import DescriptionList from @/components/metadata (DS-2.1.7.1), and 4 (workspace-layout, workspace-toolbar, primary-workspace, workspace-certification) now import Table primitives from @/components/table (DS-2.1.7.2, DS-2.1.7.5, DS-2.1.7.6) — real cracks in what used to be a page-shell-only pattern.",
+    note: "Every page still imports the same 3 names from Layout's page-shell level and nothing else from that module — zero pages import Panel or Surface. But 7 of the 9 now import DescriptionList from @/components/metadata, and 4 (workspace-layout, workspace-toolbar, primary-workspace, workspace-certification) now import Table primitives from @/components/table — real cracks in what used to be a page-shell-only pattern.",
   },
 ];
 
 export const COMPOSITION_SUMMARY =
-  "The Foundation Layer is internally well-composed: Table, Metadata, and Forms each build cleanly on Layout and ui, never on each other, and both hard behavioral rules (Metadata never edits, Forms never present) hold with zero exceptions under direct grep. The next layer up — Workspace Architecture — has started consuming it: 7 of 9 pages now use DescriptionList and 4 of 9 now use Table primitives, both through real adoption pilots (DS-2.1.7.1 and DS-2.1.7.2/7.5/7.6). Forms and Layout's Panel/Surface remain entirely unadopted at that layer.";
+  "The Foundation Layer is internally well-composed: Table, Metadata, and Forms each build cleanly on Layout and ui, never on each other, and both hard behavioral rules (Metadata never edits, Forms never present) hold with zero exceptions under direct grep. The next layer up — Workspace Architecture — has started consuming it: 7 of 9 pages now use DescriptionList and 4 of 9 now use Table primitives, both through real adoption pilots. Forms and Layout's Panel/Surface remain entirely unadopted at that layer.";

@@ -22,7 +22,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Workflow → Platform",
-    rule: "A Platform component may compose any Workflow component — how 95 of 96 certified Platform components already ship, per DS-4.10's own certification finding.",
+    rule: "A Platform component may compose any Workflow component — how 95 of 96 certified Platform components already ship, per Platform Certification's own certification finding.",
   },
   {
     category: "Operational → Workflow",
@@ -30,7 +30,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Foundation → Operational",
-    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, per DS-2.5.10's own certification finding.",
+    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, per Operational Certification's own certification finding.",
   },
   {
     category: "Business Feature → Repository",
@@ -45,7 +45,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
 export const FORBIDDEN_RULES: CompositionRule[] = [
   {
     category: "Business Feature recreating reusable UI",
-    rule: "If a Platform, Workflow, or Operational component already covers a Feature Template part — a Header, an Inspector, a Dialog — a Business Feature must compose that component rather than hand-rolling a new one. This is the single most common way duplication re-enters a codebase, per every DS-3.x and DS-4.x package's own duplication audit one and two tiers down.",
+    rule: "If a Platform, Workflow, or Operational component already covers a Feature Template part — a Header, an Inspector, a Dialog — a Business Feature must compose that component rather than hand-rolling a new one. This is the single most common way duplication re-enters a codebase, per every Workflow-tier and Platform-tier certification's own duplication audit one and two tiers down.",
   },
   {
     category: "Platform importing Business Features",

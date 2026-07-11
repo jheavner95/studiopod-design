@@ -10,7 +10,7 @@ export const ROADMAP_RECOMMENDATIONS: RoadmapRecommendation[] = [
     id: "update-blockers",
     title: "Update FOUNDATION_BLOCKERS — several listed blockers are already resolved",
     detail:
-      "readiness.ts's DS-2.3 Inspector Components blocker list still names \"description-list\" and \"combobox,\" both of which moved to Exists in DS-2.1.2 and DS-2.1.5. The remaining real blockers for Inspector are Tabs, Divider, and Tooltip. A cheap, concrete data fix — not new work.",
+      "The readiness data's Inspector Components blocker list still names \"description-list\" and \"combobox,\" both of which have since moved to Exists in Layout and Forms. The remaining real blockers for Inspector are Tabs, Divider, and Tooltip. A cheap, concrete data fix — not new work.",
     kind: "Fix existing data",
   },
   {

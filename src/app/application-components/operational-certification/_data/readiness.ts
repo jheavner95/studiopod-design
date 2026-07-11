@@ -13,7 +13,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
   {
     label: "Adoption readiness",
     verdict: "Not ready",
-    note: "Zero real screens outside src/app/application-components/ import any operational component, confirmed by direct grep and independently reconfirmed by all nine per-system audits. This is structural, not a defect — Platform Components (DS-3 and beyond) is the tier that would consume this library, and it doesn't exist yet.",
+    note: "Zero real screens outside src/app/application-components/ import any operational component, confirmed by direct grep and independently reconfirmed by all nine per-system audits. This is structural, not a defect — Platform Components, the tier that would consume this library, doesn't exist yet.",
   },
   {
     label: "API stability",

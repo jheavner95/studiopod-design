@@ -6,7 +6,7 @@ export interface ResponsiveTopic {
 export const RESPONSIVE_TOPICS: ResponsiveTopic[] = [
   {
     label: "Horizontal scrolling",
-    note: "Table's built-in ScrollArea handles this at every breakpoint — a wide table scrolls within its own bounds rather than widening the page, the same fix first diagnosed for CSS Grid blowout in DS-0.3.",
+    note: "Table's built-in ScrollArea handles this at every breakpoint — a wide table scrolls within its own bounds rather than widening the page, the same fix first diagnosed for CSS Grid overflow elsewhere in this system.",
   },
   {
     label: "Priority columns",

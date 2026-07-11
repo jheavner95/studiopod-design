@@ -7,7 +7,7 @@ export interface AdoptionEntry {
 }
 
 const VERDICT_LABEL: Record<AdoptionVerdict, string> = {
-  "no-candidate": "No real candidate",
+  "no-candidate": "No real implementation",
   "diagram-layer-only": "Diagram-layer only",
   "does-not-exist": "Does not exist",
 };
@@ -64,7 +64,7 @@ export const ADOPTION_TARGETS: AdoptionEntry[] = [
 ];
 
 export const ADOPTION_SUMMARY =
-  "Zero of the eight named platforms had a real business-domain adoption candidate at the time this audit ran, before any Platform-tier library existed. Every one resolved to a pre-existing illustration/diagram library (src/production/, src/platforms/, src/capabilities/ — all three self-documented as schemas that exist to feed IllustrationCanvas, not real operational logic), a static example fixture, or a bare string in planning/prose data that the design system's own prior audits already flagged as internally inconsistent. That prediction was independently validated: DS-4.2 through DS-4.9 have since built all eight platform libraries, and every one of their own dedicated duplication audits reconfirmed zero real business-domain logic to migrate — each shipped as pure re-exports of already-certified Foundation/Operational/Workflow components, genuinely greenfield, not migrated from anything. DS-4.10's own certification re-verified this holds: see the Platform Component Library Certification page.";
+  "Zero of the eight named platforms had a real business-domain implementation to build from at the time this audit ran, before any Platform-tier library existed. Every one resolved to a pre-existing illustration/diagram library (src/production/, src/platforms/, src/capabilities/ — all three self-documented as schemas that exist to feed IllustrationCanvas, not real operational logic), a static example fixture, or a bare string in planning/prose data that this design system's own prior audits already flagged as internally inconsistent. That prediction was independently validated: all eight platform libraries have since been built, and every one of their own dedicated duplication audits reconfirmed zero real business-domain logic to migrate — each shipped as pure re-exports of already-certified Foundation/Operational/Workflow components, genuinely greenfield, not migrated from anything. The Platform Component Library Certification capstone re-verified this holds: see that page for details.";
 
 /**
  * As of DS-4.10 (the DS-4 capstone), every entry below is stale in one
@@ -80,7 +80,7 @@ export const ADOPTION_SUMMARY =
  * no longer true.
  */
 export const ADOPTION_TARGETS_STALENESS_NOTE =
-  "Every verdict below describes the absence of real business-domain code (an order-processing engine, a content-sync pipeline, a permission-evaluation system), confirmed accurate by DS-4.10's own re-audit. It does not describe the absence of a Platform-tier component library — all eight now exist, certified Platform Ready or better. See the DS-4.10 Platform Component Library Certification page for the current, built state of each.";
+  "Every verdict below describes the absence of real business-domain code (an order-processing engine, a content-sync pipeline, a permission-evaluation system), confirmed accurate by the Platform Component Library Certification capstone's own re-audit. It does not describe the absence of a Platform-tier component library — all eight now exist, certified Platform Ready or better. See the Platform Component Library Certification page for the current, built state of each.";
 
 export const PLATFORM_LIST_DISCREPANCY =
-  "This page's own eight-platform list (Production, Product, Publishing, Commerce, Intelligence, Operations, Admin, Integrations) does not match any prior platform list already in the codebase: coverage.ts and templates.ts (DS-0.3) both include \"Assets\" and omit \"Product\"; workspace-certification's own platform-certification.ts (DS-1.9) lists nine platforms, including both \"Assets\" and \"Product\"; workflow-certification's own roadmap.ts (DS-3.9) lists a six-platform set including \"Planning\" and \"Automation\" found nowhere else. This page adopts the eight-platform list its own work order specifies and treats it as canonical for DS-4 going forward — reconciling the older pages against it is a migration this package does not perform.";
+  "This page's own eight-platform list (Production, Product, Publishing, Commerce, Intelligence, Operations, Admin, Integrations) does not match any prior platform list already in the codebase: an earlier coverage/templates pair both include \"Assets\" and omit \"Product\"; Workspace Certification's own platform-certification data lists nine platforms, including both \"Assets\" and \"Product\"; Workflow Certification's own roadmap data lists a six-platform set including \"Planning\" and \"Automation\" found nowhere else. This page adopts the eight-platform list its own scope specifies and treats it as canonical going forward — reconciling the older pages against it is a migration this page does not perform.";

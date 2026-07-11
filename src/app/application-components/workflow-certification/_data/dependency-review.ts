@@ -43,4 +43,4 @@ export const LAYER_CHECKS: LayerCheck[] = [
 ];
 
 export const LAYERING_NOTE =
-  "Foundation → Operational → Workflow → Platform Components is a strictly one-directional dependency graph today, confirmed by direct grep rather than assumed from the architecture diagram. \"Platform Components\" (the tier that would consume this library, and everything below it, in a real StudioPOD screen) does not exist yet — that is the subject of DS-4 and beyond, not a violation of this review.";
+  "Foundation → Operational → Workflow → Platform Components is a strictly one-directional dependency graph today, confirmed by direct grep rather than assumed from the architecture diagram. \"Platform Components\" (the tier that would consume this library, and everything below it, in a real StudioPOD screen) does not exist yet — that's a later stage of the roadmap, not a violation of this review.";

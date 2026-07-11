@@ -25,7 +25,7 @@ export const ACCESSIBILITY_STRENGTHS: AccessibilityTopic[] = [
 export const ACCESSIBILITY_GAPS: AccessibilityTopic[] = [
   {
     label: "No first-party announcement pattern",
-    text: "The one gap every one of the eight independent audits confirmed as inherited: no system in the tier implements a built-in aria-live region. Selection-count changes (Workflow Visualization) and status changes (State Machine, Approval & Review, Pipeline Components) are all left as an opt-in the consuming screen must add itself — the same systemic gap DS-2.5.10 already found across the Operational Component Library, now confirmed unresolved one tier up.",
+    text: "The one gap every one of the eight independent audits confirmed as inherited: no system in the tier implements a built-in aria-live region. Selection-count changes (Workflow Visualization) and status changes (State Machine, Approval & Review, Pipeline Components) are all left as an opt-in the consuming screen must add itself — the same systemic gap the Operational Component Library's own certification already found, now confirmed unresolved one tier up.",
   },
   {
     label: "WorkflowStepperStep missing aria-current",
@@ -33,6 +33,6 @@ export const ACCESSIBILITY_GAPS: AccessibilityTopic[] = [
   },
   {
     label: "Reduced motion",
-    text: "Not independently re-verified component-by-component in this pass — the tier's own animated primitives (Expandable, used by several systems for stage/section collapse) already gate behind useMotionPreference() per DS-2.5.10's own prior finding, and none of the eight systems introduce new animation of their own, so this is inherited rather than freshly confirmed.",
+    text: "Not independently re-verified component-by-component in this pass — the tier's own animated primitives (Expandable, used by several systems for stage/section collapse) already gate behind useMotionPreference() per the Operational Component Library's own prior finding, and none of the eight systems introduce new animation of their own, so this is inherited rather than freshly confirmed.",
   },
 ];

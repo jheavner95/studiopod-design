@@ -13,12 +13,12 @@ export const PLATFORM_ANATOMY: PlatformAnatomyRegion[] = [
   {
     name: "Platform Shell",
     layer: "Platform",
-    description: "The outer chrome for one platform — its own navigation, header, and top-level layout, composing Workspace Architecture's own six-tier blueprint (DS-1: Global Navigation, Header, Toolbar) scoped to a single platform rather than the whole StudioPOD app.",
+    description: "The outer chrome for one platform — its own navigation, header, and top-level layout, composing Workspace Architecture's own six-tier blueprint (Global Navigation, Header, Toolbar) scoped to a single platform rather than the whole StudioPOD app.",
   },
   {
     name: "Platform Workspace",
     layer: "Platform",
-    description: "The primary work area within a platform's own shell — an Asset Workspace, Primary Workspace, Inspector Workspace, or Status Workspace region (DS-1's own four workspace tiers) populated with that platform's own domain objects.",
+    description: "The primary work area within a platform's own shell — an Asset Workspace, Primary Workspace, Inspector Workspace, or Status Workspace region (Workspace Architecture's own four workspace tiers) populated with that platform's own domain objects.",
   },
   {
     name: "Platform Services",

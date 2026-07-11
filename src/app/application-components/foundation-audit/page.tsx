@@ -187,7 +187,7 @@ export default function FoundationAuditPage() {
                   <span className="text-body-md font-medium text-ink-primary">{row.family}</span>
                   <Cluster gap="xs">
                     <Badge tone="neutral" size="sm">
-                      {row.packageCode}
+                      {row.sourcePath}
                     </Badge>
                     <Badge tone={STATUS_TONE[row.status]} size="sm">
                       {row.status}
@@ -289,7 +289,7 @@ export default function FoundationAuditPage() {
             id="duplication"
             eyebrow={<Eyebrow tone="accent">Section 4 · Duplication</Eyebrow>}
             title="Duplication review"
-            description="Real, grep-verified duplication still present in the codebase, grouped by family — including a re-run of every family's own promotion-candidates findingCommand to check for drift."
+            description="Real, grep-verified duplication still present in the codebase, grouped by family — including a re-run of every family's own duplication-tracking findingCommand to check for drift."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -361,7 +361,7 @@ export default function FoundationAuditPage() {
             id="certification"
             eyebrow={<Eyebrow tone="accent">Section 6 · Certification</Eyebrow>}
             title="Foundation certification"
-            description="Applying the design system's own five-level maturity model to each family. Foundation Table reached Certified in DS-2.1.8 — the first family to do so; the rest remain Production Ready, which is itself a finding, not an oversight, and isn't fabricated to look better."
+            description="Applying the design system's own five-level maturity model to each family. Foundation Table reached Certified first — the first family to do so; the rest remain Production Ready, which is itself a finding, not an oversight, and isn't fabricated to look better."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -455,7 +455,7 @@ export default function FoundationAuditPage() {
             id="roadmap"
             eyebrow={<Eyebrow tone="accent">Section 9 · Roadmap</Eyebrow>}
             title="Roadmap adjustments"
-            description="Recommended changes to DS-2, and the one genuinely new opportunity this audit surfaced — deliberately not padded with unnecessary work."
+            description="Recommended changes to the Operational Components roadmap, and the one genuinely new opportunity this audit surfaced — deliberately not padded with unnecessary work."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>

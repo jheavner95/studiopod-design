@@ -59,7 +59,7 @@ export const NAVIGATION_PROMOTION_CANDIDATES: NavigationPromotionCandidate[] = [
     description:
       "6 files share a byte-for-byte identical function PillButton({ label, active, onClick }) — a rounded-full, aria-pressed toggle button. 3 more files reimplement the identical visual/interaction contract under a different name (FilterPill, etc.) rather than importing the shared one. All 9 are exactly the row-of-buttons-with-one-active shape SegmentedControl already generalizes.",
     migrationNote:
-      "The most direct migration in this list: SegmentedControl already exists, is already correctly reused by the 5 ControlDock.tsx playground files, and covers this exact interaction. These 9 docs-page mode switchers are strong candidates for a first adoption pilot.",
+      "The most direct migration in this list: SegmentedControl already exists, is already correctly reused by the 5 ControlDock.tsx playground files, and covers this exact interaction. These 9 docs-page mode switchers are strong choices for a first adoption pass.",
   },
   {
     id: "cross-links",

@@ -9,9 +9,8 @@ export function StatusGallerySection() {
   return (
     <PreviewSection
       id="status-gallery"
-      eyebrow="status gallery"
       title="Status & health"
-      description="StatusBadge maps a node's workflow status to the existing Badge primitive. HealthIndicator maps a health signal to a pulsing dot, entirely independent of status."
+      description="The third atomic primitive, in two parts: StatusBadge maps a node's workflow status to the existing Badge primitive, and HealthIndicator maps a health signal to a pulsing dot, entirely independent of status."
     >
       <div className="flex flex-col gap-8">
         <div>

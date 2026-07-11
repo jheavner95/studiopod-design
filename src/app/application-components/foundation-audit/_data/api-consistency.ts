@@ -122,9 +122,9 @@ export const CONSISTENCY_FINDINGS: ConsistencyFinding[] = [
   },
   {
     id: "findingcommand-inconsistency",
-    title: "Table's promotion-candidates data has no findingCommand field",
+    title: "Table's duplication-tracking data has no findingCommand field",
     detail:
-      "Layout, Metadata, and Forms each define findingCommand: string on every promotion-candidate entry, rendered as a reproducible <code> block on their docs pages. Table's promotion-candidates.ts has no such field — only a prose header comment describing the method. Re-running that method literally (grep for \"<table\") returns a different file set than the one documented (see Section 4).",
+      "Layout, Metadata, and Forms each define findingCommand: string on every duplication-tracking entry, rendered as a reproducible <code> block on their docs pages. Table's own duplication-tracking data has no such field — only a prose header comment describing the method. Re-running that method literally (grep for \"<table\") returns a different file set than the one documented (see Section 4).",
     severity: "medium",
   },
 ];
@@ -135,5 +135,5 @@ export const NORMALIZATION_RECOMMENDATIONS: string[] = [
   "Decide and document whether Forms' validation tone should adopt the 5-value StatusTone already shared by Table and Metadata, or whether a narrower 2-value error/warning tone is an intentional, stated divergence for validation messaging specifically.",
   "Wire aria-describedby consistently across all 10 Forms field types, using DatePickerField's existing implementation as the reference.",
   "Document the Surface-wrapped-in-a-role-div pattern as the sanctioned idiom (or add an optional role passthrough to Surface directly) so the next component needing it doesn't reinvent the workaround.",
-  "Add a findingCommand field to every entry in foundation-table/_data/promotion-candidates.ts, matching its three sibling families.",
+  "Add a findingCommand field to every entry in Foundation Table's own duplication-tracking data, matching its three sibling families.",
 ];

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -12,6 +13,7 @@ import { FEEDBACK_PROMOTION_CANDIDATES, FEEDBACK_CLEAN_FINDINGS } from "./_data/
 import { FEEDBACK_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("foundation-feedback")!;
+const relatedComponents = [getEntry("foundation-forms")!, getEntry("foundation-overlays")!, getEntry("foundation-navigation")!];
 
 export default function FoundationFeedbackPage() {
   return (
@@ -21,8 +23,8 @@ export default function FoundationFeedbackPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="feedback-anatomy"
-            eyebrow={<Eyebrow tone="accent">Feedback anatomy</Eyebrow>}
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Six axes, one family"
             description="Transient, Persistent, Blocking, Non-blocking, Inline, and Global — most components sit on more than one; this groups by the axis each is most defined by."
             descriptionMaxWidth={false}
@@ -44,8 +46,21 @@ export default function FoundationFeedbackPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="component-gallery"
-            eyebrow={<Eyebrow tone="accent">Component gallery</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The distinctions that decide which component fits — blocking vs. non-blocking, transient vs. persistent, and where this family's boundary sits against the Overlay System and the Foundation Form System's own field-level messaging."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Every component, live"
             description="Each demo below is a real, working component with real local state — not a static screenshot. Try Toast's button, Progress Bar's ± controls, and each dismissible component's close button."
             descriptionMaxWidth={false}
@@ -57,35 +72,26 @@ export default function FoundationFeedbackPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="states"
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how the same components hold up from desktop down to mobile."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={FEEDBACK_STATES.map((item) => ({ label: item.state, value: item.note }))} />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={3}>
-            {BREAKPOINT_NOTES.map((item) => (
-              <Card key={item.breakpoint} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{item.breakpoint}</span>
-                <Body size="sm" muted>
-                  {item.note}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
+          <div className="flex flex-col gap-6">
+            <span className="text-body-sm font-medium text-ink-primary">Responsive behavior</span>
+            <CardGrid columns={3}>
+              {BREAKPOINT_NOTES.map((item) => (
+                <Card key={item.breakpoint} className="flex flex-col gap-2">
+                  <span className="text-body-sm font-medium text-ink-primary">{item.breakpoint}</span>
+                  <Body size="sm" muted>
+                    {item.note}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
 
@@ -99,81 +105,105 @@ export default function FoundationFeedbackPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How the family fits together as a system rather than one-off components — where Toast is placed, how multiple toasts stack, and how its auto-dismiss timing behaves."
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory. This audit came back almost entirely clean, a genuinely different result from every prior Foundation package."
-            descriptionMaxWidth={false}
-          />
-          <div className="flex flex-col gap-6">
-            {FEEDBACK_PROMOTION_CANDIDATES.map((candidate) => (
-              <Card key={candidate.id} className="flex flex-col gap-3">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <span className="text-body-md font-medium text-ink-primary">{candidate.pattern}</span>
-                  <Badge tone="warning" size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    {candidate.files.length} {candidate.files.length === 1 ? "file" : "files"}
-                  </Badge>
-                </div>
-                <Body size="sm" muted>
-                  {candidate.description}
-                </Body>
-                <ul className="flex flex-col gap-1 border-t border-border-subtle pt-3">
-                  {candidate.files.map((file) => (
-                    <li key={file} className="text-metadata text-ink-tertiary">
-                      <code className="break-words">{file}</code>
-                    </li>
-                  ))}
-                </ul>
-                <Body size="sm" muted className="border-t border-border-subtle pt-3">
-                  {candidate.migrationNote}
-                </Body>
-              </Card>
-            ))}
-          </div>
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {FEEDBACK_CLEAN_FINDINGS.map((finding) => (
-              <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <Body size="sm" muted>
-                  {finding}
-                </Body>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {FEEDBACK_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory. This audit came back almost entirely clean, a genuinely different result from every prior Foundation section."
+              descriptionMaxWidth={false}
+            />
+            <div className="flex flex-col gap-6">
+              {FEEDBACK_PROMOTION_CANDIDATES.map((candidate) => (
+                <Card key={candidate.id} className="flex flex-col gap-3">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3">
+                    <span className="text-body-md font-medium text-ink-primary">{candidate.pattern}</span>
+                    <Badge tone="warning" size="sm" className="w-fit shrink-0 whitespace-nowrap">
+                      {candidate.files.length} {candidate.files.length === 1 ? "file" : "files"}
+                    </Badge>
+                  </div>
+                  <Body size="sm" muted>
+                    {candidate.description}
+                  </Body>
+                  <ul className="flex flex-col gap-1 border-t border-border-subtle pt-3">
+                    {candidate.files.map((file) => (
+                      <li key={file} className="text-metadata text-ink-tertiary">
+                        <code className="break-words">{file}</code>
+                      </li>
+                    ))}
+                  </ul>
+                  <Body size="sm" muted className="border-t border-border-subtle pt-3">
+                    {candidate.migrationNote}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
+              {FEEDBACK_CLEAN_FINDINGS.map((finding) => (
+                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                  <Body size="sm" muted>
+                    {finding}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {FEEDBACK_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

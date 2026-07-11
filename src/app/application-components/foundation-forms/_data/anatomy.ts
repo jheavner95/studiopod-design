@@ -27,7 +27,7 @@ export const FORM_ANATOMY_REGIONS: FormAnatomyRegion[] = [
     name: "Section",
     purpose: "A titled, bounded group of related fields.",
     component: "FormSection",
-    notes: "Built on Panel directly — the same base Foundation Metadata's PropertySection uses, not FieldGroup's own hand-rolled card border (see Promotion Candidates).",
+    notes: "Built on Panel directly — the same base Foundation Metadata's PropertySection uses, not FieldGroup's own hand-rolled card border (see Migration Notes).",
   },
   {
     id: "field",

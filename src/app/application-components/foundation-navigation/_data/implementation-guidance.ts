@@ -34,6 +34,6 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   },
   {
     label: "When not to build a new navigation pattern",
-    text: "Before hand-rolling another \"row of buttons, one active\" control, check whether Tabs, SegmentedControl, or NavigationItem already covers it — the Promotion Candidates section below documents nine real files that didn't check first.",
+    text: "Before hand-rolling another \"row of buttons, one active\" control, check whether Tabs, SegmentedControl, or NavigationItem already covers it — the Migration Notes further down this page document nine real files that didn't check first.",
   },
 ];

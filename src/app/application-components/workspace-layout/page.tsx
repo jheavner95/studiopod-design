@@ -20,6 +20,7 @@ import { LAYOUT_ANTI_PATTERNS } from "./_data/anti-patterns";
 import { LAYOUT_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("workspace-layout")!;
+const relatedComponents = [getEntry("workspace-framework")!, getEntry("workspace-header")!, getEntry("workspace-toolbar")!];
 
 export default function WorkspaceLayoutPage() {
   return (
@@ -29,10 +30,10 @@ export default function WorkspaceLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="width-modes"
-            eyebrow={<Eyebrow tone="accent">Width modes</Eyebrow>}
-            title="Workspace width modes"
-            description="Select a mode to see its purpose, typical use cases, and where it shows up — every width here is expressed as intent, never a pixel value."
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Five workspace width modes — select one to see its purpose, typical use cases, and where it shows up. Every width here is expressed as intent, never a pixel value."
             descriptionMaxWidth={false}
           />
           <WidthModeExplorer />
@@ -42,33 +43,27 @@ export default function WorkspaceLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="density"
-            eyebrow={<Eyebrow tone="accent">Density</Eyebrow>}
-            title="Workspace density"
-            description="Three levels, the same five dimensions each — spacing, table rows, card spacing, toolbar spacing, and inspector spacing."
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="Two decisions every workspace makes independently of its width mode: how to split the Library / Primary Workspace / Inspector row, and how dense to render the content inside it."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {DENSITY_LEVELS.map((level) => (
-              <DensityCard key={level.id} level={level} />
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="region-layout"
-            eyebrow={<Eyebrow tone="accent">Region layout</Eyebrow>}
-            title="Canonical region layout"
-            description="Six proportions for the Library / Primary Workspace / Inspector row, expressed as relative weights — the bars below are proportional, not measured."
-            descriptionMaxWidth={false}
-          />
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {REGION_LAYOUTS.map((layout) => (
-              <RegionLayoutCard key={layout.id} layout={layout} />
-            ))}
+          <div className="flex flex-col gap-4">
+            <span className="text-body-sm font-medium text-ink-primary">Canonical region layout</span>
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              {REGION_LAYOUTS.map((layout) => (
+                <RegionLayoutCard key={layout.id} layout={layout} />
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <span className="text-body-sm font-medium text-ink-primary">Workspace density</span>
+            <CardGrid columns={3}>
+              {DENSITY_LEVELS.map((level) => (
+                <DensityCard key={level.id} level={level} />
+              ))}
+            </CardGrid>
           </div>
         </div>
       </SectionShell>
@@ -76,26 +71,10 @@ export default function WorkspaceLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="responsive-rules"
-            eyebrow={<Eyebrow tone="accent">Responsive rules</Eyebrow>}
-            title="Responsive rules"
-            description="Seven dimensions of behavior across three conceptual breakpoints — see Workspace Header's Responsive Behavior section for what this looks like on an actual header."
-            descriptionMaxWidth={false}
-          />
-          <ResponsiveRulesTable
-            caption="Responsive rules: how seven dimensions of workspace behavior change across desktop, tablet, and mobile."
-            rows={RESPONSIVE_RULES}
-          />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="scrolling-rules"
-            eyebrow={<Eyebrow tone="accent">Scrolling rules</Eyebrow>}
-            title="Scrolling rules"
-            description="Five concepts, six regions. Select a region below to see why it behaves the way it does."
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
+            description="A worked example of a full workspace, region by region — five scrolling concepts and the six regions they apply to. Select a region below to see why it behaves the way it does."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -115,101 +94,124 @@ export default function WorkspaceLayoutPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="spacing"
-            eyebrow={<Eyebrow tone="accent">Spacing</Eyebrow>}
-            title="Spacing system"
-            description="Six relationships, described relative to each other rather than as pixel values."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Seven dimensions of behavior across three conceptual breakpoints — see Workspace Header's own responsive behavior section for what this looks like on an actual header."
             descriptionMaxWidth={false}
           />
-          <DescriptionList
-            labelWidth="sm:w-52"
-            items={SPACING_RULES.map((rule) => ({ label: rule.label, value: rule.text }))}
+          <ResponsiveRulesTable
+            caption="Responsive rules: how seven dimensions of workspace behavior change across desktop, tablet, and mobile."
+            rows={RESPONSIVE_RULES}
           />
-          <Caption className="text-ink-tertiary">{SPACING_SCALE_NOTE}</Caption>
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-14">
           <SectionHeader
-            id="heights"
-            eyebrow={<Eyebrow tone="accent">Heights</Eyebrow>}
-            title="Height rules"
-            description="Four relative tiers across six named regions — intent, not implementation values."
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How spacing, height, and the principles above combine into a real screen — and the shapes that show up when they don't."
             descriptionMaxWidth={false}
           />
-          <HeightComparison />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader id="spacing" title="Spacing system" description="Six relationships, described relative to each other rather than as pixel values." descriptionMaxWidth={false} />
+            <DescriptionList
+              labelWidth="sm:w-52"
+              items={SPACING_RULES.map((rule) => ({ label: rule.label, value: rule.text }))}
+            />
+            <Caption className="text-ink-tertiary">{SPACING_SCALE_NOTE}</Caption>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader id="heights" title="Height rules" description="Four relative tiers across six named regions — intent, not implementation values." descriptionMaxWidth={false} />
+            <HeightComparison />
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader id="principles" title="Layout principles" descriptionMaxWidth={false} />
+            <CardGrid columns={4}>
+              {LAYOUT_PRINCIPLES.map((principle) => (
+                <Card key={principle.title} className="flex flex-col gap-2">
+                  <span className="text-body-sm font-medium text-ink-primary">{principle.title}</span>
+                  <Body size="sm" muted>
+                    {principle.explanation}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="anti-patterns"
+              title="Anti-patterns"
+              description="Every one of these has shipped somewhere before — the rules above exist specifically to make them harder to repeat."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {LAYOUT_ANTI_PATTERNS.map((pattern) => (
+                <Card key={pattern.title} className="flex flex-col gap-2 border-error/30 bg-error-soft/20">
+                  <span className="text-body-sm font-medium text-ink-primary">{pattern.title}</span>
+                  <Body size="sm" muted>
+                    {pattern.explanation}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="principles" eyebrow={<Eyebrow tone="accent">Principles</Eyebrow>} title="Layout principles" descriptionMaxWidth={false} />
-          <CardGrid columns={4}>
-            {LAYOUT_PRINCIPLES.map((principle) => (
-              <Card key={principle.title} className="flex flex-col gap-2">
-                <span className="text-body-sm font-medium text-ink-primary">{principle.title}</span>
-                <Body size="sm" muted>
-                  {principle.explanation}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="anti-patterns"
-            eyebrow={<Eyebrow tone="accent">Anti-patterns</Eyebrow>}
-            title="Anti-patterns"
-            description="Every one of these has shipped somewhere before — the rules above exist specifically to make them harder to repeat."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
+            description="The rest of the workspace shell these layout rules govern — the overall anatomy above this page and the two regions immediately on either side of it."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {LAYOUT_ANTI_PATTERNS.map((pattern) => (
-              <Card key={pattern.title} className="flex flex-col gap-2 border-error/30 bg-error-soft/20">
-                <span className="text-body-sm font-medium text-ink-primary">{pattern.title}</span>
-                <Body size="sm" muted>
-                  {pattern.explanation}
-                </Body>
-              </Card>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider>
+      <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future workspace extensions"
-            description="Room the layout rules leave for later — reserved, not scoped or committed."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={4}>
-            {LAYOUT_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-          <Caption className="text-ink-tertiary">
-            See also{" "}
-            <Link href="/application-components/workspace-framework" className="text-accent-400 hover:text-accent-300">
-              Workspace Framework
-            </Link>{" "}
-            and{" "}
-            <Link href="/application-components/workspace-header" className="text-accent-400 hover:text-accent-300">
-              Workspace Header
-            </Link>{" "}
-            for the regions these rules apply to.
-          </Caption>
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the layout rules leave for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={4}>
+              {LAYOUT_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

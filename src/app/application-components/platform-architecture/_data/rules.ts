@@ -19,11 +19,11 @@ export const PLATFORM_RULES: PlatformRule[] = [
   },
   {
     category: "Reuse requirements",
-    rule: "Before writing a new Platform component, check Workflow, Operational, and Foundation for something that already covers the need — the same duplication-audit discipline every one of DS-3.1 through DS-3.8 already dispatched before writing a line of new code. A Platform component that reimplements WorkflowNode, InspectorPanel, or DataGrid instead of composing it is a rule violation regardless of how good the reimplementation is.",
+    rule: "Before writing a new Platform component, check Workflow, Operational, and Foundation for something that already covers the need — the same duplication-audit discipline every Workflow system already dispatched before writing a line of new code. A Platform component that reimplements WorkflowNode, InspectorPanel, or DataGrid instead of composing it is a rule violation regardless of how good the reimplementation is.",
   },
   {
     category: "Composition requirements",
-    rule: "Every Platform component must be built by composing one or more Workflow/Operational/Foundation components, not by hand-rolling markup that duplicates what they already provide. The shared-ownership re-export precedent used at least nine times across DS-3 (Pipeline=Workflow, WorkflowEdge=DependencyEdge, and the rest) is the model: when a Platform component's shape genuinely matches an existing Workflow/Operational component one-to-one, re-export it under a platform-appropriate name rather than rebuilding it.",
+    rule: "Every Platform component must be built by composing one or more Workflow/Operational/Foundation components, not by hand-rolling markup that duplicates what they already provide. The shared-ownership re-export precedent used at least nine times across the Workflow systems (Pipeline=Workflow, WorkflowEdge=DependencyEdge, and the rest) is the model: when a Platform component's shape genuinely matches an existing Workflow/Operational component one-to-one, re-export it under a platform-appropriate name rather than rebuilding it.",
   },
   {
     category: "Extension requirements",

@@ -34,6 +34,6 @@ export const WORKSPACE_EVOLUTION_STEPS: EvolutionStep[] = [
   {
     id: "generalize-extensions",
     title: "Extensions are generalized",
-    description: "A Future Extension proposed on one DS-1 page (see each page's own Future Extensions section) graduates into shared architecture once more than one platform needs it.",
+    description: "A future extension proposed on one workspace architecture page (see that page's own Future Extensions section) graduates into shared architecture once more than one platform needs it.",
   },
 ];

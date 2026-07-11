@@ -28,7 +28,6 @@ export function ResponsiveGallerySection() {
   return (
     <PreviewSection
       id="responsive-gallery"
-      eyebrow="responsive gallery"
       title="Responsive behavior"
       description="The canvas measures its own container width, not the browser viewport, so it adapts correctly even embedded somewhere narrower than the page. Desktop keeps the authored layout, tablet compresses spacing, mobile stacks automatically."
     >

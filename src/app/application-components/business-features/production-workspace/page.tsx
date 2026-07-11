@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { ArrowDown } from "lucide-react";
-import { SectionShell, DescriptionList, Surface } from "@/components/layout";
+import { SectionShell, CardGrid, DescriptionList, Surface } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
@@ -7,6 +8,7 @@ import { PRODUCTION_STAGES, VALIDATION_FLOW_ORDER, VALIDATION_FLOW_LABEL } from 
 import { ProductionFeatureWorkspace } from "./_components/ProductionFeatureWorkspace";
 
 const entry = getEntry("production-workspace-feature")!;
+const relatedComponents = [getEntry("production-platform")!, getEntry("business-feature-templates")!, getEntry("application-composition")!];
 
 interface CompositionTier {
   id: string;
@@ -97,7 +99,26 @@ const FEATURE_ANATOMY: AnatomyPart[] = [
   { part: "Commands", file: "ProductionFeatureActions.tsx", description: "Every user-triggerable action, each opening a dialog or advancing state directly." },
   { part: "Dialogs", file: "ProductionFeatureDialogs.tsx", description: "Validation, Delete, Publish, Export, and Confirmation — all five, switched on one piece of dialog state." },
   { part: "Services", file: "useProductionWorkspace.ts", description: "State, orchestration, undo/redo, selection, dialog state, and every command — the feature's own non-visual core." },
-  { part: "Repositories", file: "mock-production.ts", description: "Seed data plus pure transform functions standing in for a real backend, per this package's own local-state-only instruction." },
+  { part: "Repositories", file: "mock-production.ts", description: "Seed data plus pure transform functions standing in for a real backend, per this pilot's own local-state-only scope." },
+];
+
+const ACCESSIBILITY_TOPICS = [
+  {
+    label: "Dialogs",
+    text: "Each of the five dialogs (Validation, Delete, Publish, Export, Confirmation) renders through the shared Dialog component with role=\"dialog\", aria-modal=\"true\", and aria-labelledby pointing at that dialog's own heading id. Focus is trapped inside while open, Escape closes it, and focus returns to whatever triggered it on close.",
+  },
+  {
+    label: "View switching",
+    text: "The Pipeline / Queue / Dashboard tabs sit inside a TabsList carrying an explicit aria-label (\"Production workspace view\"), so the group is announced even though the individual tab labels are short.",
+  },
+  {
+    label: "Icon-only affordances",
+    text: "Every icon paired with a button — Undo, Redo, Advance, Validate, Publish, Export, Delete — is marked aria-hidden. The action's name always ships as visible button text alongside it, so nothing depends on recognizing the icon alone.",
+  },
+  {
+    label: "Undo / Redo state",
+    text: "The Undo and Redo buttons disable themselves directly from the hook's own canUndo/canRedo history flags, so assistive technology sees the same enabled or disabled state a sighted user does.",
+  },
 ];
 
 export default function ProductionWorkspaceFeaturePage() {
@@ -108,9 +129,9 @@ export default function ProductionWorkspaceFeaturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-6">
           <SectionHeader
-            id="live-pilot"
-            eyebrow={<Eyebrow tone="accent">Live pilot</Eyebrow>}
-            title="Production Workspace Feature"
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
             description="Fully interactive — local React state and the mock repository below, no network calls. Select an artwork, advance its stage or validation flow, toggle a quality issue, or open a dialog."
             descriptionMaxWidth={false}
           />
@@ -123,38 +144,10 @@ export default function ProductionWorkspaceFeaturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="composition-diagram"
-            eyebrow={<Eyebrow tone="accent">Composition diagram</Eyebrow>}
-            title="Business Feature → Platform → Workflow → Operational → Foundation"
-            description="Every concrete component this pilot actually imports, one row per tier — not an abstract description, the real import graph."
-            descriptionMaxWidth={false}
-          />
-          <div className="flex flex-col items-stretch gap-2">
-            {COMPOSITION_CHAIN.map((tier, index) => (
-              <div key={tier.id} className="flex flex-col items-center gap-2">
-                <Card className="flex w-full flex-col gap-3">
-                  <span className="text-body-md font-medium text-ink-primary">{tier.name}</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {tier.components.map((component) => (
-                      <Badge key={component} tone={index === 0 ? "accent" : "neutral"} size="sm">
-                        {component}
-                      </Badge>
-                    ))}
-                  </div>
-                </Card>
-                {index < COMPOSITION_CHAIN.length - 1 ? <ArrowDown className="size-4 text-ink-tertiary" aria-hidden /> : null}
-              </div>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="layer-ownership"
-            eyebrow={<Eyebrow tone="accent">Layer ownership</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
             title="What each tier owns in this pilot"
+            description="The line between this feature's own layer and the certified Platform, Workflow, Operational, and Foundation tiers it composes — use this to decide where new logic belongs."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">
@@ -177,35 +170,31 @@ export default function ProductionWorkspaceFeaturePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="feature-anatomy"
-            eyebrow={<Eyebrow tone="accent">Feature anatomy</Eyebrow>}
-            title="DS-5.2's own ten parts, this pilot's own eleven files"
-            description="Feature Architecture (Application Composition Architecture's own DS-5.2) named the parts; here is the concrete file behind each one."
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="A full round trip through the pilot"
+            description="The exact sequence to try against the live workspace above, from first selection through undo."
             descriptionMaxWidth={false}
           />
-          <div className="flex flex-col gap-3">
-            {FEATURE_ANATOMY.map((item) => (
-              <Card key={item.part} className="flex flex-col gap-2">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-body-sm font-medium text-ink-primary">{item.part}</span>
-                  <Badge tone="accent" size="sm">
-                    {item.file}
-                  </Badge>
-                </div>
-                <Body size="sm" muted>
-                  {item.description}
-                </Body>
-              </Card>
-            ))}
-          </div>
+          <DescriptionList
+            items={[
+              { label: "1. Select", value: "Click an artwork's WorkflowStep in the Pipeline view — the feature sets selectedId, the sidebar's Inspector and Validation panels update." },
+              { label: "2. Inspect", value: "ProductionInspector renders the artwork's properties; ProductionValidationPanel renders its current gate status and any open quality issues as toggles." },
+              { label: "3. Toggle an issue", value: "Flipping a PropertyToggle calls toggleIssue, which updates that one issue's resolved flag in the mock repository and re-renders the gate's reason text." },
+              { label: "4. Advance", value: "Advance stage or Advance validation opens a Confirmation or Validation dialog naming the exact transition, then commits it into the undo history on confirm." },
+              { label: "5. Publish / Export / Delete", value: "Each opens its own dialog with contextual copy (a warning if publishing before validation, a note that export is local-only), then commits on confirm." },
+              { label: "6. Undo / Redo", value: "Every commit pushes the prior artwork array onto a history stack; Undo/Redo in the Header pop and replay it, with no server round-trip." },
+              { label: "7. Switch views", value: "The Navigation tabs swap the Canvas between Pipeline, Queue, and Dashboard without touching selection or dialog state." },
+            ]}
+          />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="state-diagram"
-            eyebrow={<Eyebrow tone="accent">State diagram</Eyebrow>}
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Two orthogonal flows, both local state"
             description="An artwork's pipeline stage and its validation flow move independently — an artwork can be Validating while sitting in any pipeline stage."
             descriptionMaxWidth={false}
@@ -241,25 +230,131 @@ export default function ProductionWorkspaceFeaturePage() {
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg">
+      <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="interaction-flow"
-            eyebrow={<Eyebrow tone="accent">Interaction flow</Eyebrow>}
-            title="A full round trip through the pilot"
+            id="accessibility"
+            eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>}
+            title="Accessibility"
             descriptionMaxWidth={false}
           />
-          <DescriptionList
-            items={[
-              { label: "1. Select", value: "Click an artwork's WorkflowStep in the Pipeline view — the feature sets selectedId, the sidebar's Inspector and Validation panels update." },
-              { label: "2. Inspect", value: "ProductionInspector renders the artwork's properties; ProductionValidationPanel renders its current gate status and any open quality issues as toggles." },
-              { label: "3. Toggle an issue", value: "Flipping a PropertyToggle calls toggleIssue, which updates that one issue's resolved flag in the mock repository and re-renders the gate's reason text." },
-              { label: "4. Advance", value: "Advance stage or Advance validation opens a Confirmation or Validation dialog naming the exact transition, then commits it into the undo history on confirm." },
-              { label: "5. Publish / Export / Delete", value: "Each opens its own dialog with contextual copy (a warning if publishing before validation, a note that export is local-only), then commits on confirm." },
-              { label: "6. Undo / Redo", value: "Every commit pushes the prior artwork array onto a history stack; Undo/Redo in the Header pop and replay it, with no server round-trip." },
-              { label: "7. Switch views", value: "The Navigation tabs swap the Canvas between Pipeline, Queue, and Dashboard without touching selection or dialog state." },
-            ]}
+          <DescriptionList items={ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-14">
+          <SectionHeader
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Business Feature → Platform → Workflow → Operational → Foundation"
+            description="Every concrete component this pilot actually imports, one row per tier — not an abstract description, the real import graph."
+            descriptionMaxWidth={false}
           />
+          <div className="flex flex-col items-stretch gap-2">
+            {COMPOSITION_CHAIN.map((tier, index) => (
+              <div key={tier.id} className="flex flex-col items-center gap-2">
+                <Card className="flex w-full flex-col gap-3">
+                  <span className="text-body-md font-medium text-ink-primary">{tier.name}</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tier.components.map((component) => (
+                      <Badge key={component} tone={index === 0 ? "accent" : "neutral"} size="sm">
+                        {component}
+                      </Badge>
+                    ))}
+                  </div>
+                </Card>
+                {index < COMPOSITION_CHAIN.length - 1 ? <ArrowDown className="size-4 text-ink-tertiary" aria-hidden /> : null}
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="feature-anatomy"
+              title="Eleven files, each owning one part of the feature"
+              description="The concrete file behind each of the Business Feature layer's own parts, top to bottom."
+              descriptionMaxWidth={false}
+            />
+            <div className="flex flex-col gap-3">
+              {FEATURE_ANATOMY.map((item) => (
+                <Card key={item.part} className="flex flex-col gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-body-sm font-medium text-ink-primary">{item.part}</span>
+                    <Badge tone="accent" size="sm">
+                      {item.file}
+                    </Badge>
+                  </div>
+                  <Body size="sm" muted>
+                    {item.description}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-6">
+          <SectionHeader
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="implementation-notes"
+              title="Implementation notes"
+              description="How this pilot stands in for a real backend today."
+              descriptionMaxWidth={false}
+            />
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Mock repository</span>
+              <Body size="sm" muted>
+                mock-production.ts is seed data plus pure transform functions (advanceProductionStage, advanceValidationStatus,
+                toggleIssueResolved, publishArtwork, exportArtwork) standing in for a real backend. Every function returns a new
+                array or object rather than mutating in place, matching how the hook&rsquo;s own React state updates work.
+              </Body>
+            </Card>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current pilot leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <Card className="flex flex-col gap-2 border-dashed">
+              <span className="text-body-sm font-medium text-ink-primary">Real backend</span>
+              <Body size="sm" muted>
+                Swap the mock repository&rsquo;s pure in-memory functions for real API calls once a backend exists for artwork
+                stage, validation, and queue data — the hook&rsquo;s own command surface (advance stage, advance validation,
+                toggle issue, publish, export, delete, undo/redo) wouldn&rsquo;t need to change shape to make that swap.
+              </Body>
+            </Card>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

@@ -16,7 +16,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Workflow → Platform",
-    rule: "A Platform component may compose any Workflow component — this is how most Platform components already ship, as thin wrappers or direct re-exports of Workflow primitives (confirmed at DS-4.10: 95 of 96 Platform components are pure re-exports of already-certified lower-tier components).",
+    rule: "A Platform component may compose any Workflow component — this is how most Platform components already ship, as thin wrappers or direct re-exports of Workflow primitives (confirmed at Platform Certification: 95 of 96 Platform components are pure re-exports of already-certified lower-tier components).",
   },
   {
     category: "Operational → Workflow",
@@ -24,14 +24,14 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Foundation → Operational",
-    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, confirmed at DS-2.5.10.",
+    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, confirmed at Operational Certification.",
   },
 ];
 
 export const FORBIDDEN_RULES: CompositionRule[] = [
   {
     category: "Business Feature → Foundation directly when a higher abstraction exists",
-    rule: "If a Platform, Workflow, or Operational component already covers a need, a Business Feature must compose that component rather than reaching past it straight to Foundation. Skipping a tier to hand-roll something a higher layer already provides is the single most common way duplication re-enters a codebase — the same discipline every DS-3.x and DS-4.x package's own duplication audit existed to catch one tier down.",
+    rule: "If a Platform, Workflow, or Operational component already covers a need, a Business Feature must compose that component rather than reaching past it straight to Foundation. Skipping a tier to hand-roll something a higher layer already provides is the single most common way duplication re-enters a codebase — the same discipline every Workflow and Platform package's own duplication audit existed to catch one tier down.",
   },
   {
     category: "Platform → Business Feature",

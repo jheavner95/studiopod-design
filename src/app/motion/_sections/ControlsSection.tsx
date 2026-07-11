@@ -66,7 +66,7 @@ export function ReducedMotionSection() {
       id="reduced-motion"
       eyebrow="reduced motion"
       title="One switch, every primitive"
-      description="Toggling Reduced Motion in the dock overrides both the OS-level prefers-reduced-motion setting and every primitive on this page, through the same MotionPreferenceProvider MS-1 already built."
+      description="Toggling Reduced Motion in the dock overrides both the OS-level prefers-reduced-motion setting and every primitive on this page, through the same MotionPreferenceProvider used everywhere else in the app."
     >
       <Body size="sm" muted>
         Resolved state:{" "}

@@ -5,7 +5,8 @@ import { IllustrationNode, type IllustrationNodeProps } from "@/illustrations";
 
 interface PreviewSectionProps {
   id: string;
-  eyebrow: string;
+  /** Omit to continue a canonical section already introduced by an earlier PreviewSection (no repeated eyebrow pill). */
+  eyebrow?: string;
   title: string;
   description?: string;
   children: ReactNode;
@@ -16,7 +17,7 @@ export function PreviewSection({ id, eyebrow, title, description, children }: Pr
     <SectionShell id={id} spacing="lg" divider>
       <div className="flex flex-col gap-10">
         <SectionHeader
-          eyebrow={<Eyebrow tone="accent">{eyebrow}</Eyebrow>}
+          eyebrow={eyebrow ? <Eyebrow tone="accent">{eyebrow}</Eyebrow> : undefined}
           title={title}
           description={description}
           descriptionMaxWidth={false}

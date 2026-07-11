@@ -64,7 +64,7 @@ export const METADATA_PROMOTION_CANDIDATES: MetadataPromotionCandidate[] = [
     files: ["application-components/inventory/_data/inventory.ts", "src/production/components/HealthDashboardDiagram.tsx"],
     count: 1,
     findingCommand: 'grep -n "Health Summary" src/app/application-components/inventory/_data/inventory.ts',
-    description: "The DS-0.2 inventory already tracks \"Health Summary\" as Exists, pointing at Production's own HealthDashboardDiagram — a domain-specific implementation, not a general-purpose foundation primitive. The new HealthSummary component fills that specific gap.",
+    description: "The component inventory already tracks \"Health Summary\" as Exists, pointing at Production's own HealthDashboardDiagram — a domain-specific implementation, not a general-purpose foundation primitive. The new HealthSummary component fills that specific gap.",
     migrationEffort: "Low",
     migrationNote: "No migration needed — HealthDashboardDiagram stays as Production's own richer visualization; HealthSummary is additive, for contexts that only need the passive-indicator-grid version.",
   },
@@ -93,7 +93,7 @@ export const METADATA_RESOLVED_MIGRATIONS: ResolvedMetadataMigration[] = [
     id: "accessibility-dl",
     title: "Hand-rolled Accessibility sections",
     filesMigrated: 9,
-    resolvedIn: "DS-2.1.7.1",
+    resolvedIn: "the DescriptionList adoption pass",
     note: "All 9 files that hand-rolled the dl/dt/dd Accessibility block — including foundation-layout/page.tsx and foundation-components/page.tsx, the two pages that introduced and catalog DescriptionList but hadn't adopted it themselves — now render <DescriptionList items={...} /> directly, imported from @/components/metadata. Re-verified via grep immediately before migrating; the count hadn't drifted from the original finding. This is the Foundation Metadata System's first production adoption — status is Adoption In Progress, not Certified, since DescriptionList is one of 16 Metadata components and the rest of the family remains unadopted.",
   },
 ];

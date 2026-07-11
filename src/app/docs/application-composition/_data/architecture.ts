@@ -12,7 +12,7 @@ export interface ArchitectureTopic {
 export const COMPOSITION_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   {
     label: "Purpose",
-    text: "This page defines how the real StudioPOD application gets built from the four certified design-system tiers below it — Foundation, Operational, Workflow, and Platform (96 components across eight platforms, all Certified as of DS-4.10) — without duplicating any of them. It exists because certifying reusable components is not the same problem as composing them into real, working product screens with real data, real routing, and real users; DS-1 through DS-4 solved the first problem, DS-5 solves the second.",
+    text: "This page defines how the real StudioPOD application gets built from the four certified design-system tiers below it — Foundation, Operational, Workflow, and Platform (96 components across eight platforms, all Certified) — without duplicating any of them. It exists because certifying reusable components is not the same problem as composing them into real, working product screens with real data, real routing, and real users; the certified component tiers solved the first problem, this architecture layer solves the second.",
   },
   {
     label: "Goals",
@@ -20,7 +20,7 @@ export const COMPOSITION_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   },
   {
     label: "Composition philosophy",
-    text: "Compose, don't recreate — the same rule that has held at every boundary in this design system since DS-2.1, re-verified with zero violations at every capstone (Foundation Layer Audit, Operational Certification, Workflow Certification, Platform Component Library Certification). A Business Feature is not a place to build a new button, a new table, or a new status badge; if a feature screen needs one, that need almost always resolves to an existing Foundation, Operational, Workflow, or Platform component, and on the rare occasion it doesn't, the fix is a new Platform-tier component, not a one-off feature-level fork.",
+    text: "Compose, don't recreate — the same rule that has held at every boundary in this design system since its earliest Foundation work, re-verified with zero violations at every capstone (Foundation Layer Audit, Operational Certification, Workflow Certification, Platform Component Library Certification). A Business Feature is not a place to build a new button, a new table, or a new status badge; if a feature screen needs one, that need almost always resolves to an existing Foundation, Operational, Workflow, or Platform component, and on the rare occasion it doesn't, the fix is a new Platform-tier component, not a one-off feature-level fork.",
   },
   {
     label: "Layer responsibilities",
@@ -28,10 +28,10 @@ export const COMPOSITION_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   },
   {
     label: "Reuse strategy",
-    text: "The same shared-ownership re-export precedent that let most Platform components ship as one-line re-exports of Workflow/Operational components (nine or more components reused across three or more platforms, confirmed at DS-4.10) is expected to repeat one layer up: most of what a Business Feature needs — a workspace shell, an inspector, a data grid, an approval flow — already exists as a certified Platform component. A Business Feature's own code should be almost entirely business logic (data fetching, validation rules, orchestration) wired to already-built UI, not new UI.",
+    text: "The same shared-ownership re-export precedent that let most Platform components ship as one-line re-exports of Workflow/Operational components (nine or more components reused across three or more platforms, confirmed at Platform Certification) is expected to repeat one layer up: most of what a Business Feature needs — a workspace shell, an inspector, a data grid, an approval flow — already exists as a certified Platform component. A Business Feature's own code should be almost entirely business logic (data fetching, validation rules, orchestration) wired to already-built UI, not new UI.",
   },
   {
     label: "Business Feature definition",
-    text: "\"Business Features\" is not a new term — DS-4.1 coined it to name the tier above Platform, and it has since propagated consistently into every DS-4.2 through DS-4.9 platform package's own promotion-candidates and implementation-guidance data (confirmed at DS-4.10). This page is the first to actually define what one looks like in practice — see Business Feature Model, below — rather than mention it only as the boundary Platform stops at.",
+    text: "\"Business Features\" is not a new term — Platform Architecture coined it to name the tier above Platform, and it has since propagated consistently into every platform library's own migration-notes and implementation-guidance data (confirmed at Platform Certification). This page is the first to actually define what one looks like in practice — see Business Feature Model, below — rather than mention it only as the boundary Platform stops at.",
   },
 ];

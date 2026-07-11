@@ -18,7 +18,7 @@ export const PIPELINE_ACCESSIBILITY_TOPICS: PipelineAccessibilityTopic[] = [
   },
   {
     label: "Progress announcements",
-    text: "No built-in aria-live region announces a new stage completing or PipelineProgress's label changing — the same opt-in convention every prior Workflow Component Library package already follows, and the systemic gap this session's own DS-2.5.10 certification review already flagged across the whole library rather than fixed ad hoc in one package.",
+    text: "No built-in aria-live region announces a new stage completing or PipelineProgress's label changing — the same opt-in convention every prior Workflow Component Library package already follows, and a systemic gap an earlier accessibility review already flagged across the whole library rather than fixed ad hoc in one package.",
   },
   {
     label: "Pipeline semantics",

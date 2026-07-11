@@ -18,7 +18,7 @@ export const WORKFLOW_VIZ_ACCESSIBILITY_TOPICS: WorkflowVizAccessibilityTopic[] 
   },
   {
     label: "Selection announcements",
-    text: "No built-in aria-live region announces a node being selected or a bulk-selection count changing — the same opt-in convention every prior Workflow Component Library package already follows, and the systemic gap this session's own DS-2.5.10 certification review already flagged across the whole library rather than fixed ad hoc in one package.",
+    text: "No built-in aria-live region announces a node being selected or a bulk-selection count changing — the same opt-in convention every prior Workflow Component Library package already follows, and a systemic gap already flagged during certification review of the whole library rather than fixed ad hoc in one package.",
   },
   {
     label: "Canvas semantics",

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -12,6 +13,7 @@ import { HEALTH_PROMOTION_CANDIDATES, HEALTH_CLEAN_FINDINGS } from "./_data/prom
 import { HEALTH_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("status-health")!;
+const relatedComponents = [getEntry("bulk-actions")!, getEntry("queue-jobs")!, getEntry("dashboard-widgets")!];
 
 export default function StatusHealthPage() {
   return (
@@ -21,8 +23,8 @@ export default function StatusHealthPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="anatomy"
-            eyebrow={<Eyebrow tone="accent">Anatomy</Eyebrow>}
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Eight regions, one system"
             description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component."
             descriptionMaxWidth={false}
@@ -44,8 +46,21 @@ export default function StatusHealthPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="gallery"
-            eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The rules that decide what a health or status surface shows and how it's organized — when a score needs its metrics alongside it, how an issue's own severity differs from the overall status value, and how much detail to show at once."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight health surfaces, live"
             description="Each demo below is a real, working composition with real local state — not a static screenshot. Try Sync Status's advance button."
             descriptionMaxWidth={false}
@@ -57,24 +72,13 @@ export default function StatusHealthPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="states"
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how a health panel behaves as the viewport narrows."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={HEALTH_STATES.map((item) => ({ label: item.state, value: item.note }))} />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
           <CardGrid columns={3}>
             {BREAKPOINT_NOTES.map((item) => (
               <Card key={item.breakpoint} className="flex flex-col gap-2">
@@ -85,7 +89,6 @@ export default function StatusHealthPage() {
               </Card>
             ))}
           </CardGrid>
-          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
         </div>
       </SectionShell>
 
@@ -99,64 +102,89 @@ export default function StatusHealthPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How this family's pieces compose with Foundation Metadata, Foundation Feedback, and Inspector Panel underneath, and what's inherited rather than reimplemented."
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
-            descriptionMaxWidth={false}
-          />
-          {HEALTH_PROMOTION_CANDIDATES.length === 0 ? (
-            <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-              <span className="text-body-sm font-medium text-ink-primary">Zero real candidates found</span>
-              <Body size="sm" muted>
-                No existing hand-rolled health/status dashboard was found anywhere in the codebase across all six named domains, including a deep read of Production&rsquo;s own three existing health files. See the clean findings below for what was actually checked.
-              </Body>
-            </Card>
-          ) : null}
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {HEALTH_CLEAN_FINDINGS.map((finding) => (
-              <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <Body size="sm" muted>
-                  {finding}
-                </Body>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {HEALTH_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
+              descriptionMaxWidth={false}
+            />
+            {HEALTH_PROMOTION_CANDIDATES.length === 0 ? (
+              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                <span className="text-body-sm font-medium text-ink-primary">No existing patterns to migrate</span>
+                <Body size="sm" muted>
+                  No existing hand-rolled health or status dashboard was found anywhere in the codebase across all six named domains, including a deep read
+                  of Production&rsquo;s own three existing health files. See the clean findings below for what was actually checked.
+                </Body>
+              </Card>
+            ) : null}
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
+              {HEALTH_CLEAN_FINDINGS.map((finding) => (
+                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                  <Body size="sm" muted>
+                    {finding}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {HEALTH_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

@@ -22,6 +22,6 @@ export const FOUNDATION_DESIGN_RULES: DesignRule[] = [
   },
   {
     title: "Any component used by more than one operational family belongs in the foundation layer",
-    explanation: "The moment a second DS-2.x package needs the same pattern a first one already built, that pattern graduates out of the package and into this catalog — the same generalization rule DS-1.9's Workspace Evolution Process already established.",
+    explanation: "The moment a second operational component needs the same pattern a first one already built, that pattern graduates out of its own component and into this catalog — the same generalization rule the Workspace Evolution Process already established.",
   },
 ];

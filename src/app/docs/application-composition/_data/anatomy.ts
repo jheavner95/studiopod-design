@@ -21,7 +21,7 @@ export const FEATURE_ANATOMY: AnatomyRegion[] = [
   {
     name: "Workspace",
     kind: "internal",
-    description: "The feature's own outer shell — composes Workspace Architecture's own six-tier blueprint (DS-1: Global Navigation, Header, Toolbar, Asset/Primary/Inspector regions) scoped to this one feature, the same way a Platform's own Platform Shell does one layer down.",
+    description: "The feature's own outer shell — composes Workspace Architecture's own six-tier blueprint (Global Navigation, Header, Toolbar, Asset/Primary/Inspector regions) scoped to this one feature, the same way a Platform's own Platform Shell does one layer down.",
   },
   {
     name: "Views",

@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { Network } from "lucide-react";
-import { PageShell, SectionShell } from "@/components/layout";
-import { SectionBadge, Display, Body } from "@/components/ui";
+import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
+import { getEntry } from "@/lib/design-system-navigation";
 import { ControlDock } from "./_components/ControlDock";
 import { ArchitectureGallerySection } from "./_sections/ArchitectureGallerySection";
 import { LayerViewSection } from "./_sections/LayerViewSection";
@@ -10,6 +12,24 @@ import { DependencyViewSection } from "./_sections/DependencyViewSection";
 import { ArtifactFlowSection } from "./_sections/ArtifactFlowSection";
 import { NavigatorSection } from "./_sections/NavigatorSection";
 import { ResponsiveSection } from "./_sections/ResponsiveSection";
+
+const relatedComponents = [
+  {
+    entry: getEntry("platform-architecture")!,
+    description:
+      "The blueprint every domain platform is built against — layer composition, ownership model, and certification ladder.",
+  },
+  {
+    entry: getEntry("production-library")!,
+    description:
+      "The sibling illustration-canvas playground for production and validation diagrams — diagram data, not real components.",
+  },
+  {
+    entry: getEntry("capabilities-library")!,
+    description:
+      "The sibling illustration-canvas playground for capability and provider diagrams — diagram data, not real components.",
+  },
+];
 
 export default function PlatformsPlaygroundPage() {
   return (
@@ -36,6 +56,29 @@ export default function PlatformsPlaygroundPage() {
         <ArtifactFlowSection />
         <NavigatorSection />
         <ResponsiveSection />
+
+        <SectionShell spacing="lg">
+          <div className="flex flex-col gap-6">
+            <SectionHeader
+              id="related-components"
+              eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+              title="Related components"
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {relatedComponents.map(({ entry, description }) => (
+                <Link key={entry.id} href={entry.href} className="focus-ring block rounded-lg">
+                  <Card interactive className="flex h-full flex-col gap-2">
+                    <span className="text-body-md font-medium text-ink-primary">{entry.title}</span>
+                    <Body size="sm" muted>
+                      {description}
+                    </Body>
+                  </Card>
+                </Link>
+              ))}
+            </CardGrid>
+          </div>
+        </SectionShell>
 
         <SectionShell spacing="xl" background="raised">
           <div className="flex flex-col items-center gap-4 text-center">

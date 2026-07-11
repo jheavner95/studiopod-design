@@ -22,7 +22,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
   {
     id: "workspace-feature",
     name: "Workspace Feature",
-    description: "A full working environment for one domain — composing an entire Platform Workspace rather than a single view within it. The broadest category; every one of DS-5.1's five Platform-certified \"Workspace\" candidates (Production, Product, Publishing, Commerce, Intelligence) is expected to be built as this category.",
+    description: "A full working environment for one domain — composing an entire Platform Workspace rather than a single view within it. The broadest category; every one of Application Composition Architecture's five Platform-certified \"Workspace\" prospects (Production, Product, Publishing, Commerce, Intelligence) is expected to be built as this category.",
     relatedTemplateId: "workspace-feature",
     namingNote: null,
   },
@@ -73,16 +73,16 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     name: "Configuration Feature",
     description: "Configuring behavior for one domain, one user, or the whole application — narrower and more form-heavy than a Management Feature, and the category Settings' own Business Feature is expected to be built as.",
     relatedTemplateId: "settings-feature",
-    namingNote: "DS-5.1's own Application Templates named this \"Settings Feature.\" This page renames it \"Configuration Feature\" for consistency with the Feature Structure's own \"Configuration\" data concern — the underlying composition plan is unchanged; see Settings Feature in Application Composition Architecture.",
+    namingNote: "Application Composition Architecture's own Application Templates named this \"Settings Feature.\" This page renames it \"Configuration Feature\" for consistency with the Feature Structure's own \"Configuration\" data concern — the underlying composition plan is unchanged; see Settings Feature in Application Composition Architecture.",
   },
   {
     id: "automation-feature",
     name: "Automation Feature",
     description: "Running domain logic on a schedule, trigger, or condition rather than in direct response to one user's own action — sync jobs, scheduled publishing, rule-driven alerts.",
     relatedTemplateId: null,
-    namingNote: "New in this package. DS-5.1's own Adoption Targets found real, if partial, coverage for this already — Operations Platform ships a generalized OperationsAutomation component (partial-platform-coverage, not a dedicated platform). An Automation Feature composes that component directly, supplemented by Queue & Jobs for scheduled/triggered execution and Workflow's own State Machine for any multi-step automation logic.",
+    namingNote: "New on this page. Application Composition Architecture's own Adoption Targets found real, if partial, coverage for this already — Operations Platform ships a generalized OperationsAutomation component (partial-platform-coverage, not a dedicated platform). An Automation Feature composes that component directly, supplemented by Queue & Jobs for scheduled/triggered execution and Workflow's own State Machine for any multi-step automation logic.",
   },
 ];
 
 export const CATEGORY_SUMMARY =
-  "Eight of these nine categories are a direct rename-free carry-over of DS-5.1's own Application Templates — this page adds category identity and a canonical name, not a new composition plan. Two differences are called out rather than silently applied: \"Settings Feature\" is renamed \"Configuration Feature\" for naming consistency with Feature Structure's own \"Validation\"/\"State\"/\"API\" concern-naming convention, and \"Automation Feature\" is new, grounded in DS-5.1's own partial-platform-coverage finding for Operations Platform's OperationsAutomation component.";
+  "Eight of these nine categories are a direct rename-free carry-over of Application Composition Architecture's own Application Templates — this page adds category identity and a canonical name, not a new composition plan. Two differences are called out rather than silently applied: \"Settings Feature\" is renamed \"Configuration Feature\" for naming consistency with Feature Structure's own \"Validation\"/\"State\"/\"API\" concern-naming convention, and \"Automation Feature\" is new, grounded in Application Composition Architecture's own partial-platform-coverage finding for Operations Platform's OperationsAutomation component.";

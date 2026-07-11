@@ -18,7 +18,7 @@ export const TIMELINE_ACCESSIBILITY_TOPICS: TimelineAccessibilityTopic[] = [
   },
   {
     label: "Status announcements",
-    text: "No built-in aria-live region announces a new event arriving or a status changing — the same opt-in convention every prior Operational and Workflow Framework package already follows, and the systemic gap this session's own DS-2.5.10 certification review already flagged across the whole library rather than fixed ad hoc in one package.",
+    text: "No built-in aria-live region announces a new event arriving or a status changing — the same opt-in convention every prior Operational and Workflow Framework package already follows, and a systemic gap already flagged during this design system's own certification review, to be addressed library-wide rather than fixed ad hoc in one package.",
   },
   {
     label: "Timeline semantics",

@@ -45,7 +45,7 @@ export default function ApplicationCompositionCertificationPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title="Four packages, one real Business Feature"
-            description="Every DS-5 package independently re-audited against its own actual source for this certification, rather than trusting each package's own report."
+            description="Every Application Composition package independently re-audited against its own actual source for this certification, rather than trusting each package's own report."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">
@@ -53,7 +53,7 @@ export default function ApplicationCompositionCertificationPage() {
               <Card key={pkg.code} className="flex flex-col gap-2">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <Link href={pkg.href} className="focus-ring flex items-center gap-1 text-body-md font-medium text-ink-primary hover:text-accent-400">
-                    {pkg.code} — {pkg.title}
+                    {pkg.title}
                     <ArrowUpRight className="size-3.5" aria-hidden />
                   </Link>
                 </div>
@@ -205,7 +205,7 @@ export default function ApplicationCompositionCertificationPage() {
           <SectionHeader
             id="promotion-review"
             eyebrow={<Eyebrow tone="accent">Promotion review</Eyebrow>}
-            title="Every real finding across DS-5.1–5.4, classified"
+            title="Every real finding across the four reviewed packages, classified"
             description={PROMOTION_METHODOLOGY_NOTE}
             descriptionMaxWidth={false}
           />
@@ -318,7 +318,7 @@ export default function ApplicationCompositionCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader id="roadmap" eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>} title="Where DS-5 sits in the larger plan" descriptionMaxWidth={false} />
+          <SectionHeader id="roadmap" eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>} title="Where Application Composition sits in the larger plan" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             {APPLICATION_COMPOSITION_ROADMAP.map((stage) => (
               <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
@@ -339,7 +339,7 @@ export default function ApplicationCompositionCertificationPage() {
 
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="DS-5 completion summary" descriptionMaxWidth={false} />
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Application Composition completion summary" descriptionMaxWidth={false} />
           <Body size="md" muted className="max-w-[var(--container-narrow)]">
             {DS5_COMPLETION_SUMMARY}
           </Body>
@@ -353,10 +353,10 @@ export default function ApplicationCompositionCertificationPage() {
               score={Math.round((passCount / VERIFY_DIMENSIONS.length) * 100)}
               metrics={[
                 { value: "1", label: "Real Business Feature" },
-                { value: "4", label: "DS-5 packages" },
+                { value: "4", label: "Application Composition packages" },
               ]}
             />
-            <MetricCard value="2" label="Real defects found and fixed" description="During this certification's own re-audit of DS-5.3 and DS-5.4's browser QA history" />
+            <MetricCard value="2" label="Real defects found and fixed" description="During this certification's own re-audit of the templates' and the pilot's browser QA history" />
           </CardGrid>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="flex flex-col gap-3">
@@ -381,8 +381,8 @@ export default function ApplicationCompositionCertificationPage() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every DS-5 work package</span>
-            <DescriptionList items={DS5_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
+            <span className="text-body-sm font-medium text-ink-primary">Every package in the Application Composition tier</span>
+            <DescriptionList items={DS5_WORK_PACKAGES.map((pkg) => ({ label: pkg.title, value: pkg.oneLiner }))} />
           </div>
         </div>
       </SectionShell>

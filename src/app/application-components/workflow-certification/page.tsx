@@ -46,7 +46,7 @@ export default function WorkflowCertificationPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Eight systems, ${TOTAL_COMPONENT_COUNT} components`}
-            description="Every system built across DS-3.1–3.8, each independently re-audited for this certification rather than trusting its own docs page."
+            description="Every system in the Workflow Component Library, each independently re-audited for this certification rather than trusting its own docs page."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -173,8 +173,8 @@ export default function WorkflowCertificationPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             id="promotion-review"
-            eyebrow={<Eyebrow tone="accent">Promotion review</Eyebrow>}
-            title="Every real duplication finding across DS-3, reclassified"
+            eyebrow={<Eyebrow tone="accent">Duplication review</Eyebrow>}
+            title="Every real duplication finding across the tier, reclassified"
             description={PROMOTION_METHODOLOGY_NOTE}
             descriptionMaxWidth={false}
           />
@@ -322,7 +322,7 @@ export default function WorkflowCertificationPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader id="workflow-roadmap" eyebrow={<Eyebrow tone="accent">Workflow roadmap</Eyebrow>} title="Where DS-3 sits in the larger plan" descriptionMaxWidth={false} />
+          <SectionHeader id="workflow-roadmap" eyebrow={<Eyebrow tone="accent">Workflow roadmap</Eyebrow>} title="Where this tier sits in the larger plan" descriptionMaxWidth={false} />
           <div className="flex flex-col gap-3">
             {WORKFLOW_ROADMAP.map((stage) => (
               <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
@@ -343,7 +343,7 @@ export default function WorkflowCertificationPage() {
 
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="DS-3 completion summary" descriptionMaxWidth={false} />
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Workflow Component Library completion summary" descriptionMaxWidth={false} />
           <Body size="md" muted className="max-w-[var(--container-narrow)]">
             {DS3_COMPLETION_SUMMARY}
           </Body>
@@ -389,7 +389,7 @@ export default function WorkflowCertificationPage() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every DS-3 work package</span>
+            <span className="text-body-sm font-medium text-ink-primary">Every system covered in this certification</span>
             <DescriptionList items={DS3_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
           </div>
         </div>

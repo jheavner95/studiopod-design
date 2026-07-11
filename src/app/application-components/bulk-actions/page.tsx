@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -12,6 +13,7 @@ import { BULK_PROMOTION_CANDIDATES, BULK_CLEAN_FINDINGS } from "./_data/promotio
 import { BULK_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("bulk-actions")!;
+const relatedComponents = [getEntry("filter-search")!, getEntry("status-health")!, getEntry("queue-jobs")!];
 
 export default function BulkActionsPage() {
   return (
@@ -21,10 +23,10 @@ export default function BulkActionsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="bulk-action-anatomy"
-            eyebrow={<Eyebrow tone="accent">Bulk action anatomy</Eyebrow>}
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Seven regions, one system"
-            description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component."
+            description="Every component in this family maps to exactly one region below — most delegate directly to an already-established Foundation or Operational component."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -44,8 +46,21 @@ export default function BulkActionsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="gallery"
-            eyebrow={<Eyebrow tone="accent">Gallery</Eyebrow>}
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="The rules that decide when a piece of this family belongs on screen — selection thresholds, confirmation, destructive styling, undo, progress, and conflict handling."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight bulk-action patterns, live"
             description="Each demo below is a real, working composition with real local state — not a static screenshot. Try Confirmation Flow's dialog, Progress Flow's live run, and Undo Flow's countdown."
             descriptionMaxWidth={false}
@@ -57,24 +72,13 @@ export default function BulkActionsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="states"
-            eyebrow={<Eyebrow tone="accent">States</Eyebrow>}
-            title="States"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one."
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how the action bar behaves as the viewport narrows."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={BULK_STATES.map((item) => ({ label: item.state, value: item.note }))} />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="responsive-behavior"
-            eyebrow={<Eyebrow tone="accent">Responsive behavior</Eyebrow>}
-            title="Responsive behavior"
-            descriptionMaxWidth={false}
-          />
           <CardGrid columns={3}>
             {BREAKPOINT_NOTES.map((item) => (
               <Card key={item.breakpoint} className="flex flex-col gap-2">
@@ -85,7 +89,6 @@ export default function BulkActionsPage() {
               </Card>
             ))}
           </CardGrid>
-          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
         </div>
       </SectionShell>
 
@@ -99,64 +102,89 @@ export default function BulkActionsPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="implementation-guidance"
-            eyebrow={<Eyebrow tone="accent">Implementation guidance</Eyebrow>}
-            title="Implementation guidance"
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How the action bar and its overflow menu compose with the rest of the system, and what a caller still owns."
             descriptionMaxWidth={false}
           />
-          <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
+          <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
         </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           <SectionHeader
-            id="promotion-candidates"
-            eyebrow={<Eyebrow tone="accent">Promotion candidates</Eyebrow>}
-            title="Promotion candidates"
-            description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
-            descriptionMaxWidth={false}
-          />
-          {BULK_PROMOTION_CANDIDATES.length === 0 ? (
-            <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-              <span className="text-body-sm font-medium text-ink-primary">Zero real candidates found</span>
-              <Body size="sm" muted>
-                No existing hand-rolled bulk-action UI was found anywhere in the codebase across all seven named domains, including a fresh re-check of this repo&rsquo;s own four MS-2.x Library Playground pages. See the clean findings below for what was actually checked.
-              </Body>
-            </Card>
-          ) : null}
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-            {BULK_CLEAN_FINDINGS.map((finding) => (
-              <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <Body size="sm" muted>
-                  {finding}
-                </Body>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="future-extensions"
-            eyebrow={<Eyebrow tone="accent">Future extensions</Eyebrow>}
-            title="Future extensions"
-            description="Room the current system leaves for later — reserved, not scoped or committed."
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
-            {BULK_FUTURE_EXTENSIONS.map((extension) => (
-              <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
-                <Body size="sm" muted>
-                  {extension.description}
-                </Body>
-              </Card>
+            {relatedComponents.map((related) => (
+              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+                <Card interactive className="flex h-full flex-col gap-2">
+                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <Body size="sm" muted>
+                    {related.description}
+                  </Body>
+                </Card>
+              </Link>
             ))}
           </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="migration-notes"
+              title="Migration notes"
+              description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
+              descriptionMaxWidth={false}
+            />
+            {BULK_PROMOTION_CANDIDATES.length === 0 ? (
+              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                <span className="text-body-sm font-medium text-ink-primary">No existing patterns to migrate</span>
+                <Body size="sm" muted>
+                  No hand-rolled bulk-action UI was found anywhere in the codebase across all seven named domains, including a fresh re-check of this
+                  repo&rsquo;s own four Library Playground pages. See the clean findings below for what was actually checked.
+                </Body>
+              </Card>
+            ) : null}
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
+              {BULK_CLEAN_FINDINGS.map((finding) => (
+                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
+                  <Body size="sm" muted>
+                    {finding}
+                  </Body>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Room the current system leaves for later — reserved, not scoped or committed."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {BULK_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

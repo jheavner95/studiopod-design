@@ -15,7 +15,7 @@ export interface PhilosophyTopic {
 export const PHILOSOPHY_TOPICS: PhilosophyTopic[] = [
   {
     label: "Purpose",
-    text: "Business Feature Composition Framework (DS-5.2) defined the parts every Business Feature is built from — a ten-part ownership tree (Feature Architecture) and a generic thirteen-part checklist (Feature Template) — plus nine reusable Feature Categories. This page is the templates layer: a concrete standard layout for eight of those nine categories, naming which parts a real feature in that category needs and what each part composes from. Automation Feature, DS-5.2's ninth category, has no template here — its own composition (Operations Platform's OperationsAutomation plus Queue & Jobs) is scheduling/trigger-driven rather than layout-driven, and doesn't fit this page's \"standard layout\" shape; a dedicated treatment is left to a future package.",
+    text: "The Business Feature Composition Framework defined the parts every Business Feature is built from — a ten-part ownership tree (Feature Architecture) and a generic thirteen-part checklist (Feature Template) — plus nine reusable Feature Categories. This page is the templates layer: a concrete standard layout for eight of those nine categories, naming which parts a real feature in that category needs and what each part composes from. Automation Feature, the ninth category, has no template here — its own composition (Operations Platform's OperationsAutomation plus Queue & Jobs) is scheduling/trigger-driven rather than layout-driven, and doesn't fit this page's \"standard layout\" shape; a dedicated treatment is left for later.",
   },
   {
     label: "Reuse goals",
@@ -27,6 +27,6 @@ export const PHILOSOPHY_TOPICS: PhilosophyTopic[] = [
   },
   {
     label: "Composition strategy",
-    text: "Every template favors a domain's own certified Platform component where DS-5.1's own Adoption Targets found one, and falls back to composing Workflow, Operational, or Foundation directly where no Platform-tier equivalent exists yet — the same two-path reuse strategy DS-5.2's own Business Feature Framework already established, applied here at the level of a named layout part rather than a whole feature.",
+    text: "Every template favors a domain's own certified Platform component where Platform Architecture's own Adoption Targets found one, and falls back to composing Workflow, Operational, or Foundation directly where no Platform-tier equivalent exists yet — the same two-path reuse strategy the Business Feature Composition Framework already established, applied here at the level of a named layout part rather than a whole feature.",
   },
 ];

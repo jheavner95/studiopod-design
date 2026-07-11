@@ -18,7 +18,7 @@ export const PRODUCTION_ACCESSIBILITY_TOPICS: ProductionAccessibilityTopic[] = [
   },
   {
     label: "Status announcements",
-    text: "No built-in aria-live region announces a stage completing or a job's status changing — the same opt-in convention every prior Workflow and Operational package already follows, and the same systemic gap DS-3.9's own certification review already flagged across the whole Workflow Component Library, now inherited rather than independently re-introduced at the Platform tier.",
+    text: "No built-in aria-live region announces a stage completing or a job's status changing — the same opt-in convention every prior Workflow and Operational package already follows, and the same systemic gap the Workflow Certification review already flagged across the whole Workflow Component Library, now inherited rather than independently re-introduced at the Platform tier.",
   },
   {
     label: "Canvas semantics",

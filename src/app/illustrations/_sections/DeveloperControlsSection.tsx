@@ -13,7 +13,6 @@ export function DeveloperControlsSection() {
   return (
     <PreviewSection
       id="developer-controls"
-      eyebrow="developer mode"
       title="Developer controls"
       description="Six toggleable overlays, live in the dock above. They're invisible chrome: turning them on never changes a diagram's actual layout, only what's drawn on top of it."
     >

@@ -10,7 +10,7 @@ export const ARCHITECTURE_ROADMAP: RoadmapStage[] = [
   {
     id: "workspace-architecture",
     title: "Workspace Architecture",
-    description: "DS-1 — the six-tier blueprint, certified here, that every following stage assumes already exists.",
+    description: "The six-tier blueprint, certified here, that every following stage assumes already exists.",
     status: "complete",
   },
   {

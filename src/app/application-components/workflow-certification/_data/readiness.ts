@@ -13,7 +13,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
   {
     label: "Adoption readiness",
     verdict: "Not ready",
-    note: "Zero real screens outside src/app/application-components/ import any Workflow component, confirmed by direct grep and independently reconfirmed by all eight per-system audits. This is structural, not a defect — Platform Components (DS-4 and beyond) is the tier that would consume this library, and it doesn't exist yet.",
+    note: "Zero real screens outside src/app/application-components/ import any Workflow component, confirmed by direct grep and independently reconfirmed by all eight per-system audits. This is structural, not a defect — Platform Components, still a stage ahead on the roadmap, is the tier that would consume this library, and it doesn't exist yet.",
   },
   {
     label: "API stability",
@@ -23,7 +23,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
   {
     label: "Documentation quality",
     verdict: "Ready",
-    note: "Every system's docs page covers all 8 required sections with real, grep-backed content, independently spot-checked against actual component source by all eight audits — zero stale or inflated gallery claims found anywhere in the tier (a stronger result than DS-2.5.10, which found and corrected one inaccurate claim).",
+    note: "Every system's docs page covers all 8 required sections with real, grep-backed content, independently spot-checked against actual component source by all eight audits — zero stale or inflated gallery claims found anywhere in the tier (a stronger result than the Operational Component Library's own certification, which found and corrected one inaccurate claim).",
   },
   {
     label: "Composition quality",
