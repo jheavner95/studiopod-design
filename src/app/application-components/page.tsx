@@ -152,6 +152,12 @@ export default function ApplicationComponentsPage() {
             <Button variant="secondary" size="sm" href="/application-components/product-platform">
               Product platform
             </Button>
+            <Button variant="secondary" size="sm" href="/application-components/publishing-platform">
+              Publishing platform
+            </Button>
+            <Button variant="secondary" size="sm" href="/application-components/commerce-platform">
+              Commerce platform
+            </Button>
           </div>
         </div>
       </Card>
