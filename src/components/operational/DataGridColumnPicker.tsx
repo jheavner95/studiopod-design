@@ -41,7 +41,7 @@ export function DataGridColumnPicker({ columns, visibleIds, onChange, className 
           Columns
         </Button>
       </span>
-      <Popover open={open} onOpenChange={setOpen} triggerRef={triggerRef}>
+      <Popover open={open} onOpenChange={setOpen} triggerRef={triggerRef} aria-label="Choose columns">
         <div className="flex flex-col gap-2">
           {columns.map((column) => (
             <Checkbox key={column.id} label={column.label} checked={visibleIds.has(column.id)} onChange={() => toggle(column.id)} />

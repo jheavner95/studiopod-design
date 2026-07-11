@@ -43,7 +43,12 @@ export function FilterPopover({ label, badge, icon, children, className }: Filte
           </span>
         </Button>
       </span>
-      <Popover open={open} onOpenChange={setOpen} triggerRef={triggerRef}>
+      <Popover
+        open={open}
+        onOpenChange={setOpen}
+        triggerRef={triggerRef}
+        aria-label={typeof label === "string" ? label : undefined}
+      >
         {children}
       </Popover>
     </div>

@@ -1,4 +1,4 @@
-import type { MouseEvent, ReactNode } from "react";
+import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface TableRowProps {
@@ -12,15 +12,25 @@ interface TableRowProps {
 }
 
 export function TableRow({ children, className, selected = false, interactive = false, onClick }: TableRowProps) {
+  function handleKeyDown(event: KeyboardEvent<HTMLTableRowElement>) {
+    if (!onClick) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onClick(event as unknown as MouseEvent<HTMLTableRowElement>);
+    }
+  }
+
   return (
     <tr
       onClick={onClick}
+      onKeyDown={onClick ? handleKeyDown : undefined}
+      tabIndex={onClick ? 0 : undefined}
       aria-selected={selected || undefined}
       className={cn(
         "border-b border-border-subtle last:border-b-0",
         selected && "bg-accent-soft/20",
         interactive &&
-          "cursor-pointer transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:bg-canvas-raised",
+          "cursor-pointer transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:bg-canvas-raised focus-ring",
         className,
       )}
     >
