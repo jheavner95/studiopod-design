@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { StatusWidget, MetricCard, HealthWidget } from "@/components/operational";
 import { FinalScorecard } from "./_components/FinalScorecard";
@@ -317,7 +317,7 @@ export default function FinalCertificationPage() {
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg">
+      <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader id="final-verdict" eyebrow={<Eyebrow tone="accent">Final verdict</Eyebrow>} title="Certification ledger" descriptionMaxWidth={false} />
           <Card padding="lg" className="flex flex-col gap-6 border-accent-500/30 bg-accent-soft/40">
@@ -346,6 +346,13 @@ export default function FinalCertificationPage() {
               {CLOSING_STATEMENT}
             </Body>
           </Card>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-6">
+          <SectionHeader id="related" eyebrow={<Eyebrow tone="accent">Related</Eyebrow>} title="Related" descriptionMaxWidth={false} />
+          <DocsRelatedGrid entries={[getEntry("docs-certification")!, getEntry("enterprise-architecture-audit")!, getEntry("workspace-certification")!]} />
         </div>
       </SectionShell>
     </DocsShell>

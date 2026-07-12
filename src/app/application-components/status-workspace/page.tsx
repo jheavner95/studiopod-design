@@ -65,12 +65,12 @@ export default function StatusWorkspacePage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Examples"
-            description="Six named status workspaces, each built from the same seven regions with a different emphasis."
+            description="The same seven regions, weighted differently depending on what's selected — six named variants covering the shapes a status workspace actually takes."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {PLATFORM_EXAMPLES.map((example) => (
-              <PlatformExampleCard key={example.id} example={example} />
+          <CardGrid columns={4}>
+            {STATUS_VARIANTS.map((variant) => (
+              <VariantCard key={variant.id} variant={variant} />
             ))}
           </CardGrid>
         </div>
@@ -120,12 +120,12 @@ export default function StatusWorkspacePage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="The same seven regions, weighted differently depending on what the platform actually operates."
+            description="Six named status workspaces, each built from the same seven regions with a different emphasis depending on the platform it operates."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={4}>
-            {STATUS_VARIANTS.map((variant) => (
-              <VariantCard key={variant.id} variant={variant} />
+          <CardGrid columns={3}>
+            {PLATFORM_EXAMPLES.map((example) => (
+              <PlatformExampleCard key={example.id} example={example} />
             ))}
           </CardGrid>
         </div>

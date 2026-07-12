@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { StatusWidget, MetricCard, HealthWidget } from "@/components/operational";
 import { Scorecard } from "./_components/Scorecard";
@@ -39,6 +39,60 @@ export default function WorkflowCertificationPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
       <DocsPageHeader entry={entry} />
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Workflow Component Library completion summary" descriptionMaxWidth={false} />
+          <Body size="md" muted className="max-w-[var(--container-narrow)]">
+            {DS3_COMPLETION_SUMMARY}
+          </Body>
+          <CardGrid columns={3}>
+            <StatusWidget
+              title="System readiness"
+              items={WORKFLOW_SYSTEMS.map((system) => ({
+                id: system.code,
+                label: system.name,
+                status: system.readiness === "Certified" ? "healthy" : "syncing",
+              }))}
+            />
+            <HealthWidget
+              title="Library quality"
+              score={Math.round((qualityTotals.pass / qualityTotals.total) * 100)}
+              metrics={[
+                { value: String(TOTAL_COMPONENT_COUNT), label: "Components" },
+                { value: `${WORKFLOW_SYSTEMS.filter((s) => s.readiness === "Certified").length}/8`, label: "Systems Certified" },
+              ]}
+            />
+            <MetricCard value="0" label="Foundation/Operational violations" description="Across 92 components, eight independent audits" />
+          </CardGrid>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Strengths</span>
+              <ul className="flex flex-col gap-2">
+                {EXECUTIVE_SUMMARY_STRENGTHS.map((point) => (
+                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Weaknesses</span>
+              <ul className="flex flex-col gap-2">
+                {EXECUTIVE_SUMMARY_WEAKNESSES.map((point) => (
+                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <span className="text-body-sm font-medium text-ink-primary">Every system covered in this certification</span>
+            <DescriptionList items={DS3_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
+          </div>
+        </div>
+      </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
@@ -344,56 +398,9 @@ export default function WorkflowCertificationPage() {
       </SectionShell>
 
       <SectionShell spacing="lg">
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Workflow Component Library completion summary" descriptionMaxWidth={false} />
-          <Body size="md" muted className="max-w-[var(--container-narrow)]">
-            {DS3_COMPLETION_SUMMARY}
-          </Body>
-          <CardGrid columns={3}>
-            <StatusWidget
-              title="System readiness"
-              items={WORKFLOW_SYSTEMS.map((system) => ({
-                id: system.code,
-                label: system.name,
-                status: system.readiness === "Certified" ? "healthy" : "syncing",
-              }))}
-            />
-            <HealthWidget
-              title="Library quality"
-              score={Math.round((qualityTotals.pass / qualityTotals.total) * 100)}
-              metrics={[
-                { value: String(TOTAL_COMPONENT_COUNT), label: "Components" },
-                { value: `${WORKFLOW_SYSTEMS.filter((s) => s.readiness === "Certified").length}/8`, label: "Systems Certified" },
-              ]}
-            />
-            <MetricCard value="0" label="Foundation/Operational violations" description="Across 92 components, eight independent audits" />
-          </CardGrid>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Strengths</span>
-              <ul className="flex flex-col gap-2">
-                {EXECUTIVE_SUMMARY_STRENGTHS.map((point) => (
-                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Weaknesses</span>
-              <ul className="flex flex-col gap-2">
-                {EXECUTIVE_SUMMARY_WEAKNESSES.map((point) => (
-                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every system covered in this certification</span>
-            <DescriptionList items={DS3_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
-          </div>
+        <div className="flex flex-col gap-6">
+          <SectionHeader id="related" eyebrow={<Eyebrow tone="accent">Related</Eyebrow>} title="Related" descriptionMaxWidth={false} />
+          <DocsRelatedGrid entries={[getEntry("docs-workflow")!, getEntry("operational-certification")!, getEntry("platform-certification")!]} />
         </div>
       </SectionShell>
     </DocsShell>

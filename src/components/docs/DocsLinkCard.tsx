@@ -42,6 +42,7 @@ export function DocsLinkCard({
   className,
 }: DocsLinkCardProps) {
   const Icon = external ? ArrowUpRight : ArrowRight;
+  const isLarge = size === "lg";
   return (
     <Link
       href={href}
@@ -49,13 +50,21 @@ export function DocsLinkCard({
       aria-label={srLabel}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
-      <Card interactive className={cn("flex h-full flex-col gap-2 group-hover:bg-surface-hover", className)}>
+      <Card
+        interactive
+        padding={isLarge ? "lg" : "md"}
+        className={cn(
+          "flex h-full flex-col gap-2 group-hover:bg-surface-hover",
+          isLarge && "border-border-strong bg-surface-hover/40",
+          className,
+        )}
+      >
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <span
               className={cn(
                 "font-medium text-ink-primary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] group-hover:text-accent-400",
-                size === "lg" ? "text-body-lg" : "text-body-md",
+                isLarge ? "text-body-lg" : "text-body-md",
               )}
             >
               {title}
@@ -63,12 +72,15 @@ export function DocsLinkCard({
             {adornment}
           </div>
           <Icon
-            className="mt-0.5 size-4 shrink-0 text-ink-tertiary transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-safe:group-hover:translate-x-0.5 group-hover:text-accent-400"
+            className={cn(
+              "shrink-0 text-ink-tertiary transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-safe:group-hover:translate-x-0.5 group-hover:text-accent-400",
+              isLarge ? "mt-1 size-5" : "mt-0.5 size-4",
+            )}
             aria-hidden
           />
         </div>
         {description ? (
-          <Body size="sm" muted className="flex-1">
+          <Body size={isLarge ? "md" : "sm"} muted className="flex-1">
             {description}
           </Body>
         ) : null}

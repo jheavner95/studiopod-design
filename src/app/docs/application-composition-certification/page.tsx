@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { StatusWidget, MetricCard, HealthWidget } from "@/components/operational";
 import { REVIEWED_PACKAGES, VERIFY_DIMENSIONS, type VerifyVerdict } from "./_data/review";
@@ -38,6 +38,56 @@ export default function ApplicationCompositionCertificationPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
       <DocsPageHeader entry={entry} />
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Application Composition completion summary" descriptionMaxWidth={false} />
+          <Body size="md" muted className="max-w-[var(--container-narrow)]">
+            {DS5_COMPLETION_SUMMARY}
+          </Body>
+          <CardGrid columns={3}>
+            <StatusWidget
+              title="Package readiness"
+              items={REVIEWED_PACKAGES.map((pkg) => ({ id: pkg.code, label: pkg.title, status: "healthy" }))}
+            />
+            <HealthWidget
+              title="Verification quality"
+              score={Math.round((passCount / VERIFY_DIMENSIONS.length) * 100)}
+              metrics={[
+                { value: "1", label: "Real Business Feature" },
+                { value: "4", label: "Application Composition packages" },
+              ]}
+            />
+            <MetricCard value="2" label="Real defects found and fixed" description="During this certification's own re-audit of the templates' and the pilot's browser QA history" />
+          </CardGrid>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Strengths</span>
+              <ul className="flex flex-col gap-2">
+                {EXECUTIVE_SUMMARY_STRENGTHS.map((point) => (
+                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Weaknesses</span>
+              <ul className="flex flex-col gap-2">
+                {EXECUTIVE_SUMMARY_WEAKNESSES.map((point) => (
+                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <span className="text-body-sm font-medium text-ink-primary">Every package in the Application Composition tier</span>
+            <DescriptionList items={DS5_WORK_PACKAGES.map((pkg) => ({ label: pkg.title, value: pkg.oneLiner }))} />
+          </div>
+        </div>
+      </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
@@ -338,52 +388,9 @@ export default function ApplicationCompositionCertificationPage() {
       </SectionShell>
 
       <SectionShell spacing="lg">
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Application Composition completion summary" descriptionMaxWidth={false} />
-          <Body size="md" muted className="max-w-[var(--container-narrow)]">
-            {DS5_COMPLETION_SUMMARY}
-          </Body>
-          <CardGrid columns={3}>
-            <StatusWidget
-              title="Package readiness"
-              items={REVIEWED_PACKAGES.map((pkg) => ({ id: pkg.code, label: pkg.title, status: "healthy" }))}
-            />
-            <HealthWidget
-              title="Verification quality"
-              score={Math.round((passCount / VERIFY_DIMENSIONS.length) * 100)}
-              metrics={[
-                { value: "1", label: "Real Business Feature" },
-                { value: "4", label: "Application Composition packages" },
-              ]}
-            />
-            <MetricCard value="2" label="Real defects found and fixed" description="During this certification's own re-audit of the templates' and the pilot's browser QA history" />
-          </CardGrid>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Strengths</span>
-              <ul className="flex flex-col gap-2">
-                {EXECUTIVE_SUMMARY_STRENGTHS.map((point) => (
-                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Weaknesses</span>
-              <ul className="flex flex-col gap-2">
-                {EXECUTIVE_SUMMARY_WEAKNESSES.map((point) => (
-                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every package in the Application Composition tier</span>
-            <DescriptionList items={DS5_WORK_PACKAGES.map((pkg) => ({ label: pkg.title, value: pkg.oneLiner }))} />
-          </div>
+        <div className="flex flex-col gap-6">
+          <SectionHeader id="related" eyebrow={<Eyebrow tone="accent">Related</Eyebrow>} title="Related" descriptionMaxWidth={false} />
+          <DocsRelatedGrid entries={[getEntry("application-composition-doc")!, getEntry("business-features-doc")!, getEntry("platform-certification")!]} />
         </div>
       </SectionShell>
     </DocsShell>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { StatusWidget, MetricCard, HealthWidget } from "@/components/operational";
 import { Scorecard } from "./_components/Scorecard";
@@ -31,6 +31,60 @@ export default function AccessibilityCertificationPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
       <DocsPageHeader entry={entry} />
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Accessibility & Interaction Quality completion summary" descriptionMaxWidth={false} />
+          <Body size="md" muted className="max-w-[var(--container-narrow)]">
+            {ACCESSIBILITY_COMPLETION_SUMMARY}
+          </Body>
+          <CardGrid columns={3}>
+            <StatusWidget
+              title="Tier readiness"
+              items={TIER_REVIEWS.map((tier) => ({
+                id: tier.code,
+                label: tier.name,
+                status: "healthy",
+              }))}
+            />
+            <HealthWidget
+              title="Quality dimensions"
+              score={Math.round((qualityTotals.pass / qualityTotals.total) * 100)}
+              metrics={[
+                { value: String(TOTAL_FILES_MODIFIED), label: "Files modified" },
+                { value: `${TOTAL_RESOLVED}/${TOTAL_RESOLVED + TOTAL_DEFERRED}`, label: "Findings Resolved" },
+              ]}
+            />
+            <MetricCard value={String(TOTAL_DEFERRED)} label="Real, disclosed gaps deferred" description="None fixed speculatively — each carries a re-verify note" />
+          </CardGrid>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Strengths</span>
+              <ul className="flex flex-col gap-2">
+                {EXECUTIVE_SUMMARY_STRENGTHS.map((point) => (
+                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="text-body-sm font-medium text-ink-primary">Weaknesses</span>
+              <ul className="flex flex-col gap-2">
+                {EXECUTIVE_SUMMARY_WEAKNESSES.map((point) => (
+                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <span className="text-body-sm font-medium text-ink-primary">Every package in this review</span>
+            <DescriptionList items={DS6_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
+          </div>
+        </div>
+      </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
@@ -244,56 +298,9 @@ export default function AccessibilityCertificationPage() {
       </SectionShell>
 
       <SectionShell spacing="lg">
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="executive-summary" eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>} title="Accessibility & Interaction Quality completion summary" descriptionMaxWidth={false} />
-          <Body size="md" muted className="max-w-[var(--container-narrow)]">
-            {ACCESSIBILITY_COMPLETION_SUMMARY}
-          </Body>
-          <CardGrid columns={3}>
-            <StatusWidget
-              title="Tier readiness"
-              items={TIER_REVIEWS.map((tier) => ({
-                id: tier.code,
-                label: tier.name,
-                status: "healthy",
-              }))}
-            />
-            <HealthWidget
-              title="Quality dimensions"
-              score={Math.round((qualityTotals.pass / qualityTotals.total) * 100)}
-              metrics={[
-                { value: String(TOTAL_FILES_MODIFIED), label: "Files modified" },
-                { value: `${TOTAL_RESOLVED}/${TOTAL_RESOLVED + TOTAL_DEFERRED}`, label: "Findings Resolved" },
-              ]}
-            />
-            <MetricCard value={String(TOTAL_DEFERRED)} label="Real, disclosed gaps deferred" description="None fixed speculatively — each carries a re-verify note" />
-          </CardGrid>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Strengths</span>
-              <ul className="flex flex-col gap-2">
-                {EXECUTIVE_SUMMARY_STRENGTHS.map((point) => (
-                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Weaknesses</span>
-              <ul className="flex flex-col gap-2">
-                {EXECUTIVE_SUMMARY_WEAKNESSES.map((point) => (
-                  <li key={point.slice(0, 24)} className="text-body-sm text-ink-secondary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Every package in this review</span>
-            <DescriptionList items={DS6_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
-          </div>
+        <div className="flex flex-col gap-6">
+          <SectionHeader id="related" eyebrow={<Eyebrow tone="accent">Related</Eyebrow>} title="Related" descriptionMaxWidth={false} />
+          <DocsRelatedGrid entries={[getEntry("enterprise-architecture-audit")!, getEntry("final-certification")!, getEntry("docs-certification")!]} />
         </div>
       </SectionShell>
     </DocsShell>

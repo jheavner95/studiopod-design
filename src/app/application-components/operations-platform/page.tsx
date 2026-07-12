@@ -91,7 +91,7 @@ export default function OperationsPlatformPage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Eight states this platform recognizes, plus how the layout responds across breakpoints. Seven of eight states have at least one verbatim vocabulary match — the strongest ratio of any Platform package up to this one — with Monitoring the sole disclosed gap, a close analog rather than an exact match. (A prior draft of this description overstated the ratio as zero gaps; this reflects the corrected count.)"
+            description="Eight states this platform recognizes, plus how the layout responds across breakpoints. Seven of eight states have at least one verbatim vocabulary match, with Monitoring the sole disclosed gap, a close analog rather than an exact match."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={OPERATIONS_STATES.map((item) => ({ label: item.state, value: item.note }))} />
