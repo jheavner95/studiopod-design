@@ -5,7 +5,7 @@ import type { Workflow } from "../types";
 export const prepareValidateProduce: Workflow = {
   id: "prepare-validate-produce",
   title: "Prepare, Validate, Produce",
-  description: "The core StudioPOD loop that turns a design into a finished, shippable product.",
+  description: "The three-step loop every order — from a Trailhead mug wrap to a Holiday collection batch — moves through on its way to fulfillment.",
   pattern: "linear",
   completion: 0.66,
   steps: [
@@ -16,7 +16,7 @@ export const prepareValidateProduce: Workflow = {
       icon: <Package className="size-5" />,
       completed: true,
       estimatedDuration: "~10 min",
-      description: "Upload artwork, choose a product template, and set placement and print options.",
+      description: "The Trailhead mug wrap's artwork and product template are assembled, print options set.",
     },
     {
       id: "validate",
@@ -26,7 +26,7 @@ export const prepareValidateProduce: Workflow = {
       active: true,
       health: "healthy",
       estimatedDuration: "~2 min",
-      description: "Safe zone, resolution, and color profile are checked automatically before anything is produced.",
+      description: "Bleed, resolution, and color profile are checked automatically — the same gate every artwork clears before it can be produced.",
     },
     {
       id: "produce",
@@ -34,7 +34,7 @@ export const prepareValidateProduce: Workflow = {
       subtitle: "Send to fulfillment",
       icon: <Factory className="size-5" />,
       estimatedDuration: "~1–2 days",
-      description: "Once validated, the order is routed to the production queue and fulfilled.",
+      description: "Batch run #204 picks up the validated order and routes it to fulfillment.",
     },
   ],
   connections: [

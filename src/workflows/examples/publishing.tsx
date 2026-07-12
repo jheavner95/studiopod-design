@@ -1,39 +1,39 @@
-import { Package, Store, Rocket, Activity } from "lucide-react";
+import { Package, Rocket, Store, Activity } from "lucide-react";
 import type { Workflow } from "../types";
 
-/** Looping flow: Monitoring feeds back into Product, since published listings are continuously refined. */
+/** Looping flow: Monitoring feeds back into Publishing, since a live listing is continuously refreshed rather than published once. */
 export const publishing: Workflow = {
   id: "publishing",
-  title: "Publishing",
-  description: "How a product listing goes live on a marketplace and stays healthy afterward.",
+  title: "Publishing Pipeline",
+  description: "How a Production Package becomes a live marketplace listing — and stays healthy afterward.",
   pattern: "looping",
   completion: 0.5,
   steps: [
     {
-      id: "product",
-      title: "Product",
-      subtitle: "Define the sellable item",
+      id: "production-package",
+      title: "Production Package",
+      subtitle: "The validated artifact ready to publish",
       icon: <Package className="size-5" />,
       completed: true,
-      estimatedDuration: "~10 min",
-      description: "Pricing, variants, and product metadata are defined.",
-    },
-    {
-      id: "marketplace",
-      title: "Marketplace",
-      subtitle: "Choose a sales channel",
-      icon: <Store className="size-5" />,
-      active: true,
-      estimatedDuration: "~5 min",
-      description: "Connect the product to one or more marketplace channels.",
+      estimatedDuration: "~1 min",
+      description: "Poster proof #118 arrives from production, ready to list.",
     },
     {
       id: "publishing-step",
       title: "Publishing",
-      subtitle: "Push the listing live",
+      subtitle: "Create the listing and syndicate it",
       icon: <Rocket className="size-5" />,
+      active: true,
       estimatedDuration: "~1 min",
-      description: "The listing is submitted and goes live on the selected channel.",
+      description: "The listing is created once and syndicated to every connected sales channel.",
+    },
+    {
+      id: "marketplace-listing",
+      title: "Marketplace Listing",
+      subtitle: "Live on the storefront",
+      icon: <Store className="size-5" />,
+      estimatedDuration: "instant",
+      description: "Poster proof #118 goes live as a marketplace listing on Etsy and Shopify.",
     },
     {
       id: "monitoring",
@@ -42,13 +42,13 @@ export const publishing: Workflow = {
       icon: <Activity className="size-5" />,
       health: "healthy",
       estimatedDuration: "ongoing",
-      description: "Listing performance and health are tracked continuously, feeding updates back into the product.",
+      description: "Listing performance and provider health are tracked continuously, feeding updates back into Publishing.",
     },
   ],
   connections: [
-    { id: "product-marketplace", source: "product", target: "marketplace" },
-    { id: "marketplace-publishing", source: "marketplace", target: "publishing-step" },
-    { id: "publishing-monitoring", source: "publishing-step", target: "monitoring" },
-    { id: "monitoring-product-loop", source: "monitoring", target: "product", loop: true },
+    { id: "package-publishing", source: "production-package", target: "publishing-step" },
+    { id: "publishing-listing", source: "publishing-step", target: "marketplace-listing" },
+    { id: "listing-monitoring", source: "marketplace-listing", target: "monitoring" },
+    { id: "monitoring-publishing-loop", source: "monitoring", target: "publishing-step", loop: true },
   ],
 };

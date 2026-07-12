@@ -1,11 +1,11 @@
-import { BookOpen, ShoppingCart, Factory, Truck, BarChart3 } from "lucide-react";
+import { BookOpen, ShoppingCart, Factory, Truck, Sparkles } from "lucide-react";
 import type { Workflow } from "../types";
 
 /** Branching flow: Orders is a decision step, routing to Production (make-to-order) or straight to Fulfillment (from stock). */
 export const commerce: Workflow = {
   id: "commerce",
-  title: "Commerce",
-  description: "How an order moves from the catalog to fulfillment and analytics, with a make-to-order/from-stock split.",
+  title: "Commerce Lifecycle",
+  description: "How a Studio Tee order moves from the catalog to fulfillment, split by whether it's made to order or already in stock.",
   pattern: "branching",
   completion: 0.25,
   steps: [
@@ -16,7 +16,7 @@ export const commerce: Workflow = {
       icon: <BookOpen className="size-5" />,
       completed: true,
       estimatedDuration: "ongoing",
-      description: "The full set of products available across sales channels.",
+      description: "Studio Tee — Black / M and every other product available across sales channels.",
     },
     {
       id: "orders",
@@ -26,7 +26,7 @@ export const commerce: Workflow = {
       kind: "decision",
       active: true,
       estimatedDuration: "~1 min",
-      description: "Each order is routed based on whether the product is made on demand or already in stock.",
+      description: "A Studio Tee order comes in, routed by whether it's made on demand or already in stock.",
     },
     {
       id: "production",
@@ -42,15 +42,15 @@ export const commerce: Workflow = {
       subtitle: "Pack and ship",
       icon: <Truck className="size-5" />,
       estimatedDuration: "~1 day",
-      description: "Orders are packed and shipped, whether freshly produced or pulled from stock.",
+      description: "The order is packed and shipped, whether freshly produced or pulled from stock.",
     },
     {
-      id: "analytics",
-      title: "Analytics",
+      id: "performance-intelligence",
+      title: "Performance Intelligence",
       subtitle: "Track sales performance",
-      icon: <BarChart3 className="size-5" />,
+      icon: <Sparkles className="size-5" />,
       estimatedDuration: "ongoing",
-      description: "Completed orders feed sales and demand analytics.",
+      description: "Completed orders feed sell-through data back into the next Creative Brief.",
     },
   ],
   connections: [
@@ -58,7 +58,7 @@ export const commerce: Workflow = {
     { id: "orders-production", source: "orders", target: "production" },
     { id: "orders-fulfillment", source: "orders", target: "fulfillment", label: "From stock" },
     { id: "production-fulfillment", source: "production", target: "fulfillment" },
-    { id: "fulfillment-analytics", source: "fulfillment", target: "analytics" },
+    { id: "fulfillment-performance-intelligence", source: "fulfillment", target: "performance-intelligence" },
   ],
   branches: [
     {

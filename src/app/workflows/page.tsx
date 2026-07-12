@@ -1,9 +1,12 @@
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
+import { Card, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@/components/ui";
 import { IllustrationDevProvider } from "@/illustrations";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { DOCK_CLEARANCE_CLASS } from "@/motion";
+import { WorkflowDiagram, WorkflowLegend } from "@/workflows";
+import { canonicalProductionFlow, prepareValidateProduce, productionIntelligenceLoop } from "@/workflows/examples";
+import type { Workflow } from "@/workflows/types";
 import { ControlDock } from "./_components/ControlDock";
 import { WorkflowGallerySection } from "./_sections/WorkflowGallerySection";
 import { PlaybackSection } from "./_sections/PlaybackSection";
@@ -13,6 +16,45 @@ import { ResponsiveSection } from "./_sections/ResponsiveSection";
 
 const entry = getEntry("workflows-library")!;
 const relatedComponents = [getEntry("docs-workflow")!, getEntry("illustrations")!, getEntry("workflow-timeline")!];
+
+/** The three diagrams that carry StudioPOD's whole production story — rendered full-width, screenshot-ready, each answering what begins, what changes, and what gets produced. */
+const SIGNATURE_WORKFLOWS: {
+  workflow: Workflow;
+  eyebrow: string;
+  minWidth: number;
+  story: { begins: string; changes: string; produces: string };
+}[] = [
+  {
+    workflow: canonicalProductionFlow,
+    eyebrow: "The complete flow",
+    minWidth: 960,
+    story: {
+      begins: "A Creative Brief for the next product.",
+      changes: "The brief becomes artwork, clears validation, ships as a Production Package, and gets published.",
+      produces: "Performance Intelligence that shapes the next Creative Brief.",
+    },
+  },
+  {
+    workflow: prepareValidateProduce,
+    eyebrow: "The simple version",
+    minWidth: 640,
+    story: {
+      begins: "Artwork and a product template, ready to prepare.",
+      changes: "Automated checks confirm it's production-ready.",
+      produces: "A produced order in the fulfillment queue.",
+    },
+  },
+  {
+    workflow: productionIntelligenceLoop,
+    eyebrow: "The loop that closes it",
+    minWidth: 640,
+    story: {
+      begins: "Sell-through and engagement data from a shipped product.",
+      changes: "Patterns become a specific recommendation.",
+      produces: "The next Creative Brief, already informed by what just sold.",
+    },
+  },
+];
 
 // Plain-language descriptions for the related-components cards below —
 // written here rather than pulled from each entry's own registry
@@ -44,22 +86,22 @@ const PATTERNS = [
   {
     name: "Linear",
     description: "A straight sequence from start to finish, with no branches or loops.",
-    examples: "Prepare, Validate, Produce · Artwork Production · Quality Assurance",
+    examples: "Prepare, Validate, Produce · Creative Brief → Performance Intelligence · Artwork Production",
   },
   {
     name: "Looping",
     description: "A cycle where a later step's output feeds back into an earlier one.",
-    examples: "Publishing — Monitoring loops back into Product",
+    examples: "Production Intelligence Feedback Loop · Publishing Pipeline — Monitoring loops back into Publishing",
   },
   {
     name: "Branching",
     description: "A decision step that routes to one of several next steps.",
-    examples: "Commerce — Orders routes to Production or straight to Fulfillment",
+    examples: "Commerce Lifecycle — Orders routes to Production or straight to Fulfillment",
   },
   {
     name: "Parallel",
     description: "Two or more steps reachable from the same point, in either order.",
-    examples: "Beta User Journey — Connect AI and Import Artwork",
+    examples: "Multi-Channel Publishing — Etsy, Shopify, and Amazon listings publish at once",
   },
 ];
 
@@ -82,9 +124,61 @@ export default function WorkflowsLibraryPage() {
   return (
     <IllustrationDevProvider>
       <DocsShell entry={entry} toc={<DocsTableOfContents />}>
-        <DocsPageHeader entry={entry} />
+        <DocsPageHeader entry={entry}>
+          <Body size="lg" className="max-w-[var(--container-narrow)] font-medium text-ink-primary">
+            This is the visual language of StudioPOD — the diagrams every team reaches for to explain how a Creative
+            Brief becomes a shipped, selling product.
+          </Body>
+        </DocsPageHeader>
 
         <ControlDock />
+
+        <SectionShell spacing="lg" divider>
+          <div className="flex flex-col gap-14">
+            <SectionHeader
+              id="signature-workflows"
+              eyebrow={<Eyebrow tone="accent">Signature workflows</Eyebrow>}
+              title="The diagrams that explain how StudioPOD works"
+              description="Three diagrams carry the whole story — screenshot them, put them in a deck, reference them anywhere. Everything else on this page composes from the same StudioPOD vocabulary."
+              descriptionMaxWidth={false}
+            />
+            {SIGNATURE_WORKFLOWS.map(({ workflow, eyebrow, minWidth, story }) => (
+              <div key={workflow.id} className="flex flex-col gap-6">
+                <div className="flex flex-col gap-1">
+                  <Caption className="uppercase tracking-wide text-accent-400">{eyebrow}</Caption>
+                  <span className="text-body-lg font-medium text-ink-primary">{workflow.title}</span>
+                  {workflow.description ? (
+                    <Body size="sm" muted className="max-w-[var(--container-narrow)]">
+                      {workflow.description}
+                    </Body>
+                  ) : null}
+                </div>
+                <GlassPanel padding="lg" glow className="flex w-full flex-col gap-6">
+                  <div className="scrollbar-none overflow-x-auto py-2">
+                    <div className="w-max" style={{ minWidth }}>
+                      <WorkflowDiagram workflow={workflow} layout="horizontal" nodeSize="lg" />
+                    </div>
+                  </div>
+                  <WorkflowLegend workflow={workflow} onlyPresent />
+                </GlassPanel>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div className="flex flex-col gap-1">
+                    <Caption className="text-ink-tertiary">Begins</Caption>
+                    <Body size="sm">{story.begins}</Body>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <Caption className="text-ink-tertiary">Changes</Caption>
+                    <Body size="sm">{story.changes}</Body>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <Caption className="text-ink-tertiary">Produces</Caption>
+                    <Body size="sm">{story.produces}</Body>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </SectionShell>
 
         <SectionShell spacing="lg" divider>
           <div className="flex flex-col gap-10">
@@ -138,8 +232,8 @@ export default function WorkflowsLibraryPage() {
             <SectionHeader
               id="examples"
               eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
-              title="Examples"
-              description="All six example workflows, every pattern represented, rendered from data through the same WorkflowDiagram component. Click a step to expand its details."
+              title="More workflows"
+              description="Five supporting workflows, every pattern still represented, each built from the same StudioPOD vocabulary as the signature diagrams above. Click a step to expand its details."
               descriptionMaxWidth={false}
             />
             <WorkflowGallerySection />

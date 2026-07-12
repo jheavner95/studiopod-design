@@ -4,8 +4,8 @@ import type { Workflow } from "../types";
 /** Linear flow with one optional step: Camera Check only applies to products with a 3D mockup preview. */
 export const qualityAssurance: Workflow = {
   id: "quality-assurance",
-  title: "Quality Assurance",
-  description: "The checks every piece of artwork passes through before it is marked ready to produce.",
+  title: "Quality Gate",
+  description: "The gate every artwork clears — bleed, resolution, color profile — before it's marked ready to produce.",
   pattern: "linear",
   completion: 0.5,
   steps: [
@@ -16,7 +16,7 @@ export const qualityAssurance: Workflow = {
       icon: <ImageIcon className="size-5" />,
       completed: true,
       estimatedDuration: "~1 min",
-      description: "The uploaded artwork file is queued for review.",
+      description: "Poster proof #118 is queued for review.",
     },
     {
       id: "safe-zone",
@@ -52,7 +52,7 @@ export const qualityAssurance: Workflow = {
       icon: <CheckCircle2 className="size-5" />,
       health: "healthy",
       estimatedDuration: "instant",
-      description: "The artwork is marked ready and can move into the production queue.",
+      description: "Poster proof #118 clears its quality gate — bleed, resolution, color profile — and moves into the production queue.",
     },
   ],
   connections: [

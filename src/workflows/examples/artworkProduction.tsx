@@ -1,11 +1,11 @@
-import { Lightbulb, FolderOpen, Layers, ShieldCheck, Download } from "lucide-react";
+import { Lightbulb, FolderOpen, Layers, ShieldCheck, Package } from "lucide-react";
 import type { Workflow } from "../types";
 
-/** Linear, five-stage flow from a creative brief to an exported, ready-to-print file. */
+/** Linear, five-stage flow — the first five stages of StudioPOD's canonical production flow, from a creative brief to a packaged, manufacturing-ready artifact. */
 export const artworkProduction: Workflow = {
   id: "artwork-production",
   title: "Artwork Production",
-  description: "How a creative brief becomes a validated, exportable print file.",
+  description: "How a Creative Brief becomes a validated Production Package, ready for manufacturing.",
   pattern: "linear",
   completion: 0.4,
   steps: [
@@ -25,7 +25,7 @@ export const artworkProduction: Workflow = {
       icon: <FolderOpen className="size-5" />,
       completed: true,
       estimatedDuration: "~5 min",
-      description: "A project is created with the correct canvas size, bleed, and color profile for the target product.",
+      description: "The Trailhead mug wrap's working file opens against the drinkware template.",
     },
     {
       id: "composition",
@@ -34,7 +34,7 @@ export const artworkProduction: Workflow = {
       icon: <Layers className="size-5" />,
       active: true,
       estimatedDuration: "~1–3 hrs",
-      description: "Layers, text, and imagery are composed within the product's safe zone.",
+      description: "Marcus D. arranges layers, text, and imagery within the wrap's safe zone.",
     },
     {
       id: "validation",
@@ -43,21 +43,21 @@ export const artworkProduction: Workflow = {
       icon: <ShieldCheck className="size-5" />,
       health: "healthy",
       estimatedDuration: "~2 min",
-      description: "Resolution, bleed, and color checks run automatically before export is allowed.",
+      description: "Resolution, bleed, and color checks run automatically before the artifact can be packaged.",
     },
     {
-      id: "export",
-      title: "Export",
-      subtitle: "Generate the production-ready file",
-      icon: <Download className="size-5" />,
+      id: "production-package",
+      title: "Production Package",
+      subtitle: "Bundle the validated artifact for manufacturing",
+      icon: <Package className="size-5" />,
       estimatedDuration: "~1 min",
-      description: "A print-ready file is generated and attached to the product for fulfillment.",
+      description: "The Trailhead mug wrap is packaged as MUG-TH-014 and added to Batch run #204.",
     },
   ],
   connections: [
     { id: "brief-project", source: "creative-brief", target: "artwork-project" },
     { id: "project-composition", source: "artwork-project", target: "composition" },
     { id: "composition-validation", source: "composition", target: "validation" },
-    { id: "validation-export", source: "validation", target: "export" },
+    { id: "validation-production-package", source: "validation", target: "production-package" },
   ],
 };
