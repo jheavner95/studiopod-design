@@ -1,6 +1,6 @@
 "use client";
 
-import { SideNavigation, NavigationSection } from "@/components/navigation";
+import { SideNavigation } from "@/components/navigation";
 import { DocsSidebarGroup } from "./DocsSidebarGroup";
 import { getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 
@@ -16,6 +16,12 @@ interface DocsSidebarProps {
  * groups dynamically; there is no hardcoded "canonical subset" anymore
  * since DocsSidebarGroup's own per-group collapse (see that file) is what
  * keeps a many-group section from reading as the full sitemap at once.
+ *
+ * The section caption below is rendered as plain text, not a nested
+ * NavigationSection — SideNavigation already supplies the one nav landmark
+ * this sidebar needs (labeled with the same section title), and nesting a
+ * second identically-labeled <nav> inside it was a real duplicate-landmark
+ * bug (DS-7.3 Part 9).
  */
 export function DocsSidebar({ section, collapsed = false }: DocsSidebarProps) {
   const sectionMeta = getSection(section);
@@ -23,11 +29,14 @@ export function DocsSidebar({ section, collapsed = false }: DocsSidebarProps) {
 
   return (
     <SideNavigation collapsed={collapsed} aria-label={sectionMeta?.title ?? "Documentation"}>
-      <NavigationSection title={sectionMeta?.title}>
+      <div className="flex flex-col gap-4">
+        {sectionMeta?.title && !collapsed ? (
+          <span className="px-3 text-caption font-semibold uppercase tracking-wide text-ink-tertiary">{sectionMeta.title}</span>
+        ) : null}
         {groups.map((groupId) => (
           <DocsSidebarGroup key={groupId} group={groupId} />
         ))}
-      </NavigationSection>
+      </div>
     </SideNavigation>
   );
 }

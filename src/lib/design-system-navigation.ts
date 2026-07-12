@@ -362,14 +362,3 @@ export function getNext(entry: NavEntry): NavEntry | undefined {
 export function getRelated(entry: NavEntry): NavEntry[] {
   return (entry.related ?? []).map((id) => getEntry(id)).filter((e): e is NavEntry => !!e);
 }
-
-/** The Design System > Section > Group > Current page trail every DocsBreadcrumbs call renders. */
-export function getBreadcrumbTrail(entry: NavEntry): { label: string; href?: string }[] {
-  const section = getSection(entry.section);
-  const group = getGroup(entry.group);
-  const trail: { label: string; href?: string }[] = [{ label: "StudioPOD Design System", href: "/" }];
-  if (section) trail.push({ label: section.title, href: section.href });
-  if (group && group.id !== "overview" && group.title !== section?.title) trail.push({ label: group.title, href: group.href });
-  trail.push({ label: entry.title });
-  return trail;
-}

@@ -19,6 +19,12 @@ interface DocsSidebarGroupProps {
  * widget) rather than always-expanded, so a section with many families
  * doesn't read as the whole sitemap at once — the group containing the
  * current page starts open, every other group starts closed.
+ *
+ * A group with exactly one page renders as a single direct link with no
+ * disclosure chrome at all — a chevron and an unclickable group heading
+ * sitting above one link is redundant, and when the group and its lone
+ * child share a title (e.g. "Layout" over "Layout") it was a literal
+ * duplicate label (DS-7.3 Part 3/4).
  */
 export function DocsSidebarGroup({ group, collapsed }: DocsSidebarGroupProps) {
   const pathname = usePathname();
@@ -26,6 +32,15 @@ export function DocsSidebarGroup({ group, collapsed }: DocsSidebarGroupProps) {
   const entries = getGroupEntries(group);
 
   if (!entries.length) return null;
+
+  if (entries.length === 1) {
+    const entry = entries[0];
+    return (
+      <NavigationItem href={entry.href} active={entry.href === pathname}>
+        {entry.title}
+      </NavigationItem>
+    );
+  }
 
   const containsActive = entries.some((entry) => entry.href === pathname);
 

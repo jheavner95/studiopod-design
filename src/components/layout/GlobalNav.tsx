@@ -7,23 +7,46 @@ import { Boxes, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui";
 import { Drawer } from "@/components/overlay";
-import { NavigationItem } from "@/components/navigation";
-import { DocsSearchTrigger } from "@/components/docs";
-import { NAV_SECTIONS } from "@/lib/design-system-navigation";
+import { NavigationItem, NavigationSection } from "@/components/navigation";
+import { DocsSearchTrigger, DocsSidebarGroup } from "@/components/docs";
+import { NAV_SECTIONS, getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 
 const SECTIONS = NAV_SECTIONS.filter((section) => section.id !== "overview");
 
-function isActiveSection(pathname: string, href: string) {
-  return pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+/**
+ * Exactly one section can be "active" for a given pathname. A plain
+ * per-section prefix check (`pathname.startsWith(section.href)`) breaks
+ * when one section's route is nested under another's — e.g. Quality's
+ * "/docs/certification" sits under Architecture's own "/docs" — so this
+ * resolves the single best match: an exact href match always wins, and
+ * failing that, the longest matching prefix wins (never "whichever
+ * section happens to come first in SECTIONS").
+ */
+function resolveActiveSectionId(pathname: string): NavSectionId | null {
+  const exact = SECTIONS.find((section) => pathname === section.href);
+  if (exact) return exact.id;
+
+  let bestId: NavSectionId | null = null;
+  let bestLength = -1;
+  for (const section of SECTIONS) {
+    if (section.href !== "/" && pathname.startsWith(`${section.href}/`) && section.href.length > bestLength) {
+      bestId = section.id;
+      bestLength = section.href.length;
+    }
+  }
+  return bestId;
 }
 
 /**
  * The single persistent top-level navigation across every route: identity,
- * the six goal-first sections, and search — nothing else. Breadcrumbs live
- * one level down in DocsShell's own context bar, in-section pages in
- * DocsSidebar, and on-page sections in DocsTableOfContents; each of those
- * owns its own distinct active-state treatment so no two levels read the
- * same way (this one uses an underline, not a filled pill).
+ * the six goal-first sections, and search — nothing else. DS-7.3 removed
+ * the breadcrumb context bar that used to sit below this, so on desktop
+ * this is the only fixed chrome above page content; the sidebar (in-section
+ * pages), page header (title/status/purpose), and TOC (in-page sections)
+ * carry the rest of the wayfinding load. On mobile, where the sidebar is
+ * hidden, this component's own drawer stands in for it: it shows both the
+ * site-wide sections AND (below a divider) the current section's own pages,
+ * so there's exactly one mobile nav surface, not two.
  */
 export function GlobalNav() {
   const pathname = usePathname();
@@ -37,9 +60,13 @@ export function GlobalNav() {
     activeLinkRef.current?.scrollIntoView({ block: "nearest", inline: "nearest" });
   }, [pathname]);
 
+  const activeSectionId = resolveActiveSectionId(pathname);
+  const activeSectionMeta = activeSectionId ? getSection(activeSectionId) : null;
+  const activeSectionGroups = activeSectionId ? getGroupsForSection(activeSectionId).map((group) => group.id) : [];
+
   return (
     <header className="sticky top-0 z-[var(--z-sticky)] border-b border-border-subtle bg-canvas/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[var(--container-wide)] items-center gap-6 px-[var(--spacing-gutter)] py-2.5">
+      <div className="mx-auto flex max-w-[2160px] items-center gap-6 px-[var(--spacing-gutter)] py-2.5">
         <Link href="/" className="focus-ring flex shrink-0 items-center gap-2 rounded-md">
           <Boxes className="size-4 text-accent-400" aria-hidden />
           <span className="hidden whitespace-nowrap text-body-sm font-semibold text-ink-primary sm:inline">
@@ -49,7 +76,7 @@ export function GlobalNav() {
 
         <nav className="hidden min-w-0 items-center gap-5 overflow-x-auto md:flex" aria-label="Design system sections">
           {SECTIONS.map((section) => {
-            const active = isActiveSection(pathname, section.href);
+            const active = section.id === activeSectionId;
             return (
               <Link
                 key={section.id}
@@ -94,12 +121,25 @@ export function GlobalNav() {
         <nav className="flex flex-col gap-1" aria-label="Design system sections">
           {SECTIONS.map((section) => (
             <div key={section.id} onClick={() => setMobileOpen(false)}>
-              <NavigationItem href={section.href} active={isActiveSection(pathname, section.href)}>
+              <NavigationItem href={section.href} active={section.id === activeSectionId}>
                 {section.title}
               </NavigationItem>
             </div>
           ))}
         </nav>
+
+        {activeSectionId && activeSectionGroups.length ? (
+          <div onClick={() => setMobileOpen(false)}>
+            <NavigationSection
+              title={activeSectionMeta?.title}
+              className="max-h-[55vh] overflow-y-auto border-t border-border-subtle pt-3"
+            >
+              {activeSectionGroups.map((groupId) => (
+                <DocsSidebarGroup key={groupId} group={groupId} />
+              ))}
+            </NavigationSection>
+          </div>
+        ) : null}
       </Drawer>
     </header>
   );
