@@ -80,7 +80,7 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
         </span>
         <div id="delete-dialog-desc">
           <Body size="sm" muted>
-            This removes the artwork from the pilot&rsquo;s own mock repository. This can&rsquo;t be undone from this dialog, though the feature&rsquo;s own Undo command still reverses it.
+            This removes the artwork from the production floor. This can&rsquo;t be undone from this dialog, though Undo in the header still reverses it.
           </Body>
         </div>
         <div className="flex justify-end gap-2 pt-2">
@@ -105,11 +105,11 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
         <div id="publish-dialog-desc">
           {notValidated ? (
             <Alert tone="warning" title="Not yet validated">
-              This artwork is still {VALIDATION_FLOW_LABEL[artwork.validationStatus]}. Publishing marks it Complete regardless — this pilot doesn&rsquo;t enforce the gate, it only shows the warning.
+              This artwork is still {VALIDATION_FLOW_LABEL[artwork.validationStatus]}. Publishing now sends it live with its quality gate unresolved.
             </Alert>
           ) : (
             <Body size="sm" muted>
-              Marks the artwork Complete and flags it as published in the mock repository.
+              Sends the artwork live and flags it as published.
             </Body>
           )}
         </div>
@@ -135,7 +135,7 @@ export function ProductionFeatureDialogs({ dialog, artwork, onClose, onConfirm }
           label="Include print-ready PDF"
           checked={includePrintReadyPdf}
           onChange={setIncludePrintReadyPdf}
-          helperText="Local UI state only — no file is actually generated in this pilot."
+          helperText="Includes bleed marks and the artwork's color profile."
         />
         <div className="flex justify-end gap-2 pt-2">
           <Button variant="ghost" size="sm" onClick={onClose}>

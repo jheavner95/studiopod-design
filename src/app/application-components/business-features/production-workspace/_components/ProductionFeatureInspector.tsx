@@ -58,6 +58,7 @@ export function ProductionFeatureInspector({ artwork, onOpenDialog }: Production
     { id: "validation", label: "Validation status", value: VALIDATION_FLOW_LABEL[artwork.validationStatus] },
     { id: "priority", label: "Priority", value: artwork.priority },
     { id: "assignee", label: "Assignee", value: artwork.assignee },
+    ...(artwork.batchRun ? [{ id: "batch-run", label: "Batch run", value: artwork.batchRun }] : []),
     { id: "updated", label: "Updated", value: artwork.updatedAt },
     { id: "open-issues", label: "Open issues", value: String(artwork.issues.filter((i) => !i.resolved).length) },
   ];

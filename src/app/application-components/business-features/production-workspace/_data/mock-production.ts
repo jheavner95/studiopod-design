@@ -33,10 +33,10 @@ export const VALIDATION_FLOW_ORDER: ValidationFlowStatus[] = ["draft", "ready", 
 
 export const VALIDATION_FLOW_LABEL: Record<ValidationFlowStatus, string> = {
   draft: "Draft",
-  ready: "Ready",
+  ready: "Awaiting Validation",
   validating: "Validating",
   validated: "Validated",
-  complete: "Complete",
+  complete: "Live",
 };
 
 /** Workflow's own ApprovalStateValue vocabulary has no literal "Validated" — this is the mapping the feature owns to render its own flow through PipelineGate/ProductionValidationPanel without inventing a new status prop. */
@@ -86,6 +86,8 @@ export interface ProductionArtwork {
   issues: ValidationIssue[];
   published: boolean;
   exported: boolean;
+  /** The manufacturing batch this artwork rides along with, once it's been packaged — only set once an artwork has joined a real run. */
+  batchRun?: string;
 }
 
 export const INITIAL_ARTWORKS: ProductionArtwork[] = [
@@ -123,13 +125,14 @@ export const INITIAL_ARTWORKS: ProductionArtwork[] = [
     validationStatus: "validating",
     priority: "high",
     assignee: "Marcus D.",
-    updatedAt: "3 min ago",
+    updatedAt: "Batch run #204 started 14 min ago",
     issues: [
       { id: "iss-1", title: "Bleed area crosses the handle seam", severity: "error", resolved: false },
       { id: "iss-2", title: "CMYK profile drifted from print spec", severity: "warning", resolved: false },
     ],
     published: false,
     exported: false,
+    batchRun: "Batch run #204",
   },
   {
     id: "art-4",
@@ -164,8 +167,8 @@ export const INITIAL_ARTWORKS: ProductionArtwork[] = [
     stage: "publishing",
     validationStatus: "complete",
     priority: "low",
-    assignee: "Jordan K.",
-    updatedAt: "1 hr ago",
+    assignee: "Priya N.",
+    updatedAt: "52 min ago",
     issues: [],
     published: true,
     exported: true,
@@ -173,10 +176,11 @@ export const INITIAL_ARTWORKS: ProductionArtwork[] = [
 ];
 
 export const INITIAL_QUEUE_JOBS: QueueRowJob[] = [
-  { id: "job-1", name: "Render preview — Trailhead mug wrap", status: "running", priority: "high", progress: { processed: 6, total: 10 } },
+  { id: "job-1", name: "Render preview — Trailhead mug wrap · Batch run #204", status: "running", priority: "high", progress: { processed: 6, total: 10 } },
   { id: "job-2", name: "Render preview — Canyon poster A2", status: "queued", priority: "urgent" },
   { id: "job-3", name: "Export approved assets — Basecamp hoodie", status: "completed", priority: "low" },
   { id: "job-4", name: "Color profile check — Sunset ridge tee (back)", status: "queued", priority: "normal" },
+  { id: "job-5", name: "Sync provider inventory — Printify", status: "retrying", priority: "normal" },
 ];
 
 // ---------------------------------------------------------------------

@@ -12,7 +12,7 @@ function gateReason(artwork: ProductionArtwork): string {
   const openErrors = artwork.issues.filter((issue) => issue.severity === "error" && !issue.resolved);
   if (openErrors.length > 0) return `${openErrors.length} blocking issue${openErrors.length === 1 ? "" : "s"} must be resolved.`;
   if (artwork.validationStatus === "validated" || artwork.validationStatus === "complete") return "All quality gates passed.";
-  return "No blocking issues found yet — validation still in progress.";
+  return "Automated checks running — no blocking issues found yet.";
 }
 
 /**
@@ -34,7 +34,7 @@ export function ProductionFeatureValidation({ artwork, onToggleIssue }: Producti
         title={`Validation — ${VALIDATION_FLOW_LABEL[artwork.validationStatus]}`}
         status={VALIDATION_FLOW_TO_APPROVAL_STATE[artwork.validationStatus]}
         reason={gateReason(artwork)}
-        actor="QA bot"
+        actor={artwork.validationStatus === "validated" || artwork.validationStatus === "complete" ? artwork.assignee : "QA bot"}
         timestamp={artwork.updatedAt}
       />
       {artwork.issues.length > 0 ? (

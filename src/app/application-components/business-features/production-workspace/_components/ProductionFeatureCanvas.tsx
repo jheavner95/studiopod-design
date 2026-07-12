@@ -68,7 +68,7 @@ export function ProductionFeatureCanvas({ view, artworksByStage, queueJobs, sele
                             {isSelected ? <span className="sr-only"> (selected)</span> : null}
                           </>
                         }
-                        description={`${artwork.sku} · ${artwork.assignee}`}
+                        description={artwork.batchRun ? `${artwork.sku} · ${artwork.assignee} · ${artwork.batchRun}` : `${artwork.sku} · ${artwork.assignee}`}
                         status={stepStatus(artwork)}
                         onClick={() => onSelect(artwork.id)}
                       />

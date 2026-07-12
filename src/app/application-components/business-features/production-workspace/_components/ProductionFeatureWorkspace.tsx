@@ -25,7 +25,7 @@ export function ProductionFeatureWorkspace() {
       <ProductionWorkspace
         header={
           <ProductionFeatureHeader
-            artworkCount={workspace.artworks.length}
+            today={workspace.today}
             view={workspace.view}
             onViewChange={workspace.setView}
             canUndo={workspace.canUndo}

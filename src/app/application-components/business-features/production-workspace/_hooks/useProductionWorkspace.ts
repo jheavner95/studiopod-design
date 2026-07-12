@@ -175,18 +175,30 @@ export function useProductionWorkspace() {
     return grouped;
   }, [artworks]);
 
+  const needsAttentionCount = useMemo(
+    () => artworks.filter((a) => a.issues.some((i) => i.severity === "error" && !i.resolved)).length,
+    [artworks],
+  );
+  const publishedCount = useMemo(() => artworks.filter((a) => a.published).length, [artworks]);
+
+  /** What a production manager glances at before anything else — in flight, blocked, and shipped, not implementation detail. */
+  const today = useMemo(
+    () => ({ inFlight: artworks.length, needsAttention: needsAttentionCount, publishedCount }),
+    [artworks.length, needsAttentionCount, publishedCount],
+  );
+
   const metrics: StatGroupItem[] = useMemo(() => {
     const total = artworks.length || 1;
-    const blocked = artworks.filter((a) => a.issues.some((i) => i.severity === "error" && !i.resolved)).length;
-    const validated = artworks.filter((a) => VALIDATION_FLOW_ORDER.indexOf(a.validationStatus) >= VALIDATION_FLOW_ORDER.indexOf("validated")).length;
-    const published = artworks.filter((a) => a.published).length;
+    const qualityCleared = artworks.filter((a) => VALIDATION_FLOW_ORDER.indexOf(a.validationStatus) >= VALIDATION_FLOW_ORDER.indexOf("validated")).length;
+    const readyToPublish = artworks.filter((a) => a.validationStatus === "validated" && !a.published).length;
     return [
-      { value: `${Math.round((validated / total) * 100)}%`, label: "Validated or later" },
-      { value: String(blocked), label: "Blocked by open errors" },
-      { value: String(published), label: "Published" },
-      { value: String(artworks.length), label: "Total artworks" },
+      { value: String(artworks.length), label: "In production" },
+      { value: `${Math.round((qualityCleared / total) * 100)}%`, label: "Quality gates cleared" },
+      { value: String(readyToPublish), label: "Ready to publish" },
+      { value: String(publishedCount), label: "Live in market" },
+      { value: String(needsAttentionCount), label: "Needs attention" },
     ];
-  }, [artworks]);
+  }, [artworks, publishedCount, needsAttentionCount]);
 
   return {
     artworks,
@@ -197,6 +209,7 @@ export function useProductionWorkspace() {
     view,
     dialog,
     metrics,
+    today,
     canUndo: past.length > 0,
     canRedo: future.length > 0,
     setView,

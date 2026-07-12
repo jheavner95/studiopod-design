@@ -135,7 +135,7 @@ export default function ProductionWorkspaceFeaturePage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Overview"
-            description="Fully interactive — local React state and the mock repository below, no network calls. Select an artwork, advance its stage or validation flow, toggle a quality issue, or open a dialog."
+            description="Six artworks are moving through the floor right now — a mug wrap mid-batch, two posters in validation, one hoodie already live. Select any of them below to see its file, its quality gate, and who's on it. Fully interactive, local React state, no network calls."
             descriptionMaxWidth={false}
           />
           <Surface border elevation="panel" className="overflow-hidden">
