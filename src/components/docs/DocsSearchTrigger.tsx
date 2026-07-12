@@ -7,10 +7,15 @@ import { NAV_REGISTRY, getGroup } from "@/lib/design-system-navigation";
 
 interface DocsSearchTriggerProps {
   className?: string;
+  compact?: boolean;
 }
 
-/** Every routable destination, searchable — built directly from NAV_REGISTRY, never a hand-maintained list. */
-export function DocsSearchTrigger({ className }: DocsSearchTriggerProps) {
+/**
+ * Every routable destination, searchable — built directly from NAV_REGISTRY, never a
+ * hand-maintained list. Mounted once, globally, inside GlobalNav (not per-page inside
+ * DocsShell) so there's a single search entry point regardless of which route is current.
+ */
+export function DocsSearchTrigger({ className, compact }: DocsSearchTriggerProps) {
   const router = useRouter();
 
   const items: CommandPaletteItem[] = NAV_REGISTRY.map((entry) => ({
@@ -20,5 +25,5 @@ export function DocsSearchTrigger({ className }: DocsSearchTriggerProps) {
     onSelect: () => router.push(entry.href),
   }));
 
-  return <CommandNavigation items={items} placeholder="Search the Design System…" className={className} />;
+  return <CommandNavigation items={items} placeholder="Search the Design System…" className={className} compact={compact} />;
 }

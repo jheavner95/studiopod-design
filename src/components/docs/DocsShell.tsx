@@ -5,8 +5,6 @@ import { useState } from "react";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Button } from "@/components/ui";
 import { DocsBreadcrumbs } from "./DocsBreadcrumbs";
-import { DocsSectionNav } from "./DocsSectionNav";
-import { DocsSearchTrigger } from "./DocsSearchTrigger";
 import { DocsSidebar } from "./DocsSidebar";
 import { DocsMobileNav } from "./DocsMobileNav";
 import { DocsPageNavigation } from "./DocsPageNavigation";
@@ -21,9 +19,12 @@ interface DocsShellProps {
 
 /**
  * The outermost responsive composition every /docs/* page wraps its content
- * in: sticky context bar (section switcher + search + breadcrumbs) above a
- * three-column desktop layout (collapsible sidebar / content / optional
- * TOC) that collapses to a Drawer-based mobile nav below md.
+ * in: a compact sticky context bar (breadcrumbs only — DS-7.2 removed the
+ * second section-nav row that used to duplicate GlobalNav; site-wide
+ * section switching and search now live there exclusively, see
+ * GlobalNav.tsx) above a three-column desktop layout (collapsible sidebar /
+ * content / optional TOC) that collapses to a Drawer-based "Pages" trigger
+ * below md.
  *
  * DS-6.1 widened this from Container's own 1440px "wide" cap to a
  * docs-specific one; DS-6.2 widened it again to 2160px total, alongside
@@ -36,27 +37,28 @@ interface DocsShellProps {
  * content, and TOC centered together as one block past the outer cap,
  * rather than leaving a lopsided gap between a capped content column and
  * the TOC.
+ *
+ * The sticky offsets below (`top-11`, `top-24`) are coupled to GlobalNav's
+ * and this context bar's own rendered heights — see DS-7.2's report for the
+ * exact pixel measurements they were derived from; if either header row's
+ * padding changes, these need to move with it.
  */
 export function DocsShell({ entry, children, toc }: DocsShellProps) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div className="flex flex-col">
-      <div className="sticky top-14 z-[var(--z-sticky)] border-b border-border-subtle bg-canvas/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-[2160px] flex-col gap-3 px-[var(--spacing-gutter)] py-3">
-          <div className="flex items-center justify-between gap-4">
-            <DocsSectionNav className="hidden md:flex" />
-            <div className="md:hidden">
-              <DocsMobileNav section={entry.section} />
-            </div>
-            <DocsSearchTrigger className="ml-auto" />
-          </div>
+      <div className="sticky top-14 z-[var(--z-sticky)] bg-canvas/95 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-[2160px] items-center justify-between gap-4 px-[var(--spacing-gutter)] py-2">
           <DocsBreadcrumbs entry={entry} />
+          <div className="shrink-0 md:hidden">
+            <DocsMobileNav section={entry.section} />
+          </div>
         </div>
       </div>
 
       <div className="mx-auto flex w-full max-w-[2160px] flex-1 items-start gap-8 px-[var(--spacing-gutter)] py-8">
-        <aside className="sticky top-32 hidden shrink-0 self-start md:block">
+        <aside className="sticky top-24 hidden shrink-0 self-start md:block">
           <div className="flex items-center justify-end pb-2">
             <Button
               variant="ghost"
@@ -79,7 +81,7 @@ export function DocsShell({ entry, children, toc }: DocsShellProps) {
           <DocsPageNavigation entry={entry} />
         </main>
 
-        {toc ? <div className="sticky top-32 hidden w-72 shrink-0 xl:block">{toc}</div> : null}
+        {toc ? <div className="sticky top-24 hidden w-72 shrink-0 xl:block">{toc}</div> : null}
       </div>
     </div>
   );

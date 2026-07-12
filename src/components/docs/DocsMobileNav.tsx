@@ -1,19 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { List, X } from "lucide-react";
 import { Drawer } from "@/components/overlay";
 import { NavigationSection } from "@/components/navigation";
 import { Button } from "@/components/ui";
 import { DocsSidebarGroup } from "./DocsSidebarGroup";
-import { DocsSectionNav } from "./DocsSectionNav";
 import { getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 
 interface DocsMobileNavProps {
   section: NavSectionId;
 }
 
-/** The mobile/tablet equivalent of DocsSidebar — a bottom-edge Drawer holding the same section-nav + group navigation, triggered from the sticky context bar. */
+/**
+ * The mobile/tablet equivalent of DocsSidebar — a bottom-edge Drawer holding
+ * only the current section's own pages. Site-wide section switching lives in
+ * GlobalNav's own (right-edge) drawer, not here — this is deliberately
+ * scoped to "in-section pages" per DS-7.2's ownership boundaries, so the two
+ * drawers never show the same destinations.
+ */
 export function DocsMobileNav({ section }: DocsMobileNavProps) {
   const [open, setOpen] = useState(false);
   const sectionMeta = getSection(section);
@@ -22,8 +27,8 @@ export function DocsMobileNav({ section }: DocsMobileNavProps) {
   return (
     <>
       <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
-        <Menu className="size-4" aria-hidden />
-        Menu
+        <List className="size-4" aria-hidden />
+        Pages
       </Button>
       <Drawer open={open} onOpenChange={setOpen} edge="bottom" labelledBy="docs-mobile-nav-title">
         <div className="flex items-center justify-between">
@@ -34,8 +39,7 @@ export function DocsMobileNav({ section }: DocsMobileNavProps) {
             <X className="size-4" aria-hidden />
           </Button>
         </div>
-        <DocsSectionNav className="border-t border-border-subtle pt-3" />
-        <NavigationSection title={sectionMeta?.title} className="max-h-[55vh] overflow-y-auto border-t border-border-subtle pt-3">
+        <NavigationSection title={sectionMeta?.title} className="max-h-[65vh] overflow-y-auto">
           {groups.map((groupId) => (
             <DocsSidebarGroup key={groupId} group={groupId} />
           ))}

@@ -51,15 +51,17 @@ export function DocsTableOfContents({ selector = "[data-toc-heading]", className
   return (
     <nav aria-label="On this page" className={cn("flex flex-col gap-3", className)}>
       <Caption className="uppercase tracking-wide text-ink-tertiary">On this page</Caption>
-      <ul className="flex flex-col gap-2 border-l border-border-subtle pl-4">
+      <ul className="flex flex-col gap-2 pl-4">
         {items.map((item) => (
           <li key={item.id}>
             <a
               href={`#${item.id}`}
               aria-current={activeId === item.id ? "location" : undefined}
               className={cn(
-                "focus-ring block text-caption transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
-                activeId === item.id ? "font-medium text-accent-400" : "text-ink-tertiary hover:text-ink-secondary",
+                "focus-ring block border-l-2 py-0.5 pl-3 text-caption transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+                activeId === item.id
+                  ? "border-accent-400 font-medium text-accent-400"
+                  : "border-border-subtle text-ink-tertiary hover:border-ink-tertiary hover:text-ink-secondary",
               )}
             >
               {item.label}
