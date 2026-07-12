@@ -9,20 +9,28 @@ import { Button } from "@/components/ui";
 import { Drawer } from "@/components/overlay";
 import { NavigationItem, NavigationSection } from "@/components/navigation";
 import { DocsSearchTrigger, DocsSidebarGroup } from "@/components/docs";
-import { NAV_SECTIONS, getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
+import { NAV_SECTIONS, getEntryByHref, getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 
 const SECTIONS = NAV_SECTIONS.filter((section) => section.id !== "overview");
 
 /**
- * Exactly one section can be "active" for a given pathname. A plain
- * per-section prefix check (`pathname.startsWith(section.href)`) breaks
- * when one section's route is nested under another's — e.g. Quality's
- * "/docs/certification" sits under Architecture's own "/docs" — so this
- * resolves the single best match: an exact href match always wins, and
- * failing that, the longest matching prefix wins (never "whichever
- * section happens to come first in SECTIONS").
+ * Exactly one section can be "active" for a given pathname. Several
+ * registry entries — Tokens, Foundations, Core Components, Marketing
+ * Components — live at a standalone top-level route (e.g. "/tokens")
+ * rather than nested under their own section's own href ("/application-
+ * components"), a legacy artifact of routes that predate the DS-7.1
+ * information architecture. A plain prefix check against NAV_SECTIONS
+ * hrefs misses those entirely (DS-7.4 fix), so the registry itself — the
+ * single source of truth for which section a page belongs to — is
+ * checked first via an exact href lookup. Only pages absent from the
+ * registry (e.g. sub-routes not individually registered) fall back to
+ * prefix matching: an exact section-href match wins, then the longest
+ * matching prefix (never "whichever section happens to come first").
  */
 function resolveActiveSectionId(pathname: string): NavSectionId | null {
+  const registryEntry = getEntryByHref(pathname);
+  if (registryEntry) return registryEntry.section;
+
   const exact = SECTIONS.find((section) => pathname === section.href);
   if (exact) return exact.id;
 

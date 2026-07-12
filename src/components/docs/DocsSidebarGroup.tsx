@@ -9,7 +9,6 @@ import { getGroup, getGroupEntries, type NavGroupId } from "@/lib/design-system-
 
 interface DocsSidebarGroupProps {
   group: NavGroupId;
-  collapsed?: boolean;
 }
 
 /**
@@ -25,8 +24,12 @@ interface DocsSidebarGroupProps {
  * sitting above one link is redundant, and when the group and its lone
  * child share a title (e.g. "Layout" over "Layout") it was a literal
  * duplicate label (DS-7.3 Part 3/4).
+ *
+ * DS-7.4 removed the desktop icon-only rail mode this used to also render
+ * (`collapsed`) along with DocsShell's own collapse toggle — the sidebar
+ * is always fully expanded on desktop now.
  */
-export function DocsSidebarGroup({ group, collapsed }: DocsSidebarGroupProps) {
+export function DocsSidebarGroup({ group }: DocsSidebarGroupProps) {
   const pathname = usePathname();
   const groupMeta = getGroup(group);
   const entries = getGroupEntries(group);
@@ -43,18 +46,6 @@ export function DocsSidebarGroup({ group, collapsed }: DocsSidebarGroupProps) {
   }
 
   const containsActive = entries.some((entry) => entry.href === pathname);
-
-  if (collapsed) {
-    return (
-      <NavigationGroup label={groupMeta?.title} collapsed>
-        {entries.map((entry) => (
-          <NavigationItem key={entry.id} href={entry.href} active={entry.href === pathname}>
-            {entry.title}
-          </NavigationItem>
-        ))}
-      </NavigationGroup>
-    );
-  }
 
   return (
     <Expandable

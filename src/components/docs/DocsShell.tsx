@@ -1,9 +1,4 @@
-"use client";
-
 import type { ReactNode } from "react";
-import { useState } from "react";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
-import { Button } from "@/components/ui";
 import { DocsSidebar } from "./DocsSidebar";
 import { DocsPageNavigation } from "./DocsPageNavigation";
 import type { NavEntry } from "@/lib/design-system-navigation";
@@ -22,8 +17,14 @@ interface DocsShellProps {
  * mobile "Pages" trigger that used to live in that bar moved into
  * GlobalNav's own drawer (see GlobalNav.tsx), so there's exactly one mobile
  * nav surface, not two. What's left is a three-column desktop layout
- * (collapsible sidebar / content / optional TOC); the sidebar is simply
+ * (persistent sidebar / content / optional TOC); the sidebar is simply
  * hidden below md, with GlobalNav's drawer standing in for it there.
+ *
+ * DS-7.4 removed the desktop sidebar's own collapse toggle — the current
+ * page and its neighbors should always be visible on desktop/laptop, not
+ * one click away behind a control most users never touch. The sidebar is
+ * a fixed-width column with a stable left edge; only the mobile drawer
+ * still has an open/closed concept.
  *
  * DS-6.1 widened this from Container's own 1440px "wide" cap to a
  * docs-specific one; DS-6.2 widened it again to 2160px total, alongside
@@ -42,27 +43,11 @@ interface DocsShellProps {
  * height (~55px) — it no longer has a second header row to account for.
  */
 export function DocsShell({ entry, children, toc }: DocsShellProps) {
-  const [collapsed, setCollapsed] = useState(false);
-
   return (
     <div className="flex flex-col">
       <div className="mx-auto flex w-full max-w-[2160px] flex-1 items-start gap-8 px-[var(--spacing-gutter)] py-8">
         <aside className="sticky top-14 hidden shrink-0 self-start md:block">
-          <div className="flex items-center justify-end pb-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setCollapsed((value) => !value)}
-              aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
-            >
-              {collapsed ? (
-                <PanelLeftOpen className="size-4" aria-hidden />
-              ) : (
-                <PanelLeftClose className="size-4" aria-hidden />
-              )}
-            </Button>
-          </div>
-          <DocsSidebar section={entry.section} collapsed={collapsed} />
+          <DocsSidebar section={entry.section} />
         </aside>
 
         <main className="flex min-w-0 flex-1 flex-col gap-10">
