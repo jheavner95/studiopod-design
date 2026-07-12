@@ -56,7 +56,7 @@ export default function EnterpriseArchitectureAuditPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Eight audit areas, ${TOTAL_IMPORT_EDGES.toLocaleString()} import edges across ${TOTAL_FILES_ANALYZED.toLocaleString()} files`}
-            description="The final architectural audit before DS-6.5 Final Enterprise Certification — every layering, dependency, naming, API-consistency, adoption, and duplication claim from all seven prior certification pages independently re-verified against current source, not trusted from any single page's own point-in-time snapshot."
+            description="The final architectural audit before Final Enterprise Certification — every layering, dependency, naming, API-consistency, adoption, and duplication claim from all seven prior certification pages independently re-verified against current source, not trusted from any single page's own point-in-time snapshot."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -403,7 +403,7 @@ export default function EnterpriseArchitectureAuditPage() {
             <DescriptionList items={REMAINING_BLOCKERS.map((blocker, i) => ({ label: `${i + 1}`, value: blocker.item }))} />
           </div>
           <Card className="flex flex-col gap-2">
-            <span className="text-body-sm font-medium text-ink-primary">On DS-6.5</span>
+            <span className="text-body-sm font-medium text-ink-primary">Looking ahead to Final Enterprise Certification</span>
             <Body size="sm" muted>
               {DS65_NOTE}
             </Body>

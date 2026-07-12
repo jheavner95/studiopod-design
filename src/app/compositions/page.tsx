@@ -238,10 +238,10 @@ export default function CompositionsPage() {
             <SectionHeader id="migration-notes" title="Migration notes" descriptionMaxWidth={false} />
             <Card className="flex flex-col gap-2">
               <Body size="sm" muted>
-                This composition layer was originally the entire project&rsquo;s scope. It has since been
-                reclassified as an early proof of the composition model — showing how Foundation and Core Components
-                primitives compose into marketing sections — rather than a roadmap toward a finished marketing site.
-                That work is paused while the Components section is the priority; see{" "}
+                This composition layer is a proof of the composition model — showing how Foundation and Core
+                Components primitives compose into marketing sections — rather than a roadmap toward a finished
+                marketing site. Assembling real marketing pages from it is intentionally out of scope while the
+                Components section is the priority; see{" "}
                 <Link href="/marketing-components" className="font-medium text-ink-secondary underline underline-offset-2">
                   Marketing Components
                 </Link>{" "}

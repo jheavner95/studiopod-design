@@ -146,7 +146,7 @@ export default function WorkflowFrameworkPage() {
             <SectionHeader
               id="migration-notes"
               title="Migration notes"
-              description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory."
+              description="Real, grep-verified duplication — not estimated or carried over from memory."
               descriptionMaxWidth={false}
             />
             {WORKFLOW_PROMOTION_CANDIDATES.length === 0 ? (

@@ -134,7 +134,7 @@ export default function FoundationFeedbackPage() {
             <SectionHeader
               id="migration-notes"
               title="Migration notes"
-              description="Real, grep-verified duplication found while building this system — not estimated or carried over from memory. This audit came back almost entirely clean, a genuinely different result from every prior Foundation section."
+              description="Real, grep-verified duplication — not estimated or carried over from memory. This audit came back almost entirely clean, a genuinely different result from every prior Foundation section."
               descriptionMaxWidth={false}
             />
             <div className="flex flex-col gap-6">

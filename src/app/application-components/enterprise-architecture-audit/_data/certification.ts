@@ -43,4 +43,4 @@ export const REMAINING_BLOCKERS: RemainingBlocker[] = [
 ];
 
 export const DS65_NOTE =
-  "DS-6.5 Final Enterprise Certification — the terminal milestone this audit exists to prepare the ground for — is explicitly out of scope for this package. This page audits and catalogues; it does not perform that final sign-off. The three Remaining Blockers above are exactly what DS-6.5 would need to close before it could reach Enterprise Certified for the system as a whole.";
+  "Final Enterprise Certification — the sign-off this audit exists to prepare the ground for — is explicitly out of scope here. This page audits and catalogues; it does not perform that final sign-off. The three Remaining Blockers above are exactly what a final review would need to close before the system as a whole could reach Enterprise Certified.";

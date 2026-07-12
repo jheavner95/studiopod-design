@@ -130,7 +130,7 @@ export default function FinalCertificationPage() {
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">New findings — DS-1.9 Workspace Architecture Certification, re-verified for the first time since its original authorship</span>
+            <span className="text-body-sm font-medium text-ink-primary">New findings — Workspace Architecture Certification, re-verified for the first time since its original publication</span>
             {ARCHITECTURE_FINDINGS.map((f) => (
               <Card key={f.title} className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
                 <span className="text-body-sm font-medium text-ink-primary">{f.title}</span>
@@ -337,7 +337,7 @@ export default function FinalCertificationPage() {
             </ul>
           </Card>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Standing disclosures — permanent, not deferred to a future package</span>
+            <span className="text-body-sm font-medium text-ink-primary">Standing disclosures — permanent, not deferred to later work</span>
             <DescriptionList items={STANDING_DISCLOSURES.map((item, i) => ({ label: `${i + 1}`, value: item }))} />
           </div>
           <Card className="flex flex-col gap-2">

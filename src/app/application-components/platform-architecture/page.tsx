@@ -130,7 +130,7 @@ export default function PlatformArchitecturePage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight platforms, one composition plan each"
-            description="Every field below is a forward-looking architecture proposal, not existing code — Migration Notes, under Reference, confirms zero real components existed for any of these eight platforms at the time this page was first written. Workflow/Operational/Foundation usage cites real, already-certified systems by name."
+            description="Every field below is a forward-looking architecture proposal, not existing code — Migration Notes, under Reference, confirms no real components exist yet for any of these eight platforms. Workflow/Operational/Foundation usage cites real, already-certified systems by name."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-6">

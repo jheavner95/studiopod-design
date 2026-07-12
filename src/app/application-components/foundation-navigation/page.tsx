@@ -164,7 +164,7 @@ export default function FoundationNavigationPage() {
             <SectionHeader
               id="migration-notes"
               title="Migration notes"
-              description={`Real, grep-verified duplication found while building this system, not estimated or carried over from memory — ${NAVIGATION_PROMOTION_CANDIDATES.length} patterns, ${totalMigrationFiles} files combined.`}
+              description={`Real, grep-verified duplication, not estimated or carried over from memory — ${NAVIGATION_PROMOTION_CANDIDATES.length} patterns, ${totalMigrationFiles} files combined.`}
               descriptionMaxWidth={false}
             />
             <div className="flex flex-col gap-6">

@@ -31,10 +31,10 @@ export default function MarketingComponentsPage() {
         <Card className="flex flex-col gap-3 sm:flex-row sm:items-start">
           <Info className="size-5 shrink-0 text-accent-400" aria-hidden />
           <Body size="sm" muted>
-            This package used to be the entire project. It has been reclassified: the compositions on the
-            Composition Playground are early design-system examples of how Foundation and Core Components compose
-            into marketing page sections — not a roadmap toward a finished marketing site. That work is paused while{" "}
-            <span className="font-medium text-ink-secondary">the Components section</span> becomes the priority.
+            The compositions on the Composition Playground are design-system examples of how Foundation and Core
+            Components compose into marketing page sections — not a roadmap toward a finished marketing site.
+            Assembling real marketing pages from them is intentionally out of scope while{" "}
+            <span className="font-medium text-ink-secondary">the Components section</span> is the priority.
           </Body>
         </Card>
       </SectionShell>
