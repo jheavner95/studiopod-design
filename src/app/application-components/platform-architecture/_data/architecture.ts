@@ -21,7 +21,7 @@ export const PLATFORM_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   },
   {
     label: "Composition rules",
-    text: "Every Platform component must compose from Foundation, Operational, and/or Workflow directly — the same \"compose, don't reimplement\" discipline that produced a zero-Foundation-violation, zero-Operational-violation result across all eight Workflow systems at Workflow Certification. A Platform component that reimplements a status marker, an inspector shell, or a data table instead of composing WorkflowNode/InspectorPanel/DataGrid is a Platform Rules violation before it ships (see Behavior, below).",
+    text: "Every Platform component must compose from Foundation, Operational, and/or Workflow directly — the same \"compose, don't reimplement\" discipline that produced a zero-Foundation-violation, zero-Operational-violation result across all eight Workflow systems, confirmed by direct grep against the codebase. A Platform component that reimplements a status marker, an inspector shell, or a data table instead of composing WorkflowNode/InspectorPanel/DataGrid is a Platform Rules violation before it ships (see Behavior, below).",
   },
   {
     label: "Ownership",
@@ -33,6 +33,6 @@ export const PLATFORM_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   },
   {
     label: "Certification goals",
-    text: "The same four-level ladder already established for Workspace Architecture and Workflow Certification (Prototype → Production Ready → Certified → Enterprise Certified) applies to Platform. Every domain platform is certified against this same ladder: the Platform Component Library Certification — the capstone this page's own architecture sets the bar for — independently certifies all eight Platform Ready.",
+    text: "The same four-level ladder already established for Workspace Architecture and Workflow (Prototype → Production Ready → Certified → Enterprise Certified) applies to Platform. Every domain platform is certified against this same ladder — see Certification, below, for all eight platforms' current standing.",
   },
 ];

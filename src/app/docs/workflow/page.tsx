@@ -8,23 +8,20 @@ import { getEntry, getGroup, getGroupEntries } from "@/lib/design-system-navigat
 
 const entry = getEntry("docs-workflow")!;
 
-// DS-7.1: Workflow no longer owns a dedicated top-level group — it's one of nine entries
-// inside the Architecture section's "tier-model" group, alongside the other tier pages and
-// their capstone certifications. The "related tiers" section below cross-links the rest of
-// that group instead of the old (now-nonexistent) workflow-systems group.
+// Workflow is one of the tier pages inside the Architecture section's "tier-model" group.
+// The "related tiers" section below cross-links the rest of that group.
 const tierModelEntries = getGroupEntries("tier-model");
 const siblingTierPages = tierModelEntries.filter((e) => e.id !== entry.id);
 
-const primaryEntryPoints = [getEntry("workflow-framework")!, getEntry("workflow-certification")!];
-const relatedGroups = [getGroup("components-overview")!, getGroup("quality-overview")!, getGroup("architecture-overview")!];
+const primaryEntryPoints = [getEntry("workflow-framework")!, getEntry("workflow-stepper")!];
+const relatedGroups = [getGroup("components-overview")!, getGroup("playground-overview")!, getGroup("architecture-overview")!];
 
-// Real per-system component counts, verified against
-// src/app/application-components/workflow-certification/_data/systems.ts (WORKFLOW_SYSTEMS,
-// TOTAL_COMPONENT_COUNT = 92) — the same audit data that page's own scorecard renders.
+// Real per-system component counts, verified against src/components/workflow/
+// (92 components total across the tier's eight systems).
 const STATS = [
   { label: "Pages in Tier Model", value: String(tierModelEntries.length) },
   { label: "Real components", value: "92" },
-  { label: "Certified families", value: "2 of 8" },
+  { label: "Workflow systems", value: "8" },
 ];
 
 export default function DocsWorkflowPage() {
@@ -35,11 +32,10 @@ export default function DocsWorkflowPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="This page is architecture documentation explaining how the Workflow tier fits into the system — it is not the primary way to browse Workflow's actual components; for that, use the Components section. Workflow Tier is the domain-agnostic layer for multi-step processes and cross-cutting visualization — eight systems (Workflow Framework, Workflow Stepper, Workflow Timeline, Approval & Review, Pipeline Components, State Machine, Dependency & Relationship Views, and Workflow Visualization) built entirely on Foundation and Operational rather than raw HTML. Every other system in the tier composes from Workflow Framework's shared header/sidebar/stage/step/transition/progress/summary/actions/footer shell, and several reuse Workflow Timeline for their own history views. Together the eight systems total 92 components, two of which — State Machine and Dependency & Relationship Views — are independently Certified with zero exceptions."
+        purpose="This page is architecture documentation explaining how the Workflow tier fits into the system — it is not the primary way to browse Workflow's actual components; for that, use the Components section. Workflow Tier is the domain-agnostic layer for multi-step processes and cross-cutting visualization — eight systems (Workflow Framework, Workflow Stepper, Workflow Timeline, Approval & Review, Pipeline Components, State Machine, Dependency & Relationship Views, and Workflow Visualization) built entirely on Foundation and Operational rather than raw HTML. Every other system in the tier composes from Workflow Framework's shared header/sidebar/stage/step/transition/progress/summary/actions/footer shell, and several reuse Workflow Timeline for their own history views. Together the eight systems total 92 components."
         whatYoullLearn={[
           "The eight systems and what each one owns — process shell, wizard progress, history timeline, approvals, pipelines, state-driven processes, dependency graphs, and the operational visualization layer.",
           "How later systems in the tier reuse earlier ones, such as Approval & Review and Pipeline Components both building on Workflow Timeline, and State Machine and Workflow Visualization building on Pipeline Components.",
-          "Which two of the eight systems have earned the tier's highest Certified rating versus the six rated Production Ready.",
           "Known limitations across the tier — like WorkflowStepperStep never setting aria-current on the active step, or the PipelineStage/PipelineStep naming collisions with the illustration library.",
           "Where Workflow sits relative to Foundation, Operational, and Platform in the tier model, and where each of those tiers' own architecture pages live.",
         ]}

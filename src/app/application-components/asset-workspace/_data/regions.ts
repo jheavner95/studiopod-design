@@ -62,8 +62,8 @@ export const ASSET_WORKSPACE_REGIONS: AssetWorkspaceRegion[] = [
         text: "Selection Count only appears once something is selected, the same rule Bulk Actions follows in the Workspace Toolbar.",
       },
     ],
-    reuseNotes: "The Application Components inventory's own Result Summary Bar item — Needed.",
-    reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
+    reuseNotes: "Composed from the Filter & Search family's Result Summary component.",
+    reuseLinks: [{ label: "Filter & Search", href: "/application-components/filter-search" }],
   },
   {
     id: "asset-presentation",
@@ -122,7 +122,7 @@ export const ASSET_WORKSPACE_REGIONS: AssetWorkspaceRegion[] = [
         text: "Not a navigation pattern on its own — the performance technique underneath any of the three above once a result set is large enough that rendering every row at once would stall the browser.",
       },
     ],
-    reuseNotes: "No dedicated inventory item — closest is Queue Table's own row-rendering concerns, generalized here to every Asset Presentation view.",
-    reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
+    reuseNotes: "The closest existing pattern is Queue Table's own row-rendering concerns, generalized here to every Asset Presentation view.",
+    reuseLinks: [],
   },
 ];

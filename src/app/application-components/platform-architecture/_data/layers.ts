@@ -23,7 +23,7 @@ export const LAYER_STACK: LayerDefinition[] = [
     status: "certified",
     owns: "Generic UI — buttons, inputs, tables, overlays, navigation, feedback, layout primitives. No business or workflow awareness of any kind.",
     composesFrom: null,
-    certificationRef: { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
+    certificationRef: { label: "Foundation Tier", href: "/docs/foundation" },
   },
   {
     id: "operational",
@@ -31,7 +31,7 @@ export const LAYER_STACK: LayerDefinition[] = [
     status: "certified-production-ready",
     owns: "Operational UX — composed, ready-to-use screens and panels (Data Grid, Inspector Panel, Bulk Actions, Status & Health, and six more systems) built on Foundation, not new primitives themselves.",
     composesFrom: "Foundation",
-    certificationRef: { label: "Operational Certification", href: "/application-components/operational-certification" },
+    certificationRef: { label: "Operational Tier", href: "/docs/operational" },
   },
   {
     id: "workflow",
@@ -39,15 +39,15 @@ export const LAYER_STACK: LayerDefinition[] = [
     status: "certified-production-ready",
     owns: "Business workflow primitives — multi-step processes and cross-cutting visualization (State Machine, Pipeline Components, Approval & Review, Dependency & Relationship Views, and four more systems) that are domain-agnostic by design: a WorkflowNode has no idea what business object it represents.",
     composesFrom: "Foundation, Operational",
-    certificationRef: { label: "Workflow Certification", href: "/application-components/workflow-certification" },
+    certificationRef: { label: "Workflow Tier", href: "/docs/workflow" },
   },
   {
     id: "platform",
     name: "Platform",
     status: "certified-production-ready",
-    owns: "Domain-specific reusable components — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI, scoped to exactly one platform, composed entirely from Foundation/Operational/Workflow. All eight named platforms (96 components total) have been built and certified Certified at the Platform Component Library Certification capstone.",
+    owns: "Domain-specific reusable components — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI, scoped to exactly one platform, composed entirely from Foundation/Operational/Workflow. All eight named platforms (96 components total) have been built.",
     composesFrom: "Foundation, Operational, Workflow",
-    certificationRef: { label: "Platform Component Library Certification", href: "/application-components/platform-certification" },
+    certificationRef: { label: "Platform Tier", href: "/docs/platform" },
   },
   {
     id: "business-features",
@@ -60,4 +60,4 @@ export const LAYER_STACK: LayerDefinition[] = [
 ];
 
 export const LAYERING_STATEMENT =
-  "This is a strictly one-directional composition chain — each layer composes only from the layers listed to its left, never from a layer to its right or from a sibling within the same layer. Foundation, Operational, and Workflow have each already had this verified by direct grep at their own certification (zero reverse-dependency violations across all three, most recently reconfirmed at Workflow Certification). Platform inherits the same rule by definition: see Behavior for what \"allowed imports\" and \"forbidden imports\" mean concretely for a Platform component.";
+  "This is a strictly one-directional composition chain — each layer composes only from the layers listed to its left, never from a layer to its right or from a sibling within the same layer. Foundation, Operational, and Workflow have each had this independently verified by direct grep against the codebase (zero reverse-dependency violations across all three). Platform inherits the same rule by definition: see Behavior for what \"allowed imports\" and \"forbidden imports\" mean concretely for a Platform component.";

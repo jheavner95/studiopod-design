@@ -33,6 +33,6 @@ export const ACCESSIBILITY_GUIDANCE: AccessibilityGuidance[] = [
   {
     label: "Table accessibility",
     text: "Real table markup with row and column headers — the same requirement the design system's other data tables already follow.",
-    links: [{ label: "Coverage Matrix", href: "/application-components/coverage" }],
+    links: [{ label: "Table", href: "/application-components/foundation-table" }],
   },
 ];

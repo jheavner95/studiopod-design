@@ -52,7 +52,7 @@ export const STATUS_REGIONS: StatusRegion[] = [
     guidance: [
       {
         label: "Progress",
-        text: "A visible fill or count for anything with a knowable duration — see the Application Components inventory's own Progress Indicator item.",
+        text: "A visible fill or count for anything with a knowable duration — see the Feedback family's own Progress Indicator.",
       },
       {
         label: "Cancellation",
@@ -93,8 +93,8 @@ export const STATUS_REGIONS: StatusRegion[] = [
         text: "Always available individually, plus a clear-all for the whole region — a notification list that can only grow is a notification list users learn to ignore.",
       },
     ],
-    reuseNotes: "The genuinely new region in this anatomy — no direct inventory item yet, closest is the Application Components inventory's own Warning Banner.",
-    reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
+    reuseNotes: "The genuinely distinct region in this anatomy — closest existing pattern is the Feedback family's own Alert and Banner treatment.",
+    reuseLinks: [{ label: "Feedback", href: "/application-components/foundation-feedback" }],
   },
   {
     id: "activity-timeline",

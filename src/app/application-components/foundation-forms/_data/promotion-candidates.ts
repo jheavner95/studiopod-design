@@ -30,7 +30,7 @@ export const FORM_PROMOTION_CANDIDATES: FormPromotionCandidate[] = [
     count: 5,
     lineTotal: 377,
     findingCommand: 'grep -rl "ToggleSwitch" src/app/*/_components/ControlDock.tsx',
-    description: "Five separate ControlDock.tsx files (74–81 lines each), each wiring two ToggleSwitch controls to a local setToggle(key, checked) state pattern — the exact \"configuration panel\" and \"toggle examples\" shape this work package's own spec calls out.",
+    description: "Five separate ControlDock.tsx files (74–81 lines each), each wiring two ToggleSwitch controls to a local setToggle(key, checked) state pattern — the exact \"configuration panel\" and \"toggle examples\" shape SwitchField is meant to replace.",
     migrationEffort: "Low",
     migrationNote: "Each ToggleSwitch call site is already the shape SwitchField wraps — swapping is close to mechanical, though the shared setToggle state pattern itself is out of Form System scope.",
   },
@@ -41,7 +41,7 @@ export const FORM_PROMOTION_CANDIDATES: FormPromotionCandidate[] = [
     count: 1,
     lineTotal: 331,
     findingCommand: 'grep -rl "ToggleSwitch" src/app/design-system/_sections/',
-    description: "The original MS-1/MS-2 showcase of TextInput, Select, ToggleSwitch, and Checkbox together — the single largest existing \"input examples\" and \"select examples\" surface in the repository, predating this Form System by several milestones.",
+    description: "The original showcase of TextInput, Select, ToggleSwitch, and Checkbox together — the single largest existing \"input examples\" and \"select examples\" surface in the repository, predating the Form System.",
     migrationEffort: "Medium",
     migrationNote: "It's a display gallery, not a real editing form, so migrating it means demonstrating the same controls via the new *Field wrappers rather than a like-for-like swap.",
   },
@@ -54,7 +54,7 @@ export const FORM_PROMOTION_CANDIDATES: FormPromotionCandidate[] = [
     findingCommand: 'grep -rln "Property Editor" src/app/application-components/',
     description: "\"Property Editor\" has been tracked as a Needed gap since the DS-0.2 inventory (citing FieldGroup.tsx as the closest building block) and referenced by name in four separate data files since — but no Inspector page in this repository has ever rendered a real editing form, only read-only anatomy documentation.",
     migrationEffort: "Low",
-    migrationNote: "Not a migration — PropertyEditor.tsx is net-new coverage for a gap that's been documented but empty for four work packages running.",
+    migrationNote: "Not a migration — PropertyEditor.tsx is net-new coverage for a gap that had been documented but left empty for some time.",
   },
 ];
 

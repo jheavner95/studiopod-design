@@ -39,7 +39,7 @@ export const FEATURE_LIFECYCLE: LifecycleStage[] = [
     id: "validation",
     name: "Validation",
     description: "Verify the finished feature against Composition Rules (zero recreated UI, zero cross-feature or reverse dependencies) and Feature Architecture's own ownership boundaries — the same grep-based duplication and dependency-direction audit every Workflow-tier and Platform-tier certification ran on itself one and two tiers down.",
-    gate: "A grep-based audit confirms zero forbidden-rule violations, matching the audit methodology Operational Certification through Platform Certification each ran before certifying.",
+    gate: "A grep-based audit confirms zero forbidden-rule violations, matching the audit methodology each lower tier already runs against itself.",
   },
   {
     id: "testing",
@@ -50,8 +50,8 @@ export const FEATURE_LIFECYCLE: LifecycleStage[] = [
   {
     id: "certification",
     name: "Certification",
-    description: "The feature is reviewed against this framework as a whole — Feature Structure, Feature Template, its own Feature Category's composition plan, and Composition Rules — and marked Certified, the same finish line Workspace Architecture, Foundation, Operational, Workflow, and Platform each already reached.",
-    gate: "A capstone certification page or entry documents the feature as Certified, citing the specific components it composes — the same disclosure pattern every prior tier's own certification capstone used.",
+    description: "The feature is reviewed against this framework as a whole — Feature Structure, Feature Template, its own Feature Category's composition plan, and Composition Rules — and marked Certified, the same bar every lower tier's own components are already held to.",
+    gate: "The feature's own docs page documents it as Certified, citing the specific components it composes.",
   },
   {
     id: "maintenance",

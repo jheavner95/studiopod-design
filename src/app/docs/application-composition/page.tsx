@@ -5,6 +5,7 @@ import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { COMPOSITION_ARCHITECTURE_TOPICS } from "./_data/architecture";
+import { UTILITY_SUBSTRATE_NOTES } from "./_data/utility-substrate";
 import { LAYER_STACK, COMPOSITION_MODEL_STATEMENT } from "./_data/layers";
 import { FEATURE_TRAITS } from "./_data/feature-model";
 import { FEATURE_ANATOMY } from "./_data/anatomy";
@@ -15,7 +16,7 @@ import { ADOPTION_TARGETS, ADOPTION_SUMMARY, VERDICT_LABEL, type FeatureAdoption
 import { APPLICATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("application-composition-doc")!;
-const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("platform-certification")!, getEntry("business-features-doc")!];
+const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("business-features-doc")!, getEntry("templates")!];
 
 const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "neutral"> = {
   certified: "success",
@@ -200,6 +201,16 @@ export default function ApplicationCompositionPage() {
                 </Card>
               ))}
             </CardGrid>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="utility-substrate"
+              title="The utility layers beneath every tier"
+              description="src/lib, src/hooks, src/motion, and src/providers sit underneath the six named tiers rather than inside them — every tier can depend on these, but they never depend back up into any tier."
+              descriptionMaxWidth={false}
+            />
+            <DescriptionList items={UTILITY_SUBSTRATE_NOTES.map((n) => ({ label: n.label, value: n.text }))} />
           </div>
         </div>
       </SectionShell>

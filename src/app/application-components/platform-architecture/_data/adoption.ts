@@ -62,4 +62,4 @@ export const ADOPTION_TARGETS: AdoptionEntry[] = [
 ];
 
 export const ADOPTION_SUMMARY =
-  "Each of the eight named platforms is a real Platform-tier component library, composed entirely from already-certified Foundation/Operational/Workflow components. Where an earlier illustration/diagram library covered the same domain (src/production/, src/platforms/, src/capabilities/ — each a schema that feeds IllustrationCanvas), it remains in place separately from the Platform-tier components at src/components/platform/. See the Platform Component Library Certification page for the certified state of each.";
+  "Each of the eight named platforms is a real Platform-tier component library, composed entirely from already-certified Foundation/Operational/Workflow components. Where an earlier illustration/diagram library covered the same domain (src/production/, src/platforms/, src/capabilities/ — each a schema that feeds IllustrationCanvas), it remains in place separately from the Platform-tier components at src/components/platform/. See Certification, above, for the current standing of each.";

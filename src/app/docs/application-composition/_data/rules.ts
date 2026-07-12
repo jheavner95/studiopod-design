@@ -16,7 +16,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Workflow → Platform",
-    rule: "A Platform component may compose any Workflow component — this is how most Platform components already ship, as thin wrappers or direct re-exports of Workflow primitives (confirmed at Platform Certification: 95 of 96 Platform components are pure re-exports of already-certified lower-tier components).",
+    rule: "A Platform component may compose any Workflow component — this is how most Platform components already ship, as thin wrappers or direct re-exports of Workflow primitives (95 of 96 Platform components are pure re-exports of lower-tier components, confirmed by direct grep against the codebase).",
   },
   {
     category: "Operational → Workflow",
@@ -24,7 +24,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Foundation → Operational",
-    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, confirmed at Operational Certification.",
+    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, confirmed by direct grep against the codebase.",
   },
 ];
 

@@ -121,8 +121,8 @@ export const TOOLBAR_REGIONS: ToolbarRegion[] = [
         text: "Like View Controls, the chosen sort survives a reload — sorting is a standing preference, not a one-off action.",
       },
     ],
-    reuseNotes: "No dedicated inventory item yet — closest is the Result Summary Bar, which pairs a count with a sort control.",
-    reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
+    reuseNotes: "The closest existing pattern is the Result Summary Bar, which pairs a count with a sort control.",
+    reuseLinks: [{ label: "Filter & Search", href: "/application-components/filter-search" }],
   },
   {
     id: "bulk-actions",
@@ -147,8 +147,8 @@ export const TOOLBAR_REGIONS: ToolbarRegion[] = [
         text: "Visually separated from the rest — Delete and Archive don't sit directly next to Publish and Export.",
       },
     ],
-    reuseNotes: "Directly the Application Components inventory's Batch Action Bar item — Needed.",
-    reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
+    reuseNotes: "Composed from the Bulk Actions family — the full action bar, confirmation, and progress feedback.",
+    reuseLinks: [{ label: "Bulk Actions", href: "/application-components/bulk-actions" }],
   },
   {
     id: "workspace-actions",

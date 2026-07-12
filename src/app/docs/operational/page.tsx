@@ -8,23 +8,20 @@ import { getEntry, getGroup, getGroupEntries } from "@/lib/design-system-navigat
 
 const entry = getEntry("docs-operational")!;
 
-// DS-7.1: Operational no longer owns a dedicated top-level group — it's one of nine entries
-// inside the Architecture section's "tier-model" group, alongside the other tier pages and
-// their capstone certifications. The "related tiers" section below cross-links the rest of
-// that group instead of the old (now-nonexistent) operational-systems group.
+// Operational is one of the tier pages inside the Architecture section's "tier-model" group.
+// The "related tiers" section below cross-links the rest of that group.
 const tierModelEntries = getGroupEntries("tier-model");
 const siblingTierPages = tierModelEntries.filter((e) => e.id !== entry.id);
 
-const primaryEntryPoints = [getEntry("data-grid")!, getEntry("inspector-panel")!, getEntry("operational-certification")!];
-const relatedGroups = [getGroup("components-overview")!, getGroup("quality-overview")!, getGroup("architecture-overview")!];
+const primaryEntryPoints = [getEntry("data-grid")!, getEntry("inspector-panel")!];
+const relatedGroups = [getGroup("components-overview")!, getGroup("playground-overview")!, getGroup("architecture-overview")!];
 
 // Real counts, verified against src/components/operational/ (113 component files,
-// excluding index.ts) and this tier's own capstone data at
-// application-components/operational-certification/_data/systems.ts and certification.ts.
+// excluding index.ts).
 const STATS = [
   { label: "Pages in Tier Model", value: String(tierModelEntries.length) },
   { label: "Real components", value: "113" },
-  { label: "Certified systems", value: "4 of 9" },
+  { label: "Operational systems", value: "9" },
 ];
 
 export default function DocsOperationalPage() {
@@ -39,8 +36,6 @@ export default function DocsOperationalPage() {
         whatYoullLearn={[
           "The nine operational systems and what each owns — tabular data, detail inspection, structured editing, asset browsing, search and filtering, bulk actions, health and status, background jobs, and dashboard summaries.",
           "How the systems compose from each other — five of the nine build directly on Data Grid, and both Property Panel and Status & Health build on Inspector Panel.",
-          "Which four of the nine systems (Data Grid, Filter & Search, Bulk Actions, Queue & Job) earned this tier's Certified rating, versus the five rated Production Ready.",
-          "None of the nine systems implements a first-party live-region announcement pattern, which is why the tier is rated Production Ready.",
           "Where Operational sits relative to Foundation, Workflow, and Platform in the tier model, and where each of those tiers' own architecture pages live.",
         ]}
         stats={STATS}

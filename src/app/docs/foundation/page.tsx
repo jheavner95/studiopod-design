@@ -8,21 +8,19 @@ import { getEntry, getGroup, getGroupEntries } from "@/lib/design-system-navigat
 
 const entry = getEntry("docs-foundation")!;
 
-// DS-7.1: Foundation no longer owns a dedicated top-level group — it's one of nine entries
-// inside the Architecture section's "tier-model" group, alongside the other tier pages and
-// their capstone certifications. The "related tiers" section below cross-links the rest of
-// that group instead of the old (now-nonexistent) foundation-systems group.
+// Foundation is one of the tier pages inside the Architecture section's "tier-model" group.
+// The "related tiers" section below cross-links the rest of that group.
 const tierModelEntries = getGroupEntries("tier-model");
 const siblingTierPages = tierModelEntries.filter((e) => e.id !== entry.id);
 
-const primaryEntryPoints = [getEntry("application-components")!, getEntry("foundation-audit")!];
-const relatedGroups = [getGroup("components-overview")!, getGroup("quality-overview")!, getGroup("architecture-overview")!];
+const primaryEntryPoints = [getEntry("application-components")!, getEntry("foundation-components")!];
+const relatedGroups = [getGroup("components-overview")!, getGroup("playground-overview")!, getGroup("architecture-overview")!];
 
 // Real per-family component counts, verified against src/components/{layout,table,metadata,form,overlay,navigation,feedback}/.
 const STATS = [
   { label: "Pages in Tier Model", value: String(tierModelEntries.length) },
   { label: "Real components", value: "92" },
-  { label: "Certified families", value: "1 of 7" },
+  { label: "Component families", value: "7" },
 ];
 
 export default function DocsFoundationPage() {
@@ -37,7 +35,6 @@ export default function DocsFoundationPage() {
         whatYoullLearn={[
           "The seven component families and what each one owns — structure, tabular data, read-only display, editing, transient surfaces, wayfinding, and status.",
           "Which families have real production adoption versus which exist but aren't yet used by a real screen.",
-          "How Foundation Table earned the tier's only Certified rating, and where the other six families currently stand on that same ladder.",
           "Where Foundation sits relative to Operational, Workflow, and Platform in the tier model, and where each of those tiers' own architecture pages live.",
         ]}
         stats={STATS}

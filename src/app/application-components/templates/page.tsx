@@ -8,7 +8,7 @@ import { PLATFORM_TEMPLATES, templateReadiness } from "../_data/templates";
 import { COMPONENT_FAMILIES } from "../_data/families";
 
 const entry = getEntry("templates")!;
-const relatedEntries = [getEntry("architecture-doc")!, getEntry("coverage")!, getEntry("maturity")!];
+const relatedEntries = [getEntry("architecture-doc")!, getEntry("business-feature-templates")!, getEntry("platform-architecture-doc")!];
 
 const platformTemplatesFamily = COMPONENT_FAMILIES.find((family) => family.id === "platform-templates")!;
 const analyticsFamily = COMPONENT_FAMILIES.find((family) => family.id === "analytics")!;
@@ -68,10 +68,9 @@ export default function TemplatesPage() {
               </Body>
             </Card>
             <Card className="flex flex-col gap-2">
-              <span className="text-body-sm font-medium text-ink-primary">Checking coverage or the maturity ladder</span>
+              <span className="text-body-sm font-medium text-ink-primary">Building a business feature on a template</span>
               <Body size="sm" muted>
-                Use Coverage Matrix or Maturity Model — {relatedEntries[1].description.toLowerCase()} and{" "}
-                {relatedEntries[2].description.toLowerCase()}
+                Go to Business Feature Templates — {relatedEntries[1].description.toLowerCase()}
               </Body>
             </Card>
           </CardGrid>

@@ -79,8 +79,8 @@ export const INSPECTOR_REGIONS: InspectorRegion[] = [
         text: "Common fields first, advanced Configuration behind an expand — the same rule Workspace Toolbar's Filters region already follows.",
       },
     ],
-    reuseNotes: "Directly the Property Editor item from the Application Components inventory — Needed.",
-    reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
+    reuseNotes: "Composed from the Property Panel family's structured editing rows.",
+    reuseLinks: [{ label: "Property Panel", href: "/application-components/property-panel" }],
   },
   {
     id: "relationships",
@@ -120,7 +120,7 @@ export const INSPECTOR_REGIONS: InspectorRegion[] = [
       },
       {
         label: "Fix guidance",
-        text: "Every finding says what would resolve it, not just that something's wrong — see the Application Components inventory's own QA Finding Card item.",
+        text: "Every finding says what would resolve it, not just that something's wrong.",
       },
     ],
     reuseNotes: "Built from the Validation & QA family — Validation Panel, QA Finding Card, and Score Badge all live here.",

@@ -22,7 +22,7 @@ export const LAYER_STACK: LayerDefinition[] = [
     status: "certified",
     owns: "Generic UI — buttons, inputs, tables, overlays, navigation, feedback, layout primitives. No business or workflow awareness of any kind.",
     composesFrom: null,
-    certificationRef: { label: "Foundation Layer Audit", href: "/application-components/foundation-audit" },
+    certificationRef: { label: "Foundation Tier", href: "/docs/foundation" },
   },
   {
     id: "operational",
@@ -30,7 +30,7 @@ export const LAYER_STACK: LayerDefinition[] = [
     status: "certified-production-ready",
     owns: "Operational UX — composed, ready-to-use screens and panels (Data Grid, Inspector Panel, Bulk Actions, Status & Health, and six more systems) built on Foundation.",
     composesFrom: "Foundation",
-    certificationRef: { label: "Operational Certification", href: "/application-components/operational-certification" },
+    certificationRef: { label: "Operational Tier", href: "/docs/operational" },
   },
   {
     id: "workflow",
@@ -38,15 +38,15 @@ export const LAYER_STACK: LayerDefinition[] = [
     status: "certified-production-ready",
     owns: "Domain-agnostic multi-step process primitives — State Machine, Pipeline Components, Approval & Review, Dependency & Relationship Views, and four more systems.",
     composesFrom: "Foundation, Operational",
-    certificationRef: { label: "Workflow Certification", href: "/application-components/workflow-certification" },
+    certificationRef: { label: "Workflow Tier", href: "/docs/workflow" },
   },
   {
     id: "platform",
     name: "Platform",
     status: "certified-production-ready",
-    owns: "Domain-specific reusable components, scoped to one business platform — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI. All eight named platforms, 96 components, Certified at Platform Certification.",
+    owns: "Domain-specific reusable components, scoped to one business platform — the first layer where business vocabulary (Order, Artwork, Content Item) attaches to real UI. All eight named platforms, 96 components, built.",
     composesFrom: "Foundation, Operational, Workflow",
-    certificationRef: { label: "Platform Component Library Certification", href: "/application-components/platform-certification" },
+    certificationRef: { label: "Platform Tier", href: "/docs/platform" },
   },
   {
     id: "business-features",
@@ -67,4 +67,4 @@ export const LAYER_STACK: LayerDefinition[] = [
 ];
 
 export const COMPOSITION_MODEL_STATEMENT =
-  "This is a strictly one-directional composition chain — each layer composes only from the layers listed to its left, never from a layer to its right or from a sibling within the same layer. Foundation, Operational, Workflow, and Platform have each already had this independently verified by direct grep at their own certification (zero reverse-dependency violations in any direction across all 4 tiers, most recently reconfirmed for Platform at Platform Certification). Business Features and Application inherit the same rule by definition — see Composition Rules for what \"allowed\" and \"forbidden\" mean concretely at this boundary.";
+  "This is a strictly one-directional composition chain — each layer composes only from the layers listed to its left, never from a layer to its right or from a sibling within the same layer. Foundation, Operational, Workflow, and Platform have each had this independently verified by direct grep against the codebase (zero reverse-dependency violations in any direction across all 4 tiers). Business Features and Application inherit the same rule by definition — see Composition Rules for what \"allowed\" and \"forbidden\" mean concretely at this boundary.";

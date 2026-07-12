@@ -9,15 +9,13 @@ export interface StackLayer {
 }
 
 /**
- * The same six-layer chain DS-5.1's own Composition Model established
- * (Foundation → Operational → Workflow → Platform → Business Features →
- * Application), reframed here around one question: what does each layer
- * hand a Business Feature specifically, rather than the general composition
- * relationship DS-5.1 already covers. "documented" is a status DS-5.1's own
- * LAYER_STACK didn't need — Business Features now has two architecture
- * packages behind it (DS-5.1, DS-5.2) despite zero implementation, a state
- * between "future" and "certified" worth naming honestly rather than
- * collapsing into either.
+ * The same six-layer chain Application Composition's own Composition Model
+ * establishes (Foundation → Operational → Workflow → Platform → Business
+ * Features → Application), reframed here around one question: what does
+ * each layer hand a Business Feature specifically, rather than the general
+ * composition relationship covered there. "documented" names a real state
+ * between "future" and "certified" — Business Features has architecture
+ * documentation behind it despite zero implementation.
  */
 export const COMPOSITION_STACK: StackLayer[] = [
   {
@@ -25,28 +23,28 @@ export const COMPOSITION_STACK: StackLayer[] = [
     name: "Foundation",
     status: "certified",
     contributes: "Every primitive a feature might need with no higher-tier equivalent — buttons, form fields, dialogs, feedback — composed directly wherever Platform, Workflow, or Operational doesn't already wrap it.",
-    certificationRef: { label: "Foundation Audit", href: "/application-components/foundation-audit" },
+    certificationRef: { label: "Foundation Tier", href: "/docs/foundation" },
   },
   {
     id: "operational",
     name: "Operational",
     status: "certified-production-ready",
     contributes: "Generic composed UX a feature can use as-is — Data Grid, Filter & Search, Bulk Actions, Status & Health, Dashboard Widgets — the layer richest in ready-made screens a feature never has to build itself.",
-    certificationRef: { label: "Operational Certification", href: "/application-components/operational-certification" },
+    certificationRef: { label: "Operational Tier", href: "/docs/operational" },
   },
   {
     id: "workflow",
     name: "Workflow",
     status: "certified-production-ready",
     contributes: "Domain-agnostic process and visualization systems — State Machine, Approval & Review, Pipeline Components — for any lifecycle a feature's own object moves through.",
-    certificationRef: { label: "Workflow Certification", href: "/application-components/workflow-certification" },
+    certificationRef: { label: "Workflow Tier", href: "/docs/workflow" },
   },
   {
     id: "platform",
     name: "Platform",
     status: "certified",
     contributes: "A domain's own certified component library — CommerceCatalog, ProductionPipeline, AdminUsers — 96 components across eight platforms, ready to compose directly with zero new UI invented.",
-    certificationRef: { label: "Platform Certification", href: "/application-components/platform-certification" },
+    certificationRef: { label: "Platform Tier", href: "/docs/platform" },
   },
   {
     id: "business-features",

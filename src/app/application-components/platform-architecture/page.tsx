@@ -15,7 +15,7 @@ import { ADOPTION_TARGETS, ADOPTION_SUMMARY, VERDICT_LABEL, type AdoptionVerdict
 import { PLATFORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("platform-architecture-doc")!;
-const relatedComponents = [getEntry("production-platform")!, getEntry("platform-certification")!, getEntry("application-composition-doc")!];
+const relatedComponents = [getEntry("production-platform")!, getEntry("docs-platform")!, getEntry("application-composition-doc")!];
 
 const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "accent" | "neutral"> = {
   certified: "success",

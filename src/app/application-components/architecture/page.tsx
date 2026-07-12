@@ -8,7 +8,7 @@ import { COMPONENT_FAMILIES } from "../_data/families";
 import { DEPENDENCY_CHAINS, DEPENDENCY_FANOUTS } from "../_data/dependency-map";
 
 const entry = getEntry("architecture-doc")!;
-const relatedComponents = [getEntry("inventory")!, getEntry("coverage")!, getEntry("templates")!];
+const relatedComponents = [getEntry("templates")!, getEntry("platform-architecture-doc")!, getEntry("application-composition-doc")!];
 
 export default function ArchitecturePage() {
   return (

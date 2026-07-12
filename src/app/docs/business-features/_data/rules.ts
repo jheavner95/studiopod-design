@@ -22,7 +22,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Workflow → Platform",
-    rule: "A Platform component may compose any Workflow component — how 95 of 96 certified Platform components already ship, per Platform Certification's own certification finding.",
+    rule: "A Platform component may compose any Workflow component — how 95 of 96 Platform components already ship, confirmed by direct grep against the codebase.",
   },
   {
     category: "Operational → Workflow",
@@ -30,7 +30,7 @@ export const ALLOWED_RULES: CompositionRule[] = [
   },
   {
     category: "Foundation → Operational",
-    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, per Operational Certification's own certification finding.",
+    rule: "An Operational component may compose any Foundation component — every one of the nine Operational systems is built entirely on Foundation primitives, confirmed by direct grep against the codebase.",
   },
   {
     category: "Business Feature → Repository",

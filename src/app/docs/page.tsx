@@ -1,7 +1,7 @@
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsGroupCard } from "@/components/docs";
 import { DocsSectionLanding } from "./_components/DocsSectionLanding";
 import { SectionShell, CardGrid } from "@/components/layout";
-import { Badge, SectionHeader, Eyebrow } from "@/components/ui";
+import { SectionHeader, Eyebrow } from "@/components/ui";
 import { getEntry, getGroup, getGroupsForSection, getGroupEntries, getSectionEntries } from "@/lib/design-system-navigation";
 
 const entry = getEntry("docs-root")!;
@@ -27,11 +27,9 @@ const relatedGroups = [getGroup("components-overview")!, getGroup("applications-
 // six-region blueprint), Tier Model (how Foundation, Operational, Workflow,
 // and Platform compose), Platform Architecture, and Application Composition.
 const sectionEntries = getSectionEntries("architecture");
-const certifiedCount = sectionEntries.filter((e) => e.badge === "certification").length;
 const STATS = [
   { label: "Pages in this section", value: String(sectionEntries.length) },
   { label: "Composition groups", value: String(architectureGroups.length) },
-  { label: "Certified capstones", value: String(certifiedCount) },
   { label: "Tiers documented", value: "4" },
 ];
 
@@ -43,8 +41,8 @@ export default function DocsHomePage() {
       <DocsSectionLanding
         purpose="Architecture is where the composition rules and layering model that hold the rest of the design system together live — the workspace blueprint every screen is built on, the tier stack that separates raw building blocks from full business features, and the rules that govern how a domain platform or a real feature gets assembled from certified pieces. It's for architects and anyone auditing how the system fits together, not for someone looking for a live example to copy — there's nothing to browse and drop into a screen here, only the relationships between pieces documented elsewhere. Start with the Workspace Shell for the six-region blueprint every application screen composes, or the Tier Model for how Foundation, Operational, Workflow, and Platform build on one another."
         whatYoullLearn={[
-          "The six-region Workspace Shell blueprint every application screen composes, down to its header, toolbar, content areas, and status bar, and how its own capstone certification covers it end to end.",
-          "How the Tier Model's four layers — Foundation, Operational, Workflow, Platform — build strictly on the ones before them, and where each tier's own certification record lives.",
+          "The six-region Workspace Shell blueprint every application screen composes, down to its header, toolbar, content areas, and status bar.",
+          "How the Tier Model's four layers — Foundation, Operational, Workflow, Platform — build strictly on the ones before them, and where each tier's own architecture page lives.",
           "How Platform Architecture and Application Composition define the rules a real domain platform and a real Business Feature are each built against.",
           "Where to go for a live example instead of the rules behind it — Components for individual pieces, Applications for full domain compositions, Patterns for reusable templates in between.",
         ]}
@@ -64,23 +62,7 @@ export default function DocsHomePage() {
           <CardGrid columns={2} gap="md">
             {architectureGroups.map((group) => {
               const groupEntries = getGroupEntries(group.id);
-              const groupCertifiedCount = groupEntries.filter((e) => e.badge === "certification").length;
-              return (
-                <DocsGroupCard
-                  key={group.id}
-                  href={group.href}
-                  title={group.title}
-                  description={group.description}
-                  entries={groupEntries}
-                  badge={
-                    groupCertifiedCount > 0 ? (
-                      <Badge tone="success" size="sm">
-                        Certified
-                      </Badge>
-                    ) : null
-                  }
-                />
-              );
+              return <DocsGroupCard key={group.id} href={group.href} title={group.title} description={group.description} entries={groupEntries} />;
             })}
           </CardGrid>
         </div>

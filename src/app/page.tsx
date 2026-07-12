@@ -6,7 +6,6 @@ import {
   Rocket,
   Compass,
   Sparkles,
-  ShieldCheck,
   Globe,
   Layers,
   CheckCircle2,
@@ -24,12 +23,12 @@ import { NAV_SECTIONS, getEntry, type NavSectionId } from "@/lib/design-system-n
  * The four highest-value working areas for a first-time visitor, in the
  * order most people actually move through them: build with the library,
  * see it running in a real product surface, assemble a new screen from
- * ready-made compositions, then check the evidence behind the quality bar.
+ * ready-made compositions, then understand the composition rules behind it.
  */
-const PRIMARY_SECTION_IDS: NavSectionId[] = ["components", "applications", "patterns", "quality"];
+const PRIMARY_SECTION_IDS: NavSectionId[] = ["components", "applications", "patterns", "architecture"];
 
-/** The two remaining top-level areas, surfaced lower on the page as "explore next." */
-const RELATED_SECTION_IDS: NavSectionId[] = ["architecture", "playground"];
+/** The remaining top-level area, surfaced lower on the page as "explore next." */
+const RELATED_SECTION_IDS: NavSectionId[] = ["playground"];
 
 const SECTION_ICONS: Record<NavSectionId, ReactNode> = {
   overview: <Boxes className="size-5" />,
@@ -38,7 +37,6 @@ const SECTION_ICONS: Record<NavSectionId, ReactNode> = {
   applications: <Rocket className="size-5" />,
   architecture: <Compass className="size-5" />,
   playground: <Sparkles className="size-5" />,
-  quality: <ShieldCheck className="size-5" />,
 };
 
 const IDENTITY_FACTS: { icon: ReactNode; title: string; body: string }[] = [
@@ -50,12 +48,12 @@ const IDENTITY_FACTS: { icon: ReactNode; title: string; body: string }[] = [
   {
     icon: <Layers className="size-5" />,
     title: "Organized by what you need",
-    body: "Components, Patterns, Applications, Architecture, Playground, and Quality — six areas grouped by what you're trying to do, whether that's building a screen, seeing a real example, or checking the evidence behind a claim.",
+    body: "Components, Patterns, Applications, Architecture, and Playground — five areas grouped by what you're trying to do, whether that's building a screen, seeing a real example, or understanding how the pieces fit together.",
   },
   {
     icon: <CheckCircle2 className="size-5" />,
     title: "Every page is a real page",
-    body: "Everything you reach from here is a working page — live components, real application examples, and actual certification records, not placeholders waiting to be filled in.",
+    body: "Everything you reach from here is a working page — live components, real application examples, and the actual composition rules behind them, not placeholders waiting to be filled in.",
   },
 ];
 
@@ -168,7 +166,7 @@ export default function Home() {
           <SectionHeader
             eyebrow={<Eyebrow tone="accent">Explore next</Eyebrow>}
             title="Related areas"
-            description="Once you've found your footing, these two areas are worth a look — the composition rules behind every screen, and the hands-on tools for exploring the system by trial and error."
+            description="Once you've found your footing, this area is worth a look — the hands-on tools for exploring the system by trial and error."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>

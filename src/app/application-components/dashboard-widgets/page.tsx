@@ -11,7 +11,7 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { DASHBOARD_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("dashboard-widgets")!;
-const relatedComponents = [getEntry("queue-jobs")!, getEntry("status-health")!, getEntry("operational-certification")!];
+const relatedComponents = [getEntry("queue-jobs")!, getEntry("status-health")!, getEntry("data-grid")!];
 
 export default function DashboardWidgetsPage() {
   return (

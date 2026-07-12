@@ -24,7 +24,7 @@ const primaryEntryPoints = [
   getEntry("intelligence-platform")!,
   getEntry("production-workspace-feature")!,
 ];
-const relatedGroups = [getGroup("platform-architecture")!, getGroup("platform-templates")!, getGroup("certifications")!];
+const relatedGroups = [getGroup("platform-architecture")!, getGroup("platform-templates")!, getGroup("application-composition")!];
 
 // Real counts: 8 domain platforms × 12 components each = 96, verified against
 // src/app/docs/platform/page.tsx's own scorecard and each platform's own
@@ -77,7 +77,7 @@ export default function ApplicationsPage() {
           "The eight domain platforms and what each one actually does for a StudioPOD user — not a component count, but the job it performs: running production, managing a product, publishing, transacting commerce, surfacing intelligence, operating the system, administering it, or integrating it with the outside world.",
           "Production Workspace, the current example of the Business Feature pattern, and how it composes the certified Production platform tier into an actual running screen.",
           "Why this section is distinct from Components and Patterns: these are domain compositions carrying real StudioPOD business vocabulary — Order, Artwork, Provider Connection — not generic, reusable building blocks.",
-          "Where to go next for the architecture behind these compositions (Platform Architecture, Application Composition) or their certification record (Platform Certification and friends).",
+          "Where to go next for the architecture behind these compositions — Platform Architecture and Application Composition.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}

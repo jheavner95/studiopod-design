@@ -1,23 +1,15 @@
 /**
- * DS-7.1 — the product information architecture. This registry replaces
- * the DS-IA.1 tier-first taxonomy (Workspace/Foundation/Operational/
- * Workflow/Platform "Systems" as primary navigation) with a goal-first
- * one: Overview, Components, Patterns, Applications, Architecture,
- * Playground, Quality. Every href below points at a route that already
- * existed before this package — DS-7.1 is a navigation-model rewrite,
- * not a file migration. No src/app/ route was moved or renamed; pages
- * that used to double as top-level section landings (application-components,
- * docs, docs/certification, workflow-patterns) were reframed in place to
- * serve their new section instead, exactly like every entry below was
- * reframed rather than rebuilt.
+ * The product information architecture: Overview, Components, Patterns,
+ * Applications, Architecture, Playground — a goal-first taxonomy organized
+ * around what a visitor is trying to do, not around how the system was
+ * built. Every href below points at a real route.
  *
- * The old tier concepts (Foundation/Operational/Workflow/Platform/
- * Business Feature) still exist as real documentation — see the
- * "architecture" section below — they're just no longer the spine of
- * primary navigation.
+ * The tier concepts (Foundation/Operational/Workflow/Platform/Business
+ * Feature) still exist as real documentation — see the "architecture"
+ * section below — they're just not the spine of primary navigation.
  */
 
-export type NavSectionId = "overview" | "components" | "patterns" | "applications" | "architecture" | "playground" | "quality";
+export type NavSectionId = "overview" | "components" | "patterns" | "applications" | "architecture" | "playground";
 
 /**
  * DS-7.1's own family-based grouping. "Components" is organized by what a
@@ -35,7 +27,6 @@ export type NavGroupId =
   | "applications-overview"
   | "architecture-overview"
   | "playground-overview"
-  | "quality-overview"
   | "foundations-tokens"
   | "layout"
   | "navigation"
@@ -58,9 +49,7 @@ export type NavGroupId =
   | "application-composition"
   | "visual-tools"
   | "interactive-demos"
-  | "legacy-experiments"
-  | "certifications"
-  | "tracking";
+  | "legacy-experiments";
 
 /**
  * DS-8.4's canonical page taxonomy. Describes what a page IS — never where
@@ -78,8 +67,7 @@ export type NavBadge =
   | "architecture"
   | "reference"
   | "playground"
-  | "historical-reference"
-  | "certification";
+  | "historical-reference";
 
 export const BADGE_TONE: Record<NavBadge, "neutral" | "accent" | "success" | "warning"> = {
   foundation: "neutral",
@@ -90,7 +78,6 @@ export const BADGE_TONE: Record<NavBadge, "neutral" | "accent" | "success" | "wa
   reference: "neutral",
   playground: "accent",
   "historical-reference": "neutral",
-  certification: "success",
 };
 
 export const BADGE_LABEL: Record<NavBadge, string> = {
@@ -102,14 +89,13 @@ export const BADGE_LABEL: Record<NavBadge, string> = {
   reference: "Reference",
   playground: "Playground",
   "historical-reference": "Historical Reference",
-  certification: "Certification",
 };
 
 /**
  * The five DS-6.1 page archetypes, unchanged by this package — DS-7.1
  * reorganizes WHERE pages live, not what shape they are.
  */
-export type NavPageType = "landing" | "reference" | "pattern" | "architecture" | "certification";
+export type NavPageType = "landing" | "reference" | "pattern" | "architecture";
 
 export interface NavEntry {
   id: string;
@@ -158,7 +144,6 @@ export const NAV_SECTIONS: NavSection[] = [
   { id: "applications", title: "Applications", href: "/applications", description: "The eight domain-specific platform libraries and the one real Business Feature pilot, presented as application compositions.", audience: "Anyone evaluating how a real StudioPOD surface is built." },
   { id: "architecture", title: "Architecture", href: "/docs", description: "The composition rules and layering model — workspace shell, tier stack, platform architecture, application composition — with no live examples, just relationships.", audience: "Architects and anyone auditing how the system fits together." },
   { id: "playground", title: "Playground", href: "/playground", description: "Interactive exploration tools — token/color/typography explorers, the motion and illustration engines, the composition device-preview tool — kept separate from reference documentation.", audience: "Anyone exploring or prototyping, not looking for API reference." },
-  { id: "quality", title: "Quality", href: "/docs/certification", description: "Every certification, audit, and coverage/maturity tracking view — the system's own evidence trail.", audience: "Anyone assessing whether the system is production-ready." },
 ];
 
 export const NAV_GROUPS: NavGroup[] = [
@@ -196,10 +181,6 @@ export const NAV_GROUPS: NavGroup[] = [
   { id: "visual-tools", section: "playground", title: "Visual Tools", href: "/motion", description: "Preview and test the animation and illustration engines; token, color, typography, and layout exploration now lives in Foundations & Tokens." },
   { id: "interactive-demos", section: "playground", title: "Interactive Demos", href: "/compositions", description: "Device-preview composition playground." },
   { id: "legacy-experiments", section: "playground", title: "Archived Experiments", href: "/platforms", description: "Illustration-canvas playgrounds kept reachable for historical reference." },
-
-  { id: "quality-overview", section: "quality", title: "Quality Overview", href: "/docs/certification", description: "Every certification and audit, plus coverage/maturity tracking." },
-  { id: "certifications", section: "quality", title: "Certifications", href: "/application-components/workspace-certification", description: "The nine capstone certification and audit reviews." },
-  { id: "tracking", section: "quality", title: "Tracking", href: "/application-components/inventory", description: "Component inventory, coverage matrix, and maturity model." },
 ];
 
 export const NAV_REGISTRY: NavEntry[] = [
@@ -213,7 +194,7 @@ export const NAV_REGISTRY: NavEntry[] = [
   // Components — Overview & Foundations
   // ---------------------------------------------------------------------
   { id: "application-components", title: "Components", href: "/application-components", section: "components", group: "components-overview", order: 0, description: "Browse the full library of reusable interface components, organized by family so you can quickly find the piece you need.", pageType: "landing", next: "foundations", aliases: ["Formerly the DS-0.3/Application Components tier landing"] },
-  { id: "foundation-components", title: "Foundation Catalog", href: "/application-components/foundation-components", section: "components", group: "components-overview", order: 1, description: "Look up any foundational component's purpose, status, required states, and accessibility support, plus see overall coverage across the catalog.", badge: "reference", pageType: "reference", related: ["foundation-layout", "foundation-table", "foundation-audit"], aliases: ["Orphaned by the DS-7.1 registry rewrite until Part 9's legacy audit added it back — see the Naming Review"] },
+  { id: "foundation-components", title: "Foundation Catalog", href: "/application-components/foundation-components", section: "components", group: "components-overview", order: 1, description: "Look up any foundational component's purpose, status, required states, and accessibility support, plus see overall coverage across the catalog.", badge: "reference", pageType: "reference", related: ["foundation-layout", "foundation-table"], aliases: ["Orphaned by the DS-7.1 registry rewrite until Part 9's legacy audit added it back — see the Naming Review"] },
   { id: "foundations", title: "Foundations", href: "/foundations", section: "components", group: "foundations-tokens", order: 0, description: "Learn about the structural and motion building blocks that every other component family is built on.", badge: "foundation", pageType: "landing", previous: "application-components", next: "tokens" },
   { id: "tokens", title: "Tokens", href: "/tokens", section: "components", group: "foundations-tokens", order: 1, description: "Look up the color, typography, spacing, radius, and shadow values that keep every component visually consistent.", badge: "foundation", pageType: "reference", previous: "foundations" },
 
@@ -288,7 +269,7 @@ export const NAV_REGISTRY: NavEntry[] = [
   // ---------------------------------------------------------------------
   { id: "workflow-patterns", title: "Patterns", href: "/workflow-patterns", section: "patterns", group: "patterns-overview", order: 0, description: "Browse reusable page compositions and templates you can use to solve recurring product design problems instead of building screens from scratch.", pageType: "landing", next: "templates" },
   { id: "templates", title: "Platform Templates", href: "/application-components/templates", section: "patterns", group: "platform-templates", order: 0, description: "Assemble new screens quickly using ready-made platform-screen templates built entirely from already-approved components.", badge: "pattern", pageType: "pattern", previous: "workflow-patterns", next: "business-feature-templates" },
-  { id: "business-feature-templates", title: "Business Feature Templates", href: "/docs/business-feature-templates", section: "patterns", group: "platform-templates", order: 1, description: "Browse ready-made feature blueprints with standard layouts, showing which components to combine to build common business features.", badge: "pattern", pageType: "pattern", previous: "templates", related: ["platform-architecture-doc", "platform-certification"] },
+  { id: "business-feature-templates", title: "Business Feature Templates", href: "/docs/business-feature-templates", section: "patterns", group: "platform-templates", order: 1, description: "Browse ready-made feature blueprints with standard layouts, showing which components to combine to build common business features.", badge: "pattern", pageType: "pattern", previous: "templates", related: ["platform-architecture-doc"] },
   { id: "workflows-library", title: "Workflow Diagram Library", href: "/workflows", section: "patterns", group: "process-diagrams", order: 0, description: "Browse a library of diagrams that visually explain how StudioPOD's key business processes work.", badge: "pattern", pageType: "pattern", aliases: ["Distinct from Components' own Workflow & Process family — see the Naming Review"] },
 
   // ---------------------------------------------------------------------
@@ -317,24 +298,18 @@ export const NAV_REGISTRY: NavEntry[] = [
   { id: "asset-workspace", title: "Asset Workspace", href: "/application-components/asset-workspace", section: "architecture", group: "workspace-shell", order: 5, description: "Learn how the asset-browsing workspace helps users search, filter, and select files or media.", badge: "architecture", pageType: "reference", previous: "workspace-toolbar", next: "primary-workspace" },
   { id: "primary-workspace", title: "Primary Workspace", href: "/application-components/primary-workspace", section: "architecture", group: "workspace-shell", order: 6, description: "Understand how the primary content region displays the main working area of a screen.", badge: "architecture", pageType: "reference", previous: "asset-workspace", next: "inspector-workspace" },
   { id: "inspector-workspace", title: "Inspector Workspace", href: "/application-components/inspector-workspace", section: "architecture", group: "workspace-shell", order: 7, description: "Learn how the inspector workspace shows detailed properties and information about whatever is currently selected.", badge: "architecture", pageType: "reference", previous: "primary-workspace", next: "status-workspace" },
-  { id: "status-workspace", title: "Status Workspace", href: "/application-components/status-workspace", section: "architecture", group: "workspace-shell", order: 8, description: "See how the status workspace surfaces operational health, alerts, and system status at a glance.", badge: "architecture", pageType: "reference", previous: "inspector-workspace", next: "workspace-certification" },
-  { id: "workspace-certification", title: "Workspace Certification", href: "/application-components/workspace-certification", section: "architecture", group: "workspace-shell", order: 9, description: "Review the completed quality certification for the workspace layout system, confirming it meets accessibility and reliability standards.", badge: "certification", pageType: "certification", previous: "status-workspace", related: ["foundation-audit", "operational-certification", "workflow-certification", "platform-certification", "application-composition-certification", "accessibility-certification", "enterprise-architecture-audit", "final-certification"] },
+  { id: "status-workspace", title: "Status Workspace", href: "/application-components/status-workspace", section: "architecture", group: "workspace-shell", order: 8, description: "See how the status workspace surfaces operational health, alerts, and system status at a glance.", badge: "architecture", pageType: "reference", previous: "inspector-workspace" },
 
-  { id: "docs-foundation", title: "Foundation Tier", href: "/docs/foundation", section: "architecture", group: "tier-model", order: 0, description: "Explore the basic UI building blocks, like buttons, inputs, and layout primitives, that every other part of the design system is built from.", badge: "architecture", pageType: "landing", next: "foundation-audit" },
-  { id: "foundation-audit", title: "Foundation Audit", href: "/application-components/foundation-audit", section: "architecture", group: "tier-model", order: 1, description: "Review the quality audit confirming the Foundation layer's components meet the system's design and accessibility standards.", badge: "certification", pageType: "certification", previous: "docs-foundation", next: "docs-operational", related: ["workspace-certification", "operational-certification", "workflow-certification", "platform-certification", "application-composition-certification", "accessibility-certification", "enterprise-architecture-audit", "final-certification"] },
-  { id: "docs-operational", title: "Operational Tier", href: "/docs/operational", section: "architecture", group: "tier-model", order: 2, description: "Browse ready-to-use panels and screens, built from Foundation components, that you can drop into an application.", badge: "architecture", pageType: "landing", previous: "foundation-audit", next: "operational-certification" },
-  { id: "operational-certification", title: "Operational Certification", href: "/application-components/operational-certification", section: "architecture", group: "tier-model", order: 3, description: "Review the certification confirming the Operational-tier panels and screens are ready for production use.", badge: "certification", pageType: "certification", previous: "docs-operational", next: "docs-workflow", related: ["workspace-certification", "foundation-audit", "workflow-certification", "platform-certification", "application-composition-certification", "accessibility-certification", "enterprise-architecture-audit", "final-certification"] },
-  { id: "docs-workflow", title: "Workflow Tier", href: "/docs/workflow", section: "architecture", group: "tier-model", order: 4, description: "Explore the systems for building multi-step processes and visualizations that work across any business domain.", badge: "architecture", pageType: "landing", previous: "operational-certification", next: "workflow-certification" },
-  { id: "workflow-certification", title: "Workflow Certification", href: "/application-components/workflow-certification", section: "architecture", group: "tier-model", order: 5, description: "Review the certification confirming the Workflow-tier systems are ready for production use.", badge: "certification", pageType: "certification", previous: "docs-workflow", next: "docs-platform", related: ["workspace-certification", "foundation-audit", "operational-certification", "platform-certification", "application-composition-certification", "accessibility-certification", "enterprise-architecture-audit", "final-certification"] },
-  { id: "docs-platform", title: "Platform Tier", href: "/docs/platform", section: "architecture", group: "tier-model", order: 6, description: "Browse the component libraries that adapt the design system to specific business domains, like commerce or publishing.", badge: "architecture", pageType: "landing", previous: "workflow-certification", next: "platform-certification" },
-  { id: "platform-certification", title: "Platform Certification", href: "/application-components/platform-certification", section: "architecture", group: "tier-model", order: 7, description: "Review the certification confirming the Platform-tier libraries meet the system's quality bar.", badge: "certification", pageType: "certification", previous: "docs-platform", next: "architecture-doc", related: ["workspace-certification", "foundation-audit", "operational-certification", "workflow-certification", "application-composition-certification", "accessibility-certification", "enterprise-architecture-audit", "final-certification"] },
-  { id: "architecture-doc", title: "Tier Composition", href: "/application-components/architecture", section: "architecture", group: "tier-model", order: 8, description: "Understand how the Workspace, Foundation, Operational, Workflow, and Platform tiers stack together to form a complete application.", badge: "architecture", pageType: "architecture", previous: "platform-certification" },
+  { id: "docs-foundation", title: "Foundation Tier", href: "/docs/foundation", section: "architecture", group: "tier-model", order: 0, description: "Explore the basic UI building blocks, like buttons, inputs, and layout primitives, that every other part of the design system is built from.", badge: "architecture", pageType: "landing", next: "docs-operational" },
+  { id: "docs-operational", title: "Operational Tier", href: "/docs/operational", section: "architecture", group: "tier-model", order: 2, description: "Browse ready-to-use panels and screens, built from Foundation components, that you can drop into an application.", badge: "architecture", pageType: "landing", previous: "docs-foundation", next: "docs-workflow" },
+  { id: "docs-workflow", title: "Workflow Tier", href: "/docs/workflow", section: "architecture", group: "tier-model", order: 4, description: "Explore the systems for building multi-step processes and visualizations that work across any business domain.", badge: "architecture", pageType: "landing", previous: "docs-operational", next: "docs-platform" },
+  { id: "docs-platform", title: "Platform Tier", href: "/docs/platform", section: "architecture", group: "tier-model", order: 6, description: "Browse the component libraries that adapt the design system to specific business domains, like commerce or publishing.", badge: "architecture", pageType: "landing", previous: "docs-workflow", next: "architecture-doc" },
+  { id: "architecture-doc", title: "Tier Composition", href: "/application-components/architecture", section: "architecture", group: "tier-model", order: 8, description: "Understand how the Workspace, Foundation, Operational, Workflow, and Platform tiers stack together to form a complete application.", badge: "architecture", pageType: "architecture", previous: "docs-platform" },
 
   { id: "platform-architecture-doc", title: "Platform Architecture", href: "/application-components/platform-architecture", section: "architecture", group: "platform-architecture", order: 0, description: "Learn the blueprint every domain platform follows, including how layers are composed, who owns what, and how certification works.", badge: "architecture", pageType: "architecture", aliases: ["Distinct from the pre-DS-4 Platform Architecture Library Playground at /platforms — see the Naming Review"] },
 
-  { id: "application-composition-doc", title: "Application Composition", href: "/docs/application-composition", section: "architecture", group: "application-composition", order: 0, description: "Understand how Business Features combine the Foundation, Operational, Workflow, and Platform layers to build the real StudioPOD application.", badge: "architecture", pageType: "architecture", next: "business-features-doc", related: ["platform-architecture-doc", "platform-certification"] },
-  { id: "business-features-doc", title: "Business Feature Framework", href: "/docs/business-features", section: "architecture", group: "application-composition", order: 1, description: "Learn the standard structure and rules every Business Feature follows, so new features stay consistent and reusable.", badge: "architecture", pageType: "architecture", previous: "application-composition-doc", next: "application-composition-certification", related: ["platform-architecture-doc", "platform-certification"] },
-  { id: "application-composition-certification", title: "Application Composition Certification", href: "/docs/application-composition-certification", section: "architecture", group: "application-composition", order: 2, description: "Review the certification confirming the Application Composition architecture, framework, and templates meet the system's quality standards.", badge: "certification", pageType: "certification", previous: "business-features-doc", related: ["application-composition-doc", "business-features-doc", "business-feature-templates", "production-workspace-feature", "workspace-certification", "foundation-audit", "operational-certification", "workflow-certification", "platform-certification", "accessibility-certification", "enterprise-architecture-audit", "final-certification"] },
+  { id: "application-composition-doc", title: "Application Composition", href: "/docs/application-composition", section: "architecture", group: "application-composition", order: 0, description: "Understand how Business Features combine the Foundation, Operational, Workflow, and Platform layers to build the real StudioPOD application.", badge: "architecture", pageType: "architecture", next: "business-features-doc", related: ["platform-architecture-doc"] },
+  { id: "business-features-doc", title: "Business Feature Framework", href: "/docs/business-features", section: "architecture", group: "application-composition", order: 1, description: "Learn the standard structure and rules every Business Feature follows, so new features stay consistent and reusable.", badge: "architecture", pageType: "architecture", previous: "application-composition-doc", related: ["platform-architecture-doc"] },
 
   // ---------------------------------------------------------------------
   // Playground
@@ -346,17 +321,6 @@ export const NAV_REGISTRY: NavEntry[] = [
   { id: "platforms-library", title: "Platform Architecture Library (Archived)", href: "/platforms", section: "playground", group: "legacy-experiments", order: 0, description: "A historical reference version of the platform architecture diagrams — see the Applications section for the current version.", badge: "historical-reference", pageType: "pattern", related: ["platform-architecture-doc"], aliases: ["Distinct from /application-components/platform-architecture ('Platform Architecture') — disambiguated with an (Archived) suffix per DS-7.2's Naming Review"] },
   { id: "production-library", title: "Production & Validation Library (Archived)", href: "/production", section: "playground", group: "legacy-experiments", order: 1, description: "A historical reference version of the production and validation diagrams — see the Applications section for the current version.", badge: "historical-reference", pageType: "pattern", related: ["production-platform"], aliases: ["Distinct from /application-components/production-platform ('Production') — disambiguated with an (Archived) suffix per DS-7.2's Naming Review"] },
   { id: "capabilities-library", title: "Capability Library (Archived)", href: "/capabilities", section: "playground", group: "legacy-experiments", order: 2, description: "A historical reference version of the capability and provider diagrams — see the Applications section for the current version.", badge: "historical-reference", pageType: "pattern", related: ["integrations-platform"] },
-
-  // ---------------------------------------------------------------------
-  // Quality
-  // ---------------------------------------------------------------------
-  { id: "docs-certification", title: "Quality", href: "/docs/certification", section: "quality", group: "quality-overview", order: 0, description: "Browse every certification, audit, and coverage or maturity report to see the evidence behind the system's quality and production-readiness claims.", pageType: "landing", next: "final-certification" },
-  { id: "final-certification", title: "Final Enterprise Certification", href: "/application-components/final-certification", section: "quality", group: "certifications", order: 0, description: "Read the final release certification, which combines every other certification into one overall scorecard along with a technical debt register and certification history.", badge: "certification", pageType: "certification", next: "enterprise-architecture-audit", related: ["workspace-certification", "foundation-audit", "operational-certification", "workflow-certification", "platform-certification", "application-composition-certification", "accessibility-certification", "enterprise-architecture-audit"] },
-  { id: "enterprise-architecture-audit", title: "Enterprise Architecture & Adoption Audit", href: "/application-components/enterprise-architecture-audit", section: "quality", group: "certifications", order: 1, description: "Review the final architecture and adoption audit, covering dependency structure, naming consistency, feature adoption, duplication, and technical debt, before final certification.", badge: "certification", pageType: "certification", previous: "final-certification", next: "accessibility-certification", related: ["workspace-certification", "foundation-audit", "operational-certification", "workflow-certification", "platform-certification", "application-composition-certification", "accessibility-certification", "final-certification"] },
-  { id: "accessibility-certification", title: "Accessibility & Interaction Quality", href: "/application-components/accessibility-certification", section: "quality", group: "certifications", order: 2, description: "Review the accessibility and interaction-quality audit covering keyboard support, focus management, screen-reader labeling, and touch targets across the system.", badge: "certification", pageType: "certification", previous: "enterprise-architecture-audit", related: ["workspace-certification", "foundation-audit", "operational-certification", "workflow-certification", "platform-certification", "application-composition-certification", "enterprise-architecture-audit", "final-certification"] },
-  { id: "inventory", title: "Component Inventory", href: "/application-components/inventory", section: "quality", group: "tracking", order: 0, description: "Browse a full inventory table listing every real Application Components entry in the system.", badge: "reference", pageType: "reference", next: "coverage" },
-  { id: "coverage", title: "Coverage Matrix", href: "/application-components/coverage", section: "quality", group: "tracking", order: 1, description: "See which platforms and patterns each component family actually covers, in a single coverage matrix.", badge: "reference", pageType: "architecture", previous: "inventory", next: "maturity" },
-  { id: "maturity", title: "Maturity Model", href: "/application-components/maturity", section: "quality", group: "tracking", order: 2, description: "Understand the Concept → Prototype → Production Ready → Certified → Locked maturity ladder used to score how ready each component is.", badge: "reference", pageType: "architecture", previous: "coverage" },
 ];
 
 // ---------------------------------------------------------------------

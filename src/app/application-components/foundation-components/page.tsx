@@ -200,7 +200,7 @@ export default function FoundationComponentsPage() {
             <SectionHeader
               id="maturity-model"
               title="Maturity model"
-              description="The same five levels Workspace Certification defined — reused directly here, not restated."
+              description="The same five levels used consistently across every tier's own maturity model — reused directly here, not restated."
               descriptionMaxWidth={false}
             />
             <DescriptionList items={MATURITY_LEVELS.map((entry) => ({ label: entry.level, value: entry.description }))} />

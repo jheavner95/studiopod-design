@@ -15,7 +15,7 @@ const entry = getEntry("docs-workspace")!;
 const workspaceShellEntries = getGroupEntries("workspace-shell");
 const siblingShellPages = workspaceShellEntries.filter((e) => e.id !== entry.id);
 
-const primaryEntryPoints = [getEntry("workspace-framework")!, getEntry("workspace-certification")!];
+const primaryEntryPoints = [getEntry("workspace-framework")!, getEntry("workspace-header")!];
 const relatedGroups = [getGroup("components-overview")!, getGroup("applications-overview")!, getGroup("architecture-overview")!];
 
 // Real counts, verified against src/app/application-components/workspace-framework/_data/regions.ts
@@ -35,13 +35,12 @@ export default function DocsWorkspacePage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="This page is architecture documentation explaining the workspace shell's own anatomy — it is not the primary way to browse the components that implement each region; for that, use the Components section. Workspace Shell documents the seven-region blueprint — Global Navigation, Header, Toolbar, Library, Primary Workspace, Inspector, and Status — that every StudioPOD platform screen is composed from. Eight platform workspaces already build on it, from Publishing and Commerce to Admin and Integrations, presented in the Applications section, which is the proof that a single anatomy can hold across domains that otherwise share nothing. This page walks through each region on its own, the layout rules governing how they resize and collapse, and the scorecard the whole blueprint is certified against."
+        purpose="This page is architecture documentation explaining the workspace shell's own anatomy — it is not the primary way to browse the components that implement each region; for that, use the Components section. Workspace Shell documents the seven-region blueprint — Global Navigation, Header, Toolbar, Library, Primary Workspace, Inspector, and Status — that every StudioPOD platform screen is composed from. Eight platform workspaces already build on it, from Publishing and Commerce to Admin and Integrations, presented in the Applications section, which is the proof that a single anatomy can hold across domains that otherwise share nothing. This page walks through each region on its own and the layout rules governing how they resize and collapse."
         whatYoullLearn={[
           "The seven regions and what each one owns, from persistent Global Navigation down to the ambient Status region.",
           "How Header and Toolbar responsibilities are split apart — page-level context versus in-page interaction.",
           "The ten layout rules governing region sizing, breakpoints, and collapse behavior.",
           "How the Library, Primary Workspace, and Inspector regions work together as a browse-to-detail chain.",
-          "How the whole blueprint is scored, and the certification matrix across all nine StudioPOD platforms.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}

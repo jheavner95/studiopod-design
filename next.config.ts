@@ -18,6 +18,47 @@ const nextConfig: NextConfig = {
         destination: "/tokens",
         permanent: true,
       },
+      // The Quality section's per-tier certification pages restated claims
+      // that already live on each tier's own architecture page — redirected
+      // to those genuine canonical successors rather than left to 404.
+      {
+        source: "/application-components/foundation-audit",
+        destination: "/docs/foundation",
+        permanent: true,
+      },
+      {
+        source: "/application-components/operational-certification",
+        destination: "/docs/operational",
+        permanent: true,
+      },
+      {
+        source: "/application-components/workflow-certification",
+        destination: "/docs/workflow",
+        permanent: true,
+      },
+      {
+        source: "/application-components/platform-certification",
+        destination: "/application-components/platform-architecture",
+        permanent: true,
+      },
+      {
+        source: "/application-components/workspace-certification",
+        destination: "/docs/workspace",
+        permanent: true,
+      },
+      {
+        source: "/docs/application-composition-certification",
+        destination: "/docs/application-composition",
+        permanent: true,
+      },
+      {
+        // Accessibility Certification's real, standing conventions were
+        // rewritten and merged into the About & Principles page's own
+        // Accessibility section.
+        source: "/application-components/accessibility-certification",
+        destination: "/documentation#accessibility",
+        permanent: true,
+      },
     ];
   },
 };
