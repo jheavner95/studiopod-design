@@ -50,7 +50,7 @@ function ArchitectureDiagram({
       <AnimatedConnector orientation="vertical" active length={32} />
       <div className="relative w-full pt-2">
         <div className="absolute inset-x-0 top-0 h-px bg-border" />
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 pt-8 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-4">
           {platforms.map((platform) => {
             const isActive = activeId === platform.id;
             return (
