@@ -116,8 +116,12 @@
   --spacing-section-xs: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
   --spacing-section-sm: clamp(3.5rem, 2.75rem + 3.5vw, 5rem);
   --spacing-section-md: clamp(5rem, 3.75rem + 5.5vw, 7rem);
-  --spacing-section-lg: clamp(6rem, 4.25rem + 7.5vw, 9rem);
-  --spacing-section-xl: clamp(8rem, 5.5rem + 10vw, 11rem);
+  /* DS-7.5 Part 5: lg/xl trimmed ~15-20% — spacing="lg" divider is the
+     most common section gap on docs pages, and py- applies to both top
+     and bottom, so two adjacent lg sections previously stacked to ~18rem
+     of combined empty space. Tightened while keeping xs<sm<md<lg<xl. */
+  --spacing-section-lg: clamp(5rem, 3.75rem + 6vw, 7.5rem);
+  --spacing-section-xl: clamp(6.5rem, 4.75rem + 8vw, 9.5rem);
 
   /* ---------------------------------------------------------------- */
   /* Containers                                                         */

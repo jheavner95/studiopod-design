@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, ArrowDown, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { BlueprintDiagram } from "./_components/BlueprintDiagram";
 import { ScorecardTable } from "./_components/ScorecardTable";
@@ -293,18 +293,10 @@ export default function WorkspaceCertificationPage() {
             description="Every component this certification depends on."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={4}>
-            {DS1_WORK_PACKAGES.map((pkg) => (
-              <Link key={pkg.code} href={pkg.href} className="focus-ring block rounded-lg">
-                <Card interactive padding="md" className="flex h-full flex-col gap-1.5">
-                  <span className="text-body-sm font-medium text-ink-primary">{pkg.title}</span>
-                  <Body size="sm" muted className="line-clamp-2">
-                    {pkg.oneLiner}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid
+            columns={4}
+            entries={DS1_WORK_PACKAGES.map((pkg) => ({ id: pkg.code, href: pkg.href, title: pkg.title, description: pkg.oneLiner }))}
+          />
 
           <Card padding="lg" className="flex flex-col items-center gap-3 border-success/40 bg-success/10 text-center">
             <ShieldCheck className="size-8 text-success" aria-hidden />

@@ -55,10 +55,13 @@ function GroupCard({ group }: { group: NavGroup }) {
           <li key={groupEntry.id}>
             <Link
               href={groupEntry.href}
-              className="focus-ring flex items-center justify-between gap-2 rounded-md text-body-sm text-ink-secondary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-ink-primary"
+              className="focus-ring group flex items-center justify-between gap-2 rounded-md text-body-sm text-ink-secondary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-400"
             >
               {groupEntry.title}
-              <ArrowRight className="size-3.5 shrink-0 text-ink-tertiary" aria-hidden />
+              <ArrowRight
+                className="size-3.5 shrink-0 text-ink-tertiary transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-safe:group-hover:translate-x-0.5 group-hover:text-accent-400"
+                aria-hidden
+              />
             </Link>
           </li>
         ))}

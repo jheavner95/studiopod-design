@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Body, SectionHeader, Eyebrow, Card } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { FamilyCard } from "../_components/FamilyCard";
 import { DependencyChainRow, DependencyFanoutBlock } from "../_components/DependencyMap";
@@ -105,18 +104,7 @@ export default function ArchitecturePage() {
             title="Related components"
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {relatedComponents.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                  <Body size="sm" muted>
-                    {related.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid entries={relatedComponents} />
         </div>
       </SectionShell>
     </DocsShell>

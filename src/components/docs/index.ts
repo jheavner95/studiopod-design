@@ -5,3 +5,5 @@ export { DocsPageHeader } from "./DocsPageHeader";
 export { DocsPageNavigation } from "./DocsPageNavigation";
 export { DocsSearchTrigger } from "./DocsSearchTrigger";
 export { DocsTableOfContents } from "./DocsTableOfContents";
+export { DocsLinkCard } from "./DocsLinkCard";
+export { DocsRelatedGrid } from "./DocsRelatedGrid";

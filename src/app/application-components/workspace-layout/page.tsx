@@ -1,9 +1,8 @@
-import Link from "next/link";
 import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { ResponsiveRulesTable } from "@/components/table";
 import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { WidthModeExplorer } from "./_components/WidthModeExplorer";
 import { DensityCard } from "./_components/DensityCard";
@@ -172,18 +171,7 @@ export default function WorkspaceLayoutPage() {
             description="The rest of the workspace shell these layout rules govern — the overall anatomy above this page and the two regions immediately on either side of it."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {relatedComponents.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                  <Body size="sm" muted>
-                    {related.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid entries={relatedComponents} />
         </div>
       </SectionShell>
 

@@ -10,10 +10,16 @@ interface FeatureCardProps {
   className?: string;
 }
 
-/** Icon + title + description card for feature grids. */
+/**
+ * Icon + title + description card for feature grids. Static by design
+ * (DS-7.5 Part 2) — it isn't wrapped in a link, so it never uses `Card
+ * interactive`'s hover lift/border/shadow, which is reserved for surfaces
+ * that actually navigate. Use `DocsLinkCard` for a feature tile that
+ * should also be clickable.
+ */
 export function FeatureCard({ icon, title, description, footer, className }: FeatureCardProps) {
   return (
-    <Card interactive className={cn("flex h-full flex-col gap-4", className)}>
+    <Card className={cn("flex h-full flex-col gap-4", className)}>
       {icon ? (
         <div className="flex size-10 items-center justify-center rounded-md border border-border bg-canvas-raised text-accent-400">
           {icon}

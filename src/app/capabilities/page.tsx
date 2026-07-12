@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Blocks } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
-import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
+import { PageShell, SectionShell } from "@/components/layout";
+import { SectionBadge, Display, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { Alert } from "@/components/feedback";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
+import { DocsRelatedGrid } from "@/components/docs";
 import { ControlDock } from "./_components/ControlDock";
 import { RegistryGallerySection } from "./_sections/RegistryGallerySection";
 import { AICapabilitySection } from "./_sections/AICapabilitySection";
@@ -78,18 +79,14 @@ export default function CapabilitiesPlaygroundPage() {
               title="Related components"
               descriptionMaxWidth={false}
             />
-            <CardGrid columns={3}>
-              {relatedComponents.map(({ entry, description }) => (
-                <Link key={entry.id} href={entry.href} className="focus-ring block rounded-lg">
-                  <Card interactive className="flex h-full flex-col gap-2">
-                    <span className="text-body-md font-medium text-ink-primary">{entry.title}</span>
-                    <Body size="sm" muted>
-                      {description}
-                    </Body>
-                  </Card>
-                </Link>
-              ))}
-            </CardGrid>
+            <DocsRelatedGrid
+              entries={relatedComponents.map(({ entry, description }) => ({
+                id: entry.id,
+                href: entry.href,
+                title: entry.title,
+                description,
+              }))}
+            />
           </div>
         </SectionShell>
 

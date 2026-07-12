@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { ArrowDown } from "lucide-react";
-import { SectionShell, CardGrid, DescriptionList, Surface } from "@/components/layout";
+import { SectionShell, DescriptionList, Surface } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { PRODUCTION_STAGES, VALIDATION_FLOW_ORDER, VALIDATION_FLOW_LABEL } from "./_data/mock-production";
 import { ProductionFeatureWorkspace } from "./_components/ProductionFeatureWorkspace";
@@ -307,18 +306,7 @@ export default function ProductionWorkspaceFeaturePage() {
             title="Related components"
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {relatedComponents.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                  <Body size="sm" muted>
-                    {related.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid entries={relatedComponents} />
         </div>
       </SectionShell>
 

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Card, Body, Badge } from "@/components/ui";
+import { Badge } from "@/components/ui";
 import { CardGrid } from "@/components/layout";
+import { DocsLinkCard } from "@/components/docs";
 import type { NavEntry, NavStatus } from "@/lib/design-system-navigation";
 
 const STATUS_TONE: Record<NavStatus, "success" | "accent" | "neutral" | "warning"> = {
@@ -27,19 +27,17 @@ export function DocsEntryGrid({ entries, columns = 3 }: DocsEntryGridProps) {
   return (
     <CardGrid columns={columns} gap="md">
       {entries.map((entry) => (
-        <Link key={entry.id} href={entry.href} className="focus-ring block rounded-lg">
-          <Card interactive className="flex h-full flex-col gap-3">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-body-md font-medium text-ink-primary">{entry.title}</span>
-              <Badge tone={STATUS_TONE[entry.status]} size="sm">
-                {STATUS_LABEL[entry.status]}
-              </Badge>
-            </div>
-            <Body size="sm" muted>
-              {entry.description}
-            </Body>
-          </Card>
-        </Link>
+        <DocsLinkCard
+          key={entry.id}
+          href={entry.href}
+          title={entry.title}
+          description={entry.description}
+          adornment={
+            <Badge tone={STATUS_TONE[entry.status]} size="sm">
+              {STATUS_LABEL[entry.status]}
+            </Badge>
+          }
+        />
       ))}
     </CardGrid>
   );

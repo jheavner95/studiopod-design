@@ -3,6 +3,7 @@ import { Boxes } from "lucide-react";
 import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
+import { DocsRelatedGrid } from "@/components/docs";
 import { getEntry, getGroup, getSection } from "@/lib/design-system-navigation";
 import { PlaygroundBody } from "./_components/PlaygroundBody";
 import { REGISTRY } from "./_lib/registry";
@@ -225,18 +226,7 @@ export default function CompositionsPage() {
             title="Related components"
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {relatedComponents.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                  <Body size="sm" muted>
-                    {related.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid entries={relatedComponents} />
         </div>
       </SectionShell>
 

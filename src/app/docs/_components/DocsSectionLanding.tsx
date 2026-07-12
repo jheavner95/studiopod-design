@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
+import { Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { CardGrid, SectionShell } from "@/components/layout";
 import { MetricCard } from "@/components/operational";
+import { DocsLinkCard } from "@/components/docs";
 import type { NavEntry, NavGroup } from "@/lib/design-system-navigation";
 
 interface DocsSectionLandingStat {
@@ -71,17 +70,7 @@ export function DocsSectionLanding({ purpose, whatYoullLearn, stats, primaryEntr
           />
           <CardGrid columns={primaryEntryPoints.length === 2 ? 2 : 3} gap="md">
             {primaryEntryPoints.map((item) => (
-              <Link key={item.id} href={item.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-body-lg font-medium text-ink-primary">{item.title}</span>
-                    <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-                  </div>
-                  <Body size="sm" muted>
-                    {item.description}
-                  </Body>
-                </Card>
-              </Link>
+              <DocsLinkCard key={item.id} href={item.href} title={item.title} description={item.description} size="lg" />
             ))}
           </CardGrid>
         </div>
@@ -98,14 +87,7 @@ export function DocsSectionLanding({ purpose, whatYoullLearn, stats, primaryEntr
             />
             <CardGrid columns={relatedGroups.length === 2 ? 2 : 3} gap="md">
               {relatedGroups.map((group) => (
-                <Link key={group.id} href={group.href} className="focus-ring block rounded-lg">
-                  <Card interactive className="flex h-full flex-col gap-2">
-                    <span className="text-body-md font-medium text-ink-primary">{group.title}</span>
-                    <Body size="sm" muted>
-                      {group.description}
-                    </Body>
-                  </Card>
-                </Link>
+                <DocsLinkCard key={group.id} href={group.href} title={group.title} description={group.description} />
               ))}
             </CardGrid>
           </div>

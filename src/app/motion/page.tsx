@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { Waves } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsRelatedGrid } from "@/components/docs";
 import { SystemGrid } from "@/components/illustration";
 import { getEntry } from "@/lib/design-system-navigation";
 import { ControlDock } from "./_components/ControlDock";
@@ -132,18 +132,7 @@ export default function MotionPlaygroundPage() {
             title="Related components"
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {relatedComponents.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                  <Body size="sm" muted>
-                    {related.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid entries={relatedComponents} />
         </div>
       </SectionShell>
 

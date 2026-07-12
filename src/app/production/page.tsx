@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { PageShell, SectionShell } from "@/components/layout";
-import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
+import { SectionBadge, Display, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { Alert } from "@/components/feedback";
+import { DocsRelatedGrid } from "@/components/docs";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
@@ -62,16 +63,7 @@ export default function ProductionPlaygroundPage() {
               descriptionMaxWidth={false}
             />
             <div className="flex flex-col gap-4 sm:max-w-sm">
-              {relatedComponents.map((related) => (
-                <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                  <Card interactive className="flex h-full flex-col gap-2">
-                    <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                    <Body size="sm" muted>
-                      {related.description}
-                    </Body>
-                  </Card>
-                </Link>
-              ))}
+              <DocsRelatedGrid entries={relatedComponents} />
             </div>
           </div>
         </SectionShell>
