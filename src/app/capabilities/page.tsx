@@ -7,6 +7,7 @@ import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
 import { DocsRelatedGrid } from "@/components/docs";
+import { DOCK_CLEARANCE_CLASS } from "@/motion";
 import { ControlDock } from "./_components/ControlDock";
 import { RegistryGallerySection } from "./_sections/RegistryGallerySection";
 import { AICapabilitySection } from "./_sections/AICapabilitySection";
@@ -37,7 +38,7 @@ const relatedComponents = [
 export default function CapabilitiesPlaygroundPage() {
   return (
     <IllustrationDevProvider>
-      <PageShell background={<SystemGrid />}>
+      <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
             <SectionBadge icon={<Blocks className="size-3.5" />}>Historical Reference</SectionBadge>

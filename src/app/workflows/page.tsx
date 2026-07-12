@@ -3,6 +3,7 @@ import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { IllustrationDevProvider } from "@/illustrations";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
+import { DOCK_CLEARANCE_CLASS } from "@/motion";
 import { ControlDock } from "./_components/ControlDock";
 import { WorkflowGallerySection } from "./_sections/WorkflowGallerySection";
 import { PlaybackSection } from "./_sections/PlaybackSection";
@@ -249,6 +250,8 @@ export default function WorkflowsLibraryPage() {
             </div>
           </div>
         </SectionShell>
+
+        <div className={DOCK_CLEARANCE_CLASS} aria-hidden="true" />
       </DocsShell>
     </IllustrationDevProvider>
   );

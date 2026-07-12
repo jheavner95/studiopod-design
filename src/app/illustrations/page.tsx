@@ -5,6 +5,7 @@ import { SystemGrid } from "@/components/illustration";
 import { DocsRelatedGrid } from "@/components/docs";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
+import { DOCK_CLEARANCE_CLASS } from "@/motion";
 import { DevControlsPanel } from "./_components/DevControlsPanel";
 import { NodeGallerySection } from "./_sections/NodeGallerySection";
 import { ConnectionGallerySection } from "./_sections/ConnectionGallerySection";
@@ -70,7 +71,7 @@ const relatedComponents = [getEntry("motion")!, getEntry("tokens")!];
 export default function IllustrationsPlaygroundPage() {
   return (
     <IllustrationDevProvider>
-      <PageShell background={<SystemGrid />}>
+      <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
             <SectionBadge icon={<Boxes className="size-3.5" />}>Playground</SectionBadge>

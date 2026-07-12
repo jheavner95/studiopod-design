@@ -24,3 +24,4 @@ export {
 } from "./utils";
 export * from "./primitives";
 export { MotionDebugOverlay } from "./MotionDebugOverlay";
+export { ControlDockShell, DOCK_CLEARANCE_CLASS } from "./ControlDockShell";

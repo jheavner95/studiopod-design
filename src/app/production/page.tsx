@@ -7,6 +7,7 @@ import { DocsRelatedGrid } from "@/components/docs";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
+import { DOCK_CLEARANCE_CLASS } from "@/motion";
 import { ControlDock } from "./_components/ControlDock";
 import { PipelineGallerySection } from "./_sections/PipelineGallerySection";
 import { QualityGatesSection } from "./_sections/QualityGatesSection";
@@ -20,7 +21,7 @@ const relatedComponents = [getEntry("production-platform")!];
 export default function ProductionPlaygroundPage() {
   return (
     <IllustrationDevProvider>
-      <PageShell background={<SystemGrid />}>
+      <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
             <SectionBadge icon={<ShieldCheck className="size-3.5" />}>Historical Reference</SectionBadge>
