@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { CommandNavigation } from "@/components/navigation";
 import type { CommandPaletteItem } from "@/components/overlay";
-import { NAV_REGISTRY, getGroup } from "@/lib/design-system-navigation";
+import { NAV_REGISTRY, getGroup, getSection } from "@/lib/design-system-navigation";
 
 interface DocsSearchTriggerProps {
   className?: string;
@@ -22,6 +22,8 @@ export function DocsSearchTrigger({ className, compact }: DocsSearchTriggerProps
     id: entry.id,
     label: entry.title,
     group: getGroup(entry.group)?.title ?? entry.group,
+    area: getSection(entry.section)?.title,
+    pageType: entry.pageType,
     onSelect: () => router.push(entry.href),
   }));
 

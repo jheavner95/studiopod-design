@@ -7,11 +7,11 @@ import { getEntry, getGroup, getGroupsForSection, getGroupEntries, getSectionEnt
 
 const entry = getEntry("docs-root")!;
 
-// DS-7.1 Part 2: Architecture is no longer a tier-first primary-nav listing —
-// it's the composition-rules/layering documentation for a builder auditing how
-// the system fits together, distinct from Components/Applications where a
-// builder actually goes to find and use things. Its own "architecture-overview"
-// group is this page itself, so every other real group is what gets browsed.
+// Architecture is the composition-rules/layering documentation for a builder
+// auditing how the system fits together, distinct from Components/Applications
+// where a builder actually goes to find and use things. Its own
+// "architecture-overview" group is this page itself, so every other real
+// group is what gets browsed.
 const architectureGroups = getGroupsForSection("architecture").filter((group) => group.id !== "architecture-overview");
 
 // One representative entry point per group — each group's own order-0 landing
@@ -25,9 +25,8 @@ const relatedGroups = [getGroup("components-overview")!, getGroup("applications-
 
 // Real counts, derived from NAV_REGISTRY rather than hardcoded: the architecture
 // section holds this landing plus four real groups — Workspace Shell (the
-// six-region blueprint), Tier Model (how Foundation/Operational/Workflow/Platform
-// compose, now framed as internal documentation rather than primary nav),
-// Platform Architecture, and Application Composition.
+// six-region blueprint), Tier Model (how Foundation, Operational, Workflow,
+// and Platform compose), Platform Architecture, and Application Composition.
 const sectionEntries = getSectionEntries("architecture");
 const certifiedCount = sectionEntries.filter((e) => e.status === "certified").length;
 const STATS = [
@@ -43,12 +42,12 @@ export default function DocsHomePage() {
       <DocsPageHeader entry={entry} />
 
       <DocsSectionLanding
-        purpose="Architecture is where the old tier concepts — Foundation, Operational, Workflow, Platform, and Business Feature — now live as documentation, not as primary navigation. This section has no live examples to browse and nothing to pick up and use; it exists to explain the composition rules and layering model that everything in Components, Patterns, and Applications is built against. Start with the Workspace Shell for the six-region blueprint every application screen composes, or the Tier Model for how the four lower tiers stack on top of one another."
+        purpose="Architecture is where the composition rules and layering model that hold the rest of the design system together live — the workspace blueprint every screen is built on, the tier stack that separates raw building blocks from full business features, and the rules that govern how a domain platform or a real feature gets assembled from certified pieces. It's for architects and anyone auditing how the system fits together, not for someone looking for a live example to copy — there's nothing to browse and drop into a screen here, only the relationships between pieces documented elsewhere. Start with the Workspace Shell for the six-region blueprint every application screen composes, or the Tier Model for how Foundation, Operational, Workflow, and Platform build on one another."
         whatYoullLearn={[
-          "Why Foundation, Operational, Workflow, and Platform moved out of primary navigation and now live here as internal documentation instead of top-level tiers a builder browses.",
-          "The six-region Workspace Shell blueprint every application screen composes, and how its own capstone certification covers it end to end.",
+          "The six-region Workspace Shell blueprint every application screen composes, down to its header, toolbar, content areas, and status bar, and how its own capstone certification covers it end to end.",
           "How the Tier Model's four layers — Foundation, Operational, Workflow, Platform — build strictly on the ones before them, and where each tier's own certification record lives.",
           "How Platform Architecture and Application Composition define the rules a real domain platform and a real Business Feature are each built against.",
+          "Where to go for a live example instead of the rules behind it — Components for individual pieces, Applications for full domain compositions, Patterns for reusable templates in between.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}

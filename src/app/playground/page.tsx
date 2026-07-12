@@ -10,9 +10,8 @@ import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/
 
 const entry = getEntry("playground")!;
 
-// The three real content groups DS-7.1 Part 6 scoped into this section —
-// "playground-overview" is this page's own landing group, not a group of
-// child pages to browse to.
+// This section's real content groups — "playground-overview" is this page's
+// own landing group, not a group of child pages to browse to.
 const contentGroups = getGroupsForSection("playground").filter((group) => group.id !== "playground-overview");
 
 const visualTools = getGroupEntries("visual-tools");
@@ -21,12 +20,14 @@ const legacyExperiments = getGroupEntries("legacy-experiments");
 
 const allChildren = [...visualTools, ...interactiveDemos, ...legacyExperiments];
 
-const primaryEntryPoints = [getEntry("design-system")!, getEntry("motion")!, getEntry("compositions")!];
+// Every current (non-archived) destination in the section: both visual
+// tools plus the composition playground.
+const primaryEntryPoints = [getEntry("motion")!, getEntry("illustrations")!, getEntry("compositions")!];
 
-const relatedGroups = [getGroup("core-ui")!, getGroup("components-overview")!, getGroup("patterns-overview")!];
+const relatedGroups = [getGroup("components-overview")!, getGroup("patterns-overview")!, getGroup("applications-overview")!];
 
-// Real counts, derived from the registry rather than guessed: three visual
-// tools, one interactive demo, three archived pre-DS-4 experiments.
+// Real counts, derived from the registry rather than guessed: two visual
+// tools, one interactive demo, three archived experiments.
 const STATS = [
   { label: "Visual tools", value: String(visualTools.length) },
   { label: "Interactive demos", value: String(interactiveDemos.length) },
@@ -41,12 +42,12 @@ export default function PlaygroundPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Playground is where exploration and prototyping tools live, deliberately separated from reference documentation. DS-7.1 Part 6 moved every interactive demo page out of the component and pattern reference docs it used to sit alongside, on the theory that a page for exploring tokens, motion, or layout by trial and error serves a different reader than a page documenting a component's API — so neither should crowd out the other. It groups three kinds of pages: Visual Tools for exploring the design system's own raw material, Interactive Demos for composing real pages from it, and a small set of Archived Experiments — three pre-DS-4 diagram-canvas playgrounds kept reachable as historical reference after being superseded by the real Applications platforms they prototyped."
+        purpose="Playground is the hands-on side of the design system: interactive tools for exploring motion and illustration by trial and error, instead of reading about them on a reference page. It's for anyone exploring or prototyping — not for someone who already knows which component they need and just wants its API. Here you can play with the system's raw visual material, preview marketing-page compositions assembled and resized live, and get a feel for how pieces fit together before committing to a layout. A few earlier exploration tools are also kept here for reference, even though the real platforms they prototyped have since replaced them. Start with the Motion Engine to get oriented, or jump straight into whichever tool matches what you're exploring."
         whatYoullLearn={[
-          "The three visual tools — the Design System Explorer, Motion Engine, and Illustration Engine — for exploring tokens, typography, layout, animation, and the diagram engine outside any single component's reference page.",
-          "The Composition Playground's device-preview tool, for seeing marketing section compositions assembled and resized live instead of reading about them.",
-          "Why three pre-DS-4 illustration-canvas playgrounds — Platform Architecture, Production & Validation, and Capability Library — are kept here rather than deleted: they're superseded by the real Applications platforms but still useful as historical reference.",
-          "Why this section is separate from Components and Patterns: interactive exploration and API reference serve different readers and shouldn't compete for the same page.",
+          "The two visual tools — the Motion Engine and Illustration Engine — for exploring animation and the diagram engine outside of any single component's reference page. Token, color, typography, and layout exploration now lives in Foundations & Tokens.",
+          "The Composition Playground, where you can preview marketing-page sections assembled together and resized live across device sizes.",
+          "A small set of earlier exploration tools — kept reachable for reference even though the platforms they prototyped have since replaced them.",
+          "Why this section stays separate from Components and Patterns: hands-on exploration and written reference serve different moments, and neither should crowd out the other.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}
@@ -83,7 +84,7 @@ export default function PlaygroundPage() {
             id="legacy-experiments"
             eyebrow={<Eyebrow>{contentGroups.find((g) => g.id === "legacy-experiments")?.title}</Eyebrow>}
             title="Archived — kept reachable, not deleted"
-            description="Three pre-DS-4 illustration-canvas playgrounds, superseded by their real Applications-tier counterparts. DS-7.1 Part 9's Archive disposition keeps them reachable and clearly marked as historical rather than removing them outright."
+            description="Three earlier diagram-canvas playgrounds, superseded by their current counterparts in Applications. They're kept reachable here and clearly marked as historical rather than being removed outright."
           />
           <CardGrid columns={3} gap="md">
             {legacyExperiments.map((item) => (

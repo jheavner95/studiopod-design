@@ -13,6 +13,10 @@ export interface CommandPaletteItem {
   label: string;
   /** e.g. "Actions" or "Navigation destinations" — the two variants this system scopes. */
   group: string;
+  /** Top-level product area (e.g. "Components", "Architecture") — shown alongside the group so a result's place in the IA is clear at a glance. */
+  area?: string;
+  /** e.g. "reference", "landing", "certification" — the kind of page this destination is. */
+  pageType?: string;
   onSelect: () => void;
 }
 
@@ -176,11 +180,16 @@ export function CommandPalette({ open, onOpenChange, items, placeholder = "Searc
                                 onMouseEnter={() => setActiveIndex(index)}
                                 onClick={selectActive}
                                 className={cn(
-                                  "cursor-pointer rounded-md px-3 py-2 text-body-sm text-ink-primary",
+                                  "flex cursor-pointer items-center justify-between gap-3 rounded-md px-3 py-2 text-body-sm text-ink-primary",
                                   index === activeIndex && "bg-surface-hover",
                                 )}
                               >
-                                {item.label}
+                                <span className="min-w-0 truncate">{item.label}</span>
+                                {item.area || item.pageType ? (
+                                  <span className="shrink-0 text-metadata text-ink-tertiary">
+                                    {[item.area, item.pageType].filter(Boolean).join(" · ")}
+                                  </span>
+                                ) : null}
                               </li>
                             );
                           })}

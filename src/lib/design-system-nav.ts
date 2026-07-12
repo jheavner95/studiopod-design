@@ -59,7 +59,6 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
     references: [
       {
         title: "Layout & grid tools",
-        href: "/design-system#layout",
         description: "Container, PageShell, SectionShell, CardGrid, and the dev grid-overlay tooling.",
       },
       {
@@ -86,17 +85,14 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
     references: [
       {
         title: "Foundation color palette",
-        href: "/design-system#foundation-palette",
         description: "Raw Slate/Blue/Green/Amber/Red ramps and Neutral/White/Black, with semantic cross-references.",
       },
       {
         title: "Semantic colors",
-        href: "/design-system#colors",
         description: "Canvas, Surface, Panel, Border, Ink, Accent, Success, Warning, Error.",
       },
       {
         title: "Typography, spacing, radius, shadow",
-        href: "/design-system#typography",
         description: "The full type scale, spacing scale, corner-radius scale, and elevation shadow scale.",
       },
     ],
@@ -113,12 +109,10 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
     references: [
       {
         title: "Component gallery",
-        href: "/design-system#components",
         description: "Buttons, cards, badges, status indicators, and their interactive states.",
       },
       {
         title: "Forms & controls",
-        href: "/design-system#form-controls",
         description: "Text input, textarea, select, checkbox, radio, toggle, segmented control, slider, and more.",
       },
     ],

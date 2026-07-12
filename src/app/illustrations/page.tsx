@@ -65,7 +65,7 @@ const FUTURE_ENHANCEMENTS = [
   },
 ];
 
-const relatedComponents = [getEntry("motion")!, getEntry("design-system")!];
+const relatedComponents = [getEntry("motion")!, getEntry("tokens")!];
 
 export default function IllustrationsPlaygroundPage() {
   return (
@@ -73,7 +73,7 @@ export default function IllustrationsPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<Boxes className="size-3.5" />}>StudioPOD / MS-2.2</SectionBadge>
+            <SectionBadge icon={<Boxes className="size-3.5" />}>Playground</SectionBadge>
             <Display>Illustration engine</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               A reusable engine that renders diagrams from data: <code>{"<IllustrationCanvas diagram={data} />"}</code>,

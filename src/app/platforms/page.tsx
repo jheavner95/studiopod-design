@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Network } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
+import { Alert } from "@/components/feedback";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
@@ -37,7 +38,7 @@ export default function PlatformsPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<Network className="size-3.5" />}>StudioPOD / MS-2.4</SectionBadge>
+            <SectionBadge icon={<Network className="size-3.5" />}>Playground · Archived</SectionBadge>
             <Display>Platform architecture library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD&apos;s platforms relate, built on the illustration and
@@ -45,6 +46,16 @@ export default function PlatformsPlaygroundPage() {
               <code>{"<PlatformArchitectureDiagram architecture={data} />"}</code>. Every diagram on this page is
               rendered from a plain data value, no platform-specific rendering code exists anywhere here.
             </Body>
+            <Alert tone="warning" title="Archived prototype">
+              This is an early prototype, superseded by the real implementation. See{" "}
+              <Link
+                href="/application-components/platform-architecture"
+                className="text-accent-400 hover:text-accent-300"
+              >
+                Platform Architecture
+              </Link>{" "}
+              for the current version.
+            </Alert>
           </div>
         </SectionShell>
 

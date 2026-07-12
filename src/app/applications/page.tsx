@@ -9,10 +9,9 @@ import { getEntry, getGroup, getGroupsForSection, getGroupEntries, type NavEntry
 
 const entry = getEntry("applications")!;
 
-// DS-7.1 Part 5: Applications is a reframe of the existing Platform-tier and
-// Business Feature pages, not new content — every group below is read
-// straight from the registry, skipping this page's own "applications-overview"
-// group (order-0 self-entry) the way every other top-level landing page does.
+// Every group below is read straight from the registry, skipping this
+// page's own "applications-overview" group (order-0 self-entry) the way
+// every other top-level landing page does.
 const groups = getGroupsForSection("applications").filter((group) => group.id !== "applications-overview");
 const platformsGroup = groups.find((group) => group.id === "platforms")!;
 const businessFeaturesGroup = groups.find((group) => group.id === "business-features")!;
@@ -21,8 +20,13 @@ const platformEntries = getGroupEntries("platforms");
 const businessFeatureEntries = getGroupEntries("business-features");
 const allChildren = [...platformEntries, ...businessFeatureEntries];
 
-const primaryEntryPoints = [getEntry("production-platform")!, getEntry("production-workspace-feature")!];
-const relatedGroups = [getGroup("platform-architecture")!, getGroup("application-composition")!, getGroup("certifications")!];
+const primaryEntryPoints = [
+  getEntry("production-platform")!,
+  getEntry("commerce-platform")!,
+  getEntry("intelligence-platform")!,
+  getEntry("production-workspace-feature")!,
+];
+const relatedGroups = [getGroup("platform-architecture")!, getGroup("platform-templates")!, getGroup("certifications")!];
 
 // Real counts: 8 domain platforms × 12 components each = 96, verified against
 // src/app/docs/platform/page.tsx's own scorecard and each platform's own

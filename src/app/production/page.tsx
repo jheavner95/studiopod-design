@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { PageShell, SectionShell } from "@/components/layout";
 import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
+import { Alert } from "@/components/feedback";
 import { SystemGrid } from "@/components/illustration";
 import { IllustrationDevProvider } from "@/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
@@ -21,7 +22,7 @@ export default function ProductionPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<ShieldCheck className="size-3.5" />}>StudioPOD / MS-2.5</SectionBadge>
+            <SectionBadge icon={<ShieldCheck className="size-3.5" />}>Playground · Archived</SectionBadge>
             <Display>Production and validation library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD ensures production quality, built on the motion,
@@ -29,6 +30,16 @@ export default function ProductionPlaygroundPage() {
               <code>{"<ProductionPipelineDiagram pipeline={data} />"}</code>. Every diagram on this page is rendered
               from a plain data value, no production-specific rendering code exists anywhere here.
             </Body>
+            <Alert tone="warning" title="Archived prototype">
+              This is an early prototype, superseded by the real implementation. See{" "}
+              <Link
+                href="/application-components/production-platform"
+                className="text-accent-400 hover:text-accent-300"
+              >
+                Production
+              </Link>{" "}
+              for the current version.
+            </Alert>
           </div>
         </SectionShell>
 

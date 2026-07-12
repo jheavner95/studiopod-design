@@ -1,12 +1,32 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@/components/layout";
+import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { SectionBadge, Display, Body, Badge, Card, StatCard, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { DESIGN_SYSTEM_SECTIONS } from "@/lib/design-system-nav";
 import { getGroupsForSection } from "@/lib/design-system-navigation";
 
 const section = DESIGN_SYSTEM_SECTIONS.find((s) => s.id === "core-components")!;
+
+/** Real, grep-verifiable accessibility affordances built into this kit's primitives — carried over from the retired /design-system showcase page, which was the only place this was written down. */
+const ACCESSIBILITY_NOTES = [
+  {
+    label: "Focus visibility",
+    text: "Buttons, checkboxes, radios, toggles, sliders, and search inputs all share the same .focus-ring utility (src/styles/utilities.css), so a visible focus outline on :focus-visible is systemic rather than added per component.",
+  },
+  {
+    label: "Reduced motion",
+    text: "Every animated primitive reads its motion preference from the same MotionPreferenceProvider context, rather than each component implementing its own reduced-motion check.",
+  },
+  {
+    label: "Toggle and control state",
+    text: "Pressable toggles expose aria-pressed, and grouped controls like SegmentedControl carry an explicit aria-label — View, Density, Speed — since their visual caption lives outside the control markup.",
+  },
+  {
+    label: "Decorative icons",
+    text: "Icons that repeat information already given as text are marked aria-hidden so assistive tech skips the redundant glyph.",
+  },
+];
 
 // Real entry points, unchanged from the section's own reference list.
 const primaryEntryPoints = section.references;
@@ -81,6 +101,19 @@ export default function CoreComponentsPage() {
             <StatCard key={stat.label} value={stat.value} label={stat.label} description={stat.description} />
           ))}
         </CardGrid>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-6">
+          <SectionHeader
+            id="accessibility"
+            eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>}
+            title="Accessibility"
+            description="Affordances that are systemic across this kit's primitives, not one-off additions."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList items={ACCESSIBILITY_NOTES.map((note) => ({ label: note.label, value: note.text }))} />
+        </div>
       </SectionShell>
 
       <SectionShell spacing="lg" divider>

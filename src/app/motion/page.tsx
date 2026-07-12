@@ -28,14 +28,14 @@ const WHEN_TO_USE = [
   { title: "Activate, Queue Flow & Publish Flow", guidance: "System-style motion: a node's state transition, a stream of items moving through a queue, and a repeating 'item published' loop." },
 ];
 
-const relatedComponents = [getEntry("tokens")!, getEntry("illustrations")!, getEntry("design-system")!];
+const relatedComponents = [getEntry("tokens")!, getEntry("illustrations")!];
 
 export default function MotionPlaygroundPage() {
   return (
     <PageShell background={<SystemGrid />}>
       <SectionShell spacing="xl">
         <div className="flex flex-col gap-6">
-          <SectionBadge icon={<Waves className="size-3.5" />}>Foundations / Motion</SectionBadge>
+          <SectionBadge icon={<Waves className="size-3.5" />}>Playground</SectionBadge>
           <Display>Motion engine</Display>
           <Body size="lg" muted className="max-w-[var(--container-narrow)]">
             The reusable motion architecture every future illustration and page animation is built on: semantic

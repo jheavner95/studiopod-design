@@ -9,11 +9,8 @@ import { getEntry, getGroupEntries, getGroupsForSection } from "@/lib/design-sys
 const entry = getEntry("foundations")!;
 const children = getGroupEntries("foundations-tokens").filter((e) => e.id !== entry.id);
 
-// The three richest, most fully built pages in this group — the Design
-// System Overview alone exercises thirteen real sections (palette, colors,
-// typography, spacing, radius, shadow, motion, illustration, components,
-// form controls, layout, grid tools, theme preview).
-const primaryEntryPoints = children.filter((e) => e.id === "design-system" || e.id === "motion" || e.id === "illustrations");
+// The richest, most fully built pages in this group.
+const primaryEntryPoints = children.filter((e) => e.id === "motion" || e.id === "illustrations");
 const remainingEntries = children.filter((e) => !primaryEntryPoints.includes(e));
 
 const relatedGroups = getGroupsForSection("components").filter((group) =>
@@ -62,7 +59,7 @@ export default function FoundationsPage() {
             <Eyebrow tone="accent">What you&apos;ll learn</Eyebrow>
             <ul className="flex flex-col gap-2">
               {[
-                "Where the raw and semantic token scales live — color ramps, typography, spacing, radius, and shadow — and how they come together as one interactive showcase on the Design System Overview page.",
+                "Where the raw and semantic token scales live — color ramps, typography, spacing, radius, and shadow — on the Tokens reference page.",
                 "The layout primitives and dev grid-overlay tooling every page in the system composes from.",
                 "How the motion engine's five hooks and fourteen reusable animation primitives compose into every future animation, instead of one-off page effects.",
                 "How the illustration engine renders diagrams from data through a single IllustrationCanvas component, and why no real workflow diagram lives on this page yet — only the machinery it's built from.",

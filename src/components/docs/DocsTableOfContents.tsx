@@ -46,7 +46,7 @@ export function DocsTableOfContents({ selector = "[data-toc-heading]", className
     return () => observer.disconnect();
   }, [selector]);
 
-  if (items.length < 2) return null;
+  if (items.length < 4) return null;
 
   return (
     <nav aria-label="On this page" className={cn("flex flex-col gap-3", className)}>
