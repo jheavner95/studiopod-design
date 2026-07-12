@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown } from "lucide-react";
+import { ArrowUpRight, ArrowDown, Blocks, Table2, Waypoints, Layers3, LayoutDashboard, Globe, SlidersHorizontal, GitBranch, Search, ListChecks, Gauge, Activity, ShieldCheck, Boxes, Rocket, ShoppingCart, Sparkles } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
+import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid, DocsLinkCard } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { COMPOSITION_ARCHITECTURE_TOPICS } from "./_data/architecture";
 import { UTILITY_SUBSTRATE_NOTES } from "./_data/utility-substrate";
@@ -15,7 +15,13 @@ import { APPLICATION_BOUNDARIES } from "./_data/boundaries";
 import { APPLICATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("application-composition-doc")!;
-const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("business-features-doc")!, getEntry("templates")!];
+const relatedComponents = [
+  getEntry("platform-architecture-doc")!,
+  getEntry("production-workspace-feature")!,
+  getEntry("workflows-library")!,
+  getEntry("business-features-doc")!,
+  getEntry("templates")!,
+];
 
 const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "neutral"> = {
   certified: "success",
@@ -40,10 +46,167 @@ const ANATOMY_TONE: Record<"feature" | "internal" | "composition", "accent" | "n
   composition: "success",
 };
 
+/** One icon per composition tier — distinct from the canonical production-flow icon set (Lightbulb/Package/Rocket/etc.) used elsewhere, since this ladder is about code layers, not business stages. */
+const LAYER_ICONS: Record<string, React.ReactNode> = {
+  foundation: <Blocks className="size-5" />,
+  operational: <Table2 className="size-5" />,
+  workflow: <Waypoints className="size-5" />,
+  platform: <Layers3 className="size-5" />,
+  "business-features": <LayoutDashboard className="size-5" />,
+  application: <Globe className="size-5" />,
+};
+
+/** The same Trailhead mug wrap, followed through every composition tier — the production-story thread the hero stack tells alongside the generic "what this tier owns" description. */
+const LAYER_TRAILHEAD_NOTE: Record<string, string> = {
+  foundation: "Renders the same Button, Input, and Badge every Trailhead mug wrap screen reuses.",
+  operational: "Data Grid lists the Trailhead mug wrap as one row among every job in production.",
+  workflow: "Pipeline Components track its production stage without knowing what a “mug wrap” even is.",
+  platform: "Production Platform's own inspector shows its SKU — MUG-TH-014.",
+  "business-features": "Production Workspace lets Marcus D. advance it through Validation, live.",
+  application: "It ships, sells, and its Performance Intelligence shapes the next Creative Brief.",
+};
+
+interface RealApplicationEntry {
+  entryId: string;
+  icon: React.ReactNode;
+  note: string;
+}
+
+/** The five real, composed applications this page's story points to — not hypothetical destinations, live pages built from the same six-tier stack above. */
+const REAL_APPLICATIONS: RealApplicationEntry[] = [
+  { entryId: "production-workspace-feature", icon: <LayoutDashboard className="size-5" />, note: "Watch the Trailhead mug wrap move through Validation, live." },
+  { entryId: "publishing-platform", icon: <Rocket className="size-5" />, note: "The same layers publish Poster proof #118 to Etsy and Shopify." },
+  { entryId: "commerce-platform", icon: <ShoppingCart className="size-5" />, note: "Route a Studio Tee order from catalog to fulfillment." },
+  { entryId: "product-platform", icon: <Boxes className="size-5" />, note: "Catalog every SKU, from the Trailhead mug wrap to a Holiday collection." },
+  { entryId: "intelligence-platform", icon: <Sparkles className="size-5" />, note: "Turn sell-through data into the next Creative Brief." },
+];
+
+interface BuildingBlockEntry {
+  entryId: string;
+  icon: React.ReactNode;
+}
+
+/** Capabilities that show up inside almost every Platform component and Business Feature — shared, not reinvented per application. */
+const RECURRING_BUILDING_BLOCKS: BuildingBlockEntry[] = [
+  { entryId: "property-panel", icon: <SlidersHorizontal className="size-5" /> },
+  { entryId: "workflow-framework", icon: <GitBranch className="size-5" /> },
+  { entryId: "inspector-panel", icon: <Search className="size-5" /> },
+  { entryId: "queue-jobs", icon: <ListChecks className="size-5" /> },
+  { entryId: "dashboard-widgets", icon: <Gauge className="size-5" /> },
+  { entryId: "status-health", icon: <Activity className="size-5" /> },
+  { entryId: "foundation-forms", icon: <ShieldCheck className="size-5" /> },
+];
+
 export default function ApplicationCompositionPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
-      <DocsPageHeader entry={entry} />
+      <DocsPageHeader entry={entry}>
+        <Body size="lg" className="max-w-[var(--container-narrow)] font-medium text-ink-primary">
+          Every StudioPOD application is assembled, not handcrafted. Production Workspace, Publishing, Commerce,
+          Product, and Intelligence are all built from the same shared systems — composed differently for each job,
+          never rebuilt from scratch.
+        </Body>
+      </DocsPageHeader>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="composition-story"
+            eyebrow={<Eyebrow tone="accent">Composition story</Eyebrow>}
+            title="Foundation → Operational → Workflow → Platform → Business Features → Application"
+            description={COMPOSITION_MODEL_STATEMENT}
+            descriptionMaxWidth={false}
+          />
+          <GlassPanel padding="lg" glow className="flex w-full flex-col gap-3">
+            {LAYER_STACK.map((layer, index) => (
+              <div key={layer.id} className="flex flex-col items-center gap-3">
+                <Card className="flex w-full flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                  <div className="flex gap-3">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-accent-500/40 bg-accent-soft text-accent-400">
+                      {LAYER_ICONS[layer.id]}
+                    </span>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-body-md font-medium text-ink-primary">{layer.name}</span>
+                        <Badge tone={LAYER_STATUS_TONE[layer.status]} size="sm">
+                          {LAYER_STATUS_LABEL[layer.status]}
+                        </Badge>
+                      </div>
+                      <Body size="sm" muted className="max-w-[var(--container-narrow)]">
+                        {layer.owns}
+                      </Body>
+                      {layer.composesFrom ? <Caption className="text-ink-tertiary">Composes from: {layer.composesFrom}</Caption> : null}
+                      <Caption className="text-accent-400">{LAYER_TRAILHEAD_NOTE[layer.id]}</Caption>
+                    </div>
+                  </div>
+                  {layer.certificationRef ? (
+                    <Link
+                      href={layer.certificationRef.href}
+                      className="focus-ring flex shrink-0 items-center gap-1 text-caption font-medium text-accent-400 hover:text-accent-300"
+                    >
+                      {layer.certificationRef.label}
+                      <ArrowUpRight className="size-3.5" aria-hidden />
+                    </Link>
+                  ) : null}
+                </Card>
+                {index < LAYER_STACK.length - 1 ? <ArrowDown className="size-4 text-ink-tertiary" aria-hidden /> : null}
+              </div>
+            ))}
+          </GlassPanel>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="real-applications"
+            eyebrow={<Eyebrow tone="accent">Real applications</Eyebrow>}
+            title="The same composition model builds every platform"
+            description="Not five different architectures — one, composed five different ways. Each of these is a live page, not a mockup."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {REAL_APPLICATIONS.map(({ entryId, icon, note }) => {
+              const application = getEntry(entryId)!;
+              return (
+                <DocsLinkCard
+                  key={entryId}
+                  href={application.href}
+                  title={application.title}
+                  description={note}
+                  adornment={<span className="text-accent-400">{icon}</span>}
+                  actionLabel="View"
+                />
+              );
+            })}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="recurring-building-blocks"
+            eyebrow={<Eyebrow tone="accent">Recurring building blocks</Eyebrow>}
+            title="Shared capabilities, not isolated components"
+            description="These seven show up inside nearly every Platform component and Business Feature above — the same panel, the same queue, the same status treatment, everywhere it's needed."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={4}>
+            {RECURRING_BUILDING_BLOCKS.map(({ entryId, icon }) => {
+              const block = getEntry(entryId)!;
+              return (
+                <DocsLinkCard
+                  key={entryId}
+                  href={block.href}
+                  title={block.title}
+                  adornment={<span className="text-accent-400">{icon}</span>}
+                />
+              );
+            })}
+          </CardGrid>
+        </div>
+      </SectionShell>
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
@@ -86,46 +249,13 @@ export default function ApplicationCompositionPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-14">
-          <SectionHeader id="examples" eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>} title="Examples" descriptionMaxWidth={false} />
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id="composition-model"
-              title="Foundation → Operational → Workflow → Platform → Business Features → Application"
-              description={COMPOSITION_MODEL_STATEMENT}
-              descriptionMaxWidth={false}
-            />
-            <div className="flex flex-col items-stretch gap-2">
-              {LAYER_STACK.map((layer, index) => (
-                <div key={layer.id} className="flex flex-col items-center gap-2">
-                  <Card className="flex w-full flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                    <div className="flex flex-col gap-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-body-md font-medium text-ink-primary">{layer.name}</span>
-                        <Badge tone={LAYER_STATUS_TONE[layer.status]} size="sm">
-                          {LAYER_STATUS_LABEL[layer.status]}
-                        </Badge>
-                      </div>
-                      <Body size="sm" muted className="max-w-[var(--container-narrow)]">
-                        {layer.owns}
-                      </Body>
-                      {layer.composesFrom ? <Caption className="text-ink-tertiary">Composes from: {layer.composesFrom}</Caption> : null}
-                    </div>
-                    {layer.certificationRef ? (
-                      <Link
-                        href={layer.certificationRef.href}
-                        className="focus-ring flex shrink-0 items-center gap-1 text-caption font-medium text-accent-400 hover:text-accent-300"
-                      >
-                        {layer.certificationRef.label}
-                        <ArrowUpRight className="size-3.5" aria-hidden />
-                      </Link>
-                    ) : null}
-                  </Card>
-                  {index < LAYER_STACK.length - 1 ? <ArrowDown className="size-4 text-ink-tertiary" aria-hidden /> : null}
-                </div>
-              ))}
-            </div>
-          </div>
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Examples"
+            description="Eight composition plans for the templates real applications above are actually built from."
+            descriptionMaxWidth={false}
+          />
 
           <div className="flex flex-col gap-10">
             <SectionHeader

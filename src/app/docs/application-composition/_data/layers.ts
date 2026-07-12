@@ -51,10 +51,10 @@ export const LAYER_STACK: LayerDefinition[] = [
   {
     id: "business-features",
     name: "Business Features",
-    status: "future",
-    owns: "Real screens, business rules, orchestration, and data interaction — the tier this page defines (see Business Feature Model). Composes Platform components rather than recreating reusable UI.",
+    status: "certified-production-ready",
+    owns: "Real screens, business rules, orchestration, and data interaction — the tier this page defines (see Business Feature Model). Composes Platform components rather than recreating reusable UI. Production Workspace is a live, working example of this tier, not a hypothetical one.",
     composesFrom: "Foundation, Operational, Workflow, Platform",
-    certificationRef: null,
+    certificationRef: { label: "Production Workspace", href: "/application-components/business-features/production-workspace" },
   },
   {
     id: "application",
