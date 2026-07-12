@@ -9,7 +9,16 @@ import {
   DEFAULT_SPACING,
   DEFAULT_PADDING,
 } from "../layout";
-import { useElementSize, computeConnectorAnchor, offsetAlongPerpendicular, pointAlongLine } from "../utils";
+import {
+  useElementSize,
+  getConnectorEndpoints,
+  computeObstructionCurve,
+  offsetAlongPerpendicular,
+  pointAlongLine,
+  SELECTION_RING_CLEARANCE,
+  type ConnectorObstacle,
+  type RoutingStyle,
+} from "../utils";
 import { useIllustrationDev } from "../dev";
 import { IllustrationNode, type IllustrationNodeSize } from "./IllustrationNode";
 import { IllustrationConnection } from "./IllustrationConnection";
@@ -61,6 +70,20 @@ export function IllustrationCanvas({ diagram, className, nodeSize = "md", onSele
 
   const nodeRadius = nodePx / 2;
   const routing = adjustedLayout === "grid" ? "orthogonal" : "straight";
+
+  // Nodes rendered selected or in an active/processing status get a wider
+  // glow ring and a 1.05x scale from the Activate/SelectionRing primitives
+  // (see src/motion/primitives/Activate.tsx) — both sit outside the node's
+  // own layout box, so a connector touching that node needs to stop at
+  // this wider *visible* radius, not the bare one every other node uses.
+  const nodeClearance = useMemo(() => {
+    const clearance = new Map<string, number>();
+    diagram.nodes.forEach((node) => {
+      const emphasized = node.selected || node.status === "active" || node.status === "processing" || (node.active && !node.status);
+      clearance.set(node.id, emphasized ? SELECTION_RING_CLEARANCE : 0);
+    });
+    return clearance;
+  }, [diagram.nodes]);
 
   // When several labeled edges share a source (a hub fanning out, a decision
   // branch, multiple collinear back-edges in a chain), stacking every label
@@ -188,14 +211,44 @@ export function IllustrationCanvas({ diagram, className, nodeSize = "md", onSele
               const sourcePos = layoutResult.positions[connection.source];
               const targetPos = layoutResult.positions[connection.target];
               if (!sourcePos || !targetPos) return null;
-              const anchor = computeConnectorAnchor(sourcePos, targetPos, nodeRadius, nodeRadius);
+
+              const endpoints = getConnectorEndpoints(sourcePos, targetPos, nodeRadius, nodeRadius, {
+                sourceClearance: nodeClearance.get(connection.source),
+                targetClearance: nodeClearance.get(connection.target),
+                direction: connection.direction,
+              });
+
+              // A straight line can still cross a *third* node's circle —
+              // a "skip" connector (e.g. stage 1 straight to stage 3, over
+              // a parallel stage 2 node laid out on the same row). Bow the
+              // path around whichever unrelated node it would otherwise
+              // pass through rather than relying on that node's own paint
+              // order to hide the segment underneath it.
+              let connectionRouting: RoutingStyle = routing;
+              let controlPoint: { x: number; y: number } | undefined;
+              if (routing === "straight") {
+                const obstacles: ConnectorObstacle[] = diagram.nodes
+                  .filter((node) => node.id !== connection.source && node.id !== connection.target)
+                  .map((node) => {
+                    const pos = layoutResult.positions[node.id];
+                    return pos ? { center: pos, radius: nodeRadius + (nodeClearance.get(node.id) ?? 0) } : null;
+                  })
+                  .filter((obstacle): obstacle is ConnectorObstacle => obstacle !== null);
+                const curve = computeObstructionCurve(endpoints.start, endpoints.end, obstacles);
+                if (curve) {
+                  connectionRouting = "curved";
+                  controlPoint = curve;
+                }
+              }
+
               return (
                 <IllustrationConnection
                   key={connection.id}
                   connection={connection}
-                  start={anchor.start}
-                  end={anchor.end}
-                  routing={routing}
+                  start={endpoints.start}
+                  end={endpoints.end}
+                  routing={connectionRouting}
+                  controlPoint={controlPoint}
                 />
               );
             })}

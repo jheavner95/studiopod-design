@@ -14,6 +14,8 @@ export interface IllustrationConnectionProps {
   start: Point;
   end: Point;
   routing?: RoutingStyle;
+  /** Required when `routing="curved"` — the quadratic-bezier control point that bows the path around an obstructing node. */
+  controlPoint?: Point;
 }
 
 const STATUS_COLOR: Record<ConnectionStatus, string> = {
@@ -31,7 +33,13 @@ const DASH_ARRAY: Record<ConnectionStyle, string | undefined> = {
 };
 
 /** One connector between two computed anchor points — the base always-visible line, plus an emphasized accent overlay that draws in when flowing. */
-export function IllustrationConnection({ connection, start, end, routing = "straight" }: IllustrationConnectionProps) {
+export function IllustrationConnection({
+  connection,
+  start,
+  end,
+  routing = "straight",
+  controlPoint,
+}: IllustrationConnectionProps) {
   const markerId = useId().replace(/:/g, "");
   const motionEnabled = useMotionEnabled();
   const { speed } = useMotion();
@@ -43,7 +51,7 @@ export function IllustrationConnection({ connection, start, end, routing = "stra
   const shouldAnimate = isEmphasized && (connection.animated ?? true) && motionEnabled;
   const color = STATUS_COLOR[status];
   const strokeWidth = 1 + (connection.weight ?? 1) * 0.5;
-  const path = buildConnectorPath(start, end, routing);
+  const path = buildConnectorPath(start, end, routing, controlPoint);
 
   const hasEndArrow = connection.direction !== "backward";
   const hasStartArrow = connection.direction === "backward" || connection.direction === "bidirectional";
