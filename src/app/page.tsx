@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 import {
   Boxes,
   Blocks,
@@ -11,13 +10,13 @@ import {
   Globe,
   Layers,
   CheckCircle2,
-  ArrowRight,
   BookOpen,
   SlidersHorizontal,
   Palette,
 } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
-import { SectionBadge, SectionHeader, Eyebrow, Display, Body, Card, Badge, Caption } from "@/components/ui";
+import { SectionBadge, SectionHeader, Eyebrow, Display, Body, Card } from "@/components/ui";
+import { DocsLinkCard } from "@/components/docs";
 import { SystemGrid } from "@/components/illustration";
 import { NAV_SECTIONS, getEntry, type NavSectionId } from "@/lib/design-system-navigation";
 
@@ -125,28 +124,15 @@ export default function Home() {
 
           <CardGrid columns={2}>
             {primarySections.map((section) => (
-              <Link
+              <DocsLinkCard
                 key={section.id}
                 href={section.href}
-                className="focus-ring rounded-lg"
-                aria-label={`${section.title}: ${section.description}`}
-              >
-                <Card interactive className="flex h-full flex-col gap-4">
-                  <div className="flex size-10 items-center justify-center rounded-md border border-border bg-canvas-raised text-accent-400">
-                    {SECTION_ICONS[section.id]}
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <span className="text-body-md font-medium text-ink-primary">{section.title}</span>
-                    <Caption className="font-mono text-ink-tertiary">{section.href}</Caption>
-                  </div>
-                  <Body size="sm" muted>
-                    {section.description}
-                  </Body>
-                  <Badge size="sm" className="mt-auto w-fit">
-                    For: {section.audience}
-                  </Badge>
-                </Card>
-              </Link>
+                title={section.title}
+                description={section.description}
+                adornment={<span className="text-accent-400">{SECTION_ICONS[section.id]}</span>}
+                actionLabel={`For: ${section.audience}`}
+                size="lg"
+              />
             ))}
           </CardGrid>
         </div>
@@ -164,22 +150,13 @@ export default function Home() {
             {QUICK_STARTS.map(({ entryId, icon }) => {
               const item = getEntry(entryId)!;
               return (
-                <Link key={item.id} href={item.href} className="focus-ring block rounded-lg">
-                  <Card interactive className="flex h-full flex-col gap-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 text-ink-primary">
-                        <span className="text-accent-400" aria-hidden>
-                          {icon}
-                        </span>
-                        <span className="text-body-md font-medium">{item.title}</span>
-                      </div>
-                      <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-                    </div>
-                    <Body size="sm" muted className="flex-1">
-                      {item.description}
-                    </Body>
-                  </Card>
-                </Link>
+                <DocsLinkCard
+                  key={item.id}
+                  href={item.href}
+                  title={item.title}
+                  description={item.description}
+                  adornment={<span className="text-accent-400">{icon}</span>}
+                />
               );
             })}
           </CardGrid>
@@ -196,28 +173,14 @@ export default function Home() {
           />
           <CardGrid columns={2}>
             {relatedSections.map((section) => (
-              <Link
+              <DocsLinkCard
                 key={section.id}
                 href={section.href}
-                className="focus-ring rounded-lg"
-                aria-label={`${section.title}: ${section.description}`}
-              >
-                <Card interactive className="flex h-full flex-col gap-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 text-ink-primary">
-                      <span className="text-accent-400" aria-hidden>
-                        {SECTION_ICONS[section.id]}
-                      </span>
-                      <span className="text-body-md font-medium">{section.title}</span>
-                    </div>
-                    <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-                  </div>
-                  <Body size="sm" muted>
-                    {section.description}
-                  </Body>
-                  <Caption className="text-ink-tertiary">For: {section.audience}</Caption>
-                </Card>
-              </Link>
+                title={section.title}
+                description={section.description}
+                adornment={<span className="text-accent-400">{SECTION_ICONS[section.id]}</span>}
+                actionLabel={`For: ${section.audience}`}
+              />
             ))}
           </CardGrid>
         </div>

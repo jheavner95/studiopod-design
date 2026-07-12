@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { Archive } from "lucide-react";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsEntryGrid } from "@/app/docs/_components/DocsEntryGrid";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
-import { CardGrid, SectionShell, Inline } from "@/components/layout";
-import { Card, Body, Badge, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { CardGrid, SectionShell } from "@/components/layout";
+import { Badge, SectionHeader, Eyebrow } from "@/components/ui";
 import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("playground")!;
@@ -88,26 +86,20 @@ export default function PlaygroundPage() {
           />
           <CardGrid columns={3} gap="md">
             {legacyExperiments.map((item) => (
-              <Link key={item.id} href={item.href} className="focus-ring block rounded-lg">
-                <Card
-                  interactive
-                  className="flex h-full flex-col gap-3 opacity-75 grayscale-[0.4] transition-[opacity,filter] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:opacity-100 hover:grayscale-0"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-body-md font-medium text-ink-secondary">{item.title}</span>
-                    <Badge tone="warning" size="sm">
-                      Legacy
-                    </Badge>
-                  </div>
-                  <Body size="sm" muted className="flex-1">
-                    {item.description}
-                  </Body>
-                  <Inline gap="xs" align="center" className="border-t border-border-subtle pt-2">
-                    <Archive className="size-3.5 shrink-0 text-ink-tertiary" aria-hidden />
-                    <Caption className="text-ink-tertiary">Archived — superseded by Applications</Caption>
-                  </Inline>
-                </Card>
-              </Link>
+              <DocsLinkCard
+                key={item.id}
+                href={item.href}
+                title={item.title}
+                description={item.description}
+                adornment={
+                  <Badge tone="warning" size="sm">
+                    Legacy
+                  </Badge>
+                }
+                actionLabel="Archived — superseded by Applications"
+                srLabel={`${item.title} (archived — superseded by Applications): ${item.description}`}
+                className="opacity-75 grayscale-[0.4] transition-[opacity,filter] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:opacity-100 hover:grayscale-0"
+              />
             ))}
           </CardGrid>
         </div>

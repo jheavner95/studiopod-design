@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
@@ -299,12 +299,12 @@ export default function FinalCertificationPage() {
                   {c.external ? (
                     <Link href={c.href} className="focus-ring flex items-center gap-1 text-body-md font-medium text-ink-primary hover:text-accent-400">
                       {c.title}
-                      <ArrowUpRight className="size-3.5" aria-hidden />
+                      <ArrowRight className="size-3.5" aria-hidden />
                     </Link>
                   ) : (
                     <a href={c.href} className="focus-ring flex items-center gap-1 text-body-md font-medium text-ink-primary hover:text-accent-400">
                       {c.title}
-                      <ArrowUpRight className="size-3.5" aria-hidden />
+                      <ArrowRight className="size-3.5" aria-hidden />
                     </a>
                   )}
                 </div>

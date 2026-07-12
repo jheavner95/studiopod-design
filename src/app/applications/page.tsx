@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { SectionShell, CardGrid } from "@/components/layout";
 import { Card, Body, Badge, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
-import { getEntry, getGroup, getGroupsForSection, getGroupEntries, type NavEntry } from "@/lib/design-system-navigation";
+import { getEntry, getGroup, getGroupsForSection, getGroupEntries } from "@/lib/design-system-navigation";
 
 const entry = getEntry("applications")!;
 
@@ -66,22 +66,6 @@ const BUSINESS_FEATURE_BLURBS: Record<string, string> = {
     "The one real pilot: a fully wired Production Workspace screen — its own header, canvas, inspector, validation, metrics, actions, and dialogs, running on local state and mock data — proving the certified Production platform tier composes into an actual feature, not just a diagram.",
 };
 
-function ApplicationCard({ entry: item, blurb }: { entry: NavEntry; blurb: string }) {
-  return (
-    <Link href={item.href} className="focus-ring block rounded-lg">
-      <Card interactive className="flex h-full flex-col gap-3">
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-body-md font-medium text-ink-primary">{item.title}</span>
-          <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-        </div>
-        <Body size="sm" muted className="flex-1">
-          {blurb}
-        </Body>
-      </Card>
-    </Link>
-  );
-}
-
 export default function ApplicationsPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
@@ -113,7 +97,7 @@ export default function ApplicationsPage() {
           />
           <CardGrid columns={3} gap="md">
             {platformEntries.map((item) => (
-              <ApplicationCard key={item.id} entry={item} blurb={PLATFORM_BLURBS[item.id] ?? item.description} />
+              <DocsLinkCard key={item.id} href={item.href} title={item.title} description={PLATFORM_BLURBS[item.id] ?? item.description} />
             ))}
           </CardGrid>
         </div>
@@ -130,7 +114,12 @@ export default function ApplicationsPage() {
           />
           <CardGrid columns={businessFeatureEntries.length === 1 ? 2 : 3} gap="md">
             {businessFeatureEntries.map((item) => (
-              <ApplicationCard key={item.id} entry={item} blurb={BUSINESS_FEATURE_BLURBS[item.id] ?? item.description} />
+              <DocsLinkCard
+                key={item.id}
+                href={item.href}
+                title={item.title}
+                description={BUSINESS_FEATURE_BLURBS[item.id] ?? item.description}
+              />
             ))}
           </CardGrid>
           <Card className="flex flex-col gap-2 border-accent-500/30 bg-accent-soft/40 sm:flex-row sm:items-start">

@@ -2,7 +2,7 @@
 
 import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui";
+import { Checkbox, INTERACTIVE_CARD_CLASSES } from "@/components/ui";
 import { AssetThumbnail } from "./AssetThumbnail";
 import { AssetMetadata } from "./AssetMetadata";
 
@@ -54,9 +54,9 @@ export function AssetCard({
       onClick={onClick}
       onKeyDown={handleKeyDown}
       className={cn(
-        "flex flex-col gap-2 rounded-lg border p-2 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
-        selected ? "border-accent-500/60 bg-accent-soft/20" : "border-border-subtle hover:border-border-strong",
-        onClick && "focus-ring cursor-pointer",
+        "flex flex-col gap-2 rounded-lg border p-2",
+        selected ? "border-accent-500/60 bg-accent-soft/20" : "border-border-subtle",
+        onClick ? cn("focus-ring cursor-pointer", INTERACTIVE_CARD_CLASSES) : "transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
         className,
       )}
     >

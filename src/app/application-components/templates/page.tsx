@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { TemplateCard } from "../_components/TemplateCard";
 import { FamilyCard } from "../_components/FamilyCard";
@@ -150,18 +149,7 @@ export default function TemplatesPage() {
             title="Related components"
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={3}>
-            {relatedEntries.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
-                  <Body size="sm" muted>
-                    {related.description}
-                  </Body>
-                </Card>
-              </Link>
-            ))}
-          </CardGrid>
+          <DocsRelatedGrid entries={relatedEntries} columns={3} />
         </div>
       </SectionShell>
 

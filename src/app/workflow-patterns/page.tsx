@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsGroupCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
 import { SectionShell, CardGrid } from "@/components/layout";
-import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
-import { getEntry, getGroup, getGroupEntries, getGroupsForSection, type NavGroup } from "@/lib/design-system-navigation";
+import { SectionHeader, Eyebrow } from "@/components/ui";
+import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("workflow-patterns")!;
 
@@ -34,41 +32,6 @@ const STATS = [
   { label: "Example workflows", value: "6" },
   { label: "Pattern groups", value: String(contentGroups.length) },
 ];
-
-function GroupCard({ group }: { group: NavGroup }) {
-  const groupEntries = getGroupEntries(group.id);
-  return (
-    <Card className="flex h-full flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <Link
-          href={group.href}
-          className="focus-ring rounded-md text-body-lg font-medium text-ink-primary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-400"
-        >
-          {group.title}
-        </Link>
-        <Body size="sm" muted>
-          {group.description}
-        </Body>
-      </div>
-      <ul className="flex flex-col gap-1.5 border-t border-border-subtle pt-3">
-        {groupEntries.map((groupEntry) => (
-          <li key={groupEntry.id}>
-            <Link
-              href={groupEntry.href}
-              className="focus-ring group flex items-center justify-between gap-2 rounded-md text-body-sm text-ink-secondary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-400"
-            >
-              {groupEntry.title}
-              <ArrowRight
-                className="size-3.5 shrink-0 text-ink-tertiary transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-safe:group-hover:translate-x-0.5 group-hover:text-accent-400"
-                aria-hidden
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </Card>
-  );
-}
 
 export default function WorkflowPatternsPage() {
   return (
@@ -101,7 +64,13 @@ export default function WorkflowPatternsPage() {
           />
           <CardGrid columns={2} gap="md">
             {contentGroups.map((group) => (
-              <GroupCard key={group.id} group={group} />
+              <DocsGroupCard
+                key={group.id}
+                href={group.href}
+                title={group.title}
+                description={group.description}
+                entries={getGroupEntries(group.id)}
+              />
             ))}
           </CardGrid>
         </div>

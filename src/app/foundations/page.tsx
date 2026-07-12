@@ -1,8 +1,6 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { SectionShell } from "@/components/layout";
-import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
 import { getEntry, getGroupsForSection } from "@/lib/design-system-navigation";
@@ -57,17 +55,9 @@ export default function FoundationsPage() {
           {/* A single entry inside a multi-column CardGrid would occupy one
               cell and leave a large empty gutter beside it — constrain it
               to a narrow standalone card instead. */}
-          <Link href={tokensEntry.href} className="focus-ring block w-full max-w-sm rounded-lg">
-            <Card interactive className="flex h-full flex-col gap-3">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-body-md font-medium text-ink-primary">{tokensEntry.title}</span>
-                <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-              </div>
-              <Body size="sm" muted>
-                {tokensEntry.description}
-              </Body>
-            </Card>
-          </Link>
+          <div className="w-full max-w-sm">
+            <DocsLinkCard href={tokensEntry.href} title={tokensEntry.title} description={tokensEntry.description} />
+          </div>
         </div>
       </SectionShell>
     </DocsShell>

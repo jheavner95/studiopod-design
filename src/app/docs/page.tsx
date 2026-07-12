@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsGroupCard } from "@/components/docs";
 import { DocsSectionLanding } from "./_components/DocsSectionLanding";
 import { SectionShell, CardGrid } from "@/components/layout";
-import { Card, Body, Badge, SectionHeader, Eyebrow } from "@/components/ui";
+import { Badge, SectionHeader, Eyebrow } from "@/components/ui";
 import { getEntry, getGroup, getGroupsForSection, getGroupEntries, getSectionEntries } from "@/lib/design-system-navigation";
 
 const entry = getEntry("docs-root")!;
@@ -67,38 +66,20 @@ export default function DocsHomePage() {
               const groupEntries = getGroupEntries(group.id);
               const groupCertifiedCount = groupEntries.filter((e) => e.status === "certified").length;
               return (
-                <Card key={group.id} className="flex h-full flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <Link
-                        href={group.href}
-                        className="focus-ring rounded-md text-body-lg font-medium text-ink-primary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-400"
-                      >
-                        {group.title}
-                      </Link>
-                      {groupCertifiedCount > 0 ? (
-                        <Badge tone="success" size="sm">
-                          Certified
-                        </Badge>
-                      ) : null}
-                    </div>
-                    <Body size="sm" muted>
-                      {group.description}
-                    </Body>
-                  </div>
-                  <ul className="flex flex-col gap-1.5 border-t border-border-subtle pt-3">
-                    {groupEntries.map((groupEntry) => (
-                      <li key={groupEntry.id}>
-                        <Link
-                          href={groupEntry.href}
-                          className="focus-ring block rounded-md text-body-sm text-ink-secondary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-ink-primary"
-                        >
-                          {groupEntry.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
+                <DocsGroupCard
+                  key={group.id}
+                  href={group.href}
+                  title={group.title}
+                  description={group.description}
+                  entries={groupEntries}
+                  badge={
+                    groupCertifiedCount > 0 ? (
+                      <Badge tone="success" size="sm">
+                        Certified
+                      </Badge>
+                    ) : null
+                  }
+                />
               );
             })}
           </CardGrid>

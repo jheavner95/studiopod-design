@@ -1,5 +1,6 @@
 export { Button, type ButtonProps } from "./Button";
-export { Card } from "./Card";
+export { Card, INTERACTIVE_CARD_CLASSES } from "./Card";
+export { SelectableCard, type SelectableCardProps } from "./SelectableCard";
 export { Badge } from "./Badge";
 export { SectionBadge } from "./SectionBadge";
 export { Eyebrow } from "./Eyebrow";

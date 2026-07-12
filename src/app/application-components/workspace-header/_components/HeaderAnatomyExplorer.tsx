@@ -4,8 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Card, Badge, Body, Caption, Heading } from "@/components/ui";
-import { Activate } from "@/motion";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@/components/ui";
 import { HEADER_REGIONS, type HeaderRegion } from "../_data/regions";
 
 const COLUMN_SPAN: Record<HeaderRegion["column"], string> = {
@@ -24,27 +23,14 @@ interface RegionCardProps {
 function RegionCard({ region, selected, onSelect }: RegionCardProps) {
   return (
     <div id={region.id} className={cn(COLUMN_SPAN[region.column], "scroll-mt-24")}>
-      <button
-        type="button"
-        onClick={onSelect}
-        aria-pressed={selected}
-        className="focus-ring block w-full rounded-lg text-left"
-      >
-        <Activate state={selected ? "active" : "inactive"} className="rounded-lg">
-          <Card
-            interactive
-            className={cn("flex h-full min-h-28 flex-col gap-2", selected && "border-accent-500/60 bg-accent-soft/30")}
-          >
-            <span className="text-body-md font-medium text-ink-primary">{region.name}</span>
-            <Body size="sm" muted className="line-clamp-2">
-              {region.purpose}
-            </Body>
-            <Caption className="mt-auto text-ink-tertiary">
-              {region.required.length} required · {region.optional.length} optional
-            </Caption>
-          </Card>
-        </Activate>
-      </button>
+      <SelectableCard
+        title={region.name}
+        description={region.purpose}
+        meta={`${region.required.length} required · ${region.optional.length} optional`}
+        selected={selected}
+        onSelect={onSelect}
+        className="min-h-28"
+      />
     </div>
   );
 }

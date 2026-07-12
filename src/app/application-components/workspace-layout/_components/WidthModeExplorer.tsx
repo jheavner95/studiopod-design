@@ -1,26 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, Badge, Body, Caption, Heading } from "@/components/ui";
-import { Activate } from "@/motion";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@/components/ui";
 import { WIDTH_MODES, type WidthMode } from "../_data/width-modes";
 
 function ModeCard({ mode, selected, onSelect }: { mode: WidthMode; selected: boolean; onSelect: () => void }) {
   return (
-    <button type="button" onClick={onSelect} aria-pressed={selected} className="focus-ring block w-full rounded-lg text-left">
-      <Activate state={selected ? "active" : "inactive"} className="rounded-lg">
-        <Card
-          interactive
-          className={cn("flex h-full min-h-28 flex-col gap-2", selected && "border-accent-500/60 bg-accent-soft/30")}
-        >
-          <span className="text-body-md font-medium text-ink-primary">{mode.name}</span>
-          <Body size="sm" muted className="line-clamp-2">
-            {mode.purpose}
-          </Body>
-        </Card>
-      </Activate>
-    </button>
+    <SelectableCard
+      title={mode.name}
+      description={mode.purpose}
+      selected={selected}
+      onSelect={onSelect}
+      className="min-h-28"
+    />
   );
 }
 

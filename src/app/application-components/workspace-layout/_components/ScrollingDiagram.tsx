@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, Badge, Body, Caption } from "@/components/ui";
-import { Activate } from "@/motion";
+import { Card, Badge, Body, Caption, SelectableCard } from "@/components/ui";
 import { SCROLL_REGIONS, type ScrollBehavior, type ScrollRegion } from "../_data/scrolling";
 
 const BEHAVIOR_TONE: Record<ScrollBehavior, "accent" | "warning" | "neutral"> = {
@@ -14,20 +12,17 @@ const BEHAVIOR_TONE: Record<ScrollBehavior, "accent" | "warning" | "neutral"> = 
 
 function RegionChip({ region, selected, onSelect }: { region: ScrollRegion; selected: boolean; onSelect: () => void }) {
   return (
-    <button type="button" onClick={onSelect} aria-pressed={selected} className="focus-ring block w-full rounded-lg text-left">
-      <Activate state={selected ? "active" : "inactive"} className="rounded-lg">
-        <Card
-          interactive
-          padding="sm"
-          className={cn("flex h-full flex-col gap-2", selected && "border-accent-500/60 bg-accent-soft/30")}
-        >
-          <span className="text-body-sm font-medium text-ink-primary">{region.name}</span>
-          <Badge tone={BEHAVIOR_TONE[region.behavior]} size="sm" className="w-fit">
-            {region.behavior}
-          </Badge>
-        </Card>
-      </Activate>
-    </button>
+    <SelectableCard
+      title={region.name}
+      badge={
+        <Badge tone={BEHAVIOR_TONE[region.behavior]} size="sm" className="w-fit">
+          {region.behavior}
+        </Badge>
+      }
+      selected={selected}
+      onSelect={onSelect}
+      padding="sm"
+    />
   );
 }
 

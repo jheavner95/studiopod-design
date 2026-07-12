@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Check, Copy, Archive, Image as ImageIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Badge, Body, Caption } from "@/components/ui";
+import { Badge, Body, Caption, INTERACTIVE_CARD_CLASSES } from "@/components/ui";
 import { ASSET_CARD_ANATOMY } from "../_data/asset-card-anatomy";
 
 /**
@@ -34,7 +34,8 @@ export function AssetCardDemo() {
             }
           }}
           className={cn(
-            "focus-ring group flex cursor-pointer flex-col gap-0 overflow-hidden rounded-lg border bg-surface transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-0.5 hover:border-border-strong hover:shadow-md",
+            "focus-ring group flex cursor-pointer flex-col gap-0 overflow-hidden rounded-lg border bg-surface",
+            INTERACTIVE_CARD_CLASSES,
             selected ? "border-accent-500/70 bg-accent-soft/20" : "border-border",
           )}
         >

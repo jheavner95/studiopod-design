@@ -18,6 +18,16 @@ const paddingMap: Record<CardPadding, string> = {
   lg: "p-8",
 };
 
+/**
+ * DS-8.1 Part 8 — the one interactive-surface treatment (elevation, border,
+ * shadow, timing, easing) every clickable card shares. Exported so the rare
+ * surface that can't use `Card interactive` directly (e.g. a `role="button"`
+ * div that can't nest real buttons inside a real `<button>`) still gets the
+ * identical classes instead of hand-copying them.
+ */
+export const INTERACTIVE_CARD_CLASSES =
+  "transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-0.5 hover:border-border-strong hover:shadow-md";
+
 /** Atomic surface container. StatCard and FeatureCard both build on this. */
 export function Card({ children, className, padding = "md", as: Component = "div", interactive = false }: CardProps) {
   return (
@@ -25,8 +35,7 @@ export function Card({ children, className, padding = "md", as: Component = "div
       className={cn(
         "rounded-lg border border-border bg-surface",
         paddingMap[padding],
-        interactive &&
-          "transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-0.5 hover:border-border-strong hover:shadow-md",
+        interactive && INTERACTIVE_CARD_CLASSES,
         className,
       )}
     >

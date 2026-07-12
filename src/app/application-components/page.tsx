@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { CardGrid, SectionShell } from "@/components/layout";
-import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { SectionHeader, Eyebrow } from "@/components/ui";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
-import { getEntry, getGroup, getGroupEntries, getGroupsForSection, type NavGroup } from "@/lib/design-system-navigation";
+import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("application-components")!;
 
@@ -41,26 +39,6 @@ const STATS = [
   { label: "Multi-page families", value: String(multiPageFamilies) },
 ];
 
-function GroupCard({ group }: { group: NavGroup }) {
-  const count = getGroupEntries(group.id).length;
-  return (
-    <Link href={group.href} className="focus-ring block rounded-lg">
-      <Card interactive className="flex h-full flex-col gap-3">
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-body-md font-medium text-ink-primary">{group.title}</span>
-          <ArrowRight className="size-4 shrink-0 text-ink-tertiary" aria-hidden />
-        </div>
-        <Body size="sm" muted className="flex-1">
-          {group.description}
-        </Body>
-        <Caption className="text-ink-tertiary">
-          {count} {count === 1 ? "page" : "pages"}
-        </Caption>
-      </Card>
-    </Link>
-  );
-}
-
 export default function ApplicationComponentsPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
@@ -91,9 +69,18 @@ export default function ApplicationComponentsPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3} gap="md">
-            {familyGroups.map((group) => (
-              <GroupCard key={group.id} group={group} />
-            ))}
+            {familyGroups.map((group) => {
+              const count = getGroupEntries(group.id).length;
+              return (
+                <DocsLinkCard
+                  key={group.id}
+                  href={group.href}
+                  title={group.title}
+                  description={group.description}
+                  actionLabel={`${count} ${count === 1 ? "page" : "pages"}`}
+                />
+              );
+            })}
           </CardGrid>
         </div>
       </SectionShell>
@@ -108,9 +95,18 @@ export default function ApplicationComponentsPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2} gap="md">
-            {kitGroups.map((group) => (
-              <GroupCard key={group.id} group={group} />
-            ))}
+            {kitGroups.map((group) => {
+              const count = getGroupEntries(group.id).length;
+              return (
+                <DocsLinkCard
+                  key={group.id}
+                  href={group.href}
+                  title={group.title}
+                  description={group.description}
+                  actionLabel={`${count} ${count === 1 ? "page" : "pages"}`}
+                />
+              );
+            })}
           </CardGrid>
         </div>
       </SectionShell>

@@ -3,9 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Card, Badge, Body, Caption, Heading } from "@/components/ui";
-import { Activate } from "@/motion";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@/components/ui";
 import { INSPECTOR_REGIONS, type InspectorRegion } from "../_data/regions";
 
 interface RegionCardProps {
@@ -16,20 +14,15 @@ interface RegionCardProps {
 
 function RegionCard({ region, selected, onSelect }: RegionCardProps) {
   return (
-    <button type="button" onClick={onSelect} aria-pressed={selected} className="focus-ring block w-full rounded-lg text-left">
-      <Activate state={selected ? "active" : "inactive"} className="rounded-lg">
-        <Card
-          interactive
-          padding="sm"
-          className={cn("flex h-full min-h-20 flex-col gap-1.5", selected && "border-accent-500/60 bg-accent-soft/30")}
-        >
-          <span className="text-body-sm font-medium text-ink-primary">{region.name}</span>
-          <Body size="sm" muted className="line-clamp-1">
-            {region.purpose}
-          </Body>
-        </Card>
-      </Activate>
-    </button>
+    <SelectableCard
+      title={region.name}
+      description={region.purpose}
+      selected={selected}
+      onSelect={onSelect}
+      padding="sm"
+      descriptionClamp={1}
+      className="min-h-20"
+    />
   );
 }
 

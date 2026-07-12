@@ -7,3 +7,4 @@ export { DocsSearchTrigger } from "./DocsSearchTrigger";
 export { DocsTableOfContents } from "./DocsTableOfContents";
 export { DocsLinkCard } from "./DocsLinkCard";
 export { DocsRelatedGrid } from "./DocsRelatedGrid";
+export { DocsGroupCard, type DocsGroupCardEntry } from "./DocsGroupCard";

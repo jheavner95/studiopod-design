@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Card, Badge, Body, Caption, Heading } from "@/components/ui";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@/components/ui";
 import type { InventoryStatus, InventoryPriority } from "../../inventory/_data/inventory";
 import { FOUNDATION_COMPONENTS, FOUNDATION_GROUPS, groupFor, maturityFor, type FoundationComponent } from "../_data/catalog";
 
@@ -49,23 +49,18 @@ function FilterPill({ label, active, onClick }: { label: string; active: boolean
 
 function ComponentCard({ component, selected, onSelect }: { component: FoundationComponent; selected: boolean; onSelect: () => void }) {
   return (
-    <button type="button" onClick={onSelect} aria-pressed={selected} className="block w-full text-left">
-      <Card
-        interactive
-        padding="sm"
-        className={cn("flex h-full flex-col gap-2", selected && "border-accent-500/60 bg-accent-soft/30")}
-      >
-        <div className="flex items-start justify-between gap-2">
-          <span className="text-body-sm font-medium text-ink-primary">{component.name}</span>
-          <Badge tone={STATUS_TONE[component.status]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-            {component.status}
-          </Badge>
-        </div>
-        <Body size="sm" muted className="line-clamp-2">
-          {component.purpose}
-        </Body>
-      </Card>
-    </button>
+    <SelectableCard
+      title={component.name}
+      description={component.purpose}
+      badge={
+        <Badge tone={STATUS_TONE[component.status]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
+          {component.status}
+        </Badge>
+      }
+      selected={selected}
+      onSelect={onSelect}
+      padding="sm"
+    />
   );
 }
 

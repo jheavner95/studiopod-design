@@ -170,7 +170,7 @@ export function ComponentGallerySection() {
         <div>
           <Caption className="mb-4">FeatureCard, states</Caption>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <StateLabel label="Default / hover (try it)">
+            <StateLabel label="Default">
               <FeatureCard
                 icon={<Database className="size-5" />}
                 title="Unified inventory"
@@ -185,7 +185,7 @@ export function ComponentGallerySection() {
               />
             </StateLabel>
             <StateLabel label="Loading">
-              <Card interactive className="flex h-full flex-col gap-4">
+              <Card className="flex h-full flex-col gap-4">
                 <Skeleton className="size-10 rounded-md" />
                 <div className="flex flex-col gap-2">
                   <Skeleton className="h-4 w-2/3" />

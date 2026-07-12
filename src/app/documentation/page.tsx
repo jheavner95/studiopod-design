@@ -1,9 +1,8 @@
-import Link from "next/link";
-import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "../docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "../docs/_components/DocsSectionLanding";
 import { SectionShell, CardGrid } from "@/components/layout";
-import { SectionHeader, Eyebrow, Card, Body, Caption } from "@/components/ui";
+import { SectionHeader, Eyebrow, Card, Body } from "@/components/ui";
 import { NAV_SECTIONS, NAV_REGISTRY, getEntry, getGroup } from "@/lib/design-system-navigation";
 
 const entry = getEntry("documentation")!;
@@ -60,15 +59,13 @@ export default function DocumentationPage() {
           />
           <CardGrid columns={3} gap="md">
             {OTHER_SECTIONS.map((section) => (
-              <Link key={section.id} href={section.href} className="focus-ring block rounded-lg">
-                <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{section.title}</span>
-                  <Body size="sm" muted>
-                    {section.description}
-                  </Body>
-                  <Caption className="mt-auto text-ink-tertiary">For: {section.audience}</Caption>
-                </Card>
-              </Link>
+              <DocsLinkCard
+                key={section.id}
+                href={section.href}
+                title={section.title}
+                description={section.description}
+                actionLabel={`For: ${section.audience}`}
+              />
             ))}
           </CardGrid>
         </div>
