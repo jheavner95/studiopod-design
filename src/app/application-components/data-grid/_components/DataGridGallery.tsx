@@ -17,27 +17,28 @@ interface AssetRow {
   id: string;
   name: string;
   type: string;
-  status: "Published" | "Draft" | "Archived" | "Processing";
+  status: "Shipped" | "Queued" | "Archived" | "Printing";
   size: string;
   updatedAt: string;
 }
 
 const STATUS_TONE: Record<AssetRow["status"], "success" | "neutral" | "warning" | "accent"> = {
-  Published: "success",
-  Draft: "neutral",
+  Shipped: "success",
+  Queued: "neutral",
   Archived: "neutral",
-  Processing: "accent",
+  Printing: "accent",
 };
 
+/** The render queue — the same canonical products and jobs reused across the documentation, not a generic asset library. */
 const ASSETS: AssetRow[] = [
-  { id: "a1", name: "Hero banner.png", type: "Image", status: "Published", size: "2.4 MB", updatedAt: "2h ago" },
-  { id: "a2", name: "Product demo.mp4", type: "Video", status: "Processing", size: "128 MB", updatedAt: "5m ago" },
-  { id: "a3", name: "Instagram story.jpg", type: "Image", status: "Draft", size: "1.1 MB", updatedAt: "1d ago" },
-  { id: "a4", name: "Press release.pdf", type: "Document", status: "Published", size: "340 KB", updatedAt: "3d ago" },
-  { id: "a5", name: "Summer campaign.psd", type: "Design", status: "Draft", size: "45 MB", updatedAt: "6h ago" },
-  { id: "a6", name: "Logo variant.svg", type: "Vector", status: "Published", size: "12 KB", updatedAt: "1w ago" },
-  { id: "a7", name: "Old banner.png", type: "Image", status: "Archived", size: "2.1 MB", updatedAt: "2mo ago" },
-  { id: "a8", name: "Podcast episode.mp3", type: "Audio", status: "Published", size: "68 MB", updatedAt: "4d ago" },
+  { id: "a1", name: "Trailhead mug wrap", type: "Drinkware", status: "Printing", size: "24 units", updatedAt: "2h ago" },
+  { id: "a2", name: "Studio Tee — Black / M", type: "Apparel", status: "Shipped", size: "48 units", updatedAt: "5m ago" },
+  { id: "a3", name: "Sunset ridge tee — front print", type: "Apparel", status: "Queued", size: "12 units", updatedAt: "1d ago" },
+  { id: "a4", name: "Poster proof #118", type: "Proof", status: "Shipped", size: "1 unit", updatedAt: "3d ago" },
+  { id: "a5", name: "Batch run #204", type: "Batch", status: "Queued", size: "96 units", updatedAt: "6h ago" },
+  { id: "a6", name: "Holiday collection", type: "Batch", status: "Shipped", size: "250 units", updatedAt: "1w ago" },
+  { id: "a7", name: "Launch campaign", type: "Batch", status: "Archived", size: "60 units", updatedAt: "2mo ago" },
+  { id: "a8", name: "Catalog refresh", type: "Batch", status: "Shipped", size: "340 units", updatedAt: "4d ago" },
 ];
 
 function baseColumns(): DataGridColumn<AssetRow>[] {
@@ -45,7 +46,7 @@ function baseColumns(): DataGridColumn<AssetRow>[] {
     { id: "name", header: "Name", accessor: (row) => row.name, sticky: true },
     { id: "type", header: "Type", accessor: (row) => row.type },
     { id: "status", header: "Status", accessor: (row) => <Badge tone={STATUS_TONE[row.status]} size="sm">{row.status}</Badge> },
-    { id: "size", header: "Size", accessor: (row) => row.size, align: "right", nowrap: true },
+    { id: "size", header: "Qty", accessor: (row) => row.size, align: "right", nowrap: true },
     { id: "updatedAt", header: "Updated", accessor: (row) => row.updatedAt, align: "right", nowrap: true },
   ];
 }
@@ -57,7 +58,7 @@ function SimpleGridDemo() {
       <Body size="sm" muted>
         Just columns and rows — no toolbar, selection, or pagination.
       </Body>
-      <DataGrid caption="Assets" columns={baseColumns()} rows={ASSETS} getRowId={(row) => row.id} />
+      <DataGrid caption="Print jobs" columns={baseColumns()} rows={ASSETS} getRowId={(row) => row.id} />
     </Card>
   );
 }
@@ -71,7 +72,7 @@ function SelectableGridDemo() {
         {selectedIds.size} of {ASSETS.length} selected — try the header checkbox for select-all.
       </Body>
       <DataGrid
-        caption="Assets"
+        caption="Print jobs"
         columns={baseColumns()}
         rows={ASSETS}
         getRowId={(row) => row.id}
@@ -114,7 +115,7 @@ function FilterableGridDemo() {
           }}
         />
       </DataGridToolbar>
-      <DataGrid caption="Assets" columns={baseColumns()} rows={rows} getRowId={(row) => row.id} emptyVariant="no-results" />
+      <DataGrid caption="Print jobs" columns={baseColumns()} rows={rows} getRowId={(row) => row.id} emptyVariant="no-results" />
     </Card>
   );
 }
@@ -127,12 +128,12 @@ function SearchableGridDemo() {
     <Card className="flex flex-col gap-3">
       <span className="text-body-md font-medium text-ink-primary">Searchable Grid</span>
       <Body size="sm" muted>
-        Free-text filtering across row names — try &ldquo;banner&rdquo;.
+        Free-text filtering across row names — try &ldquo;tee&rdquo;.
       </Body>
       <DataGridToolbar>
-        <DataGridSearch value={query} onChange={setQuery} placeholder="Search assets" />
+        <DataGridSearch value={query} onChange={setQuery} placeholder="Search the queue" />
       </DataGridToolbar>
-      <DataGrid caption="Assets" columns={baseColumns()} rows={rows} getRowId={(row) => row.id} emptyVariant="no-results" />
+      <DataGrid caption="Print jobs" columns={baseColumns()} rows={rows} getRowId={(row) => row.id} emptyVariant="no-results" />
     </Card>
   );
 }
@@ -159,10 +160,10 @@ function BulkActionGridDemo() {
           </>
         }
       >
-        <DataGridSearch value="" onChange={() => {}} placeholder="Search assets" />
+        <DataGridSearch value="" onChange={() => {}} placeholder="Search the queue" />
       </DataGridToolbar>
       <DataGrid
-        caption="Assets"
+        caption="Print jobs"
         columns={baseColumns()}
         rows={ASSETS}
         getRowId={(row) => row.id}
@@ -182,7 +183,7 @@ function DenseGridDemo() {
       <Body size="sm" muted>
         Foundation Table&rsquo;s dense density — more rows visible per screen.
       </Body>
-      <DataGrid caption="Assets" columns={baseColumns()} rows={ASSETS} getRowId={(row) => row.id} density="dense" />
+      <DataGrid caption="Print jobs" columns={baseColumns()} rows={ASSETS} getRowId={(row) => row.id} density="dense" />
     </Card>
   );
 }
@@ -221,7 +222,7 @@ function InspectorGridDemo() {
         A narrower, sortable grid — the shape an Inspector Workspace panel would embed.
       </Body>
       <DataGrid
-        caption="Assets"
+        caption="Print jobs"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -237,10 +238,10 @@ function InspectorGridDemo() {
 
 const LARGE_DATASET: AssetRow[] = Array.from({ length: 250 }, (_, index) => ({
   id: `large-${index}`,
-  name: `Asset ${index + 1}.png`,
-  type: index % 3 === 0 ? "Image" : index % 3 === 1 ? "Video" : "Document",
-  status: (["Published", "Draft", "Archived", "Processing"] as const)[index % 4],
-  size: `${(index % 40) + 1} MB`,
+  name: `Print job #${1000 + index}`,
+  type: index % 3 === 0 ? "Apparel" : index % 3 === 1 ? "Drinkware" : "Proof",
+  status: (["Shipped", "Queued", "Archived", "Printing"] as const)[index % 4],
+  size: `${(index % 40) + 1} units`,
   updatedAt: `${(index % 30) + 1}d ago`,
 }));
 
@@ -257,7 +258,7 @@ function LargeDatasetGridDemo() {
         250 rows, paginated at 10 per page — only one page&rsquo;s worth ever renders at once.
       </Body>
       <DataGrid
-        caption="Assets"
+        caption="Print jobs"
         columns={baseColumns()}
         rows={rows}
         getRowId={(row) => row.id}

@@ -18,40 +18,23 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { PageShell, SectionShell, CardGrid } from "@/components/layout";
-import { SectionBadge, SectionHeader, Button, CTAGroup, GlassPanel } from "@/components/ui";
+import { SectionBadge, SectionHeader, Button, CTAGroup, GlassPanel, Caption } from "@/components/ui";
 import { DocsLinkCard } from "@/components/docs";
-import { SystemGrid, AnimatedNode, AnimatedConnector } from "@/components/illustration";
+import { SystemGrid } from "@/components/illustration";
 import { HeroComposition, WorkflowComposition, FeatureGridComposition, CTAComposition, type WorkflowStep } from "@/compositions";
 import { NAV_SECTIONS, getEntry, type NavSectionId } from "@/lib/design-system-navigation";
+import { WorkflowRail } from "@/workflows";
+import { canonicalProductionFlow } from "@/workflows/examples";
 
-const LAYERS = [
-  { label: "Foundations", icon: <SlidersHorizontal className="size-4" /> },
-  { label: "Components", icon: <Blocks className="size-4" /> },
-  { label: "Patterns", icon: <Waypoints className="size-4" /> },
-  { label: "Applications", icon: <Rocket className="size-4" /> },
-];
-
-/** A compact composition diagram — four layers converging into one product — used as the hero visual instead of a decorative graphic. */
-function CompositionIllustration() {
+/** The canonical production flow, rendered as the hero visual — the one flow every layer of the system builds toward, instead of a decorative graphic. */
+function ProductionFlowIllustration() {
   return (
-    <GlassPanel padding="lg" glow className="mx-auto flex w-full max-w-2xl flex-col items-center gap-6">
+    <GlassPanel padding="lg" glow className="mx-auto flex w-full max-w-2xl flex-col gap-5">
+      <Caption className="text-ink-tertiary">Creative Brief → Performance Intelligence — the flow every layer builds toward</Caption>
       <div className="scrollbar-none w-full overflow-x-auto">
-        <div className="flex w-max items-center justify-center gap-2 px-1 sm:w-full">
-          {LAYERS.map((layer, index) => (
-            <div key={layer.label} className="flex items-center">
-              <div className="flex w-20 flex-col items-center gap-2">
-                <AnimatedNode status="idle" icon={layer.icon} size="md" />
-                <span className="text-caption font-medium text-ink-primary">{layer.label}</span>
-              </div>
-              {index < LAYERS.length - 1 ? <AnimatedConnector active length={20} /> : null}
-            </div>
-          ))}
+        <div className="w-max min-w-[880px] px-1">
+          <WorkflowRail workflow={canonicalProductionFlow} />
         </div>
-      </div>
-      <AnimatedConnector orientation="vertical" active length={28} />
-      <div className="flex flex-col items-center gap-2">
-        <AnimatedNode status="active" icon={<Boxes className="size-6" />} size="lg" />
-        <span className="text-body-md font-medium text-ink-primary">StudioPOD</span>
       </div>
     </GlassPanel>
   );
@@ -221,7 +204,7 @@ export default function Home() {
             </Button>
           </CTAGroup>
         }
-        illustration={<CompositionIllustration />}
+        illustration={<ProductionFlowIllustration />}
         trustRow={{
           items: [
             "Production Operating System",

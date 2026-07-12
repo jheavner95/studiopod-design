@@ -12,6 +12,8 @@ export { publishing } from "./publishing";
 export { commerce } from "./commerce";
 export { qualityAssurance } from "./qualityAssurance";
 export { betaUserJourney } from "./betaUserJourney";
+/** The canonical, official end-to-end production flow — not part of the pattern-gallery examples above, reused directly by the homepage and architecture pages. */
+export { canonicalProductionFlow } from "./canonicalFlow";
 
 /** Every example workflow, for the Developer Playground's "show all workflows" gallery. */
 export const exampleWorkflows: Workflow[] = [

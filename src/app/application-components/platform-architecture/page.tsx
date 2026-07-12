@@ -4,6 +4,8 @@ import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
+import { PlatformArchitectureDiagram, PlatformLegend } from "@/platforms";
+import { completeArchitecture } from "@/platforms/examples";
 import { PLATFORM_ARCHITECTURE_TOPICS } from "./_data/architecture";
 import { PLATFORM_ANATOMY } from "./_data/anatomy";
 import { PLATFORM_TEMPLATES } from "./_data/templates";
@@ -125,6 +127,16 @@ export default function PlatformArchitecturePage() {
             description="This is the architecture every domain platform is built against today. Workflow/Operational/Foundation usage cites real, existing systems by name."
             descriptionMaxWidth={false}
           />
+          <div className="flex flex-col gap-4 rounded-lg border border-border-subtle bg-surface p-6">
+            <div className="flex flex-col gap-1">
+              <span className="text-body-md font-medium text-ink-primary">{completeArchitecture.title}</span>
+              <Caption className="text-ink-tertiary">{completeArchitecture.description}</Caption>
+            </div>
+            <div className="scrollbar-none overflow-x-auto">
+              <PlatformArchitectureDiagram architecture={completeArchitecture} layout="horizontal" />
+            </div>
+            <PlatformLegend architecture={completeArchitecture} onlyPresent />
+          </div>
           <div className="flex flex-col gap-6">
             {PLATFORM_TEMPLATES.map((template) => (
               <Card key={template.id} className="flex flex-col gap-4">

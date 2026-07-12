@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { MotionProvider } from "@/providers";
-import { GlobalNav } from "@/components/layout";
+import { GlobalNav, Footer } from "@/components/layout";
 import { LiveRegionProvider } from "@/components/feedback";
 import "./globals.css";
 
@@ -33,9 +33,10 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-canvas text-ink-primary antialiased">
         <MotionProvider>
           <LiveRegionProvider>
-            <div id="app-root">
+            <div id="app-root" className="flex min-h-full flex-1 flex-col">
               <GlobalNav />
-              {children}
+              <div className="flex-1">{children}</div>
+              <Footer />
             </div>
           </LiveRegionProvider>
         </MotionProvider>

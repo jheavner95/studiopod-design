@@ -4,6 +4,7 @@ export { SectionShell } from "./SectionShell";
 export { ContentColumns } from "./ContentColumns";
 export { CardGrid } from "./CardGrid";
 export { GlobalNav } from "./GlobalNav";
+export { Footer } from "./Footer";
 export { Stack, type StackGap, type StackAlign, type StackJustify } from "./Stack";
 export { Inline, type InlineGap, type InlineAlign, type InlineJustify } from "./Inline";
 export { Grid, type GridStrategy, type GridGap } from "./Grid";
