@@ -8,7 +8,7 @@ import { PRODUCTION_STAGES, VALIDATION_FLOW_ORDER, VALIDATION_FLOW_LABEL } from 
 import { ProductionFeatureWorkspace } from "./_components/ProductionFeatureWorkspace";
 
 const entry = getEntry("production-workspace-feature")!;
-const relatedComponents = [getEntry("production-platform")!, getEntry("business-feature-templates")!, getEntry("application-composition")!];
+const relatedComponents = [getEntry("production-platform")!, getEntry("business-feature-templates")!, getEntry("application-composition-doc")!];
 
 interface CompositionTier {
   id: string;

@@ -4,9 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Boxes } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DESIGN_SYSTEM_SECTIONS } from "@/lib/design-system-nav";
+import { NAV_SECTIONS } from "@/lib/design-system-navigation";
 
-/** Persistent top-level navigation across every Design System route — the seven packages, always reachable. */
+/**
+ * Persistent top-level navigation across every Design System route — the
+ * seven DS-7.1 goal-first sections (Overview/Components/Patterns/
+ * Applications/Architecture/Playground/Quality), always reachable. This
+ * used to read the pre-DS-7.1 DESIGN_SYSTEM_SECTIONS list (Foundations/
+ * Tokens/Core Components/Marketing Components/Application Components/
+ * Workflow Patterns/Documentation) — exactly the architecture-first
+ * primary navigation DS-7.1 Part 2 requires removing.
+ */
 export function GlobalNav() {
   const pathname = usePathname();
 
@@ -19,8 +27,8 @@ export function GlobalNav() {
             StudioPOD Design System
           </span>
         </Link>
-        <nav className="flex shrink-0 items-center gap-5" aria-label="Design system packages">
-          {DESIGN_SYSTEM_SECTIONS.map((section) => {
+        <nav className="flex shrink-0 items-center gap-5" aria-label="Design system sections">
+          {NAV_SECTIONS.filter((section) => section.id !== "overview").map((section) => {
             const active = pathname === section.href;
             return (
               <Link
@@ -32,7 +40,7 @@ export function GlobalNav() {
                   active ? "text-accent-400" : "text-ink-tertiary hover:text-ink-secondary",
                 )}
               >
-                {section.label}
+                {section.title}
               </Link>
             );
           })}

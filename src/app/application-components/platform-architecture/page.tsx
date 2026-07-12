@@ -14,8 +14,8 @@ import { CERTIFICATION_LEVELS, CERTIFICATION_MODEL_NOTE } from "./_data/certific
 import { ADOPTION_TARGETS, ADOPTION_SUMMARY, ADOPTION_TARGETS_STALENESS_NOTE, PLATFORM_LIST_DISCREPANCY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
 import { PLATFORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-const entry = getEntry("platform-architecture")!;
-const relatedComponents = [getEntry("production-platform")!, getEntry("platform-certification")!, getEntry("application-composition")!];
+const entry = getEntry("platform-architecture-doc")!;
+const relatedComponents = [getEntry("production-platform")!, getEntry("platform-certification")!, getEntry("application-composition-doc")!];
 
 const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "accent" | "neutral"> = {
   certified: "success",

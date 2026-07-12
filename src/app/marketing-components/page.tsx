@@ -42,7 +42,7 @@ const PRIMARY_ENTRY_POINTS = [
   },
 ];
 
-const RELATED_GROUPS = [getGroup("core-components")!, getGroup("foundations")!];
+const RELATED_GROUPS = [getGroup("core-ui")!, getGroup("foundations-tokens")!];
 
 export default function MarketingComponentsPage() {
   return (
@@ -54,7 +54,7 @@ export default function MarketingComponentsPage() {
             This package used to be the entire project. It has been reclassified: the compositions below are early
             design-system examples of how Foundation and Core Components compose into marketing page sections — not a
             roadmap toward a finished marketing site. That work is paused while{" "}
-            <span className="font-medium text-ink-secondary">Application Components</span> becomes the priority.
+            <span className="font-medium text-ink-secondary">the Components section</span> becomes the priority.
           </Body>
         </Card>
 

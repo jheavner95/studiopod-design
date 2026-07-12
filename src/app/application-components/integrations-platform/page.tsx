@@ -13,7 +13,7 @@ import { INTEGRATIONS_PROMOTION_CANDIDATES, INTEGRATIONS_CLEAN_FINDINGS } from "
 import { INTEGRATIONS_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("integrations-platform")!;
-const relatedComponents = [getEntry("admin-platform")!, getEntry("platform-architecture")!, getEntry("capabilities-library")!];
+const relatedComponents = [getEntry("admin-platform")!, getEntry("platform-architecture-doc")!, getEntry("capabilities-library")!];
 
 // Guidance entries that describe choosing between two overlapping options read as "when to use"
 // material; the rest describe how a region is scoped/composed and read as "composition" material.

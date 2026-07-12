@@ -4,10 +4,10 @@ import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { SectionBadge, Display, Body, Badge, Card, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { MetricCard } from "@/components/operational";
-import { getEntry, getGroupEntries, getSection } from "@/lib/design-system-navigation";
+import { getEntry, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("foundations")!;
-const children = getGroupEntries("foundations").filter((e) => e.id !== entry.id);
+const children = getGroupEntries("foundations-tokens").filter((e) => e.id !== entry.id);
 
 // The three richest, most fully built pages in this group — the Design
 // System Overview alone exercises thirteen real sections (palette, colors,
@@ -16,7 +16,9 @@ const children = getGroupEntries("foundations").filter((e) => e.id !== entry.id)
 const primaryEntryPoints = children.filter((e) => e.id === "design-system" || e.id === "motion" || e.id === "illustrations");
 const remainingEntries = children.filter((e) => !primaryEntryPoints.includes(e));
 
-const relatedSections = [getSection("core-components")!, getSection("application-components")!, getSection("documentation")!];
+const relatedGroups = getGroupsForSection("components").filter((group) =>
+  ["core-ui", "marketing", "components-overview"].includes(group.id),
+);
 
 // Real counts, grounded in the motion engine page's own copy ("five hooks,
 // fourteen primitives, one provider, one token set") and this group's own
@@ -53,7 +55,7 @@ export default function FoundationsPage() {
               across the whole site; the layout primitives (Container, PageShell, SectionShell, CardGrid) every page
               composes from; the motion engine&apos;s tokens, hooks, and primitives that every animation traces back
               to; and the illustration engine every workflow and architecture diagram renders through. Nothing in
-              Core Components, Application Components, or Workflow Patterns exists without this layer coming first.
+              Core UI Kit, the rest of Components, or Patterns exists without this layer coming first.
             </Body>
           </div>
           <div className="flex flex-col gap-3">
@@ -118,12 +120,12 @@ export default function FoundationsPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3} gap="md">
-            {relatedSections.map((section) => (
-              <Link key={section.id} href={section.href} className="focus-ring block rounded-lg">
+            {relatedGroups.map((group) => (
+              <Link key={group.id} href={group.href} className="focus-ring block rounded-lg">
                 <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{section.title}</span>
+                  <span className="text-body-md font-medium text-ink-primary">{group.title}</span>
                   <Body size="sm" muted>
-                    {section.description}
+                    {group.description}
                   </Body>
                 </Card>
               </Link>

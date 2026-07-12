@@ -1,24 +1,32 @@
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
-import { getEntry, getGroup, getGroupEntries } from "@/lib/design-system-navigation";
+import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("workflow-patterns")!;
-const children = getGroupEntries("workflow-patterns").filter((e) => e.id !== entry.id);
 
-// The only real page in this group today — see the group landing entry's
-// own "next" pointer in the registry.
+// Patterns' two real content groups — patterns-overview (this page's own
+// group) is excluded so the landing never links to itself.
+const contentGroups = getGroupsForSection("patterns").filter((group) => group.id !== "patterns-overview");
+
+const platformTemplateEntries = getGroupEntries("platform-templates");
+const processDiagramEntries = getGroupEntries("process-diagrams");
+const children = [...platformTemplateEntries, ...processDiagramEntries];
+
 const primaryEntryPoints = children;
-const relatedGroups = [getGroup("foundations")!, getGroup("workflow-systems")!, getGroup("diagram-libraries")!];
+const relatedGroups = [getGroup("components-overview")!, getGroup("workflow-process")!, getGroup("applications-overview")!];
 
-// Real, grep-verifiable counts against src/workflows/: 6 workflows in
-// src/workflows/examples/index.ts, 4 patterns in WorkflowPattern
-// (src/workflows/types/workflow.ts), 8 files under src/workflows/components/.
+// Real, grep-verifiable counts: 7 platform templates (PLATFORM_TEMPLATES in
+// application-components/_data/templates.ts), 8-of-9 Feature Categories
+// covered by the Business Feature Templates composition matrix (per the
+// registry's own entry description), 6 example workflows in
+// src/workflows/examples/index.ts rendered through the Process Diagrams
+// library, 2 content groups this landing organizes.
 const STATS = [
+  { label: "Platform templates", value: "7" },
+  { label: "Feature categories covered", value: "8 of 9" },
   { label: "Example workflows", value: "6" },
-  { label: "Diagram patterns", value: "4" },
-  { label: "Reusable components", value: "8" },
-  { label: "Pages in this section", value: String(children.length) },
+  { label: "Pattern groups", value: String(contentGroups.length) },
 ];
 
 export default function WorkflowPatternsPage() {
@@ -29,13 +37,12 @@ export default function WorkflowPatternsPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Workflow Patterns is StudioPOD's library of reusable diagrams for visualizing multi-step processes end to end, rendered entirely from structured data through the illustration engine. It exists because production workflows keep needing the same handful of shapes — linear pipelines, looping retry cycles, branching decision points, and parallel tracks — and this section proves all four render through one reusable component instead of one-off diagram code per page. It's deliberately scoped to visualization patterns rather than application behavior, which is why it sits alongside Foundations and the Application Components tiers rather than inside either."
+        purpose="Patterns is StudioPOD's library of reusable compositions and templates for recurring problems — the layer between Components and Applications. Where Components documents individual widgets and Applications documents full domain compositions, Patterns is for engineers and designers assembling a new feature who need a proven starting shape rather than either a single primitive or a finished platform. It holds two real groups today: Platform Templates, the reusable platform-screen and Business Feature blueprints assembled from certified components, and Process Diagrams, the workflow visualization library that renders any multi-step process from structured data through the illustration engine."
         whatYoullLearn={[
-          "The four workflow patterns the diagram engine supports — linear, looping, branching, and parallel — and which of the six example workflows demonstrates each.",
-          "How to render a full workflow from a plain data value with <WorkflowDiagram workflow={data} />, with no page-specific rendering code required.",
-          "The reusable primitives — diagram, legend, step details, timeline, rail, card, mini-map, and progress — that compose into full diagrams, timelines, and compact summaries.",
-          "Playback and scrubbing controls for walking through a workflow step by step, and how the same diagram adapts across desktop, tablet, and mobile.",
-          "Why this library is distinct from the similarly-named Workflow Systems group under Application Components, even though both work with multi-step processes.",
+          "The two groups this section organizes — Platform Templates (reusable platform-screen and Business Feature blueprints) and Process Diagrams (the workflow visualization library) — and when to reach for each.",
+          "The seven platform-screen templates and their required component families, plus the Business Feature Templates catalog covering eight of the composition framework's nine Feature Categories.",
+          "The four workflow patterns the diagram engine supports — linear, looping, branching, and parallel — and how to render any of the six example workflows with a single <WorkflowDiagram workflow={data} /> call.",
+          "Why Patterns is distinct from both Components' own Workflow & Process family and from Applications' full domain platforms, even though all three touch multi-step processes.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}

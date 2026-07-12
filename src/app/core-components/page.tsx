@@ -4,7 +4,7 @@ import { PageShell, SectionShell, CardGrid } from "@/components/layout";
 import { SectionBadge, Display, Body, Badge, Card, StatCard, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
 import { DESIGN_SYSTEM_SECTIONS } from "@/lib/design-system-nav";
-import { getSection } from "@/lib/design-system-navigation";
+import { getGroupsForSection } from "@/lib/design-system-navigation";
 
 const section = DESIGN_SYSTEM_SECTIONS.find((s) => s.id === "core-components")!;
 
@@ -24,7 +24,9 @@ const STATS = [
   { value: "12", label: "Form control components", description: "Inputs, selects, toggles & wrappers" },
 ];
 
-const relatedSections = [getSection("foundations")!, getSection("marketing-components")!, getSection("application-components")!];
+const relatedGroups = getGroupsForSection("components").filter((group) =>
+  ["components-overview", "foundations-tokens", "marketing"].includes(group.id),
+);
 
 export default function CoreComponentsPage() {
   return (
@@ -61,7 +63,7 @@ export default function CoreComponentsPage() {
                 "The two families that make up the shared UI kit: general-purpose display primitives and form controls.",
                 "Where each component's variants and interaction states — hover, disabled, loading, error — are actually demonstrated today.",
                 "The real split between the 11 general UI primitives and the 12 form control components.",
-                "How this kit relates to Foundations underneath it and to Marketing Components and Application Components, which build on top of it.",
+                "How this kit relates to Foundations underneath it and to Marketing Sections and the rest of Components, which build on top of it.",
               ].map((item) => (
                 <li key={item} className="flex gap-2 text-body-sm text-ink-secondary">
                   <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent-500" aria-hidden />
@@ -130,12 +132,12 @@ export default function CoreComponentsPage() {
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3} gap="md">
-            {relatedSections.map((related) => (
-              <Link key={related.id} href={related.href} className="focus-ring block rounded-lg">
+            {relatedGroups.map((group) => (
+              <Link key={group.id} href={group.href} className="focus-ring block rounded-lg">
                 <Card interactive className="flex h-full flex-col gap-2">
-                  <span className="text-body-md font-medium text-ink-primary">{related.title}</span>
+                  <span className="text-body-md font-medium text-ink-primary">{group.title}</span>
                   <Body size="sm" muted>
-                    {related.description}
+                    {group.description}
                   </Body>
                 </Card>
               </Link>

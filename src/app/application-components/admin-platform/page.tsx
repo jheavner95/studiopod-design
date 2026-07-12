@@ -13,7 +13,7 @@ import { ADMIN_PROMOTION_CANDIDATES, ADMIN_CLEAN_FINDINGS } from "./_data/promot
 import { ADMIN_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("admin-platform")!;
-const relatedComponents = [getEntry("platform-architecture")!, getEntry("operations-platform")!, getEntry("integrations-platform")!];
+const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("operations-platform")!, getEntry("integrations-platform")!];
 
 // IMPLEMENTATION_GUIDANCE holds two kinds of notes: how these components compose from
 // other tiers (Composition), and where each component's own responsibility stops

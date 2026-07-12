@@ -7,12 +7,7 @@ import { NavigationSection } from "@/components/navigation";
 import { Button } from "@/components/ui";
 import { DocsSidebarGroup } from "./DocsSidebarGroup";
 import { DocsSectionNav } from "./DocsSectionNav";
-import {
-  CANONICAL_APPLICATION_GROUPS,
-  getGroupsForSection,
-  getSection,
-  type NavSectionId,
-} from "@/lib/design-system-navigation";
+import { getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 
 interface DocsMobileNavProps {
   section: NavSectionId;
@@ -22,10 +17,7 @@ interface DocsMobileNavProps {
 export function DocsMobileNav({ section }: DocsMobileNavProps) {
   const [open, setOpen] = useState(false);
   const sectionMeta = getSection(section);
-  const groups =
-    section === "application-components"
-      ? CANONICAL_APPLICATION_GROUPS
-      : getGroupsForSection(section).map((group) => group.id);
+  const groups = getGroupsForSection(section).map((group) => group.id);
 
   return (
     <>

@@ -15,7 +15,7 @@ import { ResponsiveSection } from "./_sections/ResponsiveSection";
 
 const relatedComponents = [
   {
-    entry: getEntry("platform-architecture")!,
+    entry: getEntry("platform-architecture-doc")!,
     description:
       "The blueprint every domain platform is built against — layer composition, ownership model, and certification ladder.",
   },

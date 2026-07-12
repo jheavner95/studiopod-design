@@ -1,3 +1,28 @@
+/**
+ * LEGACY — this is the old, hand-authored, tier-first marketing-site
+ * section list (Foundations/Tokens/Core Components/Marketing Components/
+ * Application Components/Workflow Patterns/Documentation as seven flat,
+ * independent packages). It predates and is completely separate from the
+ * DS-7.1 product information architecture in design-system-navigation.ts
+ * (NAV_SECTIONS/NAV_GROUPS/NAV_REGISTRY), which is the current single
+ * source of truth for the seven goal-first sections (Overview/Components/
+ * Patterns/Applications/Architecture/Playground/Quality) and every page
+ * built against it, including the homepage (src/app/page.tsx) and
+ * src/app/documentation/page.tsx.
+ *
+ * DS-7.1 Part 7 retired this file as the homepage's and GlobalNav's data
+ * source (both now read NAV_SECTIONS) but did NOT delete it:
+ * application-components/page.tsx, marketing-components/page.tsx,
+ * tokens/page.tsx, core-components/page.tsx, and
+ * components/layout/SectionPlaceholder.tsx still import
+ * DESIGN_SYSTEM_SECTIONS or DesignSystemSection from here for their own
+ * page-header content (title/eyebrow/description/status/references) — that
+ * content has been corrected to match the new framing, but the plumbing
+ * itself is still this legacy shape. Don't delete this file, and don't
+ * change its exported shape, until those call sites are migrated to
+ * design-system-navigation.ts too.
+ */
+
 export interface DesignSystemReference {
   title: string;
   /** Omitted for references that aren't a route yet (e.g. repo docs). */
@@ -53,11 +78,11 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
     id: "tokens",
     label: "Tokens",
     href: "/tokens",
-    eyebrow: "package · tokens",
+    eyebrow: "components · foundations & tokens",
     title: "Tokens",
     description:
-      "The raw and semantic design tokens StudioPOD Web and App both consume: color ramps, typography, spacing, radius, and shadow scales.",
-    status: "Established — consolidating into a dedicated section page.",
+      "The raw and semantic design tokens StudioPOD Web and App both consume: color ramps, typography, spacing, radius, and shadow scales. Part of Components' own Foundations & Tokens family.",
+    status: "Established.",
     references: [
       {
         title: "Foundation color palette",
@@ -80,11 +105,11 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
     id: "core-components",
     label: "Core Components",
     href: "/core-components",
-    eyebrow: "package · core components",
+    eyebrow: "components · core ui kit",
     title: "Core Components",
     description:
-      "The shared UI kit every product surface — marketing or application — is built from: buttons, cards, badges, form inputs, and controls.",
-    status: "Established — consolidating into a dedicated section page.",
+      "The shared UI kit every product surface — marketing or application — is built from: buttons, cards, badges, form inputs, and controls. Part of Components' own Core UI Kit family.",
+    status: "Established.",
     references: [
       {
         title: "Component gallery",
@@ -102,11 +127,11 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
     id: "marketing-components",
     label: "Marketing Components",
     href: "/marketing-components",
-    eyebrow: "package · marketing components",
+    eyebrow: "components · marketing sections",
     title: "Marketing Components",
     description:
-      "Reusable marketing page-section compositions built entirely from the packages above. One package among several here, not the project's focus.",
-    status: "Early design-system examples — reclassified from the original marketing-site build, not the final site.",
+      "Reusable marketing page-section compositions built entirely from Core Components and Foundations. Part of Components' own Marketing Sections family.",
+    status: "Established.",
     references: [
       {
         title: "Composition playground",
@@ -117,28 +142,28 @@ export const DESIGN_SYSTEM_SECTIONS: DesignSystemSection[] = [
   },
   {
     id: "application-components",
-    label: "Application Components",
+    label: "Components",
     href: "/application-components",
-    eyebrow: "package · application components",
-    title: "Application Components",
+    eyebrow: "components · overview",
+    title: "Components",
     description:
-      "The operational libraries the StudioPOD application itself is built from — architecture, production, and capability visualizations. The next major focus of this project.",
-    status: "Next major focus — existing libraries reclassified as early examples.",
+      "The reusable component library the StudioPOD application itself is built from, organized by family (Layout, Navigation, Data Display, Forms, Overlays, Feedback, Search & Filter, Inspector & Properties, Workflow & Process) rather than by build history — see the Components landing page for the full family index.",
+    status: "Established — nine certifications complete, see Quality for the full record.",
     references: [
       {
-        title: "Platform architecture library",
-        href: "/platforms",
-        description: "Diagrams explaining how StudioPOD's platforms and their relationships fit together.",
+        title: "Components landing page",
+        href: "/application-components",
+        description: "The full family index — every reusable component grouped by what it's for, not which package built it.",
       },
       {
-        title: "Production & validation library",
-        href: "/production",
-        description: "How StudioPOD validates artwork, tracks quality gates, and reports production health.",
+        title: "Applications",
+        href: "/applications",
+        description: "The eight domain platform libraries and the real Business Feature pilot built from these components.",
       },
       {
-        title: "Capability library",
-        href: "/capabilities",
-        description: "Provider-agnostic AI, publishing, and commerce capability and adapter diagrams.",
+        title: "Quality",
+        href: "/docs/certification",
+        description: "Every certification and audit, including the nine capstones covering this component library.",
       },
     ],
   },

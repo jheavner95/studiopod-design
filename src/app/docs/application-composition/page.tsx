@@ -14,8 +14,8 @@ import { APPLICATION_BOUNDARIES } from "./_data/boundaries";
 import { ADOPTION_TARGETS, ADOPTION_SUMMARY, VERDICT_LABEL, type FeatureAdoptionVerdict } from "./_data/adoption";
 import { APPLICATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-const entry = getEntry("application-composition")!;
-const relatedComponents = [getEntry("platform-architecture")!, getEntry("platform-certification")!, getEntry("business-features")!];
+const entry = getEntry("application-composition-doc")!;
+const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("platform-certification")!, getEntry("business-features-doc")!];
 
 const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "neutral"> = {
   certified: "success",

@@ -1,33 +1,40 @@
+import Link from "next/link";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
-import { DocsEntryGrid } from "./_components/DocsEntryGrid";
 import { DocsSectionLanding } from "./_components/DocsSectionLanding";
-import { SectionShell } from "@/components/layout";
-import { SectionHeader, Eyebrow } from "@/components/ui";
-import { CANONICAL_APPLICATION_GROUPS, getEntry, getGroup, getGroupEntries } from "@/lib/design-system-navigation";
+import { SectionShell, CardGrid } from "@/components/layout";
+import { Card, Body, Badge, SectionHeader, Eyebrow } from "@/components/ui";
+import { getEntry, getGroup, getGroupsForSection, getGroupEntries, getSectionEntries } from "@/lib/design-system-navigation";
 
 const entry = getEntry("docs-root")!;
-const landingEntries = CANONICAL_APPLICATION_GROUPS.map((groupId) => getGroupEntries(groupId)[0]).filter(
-  (candidate) => candidate !== undefined,
-);
 
-const primaryEntryPoints = landingEntries.filter((e) =>
-  ["docs-workspace", "docs-foundation", "docs-certification"].includes(e.id),
-);
+// DS-7.1 Part 2: Architecture is no longer a tier-first primary-nav listing —
+// it's the composition-rules/layering documentation for a builder auditing how
+// the system fits together, distinct from Components/Applications where a
+// builder actually goes to find and use things. Its own "architecture-overview"
+// group is this page itself, so every other real group is what gets browsed.
+const architectureGroups = getGroupsForSection("architecture").filter((group) => group.id !== "architecture-overview");
 
-const relatedGroups = [getGroup("foundations")!, getGroup("core-components")!, getGroup("workflow-patterns")!];
+// One representative entry point per group — each group's own order-0 landing
+// entry — surfaced as this page's "Start here" cards.
+const primaryEntryPoints = architectureGroups.map((group) => getGroupEntries(group.id)[0]).filter((candidate) => candidate !== undefined);
 
-// Real counts verified against src/lib/design-system-navigation.ts: the six canonical Application
-// Components groups hold 55 pages total (10 Workspace + 10 Foundation + 11 Operational + 10 Workflow +
-// 11 Platform + 3 Certification: the index plus the Accessibility & Interaction Quality and Enterprise
-// Architecture & Adoption audit pages). Five of those tiers — Workspace, Foundation, Operational,
-// Workflow, and Platform — each carry a completed capstone certification entry (status: "certified").
-// Platform Systems scopes 8 domain-specific libraries (Production, Product, Publishing, Commerce,
-// Intelligence, Operations, Admin, Integrations).
+// Components and Applications are where a builder goes to find and use things;
+// Architecture is where the rules governing how those things compose live.
+// Patterns sits between the two — reusable compositions built on top of both.
+const relatedGroups = [getGroup("components-overview")!, getGroup("applications-overview")!, getGroup("patterns-overview")!];
+
+// Real counts, derived from NAV_REGISTRY rather than hardcoded: the architecture
+// section holds this landing plus four real groups — Workspace Shell (the
+// six-region blueprint), Tier Model (how Foundation/Operational/Workflow/Platform
+// compose, now framed as internal documentation rather than primary nav),
+// Platform Architecture, and Application Composition.
+const sectionEntries = getSectionEntries("architecture");
+const certifiedCount = sectionEntries.filter((e) => e.status === "certified").length;
 const STATS = [
-  { label: "Pages in this hub", value: "55" },
-  { label: "Documentation tiers", value: "6" },
-  { label: "Tiers certified", value: "5 of 5" },
-  { label: "Platform domains", value: "8" },
+  { label: "Pages in this section", value: String(sectionEntries.length) },
+  { label: "Composition groups", value: String(architectureGroups.length) },
+  { label: "Certified capstones", value: String(certifiedCount) },
+  { label: "Tiers documented", value: "4" },
 ];
 
 export default function DocsHomePage() {
@@ -36,12 +43,12 @@ export default function DocsHomePage() {
       <DocsPageHeader entry={entry} />
 
       <DocsSectionLanding
-        purpose="This is the entry point to the Application Components documentation — the architecture behind the StudioPOD application itself, organized into six tiers you can read in order or jump into directly. Workspace defines the six-region shell every screen composes; Foundation supplies the generic UI primitives underneath everything else; Operational and Workflow compose those primitives into ready-to-use panels and multi-step process systems; and Platform scopes all of it into eight domain-specific libraries. Certification is where each tier's own audit record lives."
+        purpose="Architecture is where the old tier concepts — Foundation, Operational, Workflow, Platform, and Business Feature — now live as documentation, not as primary navigation. This section has no live examples to browse and nothing to pick up and use; it exists to explain the composition rules and layering model that everything in Components, Patterns, and Applications is built against. Start with the Workspace Shell for the six-region blueprint every application screen composes, or the Tier Model for how the four lower tiers stack on top of one another."
         whatYoullLearn={[
-          "The six-tier architecture — Workspace, Foundation, Operational, Workflow, Platform, Certification — and how each tier builds only on the ones before it.",
-          "Where the six-region workspace shell and the seven generic Foundation primitive families live, and which higher tiers reuse them.",
-          "How nine Operational panels and eight Workflow systems get scoped into eight domain-specific Platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Admin, and Integrations.",
-          "Which tiers already hold a completed capstone certification, and where to read each tier's full audit record.",
+          "Why Foundation, Operational, Workflow, and Platform moved out of primary navigation and now live here as internal documentation instead of top-level tiers a builder browses.",
+          "The six-region Workspace Shell blueprint every application screen composes, and how its own capstone certification covers it end to end.",
+          "How the Tier Model's four layers — Foundation, Operational, Workflow, Platform — build strictly on the ones before them, and where each tier's own certification record lives.",
+          "How Platform Architecture and Application Composition define the rules a real domain platform and a real Business Feature are each built against.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}
@@ -51,12 +58,51 @@ export default function DocsHomePage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-6">
           <SectionHeader
-            id="all-tiers"
-            eyebrow={<Eyebrow tone="accent">Browse by tier</Eyebrow>}
-            title="All six tiers"
+            id="browse-architecture"
+            eyebrow={<Eyebrow tone="accent">Browse by group</Eyebrow>}
+            title="The four composition groups"
             descriptionMaxWidth={false}
           />
-          <DocsEntryGrid entries={landingEntries} />
+          <CardGrid columns={2} gap="md">
+            {architectureGroups.map((group) => {
+              const groupEntries = getGroupEntries(group.id);
+              const groupCertifiedCount = groupEntries.filter((e) => e.status === "certified").length;
+              return (
+                <Card key={group.id} className="flex h-full flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <Link
+                        href={group.href}
+                        className="focus-ring rounded-md text-body-lg font-medium text-ink-primary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-accent-400"
+                      >
+                        {group.title}
+                      </Link>
+                      {groupCertifiedCount > 0 ? (
+                        <Badge tone="success" size="sm">
+                          Certified
+                        </Badge>
+                      ) : null}
+                    </div>
+                    <Body size="sm" muted>
+                      {group.description}
+                    </Body>
+                  </div>
+                  <ul className="flex flex-col gap-1.5 border-t border-border-subtle pt-3">
+                    {groupEntries.map((groupEntry) => (
+                      <li key={groupEntry.id}>
+                        <Link
+                          href={groupEntry.href}
+                          className="focus-ring block rounded-md text-body-sm text-ink-secondary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-ink-primary"
+                        >
+                          {groupEntry.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              );
+            })}
+          </CardGrid>
         </div>
       </SectionShell>
     </DocsShell>

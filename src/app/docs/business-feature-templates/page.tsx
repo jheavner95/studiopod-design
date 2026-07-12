@@ -10,7 +10,7 @@ import { COMPOSITION_MATRIX } from "./_data/composition-matrix";
 const entry = getEntry("business-feature-templates")!;
 const purposeTopic = PHILOSOPHY_TOPICS.find((t) => t.label === "Purpose")!;
 const guidanceTopics = PHILOSOPHY_TOPICS.filter((t) => t.label !== "Purpose");
-const relatedComponents = [getEntry("business-features")!, getEntry("platform-architecture")!, getEntry("platform-certification")!];
+const relatedComponents = [getEntry("business-features-doc")!, getEntry("platform-architecture-doc")!, getEntry("platform-certification")!];
 
 function getTemplate(id: string) {
   const template = FEATURE_TEMPLATES.find((t) => t.id === id);

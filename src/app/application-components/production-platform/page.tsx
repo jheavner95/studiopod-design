@@ -13,7 +13,7 @@ import { PRODUCTION_PROMOTION_CANDIDATES, PRODUCTION_CLEAN_FINDINGS } from "./_d
 import { PRODUCTION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("production-platform")!;
-const relatedComponents = [getEntry("platform-architecture")!, getEntry("product-platform")!, getEntry("production-workspace-feature")!];
+const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("product-platform")!, getEntry("production-workspace-feature")!];
 
 export default function ProductionPlatformPage() {
   return (

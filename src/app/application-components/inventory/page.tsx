@@ -20,7 +20,7 @@ const STATUS_COUNTS = STATUS_ORDER.map((status) => ({
 }));
 
 const entry = getEntry("inventory")!;
-const relatedComponents = [getEntry("architecture")!, getEntry("coverage")!, getEntry("maturity")!];
+const relatedComponents = [getEntry("architecture-doc")!, getEntry("coverage")!, getEntry("maturity")!];
 
 /**
  * A planning/inventory page for the Application Components package — not

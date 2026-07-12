@@ -8,7 +8,7 @@ import { DependencyChainRow, DependencyFanoutBlock } from "../_components/Depend
 import { COMPONENT_FAMILIES } from "../_data/families";
 import { DEPENDENCY_CHAINS, DEPENDENCY_FANOUTS } from "../_data/dependency-map";
 
-const entry = getEntry("architecture")!;
+const entry = getEntry("architecture-doc")!;
 const relatedComponents = [getEntry("inventory")!, getEntry("coverage")!, getEntry("templates")!];
 
 export default function ArchitecturePage() {

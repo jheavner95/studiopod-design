@@ -15,8 +15,8 @@ import { CANDIDATE_FEATURES, CANDIDATE_SUMMARY } from "./_data/candidates";
 import { FUTURE_EXTENSIONS } from "./_data/future-extensions";
 import type { FeatureAdoptionVerdict } from "@/app/docs/application-composition/_data/adoption";
 
-const entry = getEntry("business-features")!;
-const relatedComponents = [getEntry("application-composition")!, getEntry("business-feature-templates")!, getEntry("platform-architecture")!];
+const entry = getEntry("business-features-doc")!;
+const relatedComponents = [getEntry("application-composition-doc")!, getEntry("business-feature-templates")!, getEntry("platform-architecture-doc")!];
 
 const STRUCTURE_TONE: Record<StructureKind, "neutral" | "accent" | "warning" | "success"> = {
   root: "neutral",

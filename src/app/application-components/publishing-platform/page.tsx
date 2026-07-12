@@ -13,7 +13,7 @@ import { PUBLISHING_PROMOTION_CANDIDATES, PUBLISHING_CLEAN_FINDINGS } from "./_d
 import { PUBLISHING_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("publishing-platform")!;
-const relatedComponents = [getEntry("platform-architecture")!, getEntry("product-platform")!, getEntry("commerce-platform")!];
+const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("product-platform")!, getEntry("commerce-platform")!];
 
 export default function PublishingPlatformPage() {
   return (

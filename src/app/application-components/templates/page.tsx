@@ -9,7 +9,7 @@ import { PLATFORM_TEMPLATES, templateReadiness } from "../_data/templates";
 import { COMPONENT_FAMILIES } from "../_data/families";
 
 const entry = getEntry("templates")!;
-const relatedEntries = [getEntry("architecture")!, getEntry("coverage")!, getEntry("maturity")!];
+const relatedEntries = [getEntry("architecture-doc")!, getEntry("coverage")!, getEntry("maturity")!];
 
 const platformTemplatesFamily = COMPONENT_FAMILIES.find((family) => family.id === "platform-templates")!;
 const analyticsFamily = COMPONENT_FAMILIES.find((family) => family.id === "analytics")!;

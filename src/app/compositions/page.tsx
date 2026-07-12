@@ -3,9 +3,13 @@ import { Boxes } from "lucide-react";
 import { PageShell, SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@/components/ui";
 import { SystemGrid } from "@/components/illustration";
-import { getEntry } from "@/lib/design-system-navigation";
+import { getEntry, getGroup, getSection } from "@/lib/design-system-navigation";
 import { PlaygroundBody } from "./_components/PlaygroundBody";
 import { REGISTRY } from "./_lib/registry";
+
+const entry = getEntry("compositions")!;
+const entrySection = getSection(entry.section)!;
+const entryGroup = getGroup(entry.group)!;
 
 const groupNames = Array.from(new Set(REGISTRY.map((entry) => entry.group)));
 const variantCount = REGISTRY.length;
@@ -83,7 +87,7 @@ const COMPOSITION_LAYERS = [
 const FUTURE_ENHANCEMENTS = [
   {
     title: "Real pages built from this layer",
-    description: "The playground proves the 11 composition types compose cleanly. Assembling actual marketing pages from them, rather than new one-off sections, hasn't started — that work is paused while Application Components is the priority.",
+    description: "The playground proves the 11 composition types compose cleanly. Assembling actual marketing pages from them, rather than new one-off sections, hasn't started — that work is paused while the Components section is the priority.",
   },
   {
     title: "Screen-reader affordances for active selection",
@@ -96,7 +100,7 @@ export default function CompositionsPage() {
     <PageShell background={<SystemGrid />}>
       <SectionShell spacing="xl">
         <div className="flex flex-col gap-6">
-          <SectionBadge icon={<Boxes className="size-3.5" />}>Marketing Components / Compositions</SectionBadge>
+          <SectionBadge icon={<Boxes className="size-3.5" />}>{entrySection.title} / {entryGroup.title}</SectionBadge>
           <Display>Composition playground</Display>
           <Body size="lg" muted className="max-w-[var(--container-narrow)]">
             {variantCount} reusable marketing section compositions, built entirely from the design system below them.
@@ -247,7 +251,7 @@ export default function CompositionsPage() {
                 This composition layer was originally the entire project&rsquo;s scope. It has since been
                 reclassified as an early proof of the composition model — showing how Foundation and Core Components
                 primitives compose into marketing sections — rather than a roadmap toward a finished marketing site.
-                That work is paused while Application Components is the priority; see{" "}
+                That work is paused while the Components section is the priority; see{" "}
                 <Link href="/marketing-components" className="font-medium text-ink-secondary underline underline-offset-2">
                   Marketing Components
                 </Link>{" "}
