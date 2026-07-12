@@ -82,7 +82,7 @@ export function GlobalNav() {
           </span>
         </Link>
 
-        <nav className="hidden min-w-0 items-center gap-5 overflow-x-auto md:flex" aria-label="Design system sections">
+        <nav className="hidden min-w-0 items-center gap-6 overflow-x-auto lg:flex" aria-label="Design system sections">
           {SECTIONS.map((section) => {
             const active = section.id === activeSectionId;
             return (
@@ -92,8 +92,10 @@ export function GlobalNav() {
                 href={section.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "focus-ring whitespace-nowrap border-b-2 pb-[3px] text-caption font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
-                  active ? "border-accent-400 text-ink-primary" : "border-transparent text-ink-tertiary hover:text-ink-secondary",
+                  "focus-ring whitespace-nowrap rounded-md border-b-2 px-0.5 pb-[3px] text-caption font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+                  active
+                    ? "border-accent-400 text-ink-primary"
+                    : "border-transparent text-ink-tertiary hover:border-border-strong hover:text-ink-secondary",
                 )}
               >
                 {section.title}
@@ -103,12 +105,12 @@ export function GlobalNav() {
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
-          <DocsSearchTrigger className="hidden md:flex" />
-          <DocsSearchTrigger compact className="md:hidden" />
+          <DocsSearchTrigger className="hidden lg:flex" />
+          <DocsSearchTrigger compact className="lg:hidden" />
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Open navigation menu"
           >
