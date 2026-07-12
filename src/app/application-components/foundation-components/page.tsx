@@ -7,12 +7,10 @@ import { CatalogExplorer } from "./_components/CatalogExplorer";
 import { catalogSummary, stateFrequency, accessibilityFrequency } from "./_data/catalog";
 import { FOUNDATION_BLOCKERS, resolveBlockers } from "./_data/readiness";
 import { MATURITY_LEVELS } from "../_data/maturity";
-import { buildBacklog } from "./_data/backlog";
 import { FOUNDATION_DESIGN_RULES } from "./_data/design-rules";
 import { FOUNDATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const summary = catalogSummary();
-const backlog = buildBacklog();
 const requiredStateCounts = stateFrequency(3);
 const accessibilityCounts = accessibilityFrequency(2);
 const entry = getEntry("foundation-components")!;
@@ -156,7 +154,7 @@ export default function FoundationComponentsPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="Which components in this catalog compose into each not-yet-built component group above it — grounded in the same catalog above, not a separate list."
+            description="Which components each higher-tier group is composed from — grounded in the same catalog above, not a separate list."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -207,50 +205,16 @@ export default function FoundationComponentsPage() {
             />
             <DescriptionList items={MATURITY_LEVELS.map((entry) => ({ label: entry.level, value: entry.description }))} />
             <Caption className="text-ink-tertiary">
-              No component in this catalog has been marked Certified or Locked — neither level can be reached from
-              status alone, and no foundation component has gone through that review yet.
+              Certified requires an accessibility audit and adoption across at least two Operational or Workflow
+              surfaces; Locked requires Certified plus a stable API with no breaking changes for two release cycles.
             </Caption>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id="implementation-backlog"
-              title="Implementation backlog"
-              description="Filtered live from the catalog above, in priority order."
-              descriptionMaxWidth={false}
-            />
-            <div className="flex flex-col gap-6">
-              {backlog.map((bucket) => (
-                <div key={bucket.id} className="flex flex-col gap-3">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-body-md font-medium text-ink-primary">
-                      {bucket.title} ({bucket.items.length})
-                    </span>
-                    <Body size="sm" muted>
-                      {bucket.description}
-                    </Body>
-                  </div>
-                  {bucket.items.length > 0 ? (
-                    <div className="flex flex-wrap gap-1.5">
-                      {bucket.items.map((component) => (
-                        <Badge key={component.id} tone="neutral" size="sm">
-                          {component.name}
-                        </Badge>
-                      ))}
-                    </div>
-                  ) : (
-                    <Caption className="text-ink-tertiary">Nothing in this bucket today.</Caption>
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="flex flex-col gap-10">
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the foundation layer leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

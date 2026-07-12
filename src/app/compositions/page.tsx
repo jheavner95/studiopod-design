@@ -88,7 +88,7 @@ const COMPOSITION_LAYERS = [
 const FUTURE_ENHANCEMENTS = [
   {
     title: "Real pages built from this layer",
-    description: "The playground proves the 11 composition types compose cleanly. Assembling actual marketing pages from them, rather than new one-off sections, hasn't started — that work is paused while the Components section is the priority.",
+    description: "The playground proves the 11 composition types compose cleanly. Composed marketing pages are not yet assembled from this layer; see Marketing Components for finished sections.",
   },
   {
     title: "Screen-reader affordances for active selection",
@@ -239,9 +239,8 @@ export default function CompositionsPage() {
             <Card className="flex flex-col gap-2">
               <Body size="sm" muted>
                 This composition layer is a proof of the composition model — showing how Foundation and Core
-                Components primitives compose into marketing sections — rather than a roadmap toward a finished
-                marketing site. Assembling real marketing pages from it is intentionally out of scope while the
-                Components section is the priority; see{" "}
+                Components primitives compose into marketing sections. Composed marketing pages are not yet
+                assembled from this layer; see{" "}
                 <Link href="/marketing-components" className="font-medium text-ink-secondary underline underline-offset-2">
                   Marketing Components
                 </Link>{" "}
@@ -254,7 +253,7 @@ export default function CompositionsPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={2}>

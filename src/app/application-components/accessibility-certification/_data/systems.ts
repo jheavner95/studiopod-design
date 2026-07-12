@@ -51,7 +51,7 @@ export const TIER_REVIEWS: TierReview[] = [
     resolvedCount: 2,
     deferredCount: 4,
     rejectedCount: 0,
-    summary: "Two real defects fixed and verified live in the browser. Four real, verified gaps disclosed and deferred rather than fixed out of scope: a shared Foundation-tier keyboard gap surfacing through DataGrid/Queue, two systemic live-region gaps matching this session's own explicit \"separate phase\" instruction, and an unconfirmed touch-target sweep across four icon-only affordances.",
+    summary: "Two real defects fixed and verified live in the browser. Four real, verified gaps disclosed and deferred rather than fixed out of scope: a shared Foundation-tier keyboard gap surfacing through DataGrid/Queue, two systemic live-region gaps where useAnnounce() wiring remains unimplemented, and an unconfirmed touch-target sweep across four icon-only affordances.",
   },
 ];
 

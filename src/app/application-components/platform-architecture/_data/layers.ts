@@ -53,7 +53,7 @@ export const LAYER_STACK: LayerDefinition[] = [
     id: "business-features",
     name: "Business Features",
     status: "future",
-    owns: "Feature implementations — real screens, routing, data fetching, and business logic. A genuinely new term in this codebase (see Component Ownership); no prior package has used it, and none of Platform's own audit found any existing code at this tier either.",
+    owns: "Feature implementations — real screens, routing, data fetching, and business logic that compose Platform, Workflow, Operational, and Foundation components into finished product experiences.",
     composesFrom: "Foundation, Operational, Workflow, Platform",
     certificationRef: null,
   },

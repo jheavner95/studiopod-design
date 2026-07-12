@@ -26,12 +26,12 @@ export const DEFERRED: PromotionEntry[] = [
   {
     title: "No aria-live wiring for feature-level state changes",
     system: "Production Workspace Feature pilot",
-    detail: "See Accessibility Review. Foundation's own Toast component already implements the pattern; the pilot doesn't compose it yet. Deferred to whichever future package builds a second real Business Feature — a natural point to establish the announcement pattern once and reuse it, rather than retrofitting this one pilot alone.",
+    detail: "See Accessibility Review. Foundation's own Toast component already implements the pattern; the pilot does not compose it. Establishing the announcement pattern once, for reuse across every Business Feature, is the recommended approach rather than retrofitting this one pilot alone.",
   },
   {
     title: "Enterprise Certified requires real production adoption",
     system: "Application Composition (whole tier)",
-    detail: "The pilot is explicitly non-production by its own defined scope (mock data, local state, no real repositories or APIs). This is a structural fact about where this tier sits in the roadmap, not a defect — deferred until a real production Business Feature ships. See Certification Decision.",
+    detail: "The pilot is explicitly non-production by its own defined scope (mock data, local state, no real repositories or APIs). This tier reaches Enterprise Certified once a real production Business Feature ships. See Certification Decision.",
   },
 ];
 
@@ -49,4 +49,4 @@ export const REJECTED: PromotionEntry[] = [
 ];
 
 export const PROMOTION_METHODOLOGY_NOTE =
-  "Every real defect found across all four packages' own browser QA passes, re-surfaced here rather than left buried in each package's own report — plus two findings actively considered and rejected as non-issues, disclosed rather than omitted.";
+  "Real defects found while cross-checking the four packages, plus two findings considered and rejected as non-issues — disclosed rather than left implicit.";

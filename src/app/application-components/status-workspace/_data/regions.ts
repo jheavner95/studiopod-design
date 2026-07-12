@@ -163,14 +163,14 @@ export const STATUS_REGIONS: StatusRegion[] = [
         text: "Not every user sees Diagnostics — it's gated the way the Platform Operations family's own Diagnostics Panel is, unlike every other region in this anatomy.",
       },
     ],
-    reuseNotes: "Directly the Platform Operations family's Diagnostics Panel item — still Partial.",
+    reuseNotes: "Directly the Platform Operations family's Diagnostics Panel item — Partial.",
     reuseLinks: [{ label: "Platform Operations family", href: "/application-components/architecture#platform-operations" }],
   },
   {
     id: "console",
     name: "Console",
     purpose: "Raw, real-time output for advanced users — the one region built for depth over glanceability.",
-    examples: ["Developer Console", "Automation Console", "Job Output", "Live Logs", "Future AI Console"],
+    examples: ["Developer Console", "Automation Console", "Job Output", "Live Logs"],
     guidance: [
       {
         label: "Optional region",
@@ -181,8 +181,8 @@ export const STATUS_REGIONS: StatusRegion[] = [
         text: "Meaningful mainly to the people building automations or debugging integrations, not the typical day-to-day user.",
       },
       {
-        label: "Future extensibility",
-        text: "The natural home for whatever comes next that needs raw, streaming output — see Future Extensions below.",
+        label: "Extensibility",
+        text: "Built to accommodate additional streaming-output use cases without requiring a new region — see Future Extensions below.",
       },
     ],
     reuseNotes: "Overlaps with Workspace Toolbar's own Automation Console future extension — Console is where that extension would actually render.",

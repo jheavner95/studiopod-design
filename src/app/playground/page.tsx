@@ -29,7 +29,7 @@ const relatedGroups = [getGroup("components-overview")!, getGroup("patterns-over
 const STATS = [
   { label: "Visual tools", value: String(visualTools.length) },
   { label: "Interactive demos", value: String(interactiveDemos.length) },
-  { label: "Archived experiments", value: String(legacyExperiments.length) },
+  { label: "Historical references", value: String(legacyExperiments.length) },
 ];
 
 export default function PlaygroundPage() {
@@ -40,11 +40,11 @@ export default function PlaygroundPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Playground is the hands-on side of the design system: interactive tools for exploring motion and illustration by trial and error, instead of reading about them on a reference page. It's for anyone exploring or prototyping — not for someone who already knows which component they need and just wants its API. Here you can play with the system's raw visual material, preview marketing-page compositions assembled and resized live, and get a feel for how pieces fit together before committing to a layout. A few earlier exploration tools are also kept here for reference, even though the real platforms they prototyped have since replaced them. Start with the Motion Engine to get oriented, or jump straight into whichever tool matches what you're exploring."
+        purpose="Playground is the hands-on side of the design system: interactive tools for exploring motion and illustration by trial and error, instead of reading about them on a reference page. It's for anyone exploring or prototyping — not for someone who already knows which component they need and just wants its API. Here you can play with the system's raw visual material, preview marketing-page compositions assembled and resized live, and get a feel for how pieces fit together before committing to a layout. A few earlier tools are also kept here as a historical reference alongside their current counterparts in Applications. Start with the Motion Engine to get oriented, or jump straight into whichever tool matches what you're exploring."
         whatYoullLearn={[
           "The two visual tools — the Motion Engine and Illustration Engine — for exploring animation and the diagram engine outside of any single component's reference page. Token, color, typography, and layout exploration now lives in Foundations & Tokens.",
           "The Composition Playground, where you can preview marketing-page sections assembled together and resized live across device sizes.",
-          "A small set of earlier exploration tools — kept reachable for reference even though the platforms they prototyped have since replaced them.",
+          "A small set of earlier tools — kept here as a historical reference alongside their current counterparts in Applications.",
           "Why this section stays separate from Components and Patterns: hands-on exploration and written reference serve different moments, and neither should crowd out the other.",
         ]}
         stats={STATS}
@@ -81,8 +81,8 @@ export default function PlaygroundPage() {
           <SectionHeader
             id="legacy-experiments"
             eyebrow={<Eyebrow>{contentGroups.find((g) => g.id === "legacy-experiments")?.title}</Eyebrow>}
-            title="Archived — kept reachable, not deleted"
-            description="Three earlier diagram-canvas playgrounds, superseded by their current counterparts in Applications. They're kept reachable here and clearly marked as historical rather than being removed outright."
+            title="Historical Reference — kept reachable, not deleted"
+            description="Three earlier diagram-canvas playgrounds, kept reachable here as historical reference alongside their current counterparts in Applications, and clearly marked as such rather than being removed outright."
           />
           <CardGrid columns={3} gap="md">
             {legacyExperiments.map((item) => (
@@ -92,12 +92,12 @@ export default function PlaygroundPage() {
                 title={item.title}
                 description={item.description}
                 adornment={
-                  <Badge tone="warning" size="sm">
-                    Legacy
+                  <Badge tone="neutral" size="sm">
+                    Historical Reference
                   </Badge>
                 }
-                actionLabel="Archived — superseded by Applications"
-                srLabel={`${item.title} (archived — superseded by Applications): ${item.description}`}
+                actionLabel="Historical Reference — see Applications for current"
+                srLabel={`${item.title} (historical reference — see Applications for current): ${item.description}`}
                 className="opacity-75 grayscale-[0.4] transition-[opacity,filter] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:opacity-100 hover:grayscale-0"
               />
             ))}

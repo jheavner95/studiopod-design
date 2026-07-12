@@ -33,6 +33,6 @@ export const PLATFORM_ARCHITECTURE_TOPICS: ArchitectureTopic[] = [
   },
   {
     label: "Certification goals",
-    text: "The same four-level ladder already established for Workspace Architecture and Workflow Certification (Prototype → Production Ready → Certified → Enterprise Certified) applies to Platform. At the time this page was first written, every one of the eight platforms audited had zero real components (see Migration Notes, below) — a structural fact, not a defect, since no platform can be more than a documented architecture until it's actually built. All eight platforms have since been built, and the Platform Component Library Certification — the capstone this page's own architecture set the bar for — independently certified all eight Platform Ready. This page itself certified the architecture in advance; that certification pass certifies what was built against it.",
+    text: "The same four-level ladder already established for Workspace Architecture and Workflow Certification (Prototype → Production Ready → Certified → Enterprise Certified) applies to Platform. Every domain platform is certified against this same ladder: the Platform Component Library Certification — the capstone this page's own architecture sets the bar for — independently certifies all eight Platform Ready.",
   },
 ];

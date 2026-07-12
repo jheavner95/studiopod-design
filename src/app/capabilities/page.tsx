@@ -40,7 +40,7 @@ export default function CapabilitiesPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<Blocks className="size-3.5" />}>Playground · Archived</SectionBadge>
+            <SectionBadge icon={<Blocks className="size-3.5" />}>Playground · Historical Reference</SectionBadge>
             <Display>Marketplace and AI capability library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD integrates AI, publishing, and commerce providers through a
@@ -48,8 +48,8 @@ export default function CapabilitiesPlaygroundPage() {
               <code>{"<CapabilityRegistryDiagram registry={data} />"}</code>. Every provider is an interchangeable
               implementation, no future provider requires a new diagram.
             </Body>
-            <Alert tone="warning" title="Archived prototype">
-              This is an early prototype, superseded by the real implementation. See{" "}
+            <Alert tone="info" title="Historical Reference">
+              This page shows an earlier version of these diagrams, kept for reference. See{" "}
               <Link
                 href="/application-components/integrations-platform"
                 className="text-accent-400 hover:text-accent-300"

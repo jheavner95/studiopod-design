@@ -23,7 +23,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
   {
     label: "Documentation quality",
     verdict: "Ready",
-    note: "Every platform's docs page covers all 8 required sections with real, grep-backed content. Five real documentation defects were found across three platforms plus Platform Architecture during this certification (Operations' self-contradictory gap count, Admin's false \"first\" superlative, Integrations' miscounted verbatim ratio, and Platform Architecture's stale \"zero platforms exist\" claims) — all five were corrected in this same pass, a stronger outcome than the Workflow tier's own \"found and left as a tracked gap\" precedent.",
+    note: "Every platform's docs page covers all 8 required sections with real, grep-backed content. Five real documentation defects were found across three platforms plus Platform Architecture (Operations' self-contradictory gap count, Admin's false \"first\" superlative, Integrations' miscounted verbatim ratio, and Platform Architecture's stale \"zero platforms exist\" claims) — all five were corrected in the same pass.",
   },
   {
     label: "Composition quality",

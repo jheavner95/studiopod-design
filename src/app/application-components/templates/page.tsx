@@ -29,7 +29,7 @@ export default function TemplatesPage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Overview"
-            description="Seven platform-screen templates, each a spec for the component families a workspace needs before it can be built — not a built screen itself."
+            description="Seven platform-screen templates, each a specification for the component families a given workspace composes — not a rendered screen itself."
             descriptionMaxWidth={false}
           />
           <DescriptionList
@@ -39,7 +39,7 @@ export default function TemplatesPage() {
                 label: "Average readiness",
                 value: `${averageReadiness}% — the mean of each template's required families' own completion, not a hand-typed number.`,
               },
-              { label: "Build status", value: "Not started — every template is a specification, waiting on its required families." },
+              { label: "Nature", value: "Specification, composed live from each required family's own data." },
             ]}
           />
         </div>
@@ -114,7 +114,7 @@ export default function TemplatesPage() {
               {
                 label: "Status line",
                 value:
-                  "Every card currently reads \"Not started — required families average N% complete,\" because none of the seven templates exist as built screens yet.",
+                  "Every card reads \"N% complete, based on required-family completion,\" reflecting each template's required families' own completion score.",
               },
               {
                 label: "Family links",
@@ -159,9 +159,9 @@ export default function TemplatesPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="future-enhancements"
-              title="Future enhancements"
-              description="Room the current templates leave for later — reserved, not scoped or committed."
+              id="extension-points"
+              title="Extension points"
+              description="Room the templates leave for platform-specific extension."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={2}>
@@ -172,8 +172,8 @@ export default function TemplatesPage() {
               <Card className="flex flex-col gap-2 border-dashed">
                 <span className="text-body-sm font-medium text-ink-primary">Analytics family coverage</span>
                 <Body size="sm" muted>
-                  {analyticsFamily.roadmapNotes} It backs both the Intelligence and Operations workspaces above, so its readiness stays
-                  at 0% until it enters the inventory.
+                  {analyticsFamily.roadmapNotes} It backs both the Intelligence and Operations workspaces above. Analytics currently has
+                  no inventory-tracked components, so its readiness score is 0% under the scoring rule.
                 </Body>
               </Card>
             </CardGrid>

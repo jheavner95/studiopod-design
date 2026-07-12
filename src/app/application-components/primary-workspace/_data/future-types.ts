@@ -35,6 +35,6 @@ export const FUTURE_WORKSPACE_TYPES: FutureWorkspaceType[] = [
   },
   {
     title: "Mixed Reality Workspace",
-    description: "A spatial variant of Canvas mode, for a future where the working surface isn't a flat screen at all.",
+    description: "A spatial variant of Canvas mode, for platforms where the working surface isn't a flat screen — a design consideration this anatomy leaves open rather than resolves.",
   },
 ];

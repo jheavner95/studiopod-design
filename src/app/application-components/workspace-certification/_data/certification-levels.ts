@@ -21,8 +21,8 @@ export const CERTIFICATION_LEVELS: CertificationLevel[] = [
     name: "Draft",
     minScorePercent: 0,
     requirements: ["A named workspace with a stated purpose", "No anatomy commitments yet"],
-    typicalUse: "Early proposal stage — a platform team sketching what a workspace might need before anything is built.",
-    reviewExpectations: "None required. A Draft hasn't been reviewed against the canonical anatomy yet.",
+    typicalUse: "Early proposal stage — a platform team sketching what a workspace needs.",
+    reviewExpectations: "None required. A Draft is an unreviewed proposal, not yet checked against the canonical anatomy.",
   },
   {
     id: "prototype",

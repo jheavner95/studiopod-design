@@ -8,7 +8,6 @@ import { APPROVAL_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { APPROVAL_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { APPROVAL_PROMOTION_CANDIDATES, APPROVAL_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { APPROVAL_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("approval-review")!;
@@ -171,39 +170,9 @@ export default function ApprovalReviewPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="A real, grep-verified check for hand-rolled approval/review/decision UI already living elsewhere in the codebase — run across six named domains plus a repo-wide identifier search, not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {APPROVAL_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">Nothing to migrate</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled approval/review/decision UI was found anywhere in the codebase across all six
-                  named domains — this exact gap had already been flagged, unbuilt, across three separate prior
-                  reviews, all independently confirmed clean by the dedicated check behind this page. See the findings
-                  below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {APPROVAL_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

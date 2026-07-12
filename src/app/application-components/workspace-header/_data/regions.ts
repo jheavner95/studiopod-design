@@ -94,7 +94,7 @@ export const HEADER_REGIONS: HeaderRegion[] = [
       },
     ],
     reuseNotes:
-      "Built from the Validation & QA family's Score Badge and Warning Banner, plus Platform Operations' Sync Status and the illustration engine's HealthIndicator — all still Partial or Needed.",
+      "Built from the Validation & QA family's Score Badge and Warning Banner, plus Platform Operations' Sync Status and the illustration engine's HealthIndicator — all Partial or Needed.",
     reuseLinks: [
       { label: "Validation & QA family", href: "/application-components/architecture#validation-qa" },
       { label: "Platform Operations family", href: "/application-components/architecture#platform-operations" },

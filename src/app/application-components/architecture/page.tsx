@@ -21,7 +21,7 @@ export default function ArchitecturePage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Nine component families"
-            description="Six map directly onto the 40-item inventory. Analytics and Platform Templates are net-new — 0% isn't a bug, it's an honest reading of what exists today."
+            description="Six map directly onto the 40-item inventory. Analytics and Platform Templates currently have no items mapped to them, so both families score 0% by definition of the weighting formula."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -85,7 +85,7 @@ export default function ArchitecturePage() {
               },
               {
                 label: "Families with no inventory items",
-                value: "Score 0% by definition — true today for Analytics and Platform Templates, not a bug in the math.",
+                value: "Score 0% by definition — Analytics and Platform Templates currently have no items mapped to them, so the formula returns 0% for both.",
               },
               {
                 label: "Priority split",

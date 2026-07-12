@@ -52,4 +52,4 @@ export const CERTIFICATION_LEVELS: CertificationLevel[] = [
 ];
 
 export const CERTIFICATION_MODEL_NOTE =
-  "This ladder was published before any Platform component existed, so the first platform built would have a bar to clear from day one — the same way Workspace Architecture's own certification model existed before the Foundation layer was built against it. All eight named platforms have since been built, and the Platform Component Library Certification capstone independently certified every one of them Platform Ready against exactly this ladder. See the Platform Component Library Certification page for the per-platform verdicts.";
+  "This is the governing certification ladder for every Platform component, consistent with the model Foundation and Workflow are certified against. The Platform Component Library Certification capstone independently certifies every one of the eight named platforms Platform Ready against exactly this ladder. See the Platform Component Library Certification page for the per-platform verdicts.";

@@ -73,7 +73,7 @@ export function FamilyCard({ family }: { family: ComponentFamily }) {
       </div>
 
       <div className="mt-auto flex flex-col gap-1 border-t border-border-subtle pt-4">
-        <Caption className="text-ink-tertiary">Roadmap notes</Caption>
+        <Caption className="text-ink-tertiary">Architectural notes</Caption>
         <Body size="sm" muted>
           {family.roadmapNotes}
         </Body>

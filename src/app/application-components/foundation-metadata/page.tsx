@@ -1,5 +1,5 @@
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { Card, Badge, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { MetadataAnatomyExplorer } from "./_components/MetadataAnatomyExplorer";
@@ -9,14 +9,7 @@ import { HierarchyDemo } from "./_components/HierarchyDemo";
 import { INFORMATION_HIERARCHY } from "./_data/hierarchy";
 import { METADATA_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { METADATA_GUIDANCE } from "./_data/implementation-guidance";
-import { METADATA_PROMOTION_CANDIDATES, METADATA_RESOLVED_MIGRATIONS, totalPromotionFiles } from "./_data/promotion-candidates";
 import { METADATA_FUTURE_EXTENSIONS } from "./_data/future-extensions";
-
-const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
-  Low: "success",
-  Medium: "warning",
-  High: "accent",
-};
 
 const entry = getEntry("foundation-metadata")!;
 const relatedComponents = [getEntry("foundation-layout")!, getEntry("foundation-forms")!, getEntry("foundation-table")!];
@@ -142,70 +135,9 @@ export default function FoundationMetadataPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description={`Real, grep-verifiable repeated metadata patterns found in this codebase today — ${METADATA_PROMOTION_CANDIDATES.length} categories, ${totalPromotionFiles()} files combined.`}
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {METADATA_PROMOTION_CANDIDATES.map((candidate) => (
-                <Card key={candidate.id} className="flex flex-col gap-3">
-                  <div className="flex flex-wrap items-baseline justify-between gap-3">
-                    <span className="text-body-md font-medium text-ink-primary">{candidate.title}</span>
-                    <Badge tone={EFFORT_TONE[candidate.migrationEffort]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                      {candidate.migrationEffort} effort
-                    </Badge>
-                  </div>
-                  <Body size="sm" muted>
-                    {candidate.description}
-                  </Body>
-                  <div className="flex flex-col gap-1">
-                    <Caption className="text-ink-tertiary">
-                      {candidate.count} file{candidate.count === 1 ? "" : "s"} · verified with
-                    </Caption>
-                    <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
-                      {candidate.findingCommand}
-                    </code>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {candidate.files.slice(0, 5).map((file) => (
-                      <span
-                        key={file}
-                        className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
-                      >
-                        {file}
-                      </span>
-                    ))}
-                  </div>
-                  <Body size="sm" muted className="border-t border-border-subtle pt-3">
-                    {candidate.migrationNote}
-                  </Body>
-                </Card>
-              ))}
-            </CardGrid>
-            {METADATA_RESOLVED_MIGRATIONS.map((migration) => (
-              <Card key={migration.id} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
-                  <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    Adoption In Progress
-                  </Badge>
-                </div>
-                <Caption className="text-ink-tertiary">
-                  {migration.filesMigrated} files migrated in {migration.resolvedIn}
-                </Caption>
-                <Body size="sm" muted>
-                  {migration.note}
-                </Body>
-              </Card>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

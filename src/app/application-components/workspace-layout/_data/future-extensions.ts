@@ -32,7 +32,7 @@ export const LAYOUT_FUTURE_EXTENSIONS: LayoutFutureExtension[] = [
   },
   {
     title: "AI workspace assistant",
-    description: "The layout counterpart to the Workspace Framework's own AI Copilot extension — where would it actually dock?",
+    description: "The layout counterpart to the Workspace Framework's own AI Copilot extension — a docking location within the layout has not been defined.",
   },
   {
     title: "Multi-monitor support",

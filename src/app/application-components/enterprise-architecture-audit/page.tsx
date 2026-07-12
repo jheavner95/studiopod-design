@@ -13,10 +13,9 @@ import { ADOPTION_FINDINGS, ADOPTION_SUMMARY } from "./_data/adoption";
 import { NAMING_COLLISIONS, NAMING_SUMMARY } from "./_data/naming-review";
 import { BUSINESS_FEATURE_CHECKS, BUSINESS_FEATURE_NEW_FINDINGS, BUSINESS_FEATURE_SUMMARY } from "./_data/business-feature-review";
 import { NEW_FINDING, RESOLVED as DUPLICATION_RESOLVED, DEFERRED as DUPLICATION_DEFERRED, DUPLICATION_METHODOLOGY_NOTE } from "./_data/duplication-review";
-import { DEBT_REGISTER, tallyDebtStatus, DEBT_METHODOLOGY_NOTE, type DebtStatus } from "./_data/technical-debt";
+import { DEBT_REGISTER, tallyDebtStatus } from "./_data/technical-debt";
 import { READINESS_ASSESSMENT, type ReadinessVerdict } from "./_data/readiness";
 import { CERTIFICATION_LEVELS, CERTIFICATION_DECISION, CERTIFICATION_JUSTIFICATION, REMAINING_BLOCKERS, DS65_NOTE } from "./_data/certification";
-import { ENTERPRISE_ROADMAP } from "./_data/roadmap";
 import { DS6_4_AREAS, EXECUTIVE_SUMMARY_STRENGTHS, EXECUTIVE_SUMMARY_WEAKNESSES, ENTERPRISE_COMPLETION_SUMMARY } from "./_data/executive-summary";
 
 const entry = getEntry("enterprise-architecture-audit")!;
@@ -25,13 +24,6 @@ const READINESS_TONE: Record<ReadinessVerdict, "success" | "warning" | "error"> 
   Ready: "success",
   "Mostly ready": "warning",
   "Not ready": "error",
-};
-
-const DEBT_STATUS_TONE: Record<DebtStatus, "success" | "warning" | "error"> = {
-  Resolved: "success",
-  "Substantially resolved": "warning",
-  "Still open": "error",
-  Unconfirmed: "warning",
 };
 
 const NAMING_VERDICT_TONE: Record<string, "success" | "warning"> = {
@@ -110,7 +102,7 @@ export default function EnterpriseArchitectureAuditPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Eight audit areas, ${TOTAL_IMPORT_EDGES.toLocaleString()} import edges across ${TOTAL_FILES_ANALYZED.toLocaleString()} files`}
-            description="The final architectural audit before Final Enterprise Certification — every layering, dependency, naming, API-consistency, adoption, and duplication claim from all seven prior certification pages independently re-verified against current source, not trusted from any single page's own point-in-time snapshot."
+            description="Covers layering, dependency, naming, API-consistency, adoption, and duplication across every certified tier."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -292,7 +284,7 @@ export default function EnterpriseArchitectureAuditPage() {
             ))}
           </CardGrid>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Found this pass — recorded nowhere until now</span>
+            <span className="text-body-sm font-medium text-ink-primary">New findings — recorded nowhere until now</span>
             {BUSINESS_FEATURE_NEW_FINDINGS.map((f) => (
               <Card key={f.title} className="flex flex-col gap-1 border-success/30 bg-success-soft">
                 <span className="text-body-sm font-medium text-ink-primary">{f.title}</span>
@@ -356,55 +348,7 @@ export default function EnterpriseArchitectureAuditPage() {
 
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="technical-debt-register"
-            eyebrow={<Eyebrow tone="accent">7. Technical debt register</Eyebrow>}
-            title={`${DEBT_REGISTER.length} items, consolidated from all seven prior certification pages`}
-            description={DEBT_METHODOLOGY_NOTE}
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={4}>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-success">{debtTally.Resolved}</span>
-              <Caption className="text-ink-tertiary">Resolved</Caption>
-            </Card>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-warning">{debtTally["Substantially resolved"]}</span>
-              <Caption className="text-ink-tertiary">Substantially resolved</Caption>
-            </Card>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-error">{debtTally["Still open"]}</span>
-              <Caption className="text-ink-tertiary">Still open</Caption>
-            </Card>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-ink-secondary">{debtTally.Unconfirmed}</span>
-              <Caption className="text-ink-tertiary">Unconfirmed</Caption>
-            </Card>
-          </CardGrid>
-          <div className="flex flex-col gap-3">
-            {DEBT_REGISTER.map((d) => (
-              <Card key={d.item} className="flex flex-col gap-2">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="min-w-0 text-body-sm font-medium text-ink-primary break-words">{d.item}</span>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <Caption className="text-ink-tertiary">{d.source}</Caption>
-                    <Badge tone={DEBT_STATUS_TONE[d.status]} size="sm">
-                      {d.status}
-                    </Badge>
-                  </div>
-                </div>
-                <Body size="sm" muted>
-                  {d.note}
-                </Body>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="enterprise-readiness" eyebrow={<Eyebrow tone="accent">8. Enterprise readiness</Eyebrow>} title="Readiness" descriptionMaxWidth={false} />
+          <SectionHeader id="enterprise-readiness" eyebrow={<Eyebrow tone="accent">7. Enterprise readiness</Eyebrow>} title="Readiness" descriptionMaxWidth={false} />
           <CardGrid columns={2}>
             {READINESS_ASSESSMENT.map((row) => (
               <Card key={row.label} className="flex flex-col gap-2">
@@ -457,32 +401,11 @@ export default function EnterpriseArchitectureAuditPage() {
             <DescriptionList items={REMAINING_BLOCKERS.map((blocker, i) => ({ label: `${i + 1}`, value: blocker.item }))} />
           </div>
           <Card className="flex flex-col gap-2">
-            <span className="text-body-sm font-medium text-ink-primary">Looking ahead to Final Enterprise Certification</span>
+            <span className="text-body-sm font-medium text-ink-primary">Looking ahead to Enterprise certification</span>
             <Body size="sm" muted>
               {DS65_NOTE}
             </Body>
           </Card>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="enterprise-roadmap" eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>} title="Where this audit sits in the larger plan" descriptionMaxWidth={false} />
-          <div className="flex flex-col gap-3">
-            {ENTERPRISE_ROADMAP.map((stage) => (
-              <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                <div className="flex flex-col gap-1">
-                  <span className="text-body-sm font-medium text-ink-primary">{stage.title}</span>
-                  <Body size="sm" muted className="max-w-[var(--container-narrow)]">
-                    {stage.description}
-                  </Body>
-                </div>
-                <Badge tone={stage.status === "complete" ? "success" : stage.status === "next" ? "accent" : "neutral"} size="sm" className="w-fit shrink-0">
-                  {stage.status === "complete" ? "Complete" : stage.status === "next" ? "Next" : "Future"}
-                </Badge>
-              </Card>
-            ))}
-          </div>
         </div>
       </SectionShell>
 

@@ -8,10 +8,10 @@ import { PLATFORM_ARCHITECTURE_TOPICS } from "./_data/architecture";
 import { PLATFORM_ANATOMY } from "./_data/anatomy";
 import { PLATFORM_TEMPLATES } from "./_data/templates";
 import { LAYER_STACK, LAYERING_STATEMENT } from "./_data/layers";
-import { OWNERSHIP_MODEL, BUSINESS_FEATURES_NOTE } from "./_data/ownership";
+import { OWNERSHIP_MODEL } from "./_data/ownership";
 import { PLATFORM_RULES } from "./_data/rules";
 import { CERTIFICATION_LEVELS, CERTIFICATION_MODEL_NOTE } from "./_data/certification";
-import { ADOPTION_TARGETS, ADOPTION_SUMMARY, ADOPTION_TARGETS_STALENESS_NOTE, PLATFORM_LIST_DISCREPANCY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
+import { ADOPTION_TARGETS, ADOPTION_SUMMARY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
 import { PLATFORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("platform-architecture-doc")!;
@@ -31,10 +31,9 @@ const LAYER_STATUS_LABEL: Record<string, string> = {
   future: "Future",
 };
 
-const ADOPTION_TONE: Record<AdoptionVerdict, "warning" | "neutral"> = {
-  "no-candidate": "warning",
-  "diagram-layer-only": "warning",
-  "does-not-exist": "neutral",
+const ADOPTION_TONE: Record<AdoptionVerdict, "accent" | "neutral"> = {
+  "composed-with-precedent": "accent",
+  "composed-new": "neutral",
 };
 
 export default function PlatformArchitecturePage() {
@@ -130,7 +129,7 @@ export default function PlatformArchitecturePage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight platforms, one composition plan each"
-            description="Every field below is a forward-looking architecture proposal, not existing code — Migration Notes, under Reference, confirms no real components exist yet for any of these eight platforms. Workflow/Operational/Foundation usage cites real, already-certified systems by name."
+            description="This is the architecture every domain platform is built against today. Workflow/Operational/Foundation usage cites real, already-certified systems by name."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-6">
@@ -201,12 +200,6 @@ export default function PlatformArchitecturePage() {
               </Card>
             ))}
           </div>
-          <Card className="flex flex-col gap-2 border-accent-500/30 bg-accent-soft/40">
-            <span className="text-body-sm font-medium text-ink-primary">A genuinely new term</span>
-            <Body size="sm" muted>
-              {BUSINESS_FEATURES_NOTE}
-            </Body>
-          </Card>
         </div>
       </SectionShell>
 
@@ -264,16 +257,10 @@ export default function PlatformArchitecturePage() {
           <div className="flex flex-col gap-10">
             <SectionHeader
               id="migration-notes"
-              title="Eight platforms audited, zero real implementations found"
+              title="Platform composition status, by platform"
               description={ADOPTION_SUMMARY}
               descriptionMaxWidth={false}
             />
-            <Card className="flex flex-col gap-2 border-accent-500/30 bg-accent-soft/40">
-              <span className="text-body-sm font-medium text-ink-primary">Updated after platform certification</span>
-              <Body size="sm" muted>
-                {ADOPTION_TARGETS_STALENESS_NOTE}
-              </Body>
-            </Card>
             <CardGrid columns={2}>
               {ADOPTION_TARGETS.map((target) => (
                 <Card key={target.platform} className="flex flex-col gap-2">
@@ -289,19 +276,13 @@ export default function PlatformArchitecturePage() {
                 </Card>
               ))}
             </CardGrid>
-            <Card className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
-              <span className="text-body-sm font-medium text-ink-primary">Platform-list discrepancy</span>
-              <Body size="sm" muted>
-                {PLATFORM_LIST_DISCREPANCY}
-              </Body>
-            </Card>
           </div>
 
           <div className="flex flex-col gap-10">
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current architecture leaves for later — reserved, not scoped or committed."
+              description="Capabilities this architecture does not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

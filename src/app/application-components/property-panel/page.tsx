@@ -8,7 +8,6 @@ import { PROPERTY_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { PROPERTY_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { PROPERTY_PROMOTION_CANDIDATES, PROPERTY_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { PROPERTY_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("property-panel")!;
@@ -151,36 +150,9 @@ export default function PropertyPanelPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings from an audit of hand-rolled multi-field editing panels across the codebase — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {PROPERTY_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">Nothing found to migrate</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled property-editing panel was found anywhere in the codebase across Production, Publishing, Commerce, Products, QA, or Settings. See the clean findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {PROPERTY_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

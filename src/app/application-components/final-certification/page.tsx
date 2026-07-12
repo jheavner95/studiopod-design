@@ -11,18 +11,11 @@ import { tallyFinalScorecard } from "./_data/final-scorecard";
 import { ARCHITECTURE_HEADLINE, ARCHITECTURE_FINDINGS, ARCHITECTURE_CONFIRMATIONS } from "./_data/architecture-summary";
 import { ACCESSIBILITY_HEADLINE, ACCESSIBILITY_RESOLVED, ACCESSIBILITY_REOPENED, ACCESSIBILITY_STILL_OPEN } from "./_data/accessibility-summary";
 import { DOCUMENTATION_HEADLINE, DOCUMENTATION_CHECKS, DOCUMENTATION_VERDICT } from "./_data/documentation-summary";
-import { DEBT_REGISTER, tallyDebtStatus, DEBT_METHODOLOGY_NOTE, type DebtStatus } from "./_data/technical-debt-register";
+import { DEBT_REGISTER, tallyDebtStatus } from "./_data/technical-debt-register";
 import { CERTIFICATION_HISTORY } from "./_data/certification-history";
 import { FINAL_VERDICT_NAME, FINAL_VERDICT_DESCRIPTION, FINAL_VERDICT_JUSTIFICATION, STANDING_DISCLOSURES, CLOSING_STATEMENT } from "./_data/final-verdict";
 
 const entry = getEntry("final-certification")!;
-
-const DEBT_STATUS_TONE: Record<DebtStatus, "success" | "warning" | "error"> = {
-  Resolved: "success",
-  "Substantially resolved": "warning",
-  "Still open": "error",
-  Unconfirmed: "warning",
-};
 
 const scorecardTally = tallyFinalScorecard();
 const debtTally = tallyDebtStatus();
@@ -37,8 +30,8 @@ export default function FinalCertificationPage() {
           <SectionHeader
             id="executive-summary"
             eyebrow={<Eyebrow tone="accent">Executive summary</Eyebrow>}
-            title="Nine certifications, one final record"
-            description="This page is the permanent, canonical release record for the StudioPOD Design System — the terminal capstone in a nine-part certification series that began with Workspace Architecture and closes here. It doesn't re-audit every prior claim from scratch; it independently re-verifies the three tiers no subsequent audit had ever re-checked (Workspace, Foundation, Operational), confirms Enterprise Architecture Audit's own structural findings with a second full-repo parse, certifies Documentation Experience for the first time, and consolidates every certification's own open items into one final, terminal Technical Debt Register."
+            title="Nine certifications, one record"
+            description="This page is the permanent, canonical release record for the StudioPOD Design System, covering Workspace, Foundation, Operational, Workflow, Platform, Application Composition, Documentation Experience, Accessibility, and Enterprise Architecture in one place."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -58,7 +51,7 @@ export default function FinalCertificationPage() {
                 { value: `${debtTally.Resolved + debtTally["Substantially resolved"]}/${DEBT_REGISTER.length}`, label: "Debt items resolved" },
               ]}
             />
-            <MetricCard value="9" label="Certifications synthesized into this final record" description="Eight prior capstones plus Documentation Experience, certified here for the first time" />
+            <MetricCard value="9" label="Certifications covered by this record" description="Every certified tier of the system, including Documentation Experience, certified here" />
           </CardGrid>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="flex flex-col gap-3">
@@ -95,8 +88,8 @@ export default function FinalCertificationPage() {
           <SectionHeader
             id="final-scorecard"
             eyebrow={<Eyebrow tone="accent">Final scorecard</Eyebrow>}
-            title="Eleven dimensions, synthesized from every prior scorecard"
-            description="The union of every quality axis tracked anywhere across the nine prior certifications, scored once, system-wide, rather than repeated per tier."
+            title="Eleven dimensions, synthesized from every scorecard"
+            description="The union of every quality axis tracked anywhere across the nine certifications, scored once, system-wide, rather than repeated per tier."
             descriptionMaxWidth={false}
           />
           <FinalScorecard />
@@ -125,12 +118,12 @@ export default function FinalCertificationPage() {
           <SectionHeader
             id="architecture-summary"
             eyebrow={<Eyebrow tone="accent">1. Architecture summary</Eyebrow>}
-            title="Sound end to end, confirmed twice — plus two new findings in the one tier nobody had re-checked"
+            title="Sound end to end, with two open findings in Workspace Architecture"
             description={ARCHITECTURE_HEADLINE}
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">New findings — Workspace Architecture Certification, re-verified for the first time since its original publication</span>
+            <span className="text-body-sm font-medium text-ink-primary">Open findings — Workspace Architecture Certification</span>
             {ARCHITECTURE_FINDINGS.map((f) => (
               <Card key={f.title} className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
                 <span className="text-body-sm font-medium text-ink-primary">{f.title}</span>
@@ -164,7 +157,7 @@ export default function FinalCertificationPage() {
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Resolved since Enterprise Architecture Audit ({ACCESSIBILITY_RESOLVED.length})</span>
+            <span className="text-body-sm font-medium text-ink-primary">Resolved ({ACCESSIBILITY_RESOLVED.length})</span>
             {ACCESSIBILITY_RESOLVED.map((item) => (
               <Card key={item.title} className="flex flex-col gap-1 border-success/30 bg-success-soft">
                 <span className="text-body-sm font-medium text-ink-primary">{item.title}</span>
@@ -176,7 +169,7 @@ export default function FinalCertificationPage() {
             ))}
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Reopened — a claim two prior certifications trusted without independently re-checking</span>
+            <span className="text-body-sm font-medium text-ink-primary">Reopened — coverage claim corrected</span>
             {ACCESSIBILITY_REOPENED.map((item) => (
               <Card key={item.title} className="flex flex-col gap-1 border-error/30 bg-error-soft">
                 <span className="text-body-sm font-medium text-ink-primary">{item.title}</span>
@@ -207,7 +200,7 @@ export default function FinalCertificationPage() {
           <SectionHeader
             id="documentation-summary"
             eyebrow={<Eyebrow tone="accent">3. Documentation summary</Eyebrow>}
-            title="Documentation Experience, certified for the first time"
+            title="Documentation Experience certification"
             description={DOCUMENTATION_HEADLINE}
             descriptionMaxWidth={false}
           />
@@ -237,65 +230,16 @@ export default function FinalCertificationPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="technical-debt-register"
-            eyebrow={<Eyebrow tone="accent">4. Technical debt register</Eyebrow>}
-            title={`${DEBT_REGISTER.length} items — the terminal register`}
-            description={DEBT_METHODOLOGY_NOTE}
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={4}>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-success">{debtTally.Resolved}</span>
-              <Caption className="text-ink-tertiary">Resolved</Caption>
-            </Card>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-warning">{debtTally["Substantially resolved"]}</span>
-              <Caption className="text-ink-tertiary">Substantially resolved</Caption>
-            </Card>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-error">{debtTally["Still open"]}</span>
-              <Caption className="text-ink-tertiary">Still open</Caption>
-            </Card>
-            <Card className="flex flex-col gap-1">
-              <span className="text-heading-4 font-medium text-ink-secondary">{debtTally.Unconfirmed}</span>
-              <Caption className="text-ink-tertiary">Unconfirmed</Caption>
-            </Card>
-          </CardGrid>
-          <div className="flex flex-col gap-3">
-            {DEBT_REGISTER.map((d) => (
-              <Card key={d.item} className="flex flex-col gap-2">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="min-w-0 text-body-sm font-medium text-ink-primary break-words">{d.item}</span>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <Caption className="text-ink-tertiary">{d.source}</Caption>
-                    <Badge tone={DEBT_STATUS_TONE[d.status]} size="sm">
-                      {d.status}
-                    </Badge>
-                  </div>
-                </div>
-                <Body size="sm" muted>
-                  {d.note}
-                </Body>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
             id="certification-history"
-            eyebrow={<Eyebrow tone="accent">5. Certification history</Eyebrow>}
+            eyebrow={<Eyebrow tone="accent">4. Certification history</Eyebrow>}
             title="All nine certifications, in order"
-            description="Every capstone that precedes this one, with a link to its own page and a one-line status reflecting this page's own re-verification, not a republish of each page's original verdict."
+            description="Every certification that precedes this one, with a link to its own page and a current status summary."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">
             {CERTIFICATION_HISTORY.map((c) => (
               <Card key={c.code} className="flex flex-col gap-2">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <Caption className="text-ink-tertiary">{c.code}</Caption>
                   {c.external ? (
                     <Link href={c.href} className="focus-ring flex items-center gap-1 text-body-md font-medium text-ink-primary hover:text-accent-400">
                       {c.title}

@@ -151,7 +151,7 @@ export default function StatusWorkspacePage() {
             <SectionHeader
               id="design-considerations"
               title="Design considerations"
-              description="The checklist every Operational Status implementation is expected to satisfy — each item traces back to a specific region or principle documented above."
+              description="What every Operational Status implementation follows — each item traces back to a specific region or principle documented above."
               descriptionMaxWidth={false}
             />
             <div className="rounded-lg border border-accent-500/30 bg-accent-soft/10 p-4 sm:p-6">
@@ -205,7 +205,7 @@ export default function StatusWorkspacePage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the anatomy leaves for later — reserved, not scoped or committed."
+              description="Capabilities this anatomy does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

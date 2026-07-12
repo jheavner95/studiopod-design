@@ -62,7 +62,7 @@ export const PLATFORM_TEMPLATES: PlatformTemplate[] = [
     purpose: "Cross-platform reporting and trend analysis.",
     requiredFamilyIds: ["workspace", "navigation", "analytics", "platform-operations"],
     layoutPattern:
-      "Shell → sidebar Navigation → Metrics Card dashboard grid → drill-down detail panel (not yet designed — Analytics is a greenfield family).",
+      "Shell → sidebar Navigation → Metrics Card dashboard grid → drill-down detail panel (scope pending Analytics family definition).",
     reuseOpportunities: "Metrics Card is the one Platform Operations component every workspace's dashboard view will reuse.",
   },
   {
@@ -76,7 +76,7 @@ export const PLATFORM_TEMPLATES: PlatformTemplate[] = [
   },
 ];
 
-/** "Not started — required families average N% complete," derived live from each required family's own completion, never a hand-typed number. */
+/** "N% complete, based on required-family completion," derived live from each required family's own completion, never a hand-typed number. */
 export function templateReadiness(template: PlatformTemplate): number {
   const families = template.requiredFamilyIds
     .map((id) => COMPONENT_FAMILIES.find((f) => f.id === id))

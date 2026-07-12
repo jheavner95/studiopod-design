@@ -39,8 +39,8 @@ export default function DocsWorkflowPage() {
         whatYoullLearn={[
           "The eight systems and what each one owns — process shell, wizard progress, history timeline, approvals, pipelines, state-driven processes, dependency graphs, and the operational visualization layer.",
           "How later systems in the tier reuse earlier ones, such as Approval & Review and Pipeline Components both building on Workflow Timeline, and State Machine and Workflow Visualization building on Pipeline Components.",
-          "Which two of the eight systems have earned the tier's highest Certified rating versus the six still rated Production Ready.",
-          "Where a handful of real, disclosed issues live — like WorkflowStepperStep never setting aria-current on the active step, or the PipelineStage/PipelineStep naming collisions with the illustration library.",
+          "Which two of the eight systems have earned the tier's highest Certified rating versus the six rated Production Ready.",
+          "Known limitations across the tier — like WorkflowStepperStep never setting aria-current on the active step, or the PipelineStage/PipelineStep naming collisions with the illustration library.",
           "Where Workflow sits relative to Foundation, Operational, and Platform in the tier model, and where each of those tiers' own architecture pages live.",
         ]}
         stats={STATS}

@@ -245,7 +245,7 @@ export default function AssetWorkspacePage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current asset workspace anatomy leaves for later — reserved, not scoped or committed."
+              description="Capabilities this asset workspace anatomy does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

@@ -8,7 +8,6 @@ import { MACHINE_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { STATE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { STATE_PROMOTION_CANDIDATES, STATE_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { STATE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("state-machine")!;
@@ -160,42 +159,9 @@ export default function StateMachinePage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across six named domains — Production, Publishing, Commerce, Automation, Intelligence, Operations — plus a repo-wide search for exported state-machine patterns, not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {STATE_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No migration matches found</span>
-                <Body size="sm" muted>
-                  No genuine state-machine implementation — states plus explicit allowed-transition rules plus guard
-                  conditions — was found anywhere in the codebase across all six named domains. What exists
-                  everywhere is the same recurring status-display-bridge pattern (a flat status enum mapped through a
-                  lookup table to a visual tone), which this family is positioned as formalizing into a real
-                  state-transition vocabulary for the first time, not deduplicating. See the findings below for what
-                  was actually checked, including the pre-existing (plural) Workflow Diagram Library&rsquo;s own
-                  playback hook, confirmed to be a simple index-stepping timer rather than real transition logic.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {STATE_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

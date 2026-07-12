@@ -25,7 +25,7 @@ export const REVIEW_AREAS: ReviewArea[] = [
   {
     code: "2",
     title: "API consistency",
-    summary: "Re-audited Operational/Workflow/Platform against the Foundation baseline. The one HIGH-severity gap Foundation's own capstone disclosed (aria-describedby) is now resolved tier-wide; one LOW-severity internal duplication (CellAlign) remains open.",
+    summary: "Re-audited Operational/Workflow/Platform against the Foundation baseline. The one HIGH-severity gap Foundation Audit disclosed (aria-describedby) is now resolved tier-wide; one LOW-severity internal duplication (CellAlign) remains open.",
     verdict: "Real gaps found",
   },
   {

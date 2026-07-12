@@ -62,7 +62,7 @@ export const ASSET_WORKSPACE_REGIONS: AssetWorkspaceRegion[] = [
         text: "Selection Count only appears once something is selected, the same rule Bulk Actions follows in the Workspace Toolbar.",
       },
     ],
-    reuseNotes: "The Application Components inventory's own Result Summary Bar item — still Needed.",
+    reuseNotes: "The Application Components inventory's own Result Summary Bar item — Needed.",
     reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
   },
   {

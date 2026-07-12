@@ -5,7 +5,7 @@ export type MaturityLevel = "Concept" | "Prototype" | "Production Ready" | "Cert
 export const MATURITY_LEVELS: { level: MaturityLevel; description: string }[] = [
   {
     level: "Concept",
-    description: "Named and scoped, nothing built. Equivalent to an inventory item marked \"Needed.\"",
+    description: "Named and scoped, with no implementation. Equivalent to an inventory item marked \"Needed.\"",
   },
   {
     level: "Prototype",
@@ -15,7 +15,7 @@ export const MATURITY_LEVELS: { level: MaturityLevel; description: string }[] = 
   {
     level: "Production Ready",
     description:
-      "A real, reusable component exists and is safe to build a screen with. Equivalent to \"Exists\" — but not yet proven under real usage.",
+      "A real, reusable component exists and is safe to build a screen with. Equivalent to \"Exists\" — but not proven under real usage.",
   },
   {
     level: "Certified",

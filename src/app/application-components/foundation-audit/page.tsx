@@ -22,16 +22,13 @@ import {
 } from "./_data/api-consistency";
 import { COMPOSITION_RULES, COMPOSITION_SUMMARY, type ComplianceCheck } from "./_data/composition";
 import { DUPLICATION_GROUPS, DUPLICATION_METHODOLOGY_NOTE } from "./_data/duplication";
-import { MIGRATION_PLAN } from "./_data/migration-plan";
 import { FAMILY_CERTIFICATION, CERTIFICATION_HEADLINE } from "./_data/certification";
 import { DESIGN_RULES_REVIEW, RECOMMENDED_ADDITIONS, type RuleReview } from "./_data/design-rules-review";
 import { READINESS_ASSESSMENT, READINESS_SUMMARY, type ReadinessRow } from "./_data/readiness";
-import { ROADMAP_RECOMMENDATIONS } from "./_data/roadmap";
 import {
   STRENGTHS,
   WEAKNESSES,
   TECHNICAL_DEBT,
-  MIGRATION_PRIORITIES,
   RECOMMENDED_NEXT_PHASE,
   READINESS_SCORE_DIMENSIONS,
   computeReadinessScore,
@@ -69,13 +66,6 @@ const SEVERITY_TONE: Record<string, "neutral" | "warning" | "error"> = {
   low: "neutral",
   medium: "warning",
   high: "error",
-};
-
-const KIND_TONE: Record<string, "neutral" | "accent" | "warning" | "success"> = {
-  "Fix existing data": "neutral",
-  "New package": "accent",
-  Reprioritize: "warning",
-  "New opportunity": "success",
 };
 
 const consistencyColumns: AuditMatrixColumn<ConsistencyDimension>[] = [
@@ -341,45 +331,11 @@ export default function FoundationAuditPage() {
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider id="migration-plan">
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="migration-plan"
-            eyebrow={<Eyebrow tone="accent">Section 5 · Migration plan</Eyebrow>}
-            title="Migration plan"
-            description="The recommended sequence — not a priority ranking by importance, a sequencing by risk and dependency. Each step explains why it sits where it does relative to its neighbors."
-            descriptionMaxWidth={false}
-          />
-          <Stack gap="md">
-            {MIGRATION_PLAN.map((step) => (
-              <Card key={step.id} className="flex flex-col gap-2">
-                <div className="flex flex-wrap items-baseline gap-3">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-caption font-medium text-accent-400">
-                    {step.order}
-                  </span>
-                  <span className="text-body-md font-medium text-ink-primary">{step.title}</span>
-                  <Badge tone={EFFORT_TONE[step.effort]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    {step.effort} effort
-                  </Badge>
-                  <Badge tone={step.status === "Completed" ? "success" : "neutral"} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    {step.status}
-                  </Badge>
-                </div>
-                <Caption className="break-words text-ink-tertiary">{step.scope}</Caption>
-                <Body size="sm" muted className="border-t border-border-subtle pt-3 break-words">
-                  {step.reasoning}
-                </Body>
-              </Card>
-            ))}
-          </Stack>
-        </div>
-      </SectionShell>
-
       <SectionShell spacing="lg" divider id="certification">
         <div className="flex flex-col gap-10">
           <SectionHeader
             id="certification"
-            eyebrow={<Eyebrow tone="accent">Section 6 · Certification</Eyebrow>}
+            eyebrow={<Eyebrow tone="accent">Section 5 · Certification</Eyebrow>}
             title="Foundation certification"
             description="Applying the design system's own five-level maturity model to each family. Foundation Table reached Certified first — the first family to do so; the rest remain Production Ready, which is itself a finding, not an oversight, and isn't fabricated to look better."
             descriptionMaxWidth={false}
@@ -440,7 +396,7 @@ export default function FoundationAuditPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             id="design-rules"
-            eyebrow={<Eyebrow tone="accent">Section 7 · Design rules</Eyebrow>}
+            eyebrow={<Eyebrow tone="accent">Section 6 · Design rules</Eyebrow>}
             title="Design rules review"
             description="Which rules the Foundation Layer actually follows, which it violates today, and which need clarification before more families are built on top of it."
             descriptionMaxWidth={false}
@@ -470,7 +426,7 @@ export default function FoundationAuditPage() {
         <div className="flex flex-col gap-10">
           <SectionHeader
             id="readiness"
-            eyebrow={<Eyebrow tone="accent">Section 8 · Readiness</Eyebrow>}
+            eyebrow={<Eyebrow tone="accent">Section 7 · Readiness</Eyebrow>}
             title="Readiness assessment"
             description="Whether the Foundation Layer is ready to support each of the six systems planned next."
             descriptionMaxWidth={false}
@@ -482,38 +438,11 @@ export default function FoundationAuditPage() {
         </div>
       </SectionShell>
 
-      <SectionShell spacing="lg" divider id="roadmap">
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="roadmap"
-            eyebrow={<Eyebrow tone="accent">Section 9 · Roadmap</Eyebrow>}
-            title="Roadmap adjustments"
-            description="Recommended changes to the Operational Components roadmap, and the one genuinely new opportunity this audit surfaced — deliberately not padded with unnecessary work."
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={2}>
-            {ROADMAP_RECOMMENDATIONS.map((rec) => (
-              <Card key={rec.id} className="flex flex-col gap-2">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <span className="text-body-sm font-medium text-ink-primary">{rec.title}</span>
-                  <Badge tone={KIND_TONE[rec.kind]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    {rec.kind}
-                  </Badge>
-                </div>
-                <Body size="sm" muted className="break-words">
-                  {rec.detail}
-                </Body>
-              </Card>
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
       <SectionShell spacing="lg" id="executive-summary">
         <div className="flex flex-col gap-10">
           <SectionHeader
             id="executive-summary"
-            eyebrow={<Eyebrow tone="accent">Section 10 · Executive summary</Eyebrow>}
+            eyebrow={<Eyebrow tone="accent">Section 8 · Executive summary</Eyebrow>}
             title="Executive summary"
             descriptionMaxWidth={false}
           />
@@ -540,23 +469,13 @@ export default function FoundationAuditPage() {
                 ))}
               </ul>
             </Card>
-            <Card className="flex flex-col gap-3">
+            <Card className="flex flex-col gap-3 sm:col-span-2">
               <span className="text-body-md font-medium text-ink-primary">Technical debt</span>
               <ul className="flex flex-col gap-2">
                 {TECHNICAL_DEBT.map((item) => (
                   <li key={item} className="flex gap-2 break-words text-body-sm text-ink-secondary">
                     <span className="mt-2 size-1 shrink-0 rounded-full bg-ink-tertiary" aria-hidden />
                     <span className="min-w-0 break-words">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-            <Card className="flex flex-col gap-3">
-              <span className="text-body-md font-medium text-ink-primary">Migration priorities</span>
-              <ul className="flex flex-col gap-2">
-                {MIGRATION_PRIORITIES.map((item) => (
-                  <li key={item} className="break-words text-body-sm text-ink-secondary">
-                    {item}
                   </li>
                 ))}
               </ul>

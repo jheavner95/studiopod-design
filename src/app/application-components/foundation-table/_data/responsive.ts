@@ -14,7 +14,7 @@ export const RESPONSIVE_TOPICS: ResponsiveTopic[] = [
   },
   {
     label: "Column hiding",
-    note: "Not implemented today. A future responsive variant would conditionally omit low-priority TableHead/TableCell pairs below a breakpoint — tracked as a real gap, not claimed as built.",
+    note: "Not implemented. A responsive variant would conditionally omit low-priority TableHead/TableCell pairs below a breakpoint.",
   },
   {
     label: "Responsive stacks",

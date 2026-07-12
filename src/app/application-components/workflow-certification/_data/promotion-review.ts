@@ -41,14 +41,14 @@ export const REJECTED: PromotionEntry[] = [
   {
     title: "Production's illustration-canvas pipeline model, and the illustration engine's own DiagramPipeline primitive",
     system: "Pipeline Components",
-    detail: "src/production/{types,utils,components} (ValidationStage/QualityGate/ProductionPipeline data model, gates.ts/status.ts/compile.tsx utils, QualityGateDiagram/ValidationDiagram/ProductionPipelineDiagram) and src/illustrations/types/diagram.ts's own PipelineStage/DiagramPipeline types were investigated in full and judged a different, coordinate-positioned SVG rendering layer rather than a literal duplicate of this system's own DOM flex/Grid composition — re-verified to still exist and still match the original description during this certification.",
+    detail: "src/production/{types,utils,components} (ValidationStage/QualityGate/ProductionPipeline data model, gates.ts/status.ts/compile.tsx utils, QualityGateDiagram/ValidationDiagram/ProductionPipelineDiagram) and src/illustrations/types/diagram.ts's own PipelineStage/DiagramPipeline types were investigated in full and judged a different, coordinate-positioned SVG rendering layer rather than a literal duplicate of this system's own DOM flex/Grid composition.",
   },
   {
     title: "PlatformRelationshipMap and CapabilityRegistryDiagram",
     system: "Dependency & Relationship Views",
-    detail: "src/platforms/components/PlatformRelationshipMap.tsx and src/capabilities/components/CapabilityRegistryDiagram.tsx were investigated in full and judged real, coexisting prior art at a different rendering layer (illustration-canvas, coordinate-positioned SVG) rather than something to migrate away from — re-verified to still exist and still match the original description during this certification.",
+    detail: "src/platforms/components/PlatformRelationshipMap.tsx and src/capabilities/components/CapabilityRegistryDiagram.tsx were investigated in full and judged real, coexisting prior art at a different rendering layer (illustration-canvas, coordinate-positioned SVG) rather than something to migrate away from.",
   },
 ];
 
 export const PROMOTION_METHODOLOGY_NOTE =
-  "Every one of the eight systems dispatched its own dedicated duplication audit before writing new code, and every one of those audits is still published in its own migration-notes data. This section reclassifies their combined output — it does not re-run the searches from scratch, since the eight per-system audits above already independently re-verified each system's own reuse and duplication claims, including re-confirming that the two Rejected-bucket citations (Production's pipeline model, PlatformRelationshipMap/CapabilityRegistryDiagram) still exist and still match their original descriptions.";
+  "Overlaps checked against the rest of the component library and how each was resolved — real reuse extracted, genuine prior art preserved and disclosed, and no speculative findings.";

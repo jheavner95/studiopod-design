@@ -11,7 +11,6 @@ import { PRE_SESSION_FIXES } from "./_data/pre-session-fixes";
 import { DIMENSION_TALLIES, computeQualityTotals, computeLiveRegionTotals } from "./_data/scorecard";
 import { RESOLVED, DEFERRED, REJECTED, FINDINGS_METHODOLOGY_NOTE } from "./_data/findings";
 import { CERTIFICATION_LEVELS, CERTIFICATION_DECISION, CERTIFICATION_JUSTIFICATION, REMAINING_BLOCKERS } from "./_data/certification";
-import { ACCESSIBILITY_ROADMAP } from "./_data/roadmap";
 import { DS6_WORK_PACKAGES, EXECUTIVE_SUMMARY_STRENGTHS, EXECUTIVE_SUMMARY_WEAKNESSES, ACCESSIBILITY_COMPLETION_SUMMARY } from "./_data/executive-summary";
 
 const entry = getEntry("accessibility-certification")!;
@@ -81,7 +80,7 @@ export default function AccessibilityCertificationPage() {
           </div>
           <div className="flex flex-col gap-3">
             <span className="text-body-sm font-medium text-ink-primary">Every package in this review</span>
-            <DescriptionList items={DS6_WORK_PACKAGES.map((pkg) => ({ label: `${pkg.code} — ${pkg.title}`, value: pkg.oneLiner }))} />
+            <DescriptionList items={DS6_WORK_PACKAGES.map((pkg) => ({ label: pkg.title, value: pkg.oneLiner }))} />
           </div>
         </div>
       </SectionShell>
@@ -92,14 +91,14 @@ export default function AccessibilityCertificationPage() {
             id="review"
             eyebrow={<Eyebrow tone="accent">Review</Eyebrow>}
             title={`Two tiers, ${TOTAL_FILES_MODIFIED} files touched`}
-            description="Foundation and Operational, each independently re-audited for accessibility and interaction quality this pass — not trusting either tier's own earlier capstone verdict."
+            description="Foundation and Operational, each reviewed for accessibility and interaction quality."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
             {TIER_REVIEWS.map((tier) => (
               <Card key={tier.code} className="flex flex-col gap-3">
                 <div className="flex items-center justify-between gap-2">
-                  <Caption className="text-ink-tertiary">{tier.code}</Caption>
+                  <Caption className="text-ink-tertiary">{tier.tier}</Caption>
                   <Badge tone="success" size="sm">
                     {tier.resolvedCount} Resolved · {tier.deferredCount} Deferred
                   </Badge>
@@ -115,7 +114,7 @@ export default function AccessibilityCertificationPage() {
             ))}
           </CardGrid>
           <div className="flex flex-col gap-3">
-            <span className="text-body-sm font-medium text-ink-primary">Fixed earlier this session, before this audit ran — independently re-verified present in code</span>
+            <span className="text-body-sm font-medium text-ink-primary">Already fixed — confirmed present in code</span>
             <DescriptionList items={PRE_SESSION_FIXES.map((fix) => ({ label: fix.title, value: fix.detail }))} />
           </div>
         </div>
@@ -228,7 +227,7 @@ export default function AccessibilityCertificationPage() {
             <Card className="flex flex-col gap-1">
               <span className="text-body-sm font-medium text-ink-primary">Rejected (0)</span>
               <Body size="sm" muted>
-                No finding from either tier&rsquo;s audit was investigated and refuted this pass — every finding traced to a real, source-verified defect, either fixed or genuinely deferred. Reported empty honestly rather than padded with a placeholder entry.
+                No finding was investigated and refuted — every finding traced to a real, source-verified defect, either fixed or genuinely deferred. Reported empty honestly rather than padded with a placeholder entry.
               </Body>
             </Card>
           )}
@@ -272,27 +271,6 @@ export default function AccessibilityCertificationPage() {
                 value: blocker.item,
               }))}
             />
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="accessibility-roadmap" eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>} title="Where this certification sits in the larger plan" descriptionMaxWidth={false} />
-          <div className="flex flex-col gap-3">
-            {ACCESSIBILITY_ROADMAP.map((stage) => (
-              <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                <div className="flex flex-col gap-1">
-                  <span className="text-body-sm font-medium text-ink-primary">{stage.title}</span>
-                  <Body size="sm" muted className="max-w-[var(--container-narrow)]">
-                    {stage.description}
-                  </Body>
-                </div>
-                <Badge tone={stage.status === "complete" ? "success" : stage.status === "next" ? "accent" : "neutral"} size="sm" className="w-fit shrink-0">
-                  {stage.status === "complete" ? "Complete" : stage.status === "next" ? "Next" : "Future"}
-                </Badge>
-              </Card>
-            ))}
           </div>
         </div>
       </SectionShell>

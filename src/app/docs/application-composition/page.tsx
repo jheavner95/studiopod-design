@@ -26,7 +26,7 @@ const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "neutral"> = {
 const LAYER_STATUS_LABEL: Record<string, string> = {
   certified: "Certified",
   "certified-production-ready": "Production Ready",
-  future: "Future",
+  future: "Not yet available",
 };
 
 const TRAIT_TONE: Record<"defining" | "forbidden", "accent" | "warning"> = {
@@ -137,7 +137,7 @@ export default function ApplicationCompositionPage() {
             <SectionHeader
               id="application-templates"
               title="Eight templates, one composition plan each"
-              description="Every field below is a forward-looking composition plan citing real, already-certified components by name — not existing feature code, since no Business Feature has been built yet (see Reference, below). A real feature is expected to blend more than one template, not be a pure instance of exactly one."
+              description="Every field below is a composition plan citing real, already-certified components by name. Business Feature coverage varies by area — see Reference, below, for the current state of each. A real feature is expected to blend more than one template, not be a pure instance of exactly one."
               descriptionMaxWidth={false}
             />
             <div className="flex flex-col gap-6">
@@ -250,7 +250,7 @@ export default function ApplicationCompositionPage() {
           <div className="flex flex-col gap-10">
             <SectionHeader
               id="migration-notes"
-              title="Ten prospective features assessed, six architecture-ready today"
+              title="Platform-tier coverage, by candidate feature"
               description={ADOPTION_SUMMARY}
               descriptionMaxWidth={false}
             />
@@ -275,7 +275,7 @@ export default function ApplicationCompositionPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current architecture leaves for later — reserved, not scoped or committed."
+              description="Capabilities this architecture does not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

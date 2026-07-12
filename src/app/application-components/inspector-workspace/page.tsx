@@ -150,8 +150,8 @@ export default function InspectorWorkspacePage() {
           <div className="flex flex-col gap-6">
             <SectionHeader
               id="implementation-notes"
-              title="Implementation notes"
-              description="The checklist every Inspector implementation must satisfy — each item traces back to a specific region or rule documented above, not restated from scratch."
+              title="Composition checklist"
+              description="What every Inspector composition follows — each item traces back to a specific region or rule documented above, not restated from scratch."
               descriptionMaxWidth={false}
             />
             <div className="rounded-lg border border-accent-500/30 bg-accent-soft/10 p-4 sm:p-6">
@@ -205,7 +205,7 @@ export default function InspectorWorkspacePage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the anatomy leaves for later — reserved, not scoped or committed."
+              description="Capabilities this anatomy does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

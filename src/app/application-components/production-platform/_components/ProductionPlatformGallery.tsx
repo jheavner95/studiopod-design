@@ -90,7 +90,7 @@ function AIGenerationDemo() {
     { id: "review", label: "Awaiting review", status: "idle" },
   ];
   return (
-    <GalleryCard title="AI Generation" description="A themed demo only — this audit confirmed no real generation integration exists anywhere in the repo yet.">
+    <GalleryCard title="AI Generation" description="A themed demo only — no real generation integration exists anywhere in the repo yet.">
       <ProductionWorkspace header={<ProductionHeader name="Summer collection artwork" type="Production" />}>
         <ProductionCanvas maxHeight="380px">
           <div className="flex flex-col gap-1 p-2">

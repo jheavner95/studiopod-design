@@ -8,7 +8,6 @@ import { PRODUCT_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { PRODUCT_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { PRODUCT_PROMOTION_CANDIDATES, PRODUCT_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { PRODUCT_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("product-platform")!;
@@ -161,40 +160,9 @@ export default function ProductPlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across the seven subdomains this platform covers — Product platform, Catalog, Variants, Provider mappings, Validation, Drafts, Library — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {PRODUCT_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No prior implementation to migrate</span>
-                <Body size="sm" muted>
-                  No subdomain surfaced real execution logic (a catalog engine, a variant-selection system, a
-                  provider-sync integration, a validation engine, or a draft-persistence layer) that this
-                  platform&rsquo;s own components would duplicate. No src/product/ directory exists at all, and
-                  Library resolves to the same already-certified Asset Browser this package&rsquo;s own ProductLibrary
-                  re-exports directly. See the findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {PRODUCT_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

@@ -38,7 +38,7 @@ export const DEFERRED: DuplicationEntry[] = [
   {
     title: "The value-transition announcement pattern above",
     scope: "Operational + Workflow status presets",
-    detail: "Not fixed in this audit — extracting a shared hook and back-filling PipelineStatus/ApprovalStatus is a real, bounded code change (touching six files) beyond this audit's own identify-and-classify scope, the same discipline every prior certification page followed for findings of this shape. Recorded in the Technical Debt Register below rather than fixed speculatively.",
+    detail: "Not fixed in this audit — extracting a shared hook and back-filling PipelineStatus/ApprovalStatus is a real, bounded code change (touching six files) beyond this audit's own identify-and-classify scope. Recorded in the technical debt register rather than fixed speculatively.",
   },
 ];
 

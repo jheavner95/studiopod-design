@@ -8,7 +8,6 @@ import { SEARCH_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { SEARCH_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { SEARCH_PROMOTION_CANDIDATES, SEARCH_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { SEARCH_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("filter-search")!;
@@ -121,36 +120,9 @@ export default function FilterSearchPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified duplication — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {SEARCH_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No reusable duplication found</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled search/filter/sort UI was found anywhere in the codebase across all eight named domains, including a fresh re-check of this repo&rsquo;s own four Library Playground pages. See what was checked below — and one real, pre-existing code duplication this package itself resolved (Data Grid&rsquo;s and Asset Browser&rsquo;s pagination components each inlined an identical &ldquo;X–Y of Z&rdquo; calculation; both now delegate to this system&rsquo;s own ResultSummary).
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">What was checked</span>
-              {SEARCH_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

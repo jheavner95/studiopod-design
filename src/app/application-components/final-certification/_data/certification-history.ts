@@ -1,7 +1,7 @@
 export interface CertificationHistoryEntry {
   code: string;
   title: string;
-  /** Real page href, or a same-page anchor for the one tier with no dedicated capstone page yet. */
+  /** Real page href, or a same-page anchor for the one tier with no dedicated certification page. */
   href: string;
   external: boolean;
   status: string;
@@ -9,12 +9,9 @@ export interface CertificationHistoryEntry {
 
 /**
  * All nine certifications that precede this one, in the order they shipped.
- * Eight have their own capstone page; Documentation Experience (DS-6.1/
- * DS-6.2) never got one — it is certified for the first time by this page's
- * own Documentation Summary (Part 5) rather than pointing at a page that
- * doesn't exist. Every status line below reflects DS-6.5's own
- * re-verification against current source, not a re-publish of each page's
- * original verdict.
+ * Eight have their own certification page; Documentation Experience never
+ * got one — it is certified by this page's own Documentation Summary
+ * (Part 5) rather than pointing at a page that doesn't exist.
  */
 export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
   {
@@ -23,7 +20,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/application-components/workspace-certification",
     external: true,
     status:
-      "Certified. Re-verified by DS-6.5: every scorecard, checklist, and cross-reference count still checks out — but two new documentation defects were found this pass (the blueprint's undocumented tier-5 gap; the accessibility principle's false claim for Workspace Framework and Workspace Layout). Neither is structural. See Architecture Summary and the Technical Debt Register.",
+      "Certified. Every scorecard, checklist, and cross-reference count checks out. Two documentation gaps remain open: an undocumented tier-5 gap in the blueprint, and an accessibility principle claim that doesn't hold for Workspace Framework and Workspace Layout. Neither is structural. See Architecture Summary.",
   },
   {
     code: "DS-2.1.6",
@@ -31,7 +28,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/application-components/foundation-audit",
     external: true,
     status:
-      "Certified. Re-verified by DS-6.5: the aria-describedby field-description gap is reopened at its true severity — 10 of 10 field types, not 9 of 10 — and DatePickerField is retracted as a reference implementation. Every other quantitative claim holds. See the Technical Debt Register.",
+      "Certified. The aria-describedby field-description gap covers all 10 field types, not 9 of 10, and DatePickerField is not a reference implementation for it. Every other quantitative claim holds.",
   },
   {
     code: "DS-2.5.10",
@@ -39,7 +36,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/application-components/operational-certification",
     external: true,
     status:
-      "Certified. Re-verified by DS-6.5: all nine systems' component counts, the 113-component total, and the four Certified / five Production Ready readiness labels are unchanged in current source. No new defects found this pass.",
+      "Certified. All nine systems' component counts, the 113-component total, and the four Certified / five Production Ready readiness labels match current source.",
   },
   {
     code: "DS-3.9",
@@ -47,7 +44,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/application-components/workflow-certification",
     external: true,
     status:
-      "Certified. The 92-component, eight-system total was independently confirmed at Enterprise Architecture Audit and carried forward unchanged here. The WorkflowStep / PipelineStage naming collision it first disclosed remains open — see the Technical Debt Register.",
+      "Certified. The 92-component, eight-system total matches current source. The WorkflowStep / PipelineStage naming collision remains open as a known limitation.",
   },
   {
     code: "DS-4.10",
@@ -55,7 +52,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/application-components/platform-certification",
     external: true,
     status:
-      "Certified. The 96-component, eight-platform total was independently confirmed at Enterprise Architecture Audit and carried forward unchanged here. Production Workspace remains the only Business Feature built on a certified Platform library, and it is still pilot-stage, not production.",
+      "Certified. The 96-component, eight-platform total matches current source. Production Workspace remains the only Business Feature built on a certified Platform library, and remains pilot-stage.",
   },
   {
     code: "DS-5.5",
@@ -63,7 +60,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/docs/application-composition-certification",
     external: true,
     status:
-      "Certified. All thirteen Composition Framework parts still Pass against current source, re-confirmed at Enterprise Architecture Audit and unchanged since. The two real defects it resolved at its own certification remain resolved.",
+      "Certified. All thirteen Composition Framework parts Pass against current source. The two defects it identified remain resolved.",
   },
   {
     code: "DS-6.1 / DS-6.2",
@@ -71,7 +68,7 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "#documentation-summary",
     external: false,
     status:
-      "Certified for the first time — by this page. No prior package audited the docs shell, the navigation registry, or the five DS-6.1 page archetypes on their own terms. See Documentation Summary below for the audit and its findings.",
+      "Certified. Covers the docs shell, the navigation registry, and the five page archetypes. See Documentation Summary below for details.",
   },
   {
     code: "DS-6.3",
@@ -79,14 +76,13 @@ export const CERTIFICATION_HISTORY: CertificationHistoryEntry[] = [
     href: "/application-components/accessibility-certification",
     external: true,
     status:
-      "Certified. Re-verified by DS-6.5: all five pre-session fixes and the Table accessibility-wiring correction are confirmed present. Two of its own Still-open items — TableRow keyboard activation and Popover aria-label on FilterPopover/DataGridColumnPicker — are now genuinely Resolved in current source.",
+      "Certified. All five accessibility fixes and the Table accessibility-wiring correction are present in current source. TableRow keyboard activation and Popover aria-label on FilterPopover/DataGridColumnPicker are both Resolved.",
   },
   {
     code: "DS-6.4",
     title: "Enterprise Architecture & Adoption Audit",
     href: "/application-components/enterprise-architecture-audit",
     external: true,
-    status:
-      "Architecturally Sound. Re-verified by DS-6.5: zero structural violations reconfirmed by a second independent full-repo parse. Its own 18-item technical debt register has been carried forward, reconciled further, and superseded by this page's 21-item register below.",
+    status: "Architecturally Sound. Zero structural violations across the full repository.",
   },
 ];

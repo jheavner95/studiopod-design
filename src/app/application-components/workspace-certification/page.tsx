@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { SectionShell, CardGrid } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, Heading } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
@@ -12,7 +12,6 @@ import { DESIGN_REVIEW_CHECKLIST } from "./_data/checklist";
 import { WORKSPACE_EVOLUTION_STEPS } from "./_data/evolution-process";
 import { ARCHITECTURE_PRINCIPLES } from "./_data/principles";
 import { CERTIFICATION_LEVELS } from "./_data/certification-levels";
-import { ARCHITECTURE_ROADMAP } from "./_data/roadmap";
 import { DS1_WORK_PACKAGES } from "./_data/completion-summary";
 
 const entry = getEntry("workspace-certification")!;
@@ -129,7 +128,7 @@ export default function WorkspaceCertificationPage() {
             id="platform-certification"
             eyebrow={<Eyebrow tone="accent">Platform certification</Eyebrow>}
             title="Platform certification matrix"
-            description="Every current StudioPOD platform, scored honestly against today's state — no platform has completed a formal Scorecard review yet, since this page is what defines that review. Product has no architecture or coverage tracking anywhere yet, which this matrix surfaces rather than hides."
+            description="Every current StudioPOD platform, scored against the same certification criteria."
             descriptionMaxWidth={false}
           />
           <CertificationMatrix />
@@ -242,45 +241,6 @@ export default function WorkspaceCertificationPage() {
               </Card>
             ))}
           </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="roadmap"
-            eyebrow={<Eyebrow tone="accent">Roadmap</Eyebrow>}
-            title="Future architecture roadmap"
-            description="The workspace architecture certified above establishes the foundation everything below it builds on."
-            descriptionMaxWidth={false}
-          />
-          <div className="flex flex-col items-stretch gap-1 rounded-xl border border-border-subtle bg-surface/40 p-6 sm:p-10">
-            {ARCHITECTURE_ROADMAP.map((stage, index) => (
-              <div key={stage.id} className="flex flex-col items-center gap-1">
-                <Card
-                  padding="md"
-                  className={
-                    stage.status === "complete"
-                      ? "flex w-full flex-col gap-1 border-success/40 bg-success/10 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
-                      : "flex w-full flex-col gap-1 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
-                  }
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-body-md font-medium text-ink-primary">{stage.title}</span>
-                    <Body size="sm" muted>
-                      {stage.description}
-                    </Body>
-                  </div>
-                  <Badge tone={stage.status === "complete" ? "success" : "neutral"} size="sm" className="mx-auto w-fit sm:mx-0">
-                    {stage.status === "complete" ? "Complete" : "Future"}
-                  </Badge>
-                </Card>
-                {index < ARCHITECTURE_ROADMAP.length - 1 ? (
-                  <ArrowDown className="size-4 text-ink-tertiary" aria-hidden />
-                ) : null}
-              </div>
-            ))}
-          </div>
         </div>
       </SectionShell>
 

@@ -8,7 +8,6 @@ import { BROWSER_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { BROWSER_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { WHEN_TO_USE_TOPICS, COMPOSITION_TOPICS } from "./_data/implementation-guidance";
-import { BROWSER_PROMOTION_CANDIDATES, BROWSER_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { BROWSER_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("asset-browser")!;
@@ -151,36 +150,9 @@ export default function AssetBrowserPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified duplication — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {BROWSER_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No migration candidates found</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled asset/library browsing UI was found anywhere in the codebase across all eight named domains, including a specific check of this repo&rsquo;s own four Library Playground pages. See the clean findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {BROWSER_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

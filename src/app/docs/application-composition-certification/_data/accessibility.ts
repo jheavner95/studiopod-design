@@ -17,6 +17,6 @@ export const ACCESSIBILITY_STRENGTHS: AccessibilityFinding[] = [
 export const ACCESSIBILITY_GAPS: AccessibilityFinding[] = [
   {
     label: "Status announcements",
-    text: "No aria-live wiring exists for state changes (selection, stage advance, validation advance, dialog confirm) — a screen reader user gets no announcement when an action completes. Foundation's own Toast component already implements aria-live=\"polite\" (confirmed by direct source read), so the pattern exists in the design system; the pilot simply doesn't compose it yet. This refines, rather than repeats, Operational, Workflow, and Platform Certification's own claim that no first-party live-region pattern exists at all — one does, one tier down, unused here.",
+    text: "No aria-live wiring exists for state changes (selection, stage advance, validation advance, dialog confirm) — a screen reader user gets no announcement when an action completes. Foundation's own Toast component already implements aria-live=\"polite\" (confirmed by direct source read), so the pattern exists in the design system; the pilot simply doesn't compose it yet.",
   },
 ];

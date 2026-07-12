@@ -8,7 +8,6 @@ import { ADMIN_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { ADMIN_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { ADMIN_PROMOTION_CANDIDATES, ADMIN_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { ADMIN_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("admin-platform")!;
@@ -141,41 +140,9 @@ export default function AdminPlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across the six subdomains this page covers — Admin platform, Users, Permissions, Configuration, Audit, Enrollment — plus Governance, not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {ADMIN_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No real findings</span>
-                <Body size="sm" muted>
-                  No subdomain surfaced real execution logic (a user-account system, an RBAC engine, a
-                  configuration-persistence store, an audit-log writer, or an enrollment-workflow engine) that this
-                  platform&rsquo;s own components would duplicate. Unlike every other Platform section on this site,
-                  Admin has no dedicated directory, diagram component, or static fixture module anywhere in the
-                  repo — its only footprint is a single planning-schema row in Platform Component Architecture&rsquo;s
-                  own templates. See the clean findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {ADMIN_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

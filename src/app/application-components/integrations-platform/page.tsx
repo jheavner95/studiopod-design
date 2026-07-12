@@ -8,7 +8,6 @@ import { INTEGRATIONS_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { INTEGRATIONS_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { INTEGRATIONS_PROMOTION_CANDIDATES, INTEGRATIONS_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { INTEGRATIONS_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("integrations-platform")!;
@@ -142,42 +141,9 @@ export default function IntegrationsPlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across the seven areas this audit covered — Integrations platform, Providers, Connections, Mappings, Synchronization, Diagnostics, Infrastructure — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {INTEGRATIONS_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No real migration targets found</span>
-                <Body size="sm" muted>
-                  No area surfaced real execution logic (an OAuth/provider-connector implementation, a
-                  connection-persistence store, a field-mapping engine, a sync-job scheduler, a diagnostic-check
-                  engine, or integrations-specific infrastructure) that this platform&rsquo;s own components would
-                  duplicate. The pre-existing Capability Library (src/capabilities/) is the closest adjacent system —
-                  a separate architecture audit already found it &ldquo;diagram-layer-only,&rdquo; and this audit
-                  independently re-confirmed that finding by reading its actual provider/failover source. See the
-                  clean findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {INTEGRATIONS_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

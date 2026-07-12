@@ -8,7 +8,6 @@ import { INTELLIGENCE_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { INTELLIGENCE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { INTELLIGENCE_SCOPE_GUIDANCE, INTELLIGENCE_COMPOSITION_GUIDANCE } from "./_data/implementation-guidance";
-import { INTELLIGENCE_PROMOTION_CANDIDATES, INTELLIGENCE_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { INTELLIGENCE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("intelligence-platform")!;
@@ -143,40 +142,9 @@ export default function IntelligencePlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="A dedicated search across the six subdomains this family covers — Recommendations, Opportunities, Health, Diagnostics, Insights, and Decision support — before a single Intelligence component was written. No speculative findings: every result below traces to a specific file that was actually read."
-              descriptionMaxWidth={false}
-            />
-            {INTELLIGENCE_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No real migration opportunities found</span>
-                <Body size="sm" muted>
-                  No subdomain surfaced real execution logic (a recommendation engine, an opportunity-scoring system,
-                  real health-monitoring, a root-cause-analysis engine, or an analytics pipeline) that this
-                  platform&rsquo;s own components would duplicate. No src/intelligence/ directory exists at all, and
-                  every existing Intelligence-named implementation is confirmed diagram-layer only (src/platforms/,
-                  src/capabilities/). See the findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">What was checked</span>
-              {INTELLIGENCE_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

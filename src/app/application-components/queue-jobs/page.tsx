@@ -8,7 +8,6 @@ import { QUEUE_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { QUEUE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { QUEUE_PROMOTION_CANDIDATES, QUEUE_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { QUEUE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("queue-jobs")!;
@@ -129,36 +128,9 @@ export default function QueueJobsPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified duplication — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {QUEUE_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No prior implementation found</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled job-queue UI was found anywhere in the codebase across all five named domains, including a direct read of the Workflow Diagram Library&rsquo;s own WorkflowCard/WorkflowProgress/WorkflowTimeline components. See the findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {QUEUE_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

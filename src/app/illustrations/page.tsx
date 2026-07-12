@@ -56,7 +56,7 @@ const ACCESSIBILITY_TOPICS = [
 
 const FUTURE_ENHANCEMENTS = [
   {
-    title: "Engine considered complete",
+    title: "What the engine currently supports",
     text: "Every primitive, layout, and state a diagram needs already exists here. Extending to a new domain should only mean defining a new Diagram object — nodes, connections, layout — never new rendering logic.",
   },
   {
@@ -163,7 +163,7 @@ export default function IllustrationsPlaygroundPage() {
               <SectionHeader
                 id="future-enhancements"
                 title="Future enhancements"
-                description="Room the current engine leaves for later — reserved, not scoped or committed."
+                description="Capabilities this engine does not currently include:"
                 descriptionMaxWidth={false}
               />
               <CardGrid columns={2}>

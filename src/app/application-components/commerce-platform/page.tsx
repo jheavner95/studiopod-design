@@ -8,7 +8,6 @@ import { COMMERCE_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { COMMERCE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { COMMERCE_PROMOTION_CANDIDATES, COMMERCE_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { COMMERCE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("commerce-platform")!;
@@ -135,40 +134,9 @@ export default function CommercePlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across the seven subdomains this platform covers — Commerce platform, Catalog, Orders, Inventory, Fulfillment, Pricing, Operations — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {COMMERCE_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No real migration targets found</span>
-                <Body size="sm" muted>
-                  No subdomain surfaced real execution logic (a sync engine, an order-management system, stock-tracking
-                  math, pick/pack/ship logic, or a pricing calculator) that this platform&rsquo;s own components would
-                  duplicate. No src/commerce/ directory exists at all, and every existing Commerce-named implementation
-                  is confirmed diagram-layer only (src/capabilities/, src/workflows/examples/). See the clean findings
-                  below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {COMMERCE_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

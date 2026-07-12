@@ -6,7 +6,7 @@ export interface NavigationFutureExtension {
 export const NAVIGATION_FUTURE_EXTENSIONS: NavigationFutureExtension[] = [
   {
     title: "Resizable navigation",
-    description: "Drag-to-resize SideNavigation's width, persisted per user — deferred for the same reason Panel's Resizable extension and Table's Column Resize are deferred.",
+    description: "Drag-to-resize SideNavigation's width, persisted per user — not included because it needs pointer-tracking state this primitive layer doesn't own.",
   },
   {
     title: "Dockable panels",

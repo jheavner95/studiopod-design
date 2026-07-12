@@ -16,7 +16,7 @@ function boolTone(value: boolean): "success" | "neutral" {
 
 function PercentCell({ value }: { value: number | null }) {
   if (value === null) {
-    return <span className="text-body-sm text-ink-tertiary">Not yet tracked</span>;
+    return <span className="text-body-sm text-ink-tertiary">Not tracked</span>;
   }
   return <span className="text-body-sm text-ink-secondary">{value}%</span>;
 }
@@ -25,7 +25,7 @@ export function CertificationMatrix() {
   return (
     <Table
       minWidth="820px"
-      caption="Platform certification matrix: for each of StudioPOD’s nine platforms, whether its architecture is defined, whether the workspace is certified, its component coverage, operational readiness, and current phase."
+      caption="Platform certification matrix: for each of StudioPOD’s nine platforms, whether its architecture is defined, whether the workspace is certified, its component coverage, operational readiness, and certification tier."
     >
       <TableHeader sticky={false}>
         <tr>
@@ -34,7 +34,7 @@ export function CertificationMatrix() {
           <TableHead className="px-3">Workspace certified</TableHead>
           <TableHead className="px-3">Component coverage</TableHead>
           <TableHead className="px-3">Operational readiness</TableHead>
-          <TableHead className="px-3">Current phase</TableHead>
+          <TableHead className="px-3">Certification tier</TableHead>
         </tr>
       </TableHeader>
       <TableBody>
@@ -44,12 +44,12 @@ export function CertificationMatrix() {
               <span className="text-body-sm font-medium text-ink-primary">{row.platform}</span>
             </TableHead>
             <TableStatusCell
-              label={row.architectureDefined ? "Defined" : "Not yet defined"}
+              label={row.architectureDefined ? "Defined" : "Unranked"}
               tone={boolTone(row.architectureDefined)}
               className="px-3"
             />
             <TableStatusCell
-              label={row.workspaceCertified ? "Certified" : "Not yet certified"}
+              label={row.workspaceCertified ? "Certified" : "Not certified"}
               tone={boolTone(row.workspaceCertified)}
               className="px-3"
             />

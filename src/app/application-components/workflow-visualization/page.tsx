@@ -8,7 +8,6 @@ import { WORKFLOW_VIZ_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { WORKFLOW_VIZ_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { WORKFLOW_VIZ_PROMOTION_CANDIDATES, WORKFLOW_VIZ_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { WORKFLOW_VIZ_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("workflow-visualization")!;
@@ -28,7 +27,7 @@ const WHEN_TO_USE = [
   {
     title: "Not real coordinate-positioned rendering",
     explanation:
-      "A screen composing a live, canvas-positioned diagram with pan/zoom and precise node coordinates belongs to the Illustration Library's own IllustrationCanvas/IllustrationNode/IllustrationConnection instead — this family has no transform/offset state of its own, and WorkflowControls' zoom/fit buttons stay inert until that lands.",
+      "A screen composing a live, canvas-positioned diagram with pan/zoom and precise node coordinates belongs to the Illustration Library's own IllustrationCanvas/IllustrationNode/IllustrationConnection instead — this family has no transform/offset state of its own, and WorkflowControls' zoom/fit buttons are present but not yet wired to a live viewport transform.",
   },
 ];
 
@@ -157,41 +156,9 @@ export default function WorkflowVisualizationPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings from checking this system's own domains for overlap, including a full read of the Illustration Library itself — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {WORKFLOW_VIZ_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">Nothing found to migrate</span>
-                <Body size="sm" muted>
-                  No genuine canvas/viewport/pan-state/minimap/multi-select implementation was found anywhere
-                  outside src/components/workflow/ — including the Illustration Library itself, confirmed by a full
-                  read of IllustrationCanvas and its dev-mode context to have no transform/offset state, no
-                  multi-select, and no minimap or toolbar concept. See the findings below for what was actually
-                  checked, including two misleadingly-named &ldquo;MiniMap&rdquo; components elsewhere in the repo
-                  that turned out to be plain node/connector strips, not spatial viewport thumbnails.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {WORKFLOW_VIZ_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

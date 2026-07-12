@@ -183,7 +183,7 @@ export default function WorkspaceLayoutPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the layout rules leave for later — reserved, not scoped or committed."
+              description="Capabilities these layout rules do not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

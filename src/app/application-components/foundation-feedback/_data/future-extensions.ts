@@ -10,7 +10,7 @@ export const FEEDBACK_FUTURE_EXTENSIONS: FeedbackFutureExtension[] = [
   },
   {
     title: "Activity Feed",
-    description: "A chronological, non-dismissible log of everything that happened, distinct from Notification Center's \"things you haven't acknowledged yet\" — deferred until a real screen needs it.",
+    description: "A chronological, non-dismissible log of everything that happened, distinct from Notification Center's \"things you haven't acknowledged yet\" — not included in the current system.",
   },
   {
     title: "Task Progress",

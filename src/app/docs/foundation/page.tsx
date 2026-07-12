@@ -36,8 +36,8 @@ export default function DocsFoundationPage() {
         purpose="This page is architecture documentation explaining how the Foundation tier fits into the system — it is not the primary way to browse Foundation's actual components; for that, use the Components section. Foundation Tier is the generic UI layer with zero business or workflow awareness — Layout, Table, Metadata, Forms, Overlays, Navigation, and Feedback. Every higher tier (Operational, Workflow, Platform) composes exclusively from these seven families rather than reaching for raw HTML or one-off styling."
         whatYoullLearn={[
           "The seven component families and what each one owns — structure, tabular data, read-only display, editing, transient surfaces, wayfinding, and status.",
-          "Which families have real production adoption today versus which are built but not yet used by a real screen.",
-          "How Foundation Table earned the tier's only Certified rating, and what the other six families still need to get there.",
+          "Which families have real production adoption versus which exist but aren't yet used by a real screen.",
+          "How Foundation Table earned the tier's only Certified rating, and where the other six families currently stand on that same ladder.",
           "Where Foundation sits relative to Operational, Workflow, and Platform in the tier model, and where each of those tiers' own architecture pages live.",
         ]}
         stats={STATS}

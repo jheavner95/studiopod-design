@@ -43,7 +43,7 @@ const STACK_STATUS_LABEL: Record<StackStatus, string> = {
   certified: "Certified",
   "certified-production-ready": "Production Ready",
   documented: "Documented",
-  future: "Future",
+  future: "Not yet available",
 };
 
 const VERDICT_TONE: Record<FeatureAdoptionVerdict, "success" | "warning" | "neutral"> = {
@@ -298,7 +298,7 @@ export default function BusinessFeaturesPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room this framework leaves for later — reserved, not scoped or committed."
+              description="Capabilities this framework does not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

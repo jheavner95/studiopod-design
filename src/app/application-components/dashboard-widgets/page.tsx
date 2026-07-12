@@ -8,7 +8,6 @@ import { DASHBOARD_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { DASHBOARD_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { DASHBOARD_PROMOTION_CANDIDATES, DASHBOARD_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { DASHBOARD_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("dashboard-widgets")!;
@@ -129,36 +128,9 @@ export default function DashboardWidgetsPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified duplication — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {DASHBOARD_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No migration targets found</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled dashboard/widget-grid UI was found anywhere in the codebase across all six named domains, including a direct read of Production&rsquo;s own HealthDashboardDiagram. See the findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {DASHBOARD_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

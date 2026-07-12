@@ -17,7 +17,7 @@ export interface ResponsiveTopic {
 export const RESPONSIVE_TOPICS: ResponsiveTopic[] = [
   {
     label: "Viewport scaling",
-    note: "WorkflowViewport has no zoom/scale transform of its own — content reflows with the DOM at every breakpoint the same way every other DOM-flow component in this tier already does, since real coordinate-based scaling is deferred to this package's own Future Extensions.",
+    note: "WorkflowViewport has no zoom/scale transform of its own — content reflows with the DOM at every breakpoint the same way every other DOM-flow component in this tier already does.",
   },
   {
     label: "Mini-map behavior",

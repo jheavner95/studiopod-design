@@ -39,7 +39,7 @@ export default function PlatformsPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<Network className="size-3.5" />}>Playground · Archived</SectionBadge>
+            <SectionBadge icon={<Network className="size-3.5" />}>Playground · Historical Reference</SectionBadge>
             <Display>Platform architecture library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD&apos;s platforms relate, built on the illustration and
@@ -47,8 +47,8 @@ export default function PlatformsPlaygroundPage() {
               <code>{"<PlatformArchitectureDiagram architecture={data} />"}</code>. Every diagram on this page is
               rendered from a plain data value, no platform-specific rendering code exists anywhere here.
             </Body>
-            <Alert tone="warning" title="Archived prototype">
-              This is an early prototype, superseded by the real implementation. See{" "}
+            <Alert tone="info" title="Historical Reference">
+              This page shows an earlier version of these diagrams, kept for reference. See{" "}
               <Link
                 href="/application-components/platform-architecture"
                 className="text-accent-400 hover:text-accent-300"

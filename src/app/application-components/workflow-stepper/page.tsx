@@ -8,7 +8,6 @@ import { STEPPER_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { STEPPER_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { STEPPER_PROMOTION_CANDIDATES, STEPPER_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { STEPPER_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("workflow-stepper")!;
@@ -157,38 +156,9 @@ export default function WorkflowStepperPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified duplication search across every named domain in the codebase — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {STEPPER_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No migration matches found</span>
-                <Body size="sm" muted>
-                  No existing hand-rolled stepper/wizard UI was found anywhere in the codebase across all six named domains, including a
-                  direct re-read of Foundation Navigation&rsquo;s own Stepper and the brand-new Workflow Framework files. See the
-                  findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {STEPPER_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

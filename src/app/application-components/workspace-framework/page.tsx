@@ -88,7 +88,7 @@ export default function WorkspaceFrameworkPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the anatomy leaves for later — reserved, not scoped or committed."
+              description="Capabilities this anatomy does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

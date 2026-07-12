@@ -32,7 +32,7 @@ export default function MaturityPage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="The five-stage ladder"
-            description="Five stages, from nothing built yet to an API stable enough to treat as a contract — every component in the inventory sits on exactly one of them."
+            description="Five stages, from an unimplemented concept to an API stable enough to treat as a contract — every component in the inventory sits on exactly one of them."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -68,7 +68,7 @@ export default function MaturityPage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Every inventory item, mapped"
-            description={`${MATURITY_ROWS.length} components. Zero reach Certified or Locked today — that requires real usage in a shipped screen, not just existing, and no Application Component has been used in a real screen yet.`}
+            description={`${MATURITY_ROWS.length} components. Certified and Locked require real, shipped usage — not just existing — which is why they're reserved for components with production traffic.`}
             descriptionMaxWidth={false}
           />
           <MaturityTable />
@@ -93,7 +93,7 @@ export default function MaturityPage() {
               {
                 label: "Certified & Locked",
                 value:
-                  "Never assigned by the mapping above — these two stages only come from manual verification (accessibility pass, responsive check, real shipped usage), which is why the sample table below shows zero of either today.",
+                  "Never assigned by the mapping above — these two stages only come from manual verification: accessibility pass, responsive check, real shipped usage.",
               },
             ]}
           />

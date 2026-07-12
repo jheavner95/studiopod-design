@@ -11,7 +11,7 @@ export const LAYOUT_FUTURE_EXTENSIONS: LayoutFutureExtension[] = [
   },
   {
     title: "Resizable Panels",
-    description: "Panel's own drag-to-resize extension — deferred today because it needs pointer-tracking state this primitive layer intentionally doesn't own.",
+    description: "Panel's own drag-to-resize extension — not included because it needs pointer-tracking state this primitive layer intentionally doesn't own.",
   },
   {
     title: "Dock Layout",

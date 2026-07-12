@@ -15,7 +15,6 @@ import { RESOLVED, DEFERRED, REJECTED, PROMOTION_METHODOLOGY_NOTE } from "./_dat
 import { NAMING_COLLISIONS, NAMING_SUMMARY } from "./_data/naming-review";
 import { READINESS_ASSESSMENT } from "./_data/readiness";
 import { CERTIFICATION_LEVELS, CERTIFICATION_DECISION, CERTIFICATION_JUSTIFICATION, REMAINING_BLOCKERS } from "./_data/certification";
-import { PLATFORM_ROADMAP } from "./_data/roadmap";
 import { DS4_WORK_PACKAGES, EXECUTIVE_SUMMARY_STRENGTHS, EXECUTIVE_SUMMARY_WEAKNESSES, DS4_COMPLETION_SUMMARY } from "./_data/executive-summary";
 
 const entry = getEntry("platform-certification")!;
@@ -372,27 +371,6 @@ export default function PlatformCertificationPage() {
                 value: blocker.item,
               }))}
             />
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader id="platform-roadmap" eyebrow={<Eyebrow tone="accent">Platform roadmap</Eyebrow>} title="Where the platform tier sits in the larger plan" descriptionMaxWidth={false} />
-          <div className="flex flex-col gap-3">
-            {PLATFORM_ROADMAP.map((stage) => (
-              <Card key={stage.id} className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                <div className="flex flex-col gap-1">
-                  <span className="text-body-sm font-medium text-ink-primary">{stage.title}</span>
-                  <Body size="sm" muted className="max-w-[var(--container-narrow)]">
-                    {stage.description}
-                  </Body>
-                </div>
-                <Badge tone={stage.status === "complete" ? "success" : stage.status === "next" ? "accent" : "neutral"} size="sm" className="w-fit shrink-0">
-                  {stage.status === "complete" ? "Complete" : stage.status === "next" ? "Next" : "Future"}
-                </Badge>
-              </Card>
-            ))}
           </div>
         </div>
       </SectionShell>

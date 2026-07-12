@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { SectionShell, CardGrid } from "@/components/layout";
-import { Card, Body, Badge, SectionHeader, Eyebrow } from "@/components/ui";
+import { SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
@@ -34,7 +32,7 @@ const relatedGroups = [getGroup("platform-architecture")!, getGroup("platform-te
 const STATS = [
   { label: "Domain platforms", value: String(platformEntries.length) },
   { label: "Real components", value: "96" },
-  { label: "Business Feature pilots", value: String(businessFeatureEntries.length) },
+  { label: "Business Features", value: String(businessFeatureEntries.length) },
 ];
 
 /**
@@ -63,7 +61,7 @@ const PLATFORM_BLURBS: Record<string, string> = {
 
 const BUSINESS_FEATURE_BLURBS: Record<string, string> = {
   "production-workspace-feature":
-    "The one real pilot: a fully wired Production Workspace screen — its own header, canvas, inspector, validation, metrics, actions, and dialogs, running on local state and mock data — proving the certified Production platform tier composes into an actual feature, not just a diagram.",
+    "A fully wired Production Workspace screen — its own header, canvas, inspector, validation, metrics, actions, and dialogs, running on local state and mock data — the certified Production platform tier composed into an actual feature, not just a diagram.",
 };
 
 export default function ApplicationsPage() {
@@ -74,10 +72,10 @@ export default function ApplicationsPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Applications is the eight domain-specific platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, and Integrations — plus the one real Business Feature pilot, presented as application compositions rather than simply another documentation page. Every platform here scopes the certified Foundation, Operational, and Workflow tiers into screens a real StudioPOD user would recognize, almost entirely by re-exporting already-certified components; the Business Feature pilot goes one step further, wiring one of those platforms into an actual running screen with local state and mock data."
+        purpose="Applications is the eight domain-specific platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, and Integrations — plus the Business Feature that composes them, presented as application compositions rather than simply another documentation page. Every platform here scopes the certified Foundation, Operational, and Workflow tiers into screens a real StudioPOD user would recognize, almost entirely by re-exporting already-certified components; the Business Feature goes one step further, wiring one of those platforms into an actual running screen with local state and mock data."
         whatYoullLearn={[
           "The eight domain platforms and what each one actually does for a StudioPOD user — not a component count, but the job it performs: running production, managing a product, publishing, transacting commerce, surfacing intelligence, operating the system, administering it, or integrating it with the outside world.",
-          "The one real Business Feature pilot, Production Workspace, and how it composes the certified Production platform tier into an actual running screen rather than staying diagram-only.",
+          "Production Workspace, the current example of the Business Feature pattern, and how it composes the certified Production platform tier into an actual running screen.",
           "Why this section is distinct from Components and Patterns: these are domain compositions carrying real StudioPOD business vocabulary — Order, Artwork, Provider Connection — not generic, reusable building blocks.",
           "Where to go next for the architecture behind these compositions (Platform Architecture, Application Composition) or their certification record (Platform Certification and friends).",
         ]}
@@ -108,7 +106,7 @@ export default function ApplicationsPage() {
           <SectionHeader
             id="business-features"
             eyebrow={<Eyebrow tone="accent">{businessFeaturesGroup.title}</Eyebrow>}
-            title="The real pilot"
+            title="The Business Feature"
             description={businessFeaturesGroup.description}
             descriptionMaxWidth={false}
           />
@@ -122,23 +120,6 @@ export default function ApplicationsPage() {
               />
             ))}
           </CardGrid>
-          <Card className="flex flex-col gap-2 border-accent-500/30 bg-accent-soft/40 sm:flex-row sm:items-start">
-            <Badge tone="accent" size="sm">
-              Why only one
-            </Badge>
-            <Body size="sm" muted>
-              Business Features is deliberately thin today — Production Workspace is the only pilot that exists, proving
-              the composition pattern works before more feature areas adopt it. See{" "}
-              <Link
-                href={getEntry("application-composition-doc")!.href}
-                className="focus-ring inline-flex items-center gap-1 font-medium text-accent-400 hover:text-accent-300"
-              >
-                Application Composition
-                <ArrowUpRight className="size-3.5" aria-hidden />
-              </Link>{" "}
-              for the framework the next pilot will follow.
-            </Body>
-          </Card>
         </div>
       </SectionShell>
     </DocsShell>

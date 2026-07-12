@@ -8,7 +8,6 @@ import { OPERATIONS_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { OPERATIONS_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { OPERATIONS_PROMOTION_CANDIDATES, OPERATIONS_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { OPERATIONS_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("operations-platform")!;
@@ -147,40 +146,9 @@ export default function OperationsPlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across the six subdomains this platform covers — Operations, Monitoring, Automation, Scheduling, Health, Alerts — plus Administration, not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {OPERATIONS_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No real migration targets found</span>
-                <Body size="sm" muted>
-                  No subdomain surfaced real execution logic (a monitoring/polling engine, an automation-orchestration
-                  system, a real scheduler, or an alerting engine) that this platform&rsquo;s own components would
-                  duplicate. No src/operations/ directory exists at all, and Platform Architecture&rsquo;s own
-                  adoption audit already confirmed a &ldquo;does-not-exist&rdquo; verdict for the Operations
-                  platform as a whole. See the clean findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {OPERATIONS_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

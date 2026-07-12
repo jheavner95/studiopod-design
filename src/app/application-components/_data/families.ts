@@ -30,7 +30,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: ["Workspace Navigation", "Breadcrumbs"],
     priority: "High",
-    roadmapNotes: "Blocks every other family — nothing else in the app has anywhere to be navigated to yet.",
+    roadmapNotes: "Blocks every other family — every other part of the app depends on it for somewhere to be navigated to.",
   },
   {
     id: "workspace",
@@ -44,7 +44,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: ["Workspace Shell", "Workspace Header", "Section Header", "Action Toolbar"],
     priority: "High",
-    roadmapNotes: "Section Header already exists and is reused as-is; the shell and header are the real gap.",
+    roadmapNotes: "Section Header exists and is reused as-is; the shell and header carry the rest of the family's scope.",
   },
   {
     id: "asset-management",
@@ -66,7 +66,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
       "Result Summary Bar",
     ],
     priority: "High",
-    roadmapNotes: "The app's primary surface — most workspace templates lean on this family more than any other.",
+    roadmapNotes: "The app's primary surface — most workspace templates depend on this family more than any other.",
   },
   {
     id: "forms-editing",
@@ -89,7 +89,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
       "Property Editor",
     ],
     priority: "Medium",
-    roadmapNotes: "The most complete family already — the gap is structured/typeahead editing, not raw controls.",
+    roadmapNotes: "The most complete family — its depth is in structured/typeahead editing, not just raw controls.",
   },
   {
     id: "workflow",
@@ -111,7 +111,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
       "Approval Panel",
     ],
     priority: "High",
-    roadmapNotes: "The workflow diagram libraries (src/workflows) explain workflows visually — none of this operates on them yet.",
+    roadmapNotes: "The workflow diagram libraries (src/workflows) explain workflows visually; this family operates on them.",
   },
   {
     id: "validation-qa",
@@ -125,7 +125,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: ["Health Summary", "Validation Panel", "QA Finding Card", "Warning Banner", "Recommendation Card", "Score Badge"],
     priority: "High",
-    roadmapNotes: "StudioPOD's deepest diagram library (src/production) — today it's all visualization, not operational panels.",
+    roadmapNotes: "Draws on StudioPOD's deepest diagram library (src/production), which handles visualization; this family handles the operational panels.",
   },
   {
     id: "platform-operations",
@@ -140,7 +140,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: ["Provider Card", "Capability Matrix", "Diagnostics Panel", "Metrics Card", "Sync Status", "Error State"],
     priority: "Medium",
-    roadmapNotes: "Today these are explained in capability/provider diagrams (src/capabilities) — not managed in UI.",
+    roadmapNotes: "These are explained in capability/provider diagrams (src/capabilities); this family manages them in UI.",
   },
   {
     id: "analytics",
@@ -153,7 +153,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: [],
     priority: "Medium",
-    roadmapNotes: "Not represented in the 40-item inventory yet — a genuinely greenfield family, not just an unbuilt one.",
+    roadmapNotes: "Not represented in the 40-item inventory — a genuinely greenfield family, distinct from the app's other families.",
   },
   {
     id: "platform-templates",
@@ -166,7 +166,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: [],
     priority: "Low",
-    roadmapNotes: "The composition layer, not a component family itself — see the Platform Templates page for the 7 planned workspaces.",
+    roadmapNotes: "The composition layer, not a component family itself — see the Platform Templates page for the 7 workspaces.",
   },
 ];
 

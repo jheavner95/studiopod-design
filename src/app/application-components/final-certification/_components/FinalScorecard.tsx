@@ -19,7 +19,7 @@ function VerdictBadge({ verdict }: { verdict: FinalVerdict }) {
 /** The eleven-dimension final scorecard — one row per dimension, not a tier matrix, since this page synthesizes across all nine tiers rather than re-scoring any one of them. */
 export function FinalScorecard() {
   return (
-    <Table caption="DS-6.5 Final Enterprise Certification scorecard, eleven dimensions" minWidth="720px">
+    <Table caption="Final Design System Certification scorecard, eleven dimensions" minWidth="720px">
       <TableHeader>
         <TableRow>
           <TableHead>Dimension</TableHead>

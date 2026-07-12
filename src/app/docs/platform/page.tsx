@@ -37,10 +37,10 @@ export default function DocsPlatformPage() {
       <DocsSectionLanding
         purpose="This page is architecture documentation explaining how the Platform tier fits into the system — it is not the primary way to browse Platform's actual domain libraries; for that, use the Applications section. Platform Tier is where business vocabulary — Order, Artwork, Content Item, Provider Connection — finally attaches to real UI. Its eight domain-specific libraries (Production, Product, Publishing, Commerce, Intelligence, Operations, Admin, and Integrations) scope the generic Foundation, Operational, and Workflow layers into screens a real StudioPOD user would recognize, almost entirely by re-exporting already-certified components rather than writing new ones."
         whatYoullLearn={[
-          "The blueprint every domain platform was built against — layer composition, ownership rules, and the certification ladder — before any platform existed.",
-          "The eight domain platforms themselves, from the first one built (Production) through the ninth and final page (Integrations), all presented in the Applications section.",
+          "The blueprint every domain platform is built against — layer composition, ownership rules, and the certification ladder.",
+          "The eight domain platforms themselves, all presented in the Applications section.",
           "Why 95 of 96 Platform-tier components are pure re-exports of certified Foundation, Operational, or Workflow components, with a single thin wrapper the only new code in the tier.",
-          "What's still missing even after certification — no platform has first-party aria-live announcements, and none has been adopted by a real application screen yet.",
+          "No platform currently has first-party aria-live announcements or has been adopted by a real application screen.",
           "Where Platform sits relative to Foundation, Operational, and Workflow in the tier model, and where each of those tiers' own architecture pages live.",
         ]}
         stats={STATS}

@@ -8,7 +8,6 @@ import { PRODUCTION_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { PRODUCTION_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { PRODUCTION_PROMOTION_CANDIDATES, PRODUCTION_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { PRODUCTION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("production-platform")!;
@@ -48,7 +47,7 @@ export default function ProductionPlatformPage() {
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
             title="Reach for Production Platform when the screen is a real production run"
-            description="Pick these components over composing Workflow Framework, Pipeline Components, State Machine, Workflow Visualization, or Operational components directly whenever the surface is specifically a production run — its pipeline progression, render/print queue, validation gates, or an artifact's own lifecycle. A dedicated audit across the six subdomains this package covers — Composition, Generation, Validation, Pipeline, Queue, QA — found no real execution logic anywhere else in the repo that these components would duplicate; see Migration Notes in Reference below for the full breakdown."
+            description="Pick these components over composing Workflow Framework, Pipeline Components, State Machine, Workflow Visualization, or Operational components directly whenever the surface is specifically a production run — its pipeline progression, render/print queue, validation gates, or an artifact's own lifecycle."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -159,40 +158,9 @@ export default function ProductionPlatformPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings across the six subdomains this package covers — Composition, Generation, Validation, Pipeline, Queue, QA — not estimated or carried over from memory."
-              descriptionMaxWidth={false}
-            />
-            {PRODUCTION_PROMOTION_CANDIDATES.length === 0 ? (
-              <Card className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <span className="text-body-sm font-medium text-ink-primary">No real logic found to migrate</span>
-                <Body size="sm" muted>
-                  No subdomain surfaced real execution logic (a pipeline runner, a generation-job integration, a validation-check engine,
-                  queue processing, or a QA decision engine) that this platform&rsquo;s own components would duplicate. Every existing
-                  Production-named implementation is confirmed diagram-layer only, and three subdomains — Pipeline, Queue, QA — resolve to
-                  already-certified Workflow/Operational components as the correct reuse target, which this package&rsquo;s own components
-                  re-export directly rather than rebuild. See the findings below for what was actually checked.
-                </Body>
-              </Card>
-            ) : null}
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Findings</span>
-              {PRODUCTION_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities these components do not implement today, and what each would require."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

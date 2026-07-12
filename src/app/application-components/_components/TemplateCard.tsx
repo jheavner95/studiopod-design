@@ -43,9 +43,9 @@ export function TemplateCard({ template }: { template: PlatformTemplate }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Caption className="text-ink-tertiary">Current status</Caption>
+        <Caption className="text-ink-tertiary">Readiness</Caption>
         <Body size="sm" muted>
-          Not started — required families average {readiness}% complete.
+          {readiness}% complete, based on required-family completion.
         </Body>
       </div>
 

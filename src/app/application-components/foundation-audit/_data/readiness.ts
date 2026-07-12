@@ -14,7 +14,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
     system: "Overlay System",
     verdict: "Partially ready",
     reasoning:
-      "All 6 overlay components (Dialog, Drawer, Popover, Menu, Tooltip, Command Palette) are still Needed — 0% built. But the Foundation Layer they'd be built on is ready to support them: Surface's floating elevation tier is already proven in production use inside UnsavedChangesBanner, and Layout's composition patterns (Panel headers, Stack bodies) transfer directly to overlay content.",
+      "All 6 overlay components (Dialog, Drawer, Popover, Menu, Tooltip, Command Palette) are Needed — 0% built. But the Foundation Layer they'd be built on is ready to support them: Surface's floating elevation tier is already proven in production use inside UnsavedChangesBanner, and Layout's composition patterns (Panel headers, Stack bodies) transfer directly to overlay content.",
     blockingComponents: ["Dialog", "Drawer", "Popover", "Menu", "Tooltip", "Command Palette"],
   },
   {
@@ -46,7 +46,7 @@ export const READINESS_ASSESSMENT: ReadinessRow[] = [
     system: "Workflow Components",
     verdict: "Not ready",
     reasoning:
-      "Shares Operational Components' blockers plus Stepper — Progress exists, but Stepper, Toast, Menu, and Dropdown Button are all still Needed, and Workflow Components' own readiness entry names exactly this set.",
+      "Shares Operational Components' blockers plus Stepper — Progress exists, but Stepper, Toast, Menu, and Dropdown Button are all Needed, and Workflow Components' own readiness entry names exactly this set.",
     blockingComponents: ["Stepper", "Toast", "Menu", "Dropdown Button"],
   },
   {

@@ -14,7 +14,7 @@ const STATE_TONE: Record<CoverageState, "success" | "warning" | "neutral"> = {
 const STATE_DESCRIPTIONS: Record<CoverageState, string> = {
   Used: "A finished, reusable version of the component is applied to this platform today.",
   Partial: "A related pattern exists and is relevant here, but isn't a dedicated finished component yet.",
-  Planned: "Not built, or not yet relevant enough to this platform to prioritize.",
+  Planned: "No dedicated coverage exists for this platform, either because the component doesn't apply here or hasn't reached this platform's scope.",
 };
 
 const entry = getEntry("coverage")!;
@@ -104,7 +104,7 @@ export default function CoveragePage() {
             items={[
               {
                 label: "Needed",
-                value: "Shows Planned on every platform, regardless of how relevant that platform is — nothing built yet means nothing to show.",
+                value: "A component with no implementation shows Planned on every platform, independent of relevance.",
               },
               {
                 label: "Partial",
@@ -112,7 +112,7 @@ export default function CoveragePage() {
               },
               {
                 label: "Exists",
-                value: "Shows Used on platforms it's relevant to, and Partial everywhere else — the component is real, just not applied there yet.",
+                value: "Shows Used on platforms it's relevant to, and Partial everywhere else, reflecting platforms where it isn't the primary pattern.",
               },
             ]}
           />

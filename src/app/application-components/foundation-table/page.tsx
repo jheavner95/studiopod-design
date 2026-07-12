@@ -1,5 +1,5 @@
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { TableAnatomyExplorer } from "./_components/TableAnatomyExplorer";
@@ -10,14 +10,7 @@ import { StatesDemo } from "./_components/StatesDemo";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { TABLE_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { TABLE_PROMOTION_CANDIDATES, TABLE_RESOLVED_MIGRATIONS, totalPromotionLines } from "./_data/promotion-candidates";
 import { TABLE_FUTURE_EXTENSIONS } from "./_data/future-extensions";
-
-const EFFORT_TONE: Record<string, "success" | "warning" | "accent"> = {
-  Low: "success",
-  Medium: "warning",
-  High: "accent",
-};
 
 const entry = getEntry("foundation-table")!;
 const relatedComponents = [getEntry("foundation-layout")!, getEntry("foundation-metadata")!, getEntry("data-grid")!];
@@ -157,55 +150,9 @@ export default function FoundationTablePage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description={`Every hand-rolled <table> implementation still remaining in this codebase — ${TABLE_PROMOTION_CANDIDATES.length} files, ${totalPromotionLines()} lines combined, neither a native <table>. Four categories have been migrated already, completing every genuine native-table case; see below.`}
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {TABLE_PROMOTION_CANDIDATES.map((candidate) => (
-                <Card key={candidate.id} className="flex flex-col gap-3">
-                  <div className="flex flex-wrap items-baseline justify-between gap-3">
-                    <code className="min-w-0 break-words text-metadata text-ink-secondary">{candidate.file}</code>
-                    <Badge tone={EFFORT_TONE[candidate.migrationEffort]} size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                      {candidate.migrationEffort} effort
-                    </Badge>
-                  </div>
-                  <Body size="sm" muted>
-                    {candidate.description}
-                  </Body>
-                  <div className="flex items-center gap-2">
-                    <Caption className="text-ink-tertiary">{candidate.lineCount} lines</Caption>
-                  </div>
-                  <Body size="sm" muted className="border-t border-border-subtle pt-3">
-                    {candidate.migrationNote}
-                  </Body>
-                </Card>
-              ))}
-            </CardGrid>
-            {TABLE_RESOLVED_MIGRATIONS.map((migration) => (
-              <Card key={migration.id} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <span className="text-body-md font-medium text-ink-primary">{migration.title} — resolved</span>
-                  <Badge tone="success" size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                    Certified
-                  </Badge>
-                </div>
-                <Caption className="text-ink-tertiary">
-                  {migration.filesRemoved} files removed ({migration.linesRemoved} lines) · {migration.linesAdded} lines added · {migration.resolvedIn}
-                </Caption>
-                <Body size="sm" muted>
-                  {migration.note}
-                </Body>
-              </Card>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

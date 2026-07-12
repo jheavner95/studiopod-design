@@ -147,7 +147,7 @@ export const TOOLBAR_REGIONS: ToolbarRegion[] = [
         text: "Visually separated from the rest — Delete and Archive don't sit directly next to Publish and Export.",
       },
     ],
-    reuseNotes: "Directly the Application Components inventory's Batch Action Bar item — still Needed.",
+    reuseNotes: "Directly the Application Components inventory's Batch Action Bar item — Needed.",
     reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
   },
   {

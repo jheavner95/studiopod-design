@@ -1,11 +1,10 @@
 import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
-import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { Card, Body, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { PrimitiveGallery } from "./_components/PrimitiveGallery";
 import { CompositionExamples } from "./_components/CompositionExamples";
-import { PROMOTION_CANDIDATES } from "./_data/promotion-candidates";
 import { LAYOUT_RULES } from "./_data/layout-rules";
 import { LAYOUT_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
@@ -121,47 +120,9 @@ export default function FoundationLayoutPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verifiable counts of repeated hand-written layout patterns across this design system — not estimates."
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {PROMOTION_CANDIDATES.map((candidate) => (
-                <Card key={candidate.primitiveId} className="flex flex-col gap-3">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-body-md font-medium text-ink-primary">{candidate.primitiveName}</span>
-                    <span className="shrink-0 text-body-sm text-accent-400">{candidate.occurrenceCount}×</span>
-                  </div>
-                  <Body size="sm" muted>
-                    {candidate.note}
-                  </Body>
-                  <div className="flex flex-col gap-1">
-                    <Caption className="text-ink-tertiary">Verified with</Caption>
-                    <code className="min-w-0 overflow-x-auto whitespace-pre rounded-md bg-canvas-raised px-3 py-2 text-metadata text-ink-secondary">
-                      {candidate.findingCommand}
-                    </code>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {candidate.examples.slice(0, 5).map((example) => (
-                      <span
-                        key={example}
-                        className="min-w-0 max-w-full truncate rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-metadata text-ink-tertiary"
-                      >
-                        {example}
-                      </span>
-                    ))}
-                  </div>
-                </Card>
-              ))}
-            </CardGrid>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current nine primitives leave for later — reserved, not scoped or committed."
+              description="Capabilities the current nine primitives do not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

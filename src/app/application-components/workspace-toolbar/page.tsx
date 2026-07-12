@@ -142,7 +142,7 @@ export default function WorkspaceToolbarPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="A reference checklist for whoever builds the first real Workspace Toolbar."
+            description="A reference checklist for building a Workspace Toolbar."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={guidanceItems("composition")} />
@@ -170,7 +170,7 @@ export default function WorkspaceToolbarPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current anatomy leaves for later — reserved, not scoped or committed."
+              description="Capabilities this anatomy does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

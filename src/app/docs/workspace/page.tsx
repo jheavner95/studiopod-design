@@ -41,7 +41,7 @@ export default function DocsWorkspacePage() {
           "How Header and Toolbar responsibilities are split apart — page-level context versus in-page interaction.",
           "The ten layout rules governing region sizing, breakpoints, and collapse behavior.",
           "How the Library, Primary Workspace, and Inspector regions work together as a browse-to-detail chain.",
-          "How the whole blueprint is scored, and the honest state of the certification matrix across all nine StudioPOD platforms today.",
+          "How the whole blueprint is scored, and the certification matrix across all nine StudioPOD platforms.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}

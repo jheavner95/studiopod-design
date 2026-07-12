@@ -1,5 +1,5 @@
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
+import { Card, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { NavigationGallery } from "./_components/NavigationGallery";
@@ -8,7 +8,6 @@ import { NAVIGATION_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { NAVIGATION_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
-import { NAVIGATION_PROMOTION_CANDIDATES, NAVIGATION_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { NAVIGATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("foundation-navigation")!;
@@ -43,8 +42,6 @@ const COMPOSITION_NOTES = [
     note: NESTING_TOPIC.note,
   },
 ];
-
-const totalMigrationFiles = NAVIGATION_PROMOTION_CANDIDATES.reduce((sum, candidate) => sum + candidate.fileCount, 0);
 
 export default function FoundationNavigationPage() {
   return (
@@ -162,53 +159,9 @@ export default function FoundationNavigationPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description={`Real, grep-verified duplication, not estimated or carried over from memory — ${NAVIGATION_PROMOTION_CANDIDATES.length} patterns, ${totalMigrationFiles} files combined.`}
-              descriptionMaxWidth={false}
-            />
-            <div className="flex flex-col gap-6">
-              {NAVIGATION_PROMOTION_CANDIDATES.map((candidate) => (
-                <Card key={candidate.id} className="flex flex-col gap-3">
-                  <div className="flex flex-wrap items-baseline justify-between gap-3">
-                    <span className="text-body-md font-medium text-ink-primary">{candidate.pattern}</span>
-                    <Badge tone="warning" size="sm" className="w-fit shrink-0 whitespace-nowrap">
-                      {candidate.fileCount} files
-                    </Badge>
-                  </div>
-                  <Body size="sm" muted>
-                    {candidate.description}
-                  </Body>
-                  <ul className="flex flex-col gap-1 border-t border-border-subtle pt-3">
-                    {candidate.files.map((file) => (
-                      <li key={file} className="text-metadata text-ink-tertiary">
-                        <code className="break-words">{file}</code>
-                      </li>
-                    ))}
-                  </ul>
-                  <Body size="sm" muted className="border-t border-border-subtle pt-3">
-                    {candidate.migrationNote}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {NAVIGATION_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

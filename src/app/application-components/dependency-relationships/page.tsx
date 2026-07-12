@@ -8,7 +8,6 @@ import { DEPENDENCY_STATES } from "./_data/states";
 import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
 import { DEPENDENCY_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { WHEN_TO_USE_TOPICS, COMPOSITION_TOPICS } from "./_data/implementation-guidance";
-import { DEPENDENCY_PROMOTION_CANDIDATES, DEPENDENCY_CLEAN_FINDINGS } from "./_data/promotion-candidates";
 import { DEPENDENCY_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("dependency-relationships")!;
@@ -151,42 +150,9 @@ export default function DependencyRelationshipsPage() {
 
           <div className="flex flex-col gap-10">
             <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description="Real, grep-verified findings from building this system — including genuine pre-existing dependency and relationship models this package deliberately does not replace, since they render through a different layer entirely."
-              descriptionMaxWidth={false}
-            />
-            <div className="flex flex-col gap-3">
-              {DEPENDENCY_PROMOTION_CANDIDATES.map((candidate) => (
-                <Card key={candidate.id} className="flex flex-col gap-2 border-warning/30 bg-warning-soft">
-                  <span className="text-body-sm font-medium text-ink-primary">{candidate.pattern}</span>
-                  <Body size="sm" muted>
-                    {candidate.description}
-                  </Body>
-                  <Caption className="text-ink-tertiary">{candidate.files.join(" · ")}</Caption>
-                  <Body size="sm" muted className="border-t border-border-subtle pt-2">
-                    {candidate.migrationNote}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-            <div className="flex flex-col gap-3">
-              <span className="text-body-sm font-medium text-ink-primary">Clean findings</span>
-              {DEPENDENCY_CLEAN_FINDINGS.map((finding) => (
-                <Card key={finding.slice(0, 24)} className="flex flex-col gap-2 border-success/30 bg-success-soft">
-                  <Body size="sm" muted>
-                    {finding}
-                  </Body>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Room the current system leaves for later — reserved, not scoped or committed."
+              description="Capabilities this system does not currently include:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

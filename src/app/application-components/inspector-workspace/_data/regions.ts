@@ -79,7 +79,7 @@ export const INSPECTOR_REGIONS: InspectorRegion[] = [
         text: "Common fields first, advanced Configuration behind an expand — the same rule Workspace Toolbar's Filters region already follows.",
       },
     ],
-    reuseNotes: "Directly the Property Editor item from the Application Components inventory — still Needed.",
+    reuseNotes: "Directly the Property Editor item from the Application Components inventory — Needed.",
     reuseLinks: [{ label: "Application Components inventory", href: "/application-components/inventory" }],
   },
   {

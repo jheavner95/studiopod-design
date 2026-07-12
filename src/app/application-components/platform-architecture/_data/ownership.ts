@@ -34,10 +34,7 @@ export const OWNERSHIP_MODEL: OwnershipEntry[] = [
   },
   {
     layer: "Business Features",
-    owns: "Feature implementations — real screens, business logic, data fetching, and side effects. A genuinely new term this package introduces (see below); this is the tier a real product screen actually lives in.",
+    owns: "Feature implementations — real screens, business logic, data fetching, and side effects; this is the tier a real product screen actually lives in.",
     doesNotOwn: "Reusable UI of any kind — if a Business Feature finds itself building something a second screen could also use, that's a signal the component belongs one layer down, in Platform.",
   },
 ];
-
-export const BUSINESS_FEATURES_NOTE =
-  "\"Business Features\" did not appear anywhere else in the codebase when this page was first written — confirmed by direct search across every earlier tier's own data files, and this page was the first to define it. It names the tier where a real StudioPOD screen — with actual data fetching, actual business rules, actual users — would live, sitting above everything this design system itself builds. The term has since propagated correctly into every platform's own migration-notes and implementation-guidance data (all eight consistently use it with the meaning defined here), confirmed at the Platform Component Library Certification capstone — expected vocabulary adoption, not drift.";

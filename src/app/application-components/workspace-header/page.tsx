@@ -163,7 +163,7 @@ export default function WorkspaceHeaderPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="A reference checklist for whoever builds the first real Workspace Header."
+            description="A reference checklist for building a Workspace Header."
             descriptionMaxWidth={false}
           />
           <DescriptionList
@@ -193,7 +193,7 @@ export default function WorkspaceHeaderPage() {
           <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
 
           <div className="flex flex-col gap-10">
-            <SectionHeader id="migration-notes" title="Migration notes" descriptionMaxWidth={false} />
+            <SectionHeader id="migration-notes" title="Reuse guidance" descriptionMaxWidth={false} />
             <DescriptionList
               items={MIGRATION_NOTES ? [{ label: MIGRATION_NOTES.label, value: renderGuidanceValue(MIGRATION_NOTES) }] : []}
             />
