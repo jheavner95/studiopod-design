@@ -39,7 +39,7 @@ export default function PlatformsPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<Network className="size-3.5" />}>Playground · Historical Reference</SectionBadge>
+            <SectionBadge icon={<Network className="size-3.5" />}>Historical Reference</SectionBadge>
             <Display>Platform architecture library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD&apos;s platforms relate, built on the illustration and

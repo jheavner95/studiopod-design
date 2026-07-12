@@ -23,7 +23,7 @@ export default function ProductionPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<ShieldCheck className="size-3.5" />}>Playground · Historical Reference</SectionBadge>
+            <SectionBadge icon={<ShieldCheck className="size-3.5" />}>Historical Reference</SectionBadge>
             <Display>Production and validation library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD ensures production quality, built on the motion,

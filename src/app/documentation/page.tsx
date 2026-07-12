@@ -16,7 +16,7 @@ const OTHER_SECTIONS = NAV_SECTIONS.filter((section) => section.id !== "overview
 
 // Real counts, derived from NAV_REGISTRY rather than hardcoded, so this
 // stays correct as the registry grows.
-const certifiedCount = NAV_REGISTRY.filter((e) => e.status === "certified").length;
+const certifiedCount = NAV_REGISTRY.filter((e) => e.badge === "certification").length;
 const STATS = [
   { label: "Top-level sections", value: String(NAV_SECTIONS.length) },
   { label: "Pages in the system", value: String(NAV_REGISTRY.length) },

@@ -40,7 +40,7 @@ export default function CapabilitiesPlaygroundPage() {
       <PageShell background={<SystemGrid />}>
         <SectionShell spacing="xl">
           <div className="flex flex-col gap-6">
-            <SectionBadge icon={<Blocks className="size-3.5" />}>Playground · Historical Reference</SectionBadge>
+            <SectionBadge icon={<Blocks className="size-3.5" />}>Historical Reference</SectionBadge>
             <Display>Marketplace and AI capability library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD integrates AI, publishing, and commerce providers through a

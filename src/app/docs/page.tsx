@@ -27,7 +27,7 @@ const relatedGroups = [getGroup("components-overview")!, getGroup("applications-
 // six-region blueprint), Tier Model (how Foundation, Operational, Workflow,
 // and Platform compose), Platform Architecture, and Application Composition.
 const sectionEntries = getSectionEntries("architecture");
-const certifiedCount = sectionEntries.filter((e) => e.status === "certified").length;
+const certifiedCount = sectionEntries.filter((e) => e.badge === "certification").length;
 const STATS = [
   { label: "Pages in this section", value: String(sectionEntries.length) },
   { label: "Composition groups", value: String(architectureGroups.length) },
@@ -64,7 +64,7 @@ export default function DocsHomePage() {
           <CardGrid columns={2} gap="md">
             {architectureGroups.map((group) => {
               const groupEntries = getGroupEntries(group.id);
-              const groupCertifiedCount = groupEntries.filter((e) => e.status === "certified").length;
+              const groupCertifiedCount = groupEntries.filter((e) => e.badge === "certification").length;
               return (
                 <DocsGroupCard
                   key={group.id}

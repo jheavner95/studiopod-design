@@ -36,7 +36,7 @@ const relatedGroups = [getGroup("architecture-overview")!, getGroup("components-
 
 const STATS = [
   { label: "Capstone reviews", value: String(capstones.length) },
-  { label: "Certified capstones", value: `${capstones.filter((e) => e.status === "certified").length} of ${capstones.length}` },
+  { label: "Certified capstones", value: `${capstones.filter((e) => e.badge === "certification").length} of ${capstones.length}` },
   { label: "Tracking views", value: String(trackingEntries.length) },
   { label: "Certified components (Foundation–Platform)", value: "393" },
 ];

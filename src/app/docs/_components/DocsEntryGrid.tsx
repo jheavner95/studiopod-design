@@ -1,21 +1,7 @@
 import { Badge } from "@/components/ui";
 import { CardGrid } from "@/components/layout";
 import { DocsLinkCard } from "@/components/docs";
-import type { NavEntry, NavStatus } from "@/lib/design-system-navigation";
-
-const STATUS_TONE: Record<NavStatus, "success" | "accent" | "neutral" | "warning"> = {
-  certified: "success",
-  established: "accent",
-  placeholder: "neutral",
-  legacy: "warning",
-};
-
-const STATUS_LABEL: Record<NavStatus, string> = {
-  certified: "Certified",
-  established: "Established",
-  placeholder: "Placeholder",
-  legacy: "Legacy",
-};
+import { BADGE_TONE, BADGE_LABEL, type NavEntry } from "@/lib/design-system-navigation";
 
 interface DocsEntryGridProps {
   entries: NavEntry[];
@@ -33,9 +19,11 @@ export function DocsEntryGrid({ entries, columns = 3 }: DocsEntryGridProps) {
           title={entry.title}
           description={entry.description}
           adornment={
-            <Badge tone={STATUS_TONE[entry.status]} size="sm">
-              {STATUS_LABEL[entry.status]}
-            </Badge>
+            entry.badge ? (
+              <Badge tone={BADGE_TONE[entry.badge]} size="sm">
+                {BADGE_LABEL[entry.badge]}
+              </Badge>
+            ) : undefined
           }
         />
       ))}
