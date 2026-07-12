@@ -10,5 +10,5 @@ export const GRID_STATES: GridStateNote[] = [
   { state: "Selected", note: "Any non-empty selectedIds set switches DataGridToolbar into its bulk-action bar and marks each selected TableRow with aria-selected." },
   { state: "Error", note: "DataGridEmptyState's error variant — a failed load, distinct from a genuine empty result." },
   { state: "Read Only", note: "Omitting selectable, onSortChange, and onRowClick renders a plain, non-interactive grid — DataGrid never assumes a grid is editable/selectable by default." },
-  { state: "Busy", note: "Toggling loading on an already-populated grid (e.g. refetching after a filter change) — DataGrid doesn't special-case this differently from the initial Loading state today; see Implementation Guidance." },
+  { state: "Busy", note: "Toggling loading on an already-populated grid (e.g. refetching after a filter change) — DataGrid doesn't special-case this differently from the initial Loading state today; see Composition below." },
 ];

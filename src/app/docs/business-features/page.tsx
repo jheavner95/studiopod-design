@@ -11,9 +11,7 @@ import { FEATURE_TEMPLATE } from "./_data/template";
 import { FEATURE_CATEGORIES, CATEGORY_SUMMARY } from "./_data/categories";
 import { ALLOWED_RULES, FORBIDDEN_RULES } from "./_data/rules";
 import { FEATURE_LIFECYCLE } from "./_data/lifecycle";
-import { CANDIDATE_FEATURES, CANDIDATE_SUMMARY } from "./_data/candidates";
 import { FUTURE_EXTENSIONS } from "./_data/future-extensions";
-import type { FeatureAdoptionVerdict } from "@/app/docs/application-composition/_data/adoption";
 
 const entry = getEntry("business-features-doc")!;
 const relatedComponents = [getEntry("application-composition-doc")!, getEntry("business-feature-templates")!, getEntry("platform-architecture-doc")!];
@@ -40,16 +38,10 @@ const STACK_STATUS_TONE: Record<StackStatus, "success" | "warning" | "accent" | 
 };
 
 const STACK_STATUS_LABEL: Record<StackStatus, string> = {
-  certified: "Certified",
+  certified: "Established",
   "certified-production-ready": "Production Ready",
   documented: "Documented",
   future: "Not yet available",
-};
-
-const VERDICT_TONE: Record<FeatureAdoptionVerdict, "success" | "warning" | "neutral"> = {
-  "platform-certified": "success",
-  "partial-platform-coverage": "warning",
-  "no-platform-coverage": "neutral",
 };
 
 export default function BusinessFeaturesPage() {
@@ -99,7 +91,7 @@ export default function BusinessFeaturesPage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="How the pieces fit together"
-            description="Two views of the same shape: the ownership tree every feature's own source code follows, and the six-layer chain it composes down through to reach the certified system beneath it."
+            description="Two views of the same shape: the ownership tree every feature's own source code follows, and the six-layer chain it composes down through to reach the existing system beneath it."
             descriptionMaxWidth={false}
           />
 
@@ -178,7 +170,7 @@ export default function BusinessFeaturesPage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="The rules and stages governing a Business Feature"
-            description="What a feature is allowed and forbidden to import, and the seven stages every feature moves through on its way to certified."
+            description="What a feature is allowed and forbidden to import, and the seven stages every feature moves through on its way to done."
             descriptionMaxWidth={false}
           />
 
@@ -200,7 +192,7 @@ export default function BusinessFeaturesPage() {
             <SectionHeader
               id="feature-lifecycle"
               title="Seven stages, one gate each"
-              description="The same Concept → Prototype → Production Ready → Certified → Locked maturity ladder every certified tier below Business Features already uses, extended one tier further."
+              description="The same Concept → Prototype → Production Ready → Certified → Locked maturity ladder every tier below Business Features already uses, extended one tier further."
               descriptionMaxWidth={false}
             />
             <div className="flex flex-col items-stretch gap-2">
@@ -232,7 +224,7 @@ export default function BusinessFeaturesPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Thirteen parts, one checklist"
-            description="Where Feature Architecture is the abstract ownership tree, this is the concrete part list a real feature is built against — each grounded in a representative already-certified component."
+            description="Where Feature Architecture is the abstract ownership tree, this is the concrete part list a real feature is built against — each grounded in a representative existing component."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -264,35 +256,6 @@ export default function BusinessFeaturesPage() {
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-14">
           <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id="migration-notes"
-              title="Migration notes"
-              description={CANDIDATE_SUMMARY}
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {CANDIDATE_FEATURES.map((candidate) => (
-                <Card key={candidate.name} className="flex flex-col gap-2">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-body-sm font-medium text-ink-primary">{candidate.name}</span>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge tone="neutral" size="sm">
-                        {FEATURE_CATEGORIES.find((c) => c.id === candidate.suggestedCategory)?.name ?? candidate.suggestedCategory}
-                      </Badge>
-                      <Badge tone={VERDICT_TONE[candidate.verdict]} size="sm">
-                        {candidate.verdictLabel}
-                      </Badge>
-                    </div>
-                  </div>
-                  <Body size="sm" muted>
-                    {candidate.finding}
-                  </Body>
-                </Card>
-              ))}
-            </CardGrid>
-          </div>
 
           <div className="flex flex-col gap-10">
             <SectionHeader

@@ -7,7 +7,7 @@ import { getEntry, getGroup, getGroupsForSection, getGroupEntries, getSectionEnt
 const entry = getEntry("docs-root")!;
 
 // Architecture is the composition-rules/layering documentation for a builder
-// auditing how the system fits together, distinct from Components/Applications
+// studying how the system fits together, distinct from Components/Applications
 // where a builder actually goes to find and use things. Its own
 // "architecture-overview" group is this page itself, so every other real
 // group is what gets browsed.
@@ -39,7 +39,7 @@ export default function DocsHomePage() {
       <DocsPageHeader entry={entry} />
 
       <DocsSectionLanding
-        purpose="Architecture is where the composition rules and layering model that hold the rest of the design system together live — the workspace blueprint every screen is built on, the tier stack that separates raw building blocks from full business features, and the rules that govern how a domain platform or a real feature gets assembled from certified pieces. It's for architects and anyone auditing how the system fits together, not for someone looking for a live example to copy — there's nothing to browse and drop into a screen here, only the relationships between pieces documented elsewhere. Start with the Workspace Shell for the six-region blueprint every application screen composes, or the Tier Model for how Foundation, Operational, Workflow, and Platform build on one another."
+        purpose="Architecture is where the composition rules and layering model that hold the rest of the design system together live — the workspace blueprint every screen is built on, the tier stack that separates raw building blocks from full business features, and the rules that govern how a domain platform or a real feature gets assembled from existing pieces. It's for architects and anyone studying how the system fits together, not for someone looking for a live example to copy — there's nothing to browse and drop into a screen here, only the relationships between pieces documented elsewhere. Start with the Workspace Shell for the six-region blueprint every application screen composes, or the Tier Model for how Foundation, Operational, Workflow, and Platform build on one another."
         whatYoullLearn={[
           "The six-region Workspace Shell blueprint every application screen composes, down to its header, toolbar, content areas, and status bar.",
           "How the Tier Model's four layers — Foundation, Operational, Workflow, Platform — build strictly on the ones before them, and where each tier's own architecture page lives.",

@@ -21,10 +21,23 @@ export default function ProductionPlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Production patterns in action"
+            description="Each demo below is a real, working composition with real local state — not a static screenshot. Try the Artwork Production demo's click-to-inspect node, or watch a batch move through Proofing, Printing, and Shipped."
+            descriptionMaxWidth={false}
+          />
+          <ProductionPlatformGallery />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
-            title="Ten regions, twelve components"
-            description="Every component in this family maps to one of the regions below — all 12 are re-exports or thin wrappers over already-certified Workflow Framework, Pipeline Components, State Machine, Workflow Visualization, and Operational components, checked directly against each one's own prop surface before composing rather than rebuilding it."
+            title="The building blocks of a production screen"
+            description="Production Platform provides the pieces for any screen built around a single production run: the render/print queue, the pipeline a job moves through stage by stage, the validation gates that decide whether an artifact can advance, and an inspector for a selected artifact's own history. Reach for it when you're building the print-production side of a workspace — a render queue, a proofing view, a batch dashboard. Ten regions cover a typical production screen end to end, each composing proven Workflow, Pipeline, State Machine, and Operational components rather than introducing new visual patterns to learn."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
@@ -46,23 +59,23 @@ export default function ProductionPlatformPage() {
           <SectionHeader
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
-            title="Reach for Production Platform when the screen is a real production run"
-            description="Pick these components over composing Workflow Framework, Pipeline Components, State Machine, Workflow Visualization, or Operational components directly whenever the surface is specifically a production run — its pipeline progression, render/print queue, validation gates, or an artifact's own lifecycle."
+            title="When to reach for it"
+            description="Production Platform components render production state — they don't decide it. Choose them when a screen's subject is a specific production run; compose Workflow, Pipeline, or Operational components directly when you're building something else."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
             <Card className="flex flex-col gap-2">
               <span className="text-body-sm font-medium text-ink-primary">Production-run screens</span>
               <Body size="sm" muted>
-                Ten regions covering workspace shell through actions — reach for these when the screen is specifically about a production
-                run&rsquo;s pipeline, queue, or artifact lifecycle, not a generic Workflow or Operational surface.
+                Choose these ten regions when a screen is specifically about a production run&rsquo;s pipeline, queue, or an artifact&rsquo;s own
+                lifecycle — not a generic workflow or operational surface.
               </Body>
             </Card>
             <Card className="flex flex-col gap-2">
-              <span className="text-body-sm font-medium text-ink-primary">Already certified underneath</span>
+              <span className="text-body-sm font-medium text-ink-primary">Consistent by composition</span>
               <Body size="sm" muted>
-                All 12 components are pure re-exports or thin wrappers over already-certified Workflow Framework, Pipeline Components, State
-                Machine, Workflow Visualization, and Operational components — no new visual language to learn.
+                Every component composes a proven Workflow, Pipeline, State Machine, or Operational piece, so a production screen looks and
+                behaves like the rest of the product — no new visual language to learn.
               </Body>
             </Card>
             <Card className="flex flex-col gap-2">
@@ -77,25 +90,12 @@ export default function ProductionPlatformPage() {
       </SectionShell>
 
       <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="examples"
-            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
-            title="Eight production patterns, live"
-            description="Each demo below is a real, working composition with real local state — not a static screenshot. Try the Artwork Production demo's click-to-inspect node."
-            descriptionMaxWidth={false}
-          />
-          <ProductionPlatformGallery />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-14">
           <SectionHeader
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Eight states this platform recognizes — every one composed from an already-certified lower-tier vocabulary, not a new Production-specific status type — plus how the layout itself behaves across breakpoints."
+            description="The states this platform recognizes are composed from the same status vocabulary used across the product, not a Production-specific status type — plus how the layout itself behaves across breakpoints."
             descriptionMaxWidth={false}
           />
 
@@ -134,6 +134,7 @@ export default function ProductionPlatformPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="How these components compose"
+            description="Where Production Platform's responsibility ends and your application logic begins."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={IMPLEMENTATION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />
@@ -160,7 +161,7 @@ export default function ProductionPlatformPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Capabilities these components do not implement today, and what each would require."
+              description="Capabilities outside this platform's current scope, and what each would depend on."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

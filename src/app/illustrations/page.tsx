@@ -31,7 +31,7 @@ const WHEN_TO_USE = [
     text: "This page ships zero StudioPOD-specific diagrams — only the primitives, layout engine, and state system real diagrams get built from.",
   },
   {
-    title: "Already adopted downstream",
+    title: "Already in use",
     text: "Workflows, Platforms, Capabilities, and Production each render their real diagrams through this engine today.",
   },
 ];

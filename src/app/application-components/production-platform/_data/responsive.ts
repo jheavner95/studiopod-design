@@ -25,6 +25,6 @@ export const RESPONSIVE_TOPICS: ResponsiveTopic[] = [
   },
   {
     label: "Canvas scaling",
-    note: "ProductionCanvas has no zoom/scale transform of its own — inherited from WorkflowViewport, which intentionally holds no coordinate system (real pan/zoom is deferred to Workflow Visualization's own Future Extensions, one tier down, not something this platform package re-opens).",
+    note: "ProductionCanvas has no zoom/scale transform of its own — inherited from WorkflowViewport, which intentionally holds no coordinate system. Real pan and zoom are on the Workflow Visualization roadmap; see Future enhancements below.",
   },
 ];

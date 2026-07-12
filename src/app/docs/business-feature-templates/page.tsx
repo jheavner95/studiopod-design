@@ -63,7 +63,7 @@ export default function BusinessFeatureTemplatesPage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Examples"
-            description="The eight standard layouts below — one per Feature Category — each naming which already-certified Foundation, Operational, Workflow, and Platform components a real feature in that category composes."
+            description="The eight standard layouts below — one per Feature Category — each naming which existing Foundation, Operational, Workflow, and Platform components a real feature in that category composes."
             descriptionMaxWidth={false}
           />
           {FEATURE_TEMPLATES.map((template) => (

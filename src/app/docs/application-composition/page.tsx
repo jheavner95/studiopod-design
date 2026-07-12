@@ -12,7 +12,6 @@ import { FEATURE_ANATOMY } from "./_data/anatomy";
 import { APPLICATION_TEMPLATES } from "./_data/templates";
 import { ALLOWED_RULES, FORBIDDEN_RULES } from "./_data/rules";
 import { APPLICATION_BOUNDARIES } from "./_data/boundaries";
-import { ADOPTION_TARGETS, ADOPTION_SUMMARY, VERDICT_LABEL, type FeatureAdoptionVerdict } from "./_data/adoption";
 import { APPLICATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("application-composition-doc")!;
@@ -25,7 +24,7 @@ const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "neutral"> = {
 };
 
 const LAYER_STATUS_LABEL: Record<string, string> = {
-  certified: "Certified",
+  certified: "Established",
   "certified-production-ready": "Production Ready",
   future: "Not yet available",
 };
@@ -39,12 +38,6 @@ const ANATOMY_TONE: Record<"feature" | "internal" | "composition", "accent" | "n
   feature: "accent",
   internal: "neutral",
   composition: "success",
-};
-
-const ADOPTION_TONE: Record<FeatureAdoptionVerdict, "success" | "warning" | "neutral"> = {
-  "platform-certified": "success",
-  "partial-platform-coverage": "warning",
-  "no-platform-coverage": "neutral",
 };
 
 export default function ApplicationCompositionPage() {
@@ -138,7 +131,7 @@ export default function ApplicationCompositionPage() {
             <SectionHeader
               id="application-templates"
               title="Eight templates, one composition plan each"
-              description="Every field below is a composition plan citing real, already-certified components by name. Business Feature coverage varies by area — see Reference, below, for the current state of each. A real feature is expected to blend more than one template, not be a pure instance of exactly one."
+              description="Every field below is a composition plan citing real, existing components by name. A real feature is expected to blend more than one template, not be a pure instance of exactly one."
               descriptionMaxWidth={false}
             />
             <div className="flex flex-col gap-6">
@@ -257,30 +250,6 @@ export default function ApplicationCompositionPage() {
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-14">
           <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id="migration-notes"
-              title="Platform-tier coverage, by candidate feature"
-              description={ADOPTION_SUMMARY}
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {ADOPTION_TARGETS.map((target) => (
-                <Card key={target.candidate} className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-body-sm font-medium text-ink-primary">{target.candidate}</span>
-                    <Badge tone={ADOPTION_TONE[target.verdict]} size="sm">
-                      {VERDICT_LABEL[target.verdict]}
-                    </Badge>
-                  </div>
-                  <Body size="sm" muted>
-                    {target.finding}
-                  </Body>
-                </Card>
-              ))}
-            </CardGrid>
-          </div>
 
           <div className="flex flex-col gap-10">
             <SectionHeader

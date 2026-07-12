@@ -153,7 +153,7 @@ export const COMPONENT_FAMILIES: ComponentFamily[] = [
     ],
     itemNames: [],
     priority: "Medium",
-    roadmapNotes: "Not represented in the 40-item inventory — a genuinely greenfield family, distinct from the app's other families.",
+    roadmapNotes: "A distinct family from the rest of the catalog — reporting and trend analysis are a different kind of UI problem than browsing, editing, or monitoring.",
   },
   {
     id: "platform-templates",

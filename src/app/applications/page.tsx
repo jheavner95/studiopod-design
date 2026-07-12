@@ -61,7 +61,7 @@ const PLATFORM_BLURBS: Record<string, string> = {
 
 const BUSINESS_FEATURE_BLURBS: Record<string, string> = {
   "production-workspace-feature":
-    "A fully wired Production Workspace screen — its own header, canvas, inspector, validation, metrics, actions, and dialogs, running on local state and mock data — the certified Production platform tier composed into an actual feature, not just a diagram.",
+    "A fully wired Production Workspace screen — its own header, canvas, inspector, validation, metrics, actions, and dialogs, running on local state and mock data — the Production platform tier composed into an actual feature, not just a diagram.",
 };
 
 export default function ApplicationsPage() {
@@ -72,10 +72,10 @@ export default function ApplicationsPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Applications is the eight domain-specific platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, and Integrations — plus the Business Feature that composes them, presented as application compositions rather than simply another documentation page. Every platform here scopes the certified Foundation, Operational, and Workflow tiers into screens a real StudioPOD user would recognize, almost entirely by re-exporting already-certified components; the Business Feature goes one step further, wiring one of those platforms into an actual running screen with local state and mock data."
+        purpose="Applications is the eight domain-specific platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, and Integrations — plus the Business Feature that composes them, presented as application compositions rather than simply another documentation page. Every platform here scopes the Foundation, Operational, and Workflow tiers into screens a real StudioPOD user would recognize, almost entirely by re-exporting existing components; the Business Feature goes one step further, wiring one of those platforms into an actual running screen with local state and mock data."
         whatYoullLearn={[
           "The eight domain platforms and what each one actually does for a StudioPOD user — not a component count, but the job it performs: running production, managing a product, publishing, transacting commerce, surfacing intelligence, operating the system, administering it, or integrating it with the outside world.",
-          "Production Workspace, the current example of the Business Feature pattern, and how it composes the certified Production platform tier into an actual running screen.",
+          "Production Workspace, the current example of the Business Feature pattern, and how it composes the Production platform tier into an actual running screen.",
           "Why this section is distinct from Components and Patterns: these are domain compositions carrying real StudioPOD business vocabulary — Order, Artwork, Provider Connection — not generic, reusable building blocks.",
           "Where to go next for the architecture behind these compositions — Platform Architecture and Application Composition.",
         ]}

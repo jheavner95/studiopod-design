@@ -16,13 +16,7 @@ const siblingTierPages = tierModelEntries.filter((e) => e.id !== entry.id);
 const primaryEntryPoints = [getEntry("workflow-framework")!, getEntry("workflow-stepper")!];
 const relatedGroups = [getGroup("components-overview")!, getGroup("playground-overview")!, getGroup("architecture-overview")!];
 
-// Real per-system component counts, verified against src/components/workflow/
-// (92 components total across the tier's eight systems).
-const STATS = [
-  { label: "Pages in Tier Model", value: String(tierModelEntries.length) },
-  { label: "Real components", value: "92" },
-  { label: "Workflow systems", value: "8" },
-];
+const STATS = [{ label: "Workflow systems", value: "8" }];
 
 export default function DocsWorkflowPage() {
   return (
@@ -32,7 +26,7 @@ export default function DocsWorkflowPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="This page is architecture documentation explaining how the Workflow tier fits into the system — it is not the primary way to browse Workflow's actual components; for that, use the Components section. Workflow Tier is the domain-agnostic layer for multi-step processes and cross-cutting visualization — eight systems (Workflow Framework, Workflow Stepper, Workflow Timeline, Approval & Review, Pipeline Components, State Machine, Dependency & Relationship Views, and Workflow Visualization) built entirely on Foundation and Operational rather than raw HTML. Every other system in the tier composes from Workflow Framework's shared header/sidebar/stage/step/transition/progress/summary/actions/footer shell, and several reuse Workflow Timeline for their own history views. Together the eight systems total 92 components."
+        purpose="This page is architecture documentation explaining how the Workflow tier fits into the system — it is not the primary way to browse Workflow's actual components; for that, use the Components section. Workflow Tier is the domain-agnostic layer for multi-step processes and cross-cutting visualization — eight systems (Workflow Framework, Workflow Stepper, Workflow Timeline, Approval & Review, Pipeline Components, State Machine, Dependency & Relationship Views, and Workflow Visualization) built entirely on Foundation and Operational rather than raw HTML. Every other system in the tier composes from Workflow Framework's shared header/sidebar/stage/step/transition/progress/summary/actions/footer shell, and several reuse Workflow Timeline for their own history views."
         whatYoullLearn={[
           "The eight systems and what each one owns — process shell, wizard progress, history timeline, approvals, pipelines, state-driven processes, dependency graphs, and the operational visualization layer.",
           "How later systems in the tier reuse earlier ones, such as Approval & Review and Pipeline Components both building on Workflow Timeline, and State Machine and Workflow Visualization building on Pipeline Components.",

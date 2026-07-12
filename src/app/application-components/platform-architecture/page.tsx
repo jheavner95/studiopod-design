@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, ArrowDown } from "lucide-react";
 import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
@@ -10,8 +10,6 @@ import { PLATFORM_TEMPLATES } from "./_data/templates";
 import { LAYER_STACK, LAYERING_STATEMENT } from "./_data/layers";
 import { OWNERSHIP_MODEL } from "./_data/ownership";
 import { PLATFORM_RULES } from "./_data/rules";
-import { CERTIFICATION_LEVELS, CERTIFICATION_MODEL_NOTE } from "./_data/certification";
-import { ADOPTION_TARGETS, ADOPTION_SUMMARY, VERDICT_LABEL, type AdoptionVerdict } from "./_data/adoption";
 import { PLATFORM_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("platform-architecture-doc")!;
@@ -25,15 +23,10 @@ const LAYER_STATUS_TONE: Record<string, "success" | "warning" | "accent" | "neut
 };
 
 const LAYER_STATUS_LABEL: Record<string, string> = {
-  certified: "Certified",
+  certified: "Established",
   "certified-production-ready": "Production Ready",
   defined: "Defined",
   future: "Future",
-};
-
-const ADOPTION_TONE: Record<AdoptionVerdict, "accent" | "neutral"> = {
-  "composed-with-precedent": "accent",
-  "composed-new": "neutral",
 };
 
 export default function PlatformArchitecturePage() {
@@ -47,7 +40,7 @@ export default function PlatformArchitecturePage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Why Platform exists, and what it owns"
-            description="Platform is the layer where StudioPOD's real business domains get their own reusable, domain-specific components — composed entirely from the certified Foundation, Operational, and Workflow tiers below it."
+            description="Platform is the layer where StudioPOD's real business domains get their own reusable, domain-specific components — composed entirely from the Foundation, Operational, and Workflow tiers below it."
             descriptionMaxWidth={false}
           />
 
@@ -129,7 +122,7 @@ export default function PlatformArchitecturePage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Eight platforms, one composition plan each"
-            description="This is the architecture every domain platform is built against today. Workflow/Operational/Foundation usage cites real, already-certified systems by name."
+            description="This is the architecture every domain platform is built against today. Workflow/Operational/Foundation usage cites real, existing systems by name."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-6">
@@ -169,7 +162,7 @@ export default function PlatformArchitecturePage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Platform rules"
-            description="The concrete, checkable rules a future audit should verify against real Platform component source — what a Platform component may and may not import, and what it must be built from."
+            description="What a Platform component may and may not import, and what it must be built from."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={PLATFORM_RULES.map((r) => ({ label: r.category, value: r.rule }))} />
@@ -209,7 +202,7 @@ export default function PlatformArchitecturePage() {
             id="related-components"
             eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
             title="Related components"
-            description="Where this architecture is built, certified, and composed into real screens."
+            description="Where this architecture is built and composed into real screens."
             descriptionMaxWidth={false}
           />
           <DocsRelatedGrid entries={relatedComponents} />
@@ -219,64 +212,6 @@ export default function PlatformArchitecturePage() {
       <SectionShell spacing="lg">
         <div className="flex flex-col gap-14">
           <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id="certification-model"
-              title="A four-level ladder, consistent with Foundation and Workflow"
-              description={CERTIFICATION_MODEL_NOTE}
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {CERTIFICATION_LEVELS.map((level) => (
-                <Card key={level.id} className="flex flex-col gap-3">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="size-4 text-accent-400" aria-hidden />
-                    <span className="text-body-md font-medium text-ink-primary">{level.name}</span>
-                  </div>
-                  <Body size="sm" muted>
-                    {level.description}
-                  </Body>
-                  <div className="flex flex-col gap-1 border-t border-border-subtle pt-3">
-                    <Caption className="text-ink-tertiary">Entry criteria</Caption>
-                    <Body size="sm" muted>
-                      {level.entryCriteria}
-                    </Body>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <Caption className="text-ink-tertiary">Exit criteria</Caption>
-                    <Body size="sm" muted>
-                      {level.exitCriteria}
-                    </Body>
-                  </div>
-                </Card>
-              ))}
-            </CardGrid>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            <SectionHeader
-              id="migration-notes"
-              title="Platform composition status, by platform"
-              description={ADOPTION_SUMMARY}
-              descriptionMaxWidth={false}
-            />
-            <CardGrid columns={2}>
-              {ADOPTION_TARGETS.map((target) => (
-                <Card key={target.platform} className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-body-sm font-medium text-ink-primary">{target.platform}</span>
-                    <Badge tone={ADOPTION_TONE[target.verdict]} size="sm">
-                      {VERDICT_LABEL[target.verdict]}
-                    </Badge>
-                  </div>
-                  <Body size="sm" muted>
-                    {target.finding}
-                  </Body>
-                </Card>
-              ))}
-            </CardGrid>
-          </div>
 
           <div className="flex flex-col gap-10">
             <SectionHeader

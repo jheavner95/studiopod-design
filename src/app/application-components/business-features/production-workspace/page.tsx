@@ -150,7 +150,7 @@ export default function ProductionWorkspaceFeaturePage() {
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
             title="What each tier owns in this pilot"
-            description="The line between this feature's own layer and the certified Platform, Workflow, Operational, and Foundation tiers it composes — use this to decide where new logic belongs."
+            description="The line between this feature's own layer and the Platform, Workflow, Operational, and Foundation tiers it composes — use this to decide where new logic belongs."
             descriptionMaxWidth={false}
           />
           <div className="flex flex-col gap-3">

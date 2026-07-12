@@ -18,11 +18,11 @@ export const STATE_ACCESSIBILITY_TOPICS: StateAccessibilityTopic[] = [
   },
   {
     label: "State announcements",
-    text: "No built-in aria-live region announces a state transition firing — the same opt-in convention every prior Workflow Component Library package already follows, consistent with a systemic gap already flagged across the whole library's own accessibility review rather than fixed ad hoc in one package.",
+    text: "StateMachine doesn't announce a state transition through an aria-live region by default. If your process needs transitions read aloud as they happen, wrap the relevant state value in your own live region.",
   },
   {
     label: "Transition semantics",
-    text: "StateTransition renders plain <div>/<span> markup, not a native ARIA graph or state-diagram role — a screen composing a live state-diagram visualization from this family should add its own semantics around it, the same opt-in convention this whole tier already follows. StateEvents' from→to summary is plain text, readable by any screen reader without extra markup.",
+    text: "StateTransition renders plain <div>/<span> markup, not a native ARIA graph or state-diagram role — a screen composing a live state-diagram visualization from this family should add its own semantics around it. StateEvents' from→to summary is plain text, readable by any screen reader without extra markup.",
   },
   {
     label: "Color independence",

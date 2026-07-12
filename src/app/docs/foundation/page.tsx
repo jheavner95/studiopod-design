@@ -16,12 +16,7 @@ const siblingTierPages = tierModelEntries.filter((e) => e.id !== entry.id);
 const primaryEntryPoints = [getEntry("application-components")!, getEntry("foundation-components")!];
 const relatedGroups = [getGroup("components-overview")!, getGroup("playground-overview")!, getGroup("architecture-overview")!];
 
-// Real per-family component counts, verified against src/components/{layout,table,metadata,form,overlay,navigation,feedback}/.
-const STATS = [
-  { label: "Pages in Tier Model", value: String(tierModelEntries.length) },
-  { label: "Real components", value: "92" },
-  { label: "Component families", value: "7" },
-];
+const STATS = [{ label: "Component families", value: "7" }];
 
 export default function DocsFoundationPage() {
   return (
@@ -34,7 +29,7 @@ export default function DocsFoundationPage() {
         purpose="This page is architecture documentation explaining how the Foundation tier fits into the system — it is not the primary way to browse Foundation's actual components; for that, use the Components section. Foundation Tier is the generic UI layer with zero business or workflow awareness — Layout, Table, Metadata, Forms, Overlays, Navigation, and Feedback. Every higher tier (Operational, Workflow, Platform) composes exclusively from these seven families rather than reaching for raw HTML or one-off styling."
         whatYoullLearn={[
           "The seven component families and what each one owns — structure, tabular data, read-only display, editing, transient surfaces, wayfinding, and status.",
-          "Which families have real production adoption versus which exist but aren't yet used by a real screen.",
+          "Why every higher tier composes from these families instead of reaching for raw HTML — the boundary that keeps business logic out of Foundation entirely.",
           "Where Foundation sits relative to Operational, Workflow, and Platform in the tier model, and where each of those tiers' own architecture pages live.",
         ]}
         stats={STATS}

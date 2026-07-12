@@ -40,12 +40,10 @@ export default function PlaygroundPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Playground is the hands-on side of the design system: interactive tools for exploring motion and illustration by trial and error, instead of reading about them on a reference page. It's for anyone exploring or prototyping — not for someone who already knows which component they need and just wants its API. Here you can play with the system's raw visual material, preview marketing-page compositions assembled and resized live, and get a feel for how pieces fit together before committing to a layout. A few earlier tools are also kept here as a historical reference alongside their current counterparts in Applications. Start with the Motion Engine to get oriented, or jump straight into whichever tool matches what you're exploring."
+        purpose="Playground is the hands-on side of the design system: try motion, illustration, and page composition directly instead of reading about them. Start with the Motion Engine to get oriented, or jump straight into whichever tool matches what you're exploring."
         whatYoullLearn={[
-          "The two visual tools — the Motion Engine and Illustration Engine — for exploring animation and the diagram engine outside of any single component's reference page. Token, color, typography, and layout exploration now lives in Foundations & Tokens.",
-          "The Composition Playground, where you can preview marketing-page sections assembled together and resized live across device sizes.",
-          "A small set of earlier tools — kept here as a historical reference alongside their current counterparts in Applications.",
-          "Why this section stays separate from Components and Patterns: hands-on exploration and written reference serve different moments, and neither should crowd out the other.",
+          "The Motion Engine and Illustration Engine — build and preview animation and diagrams live, outside of any single component's reference page.",
+          "The Composition Playground, where marketing-page sections assemble and resize live across device sizes.",
         ]}
         stats={STATS}
         primaryEntryPoints={primaryEntryPoints}

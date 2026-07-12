@@ -26,7 +26,7 @@ export default function FoundationFormsPage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Overview"
-            description="Eight regions, top to bottom — select one to see the component that owns it."
+            description="Select a region below to see which component owns it, from field label to submit action."
             descriptionMaxWidth={false}
           />
           <FormAnatomyExplorer />
@@ -39,7 +39,7 @@ export default function FoundationFormsPage() {
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
             title="When to use"
-            description="The rules every field, row, and section in this system follows — and where the line sits against Foundation Metadata's own read-only display."
+            description="Guidelines every field, row, and section follows — and how to tell when you want an editable form versus a read-only Foundation Metadata display."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
@@ -61,7 +61,7 @@ export default function FoundationFormsPage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Examples"
-            description="Ten fields, each with a live, working example plus when — and when not — to reach for it."
+            description="A live, working example of every field type, with guidance on when — and when not — to reach for it."
             descriptionMaxWidth={false}
           />
           <FieldGallery />
@@ -74,7 +74,7 @@ export default function FoundationFormsPage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Eleven states every field can be in — three of them live below, the rest documented alongside — plus a real, working form: Validate runs a blocking form-level check, and fixing a flagged field re-validates it immediately (progressive validation), with every problem aggregated once in the Validation Summary above the fields."
+            description="How fields respond to interaction, validation, and error states. In the working form below, Validate runs a blocking check, fixing a flagged field re-validates it immediately, and every problem is aggregated once in the Validation Summary above the fields."
             descriptionMaxWidth={false}
           />
           <FieldStatesDemo />
@@ -105,7 +105,7 @@ export default function FoundationFormsPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="Four ways PropertyEditor composes into a real editing surface."
+            description="How PropertyEditor composes into a real editing surface for property panels and settings pages."
             descriptionMaxWidth={false}
           />
           <PropertyEditingDemo />
@@ -132,7 +132,7 @@ export default function FoundationFormsPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Capabilities this system does not currently include:"
+              description="Capabilities not available in Forms yet:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

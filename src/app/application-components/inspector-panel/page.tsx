@@ -28,7 +28,7 @@ export default function InspectorPanelPage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Overview"
-            description="Ten regions, top to bottom — every Inspector* component maps to exactly one, and most delegate directly to an already-established Foundation component underneath."
+            description="InspectorPanel is where a workspace explains one selected thing in full — its identity, its editable properties, its validation state, its history, and what can be done to it next. Reach for it whenever a screen needs a dedicated, scannable detail view alongside a list or canvas rather than a separate page. It's built from ten focused regions, each mapping to one component below, most delegating to an existing Foundation piece underneath."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>
@@ -63,8 +63,8 @@ export default function InspectorPanelPage() {
           <SectionHeader
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
-            title="Eight inspector variants, live"
-            description="Each demo below is a real, working inspector with real local state — not a static screenshot. Try Asset/Commerce Inspector's editable fields, History Inspector's show-more, and Multi-section Inspector's tabs."
+            title="Inspector variants, live"
+            description="Each demo below is a real, working inspector with local state — not a static screenshot. Try Asset/Commerce Inspector's editable fields, History Inspector's show-more, and Multi-section Inspector's tabs."
             descriptionMaxWidth={false}
           />
           <InspectorPanelGallery />
@@ -77,7 +77,7 @@ export default function InspectorPanelPage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how the same panel reflows across breakpoints."
+            description="The states a panel moves through — from loading and validation errors to editing and success — plus how the same panel reflows across breakpoints."
             descriptionMaxWidth={false}
           />
 

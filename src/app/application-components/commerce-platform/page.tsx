@@ -26,10 +26,23 @@ export default function CommercePlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Commerce patterns in action"
+            description="Each demo below is a real, working composition with real props — not a static screenshot. Try the Pricing demo's live base/sale price fields, or watch an order move through Picked, Packed, and Shipped."
+            descriptionMaxWidth={false}
+          />
+          <CommercePlatformGallery />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
-            title="Eleven regions, twelve components"
-            description="Every component in this family maps to one of the regions below — all 12 are re-exports of already-certified Workflow Framework, Pipeline Components, State Machine, and Operational components, checked directly against each one's own prop surface before composing rather than rebuilding it."
+            title="Catalog, orders, and fulfillment in one workspace"
+            description="Commerce Platform provides the pieces for the commerce side of a workspace: a synced product catalog, an order queue, per-SKU inventory, pick/pack/ship fulfillment, and inline pricing edits. Reach for it when you're building a screen around catalog, order, or inventory data. Eleven regions cover a typical commerce screen end to end, each composing proven Workflow, Pipeline, State Machine, and Operational components rather than introducing new visual patterns to learn."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -51,8 +64,8 @@ export default function CommercePlatformPage() {
           <SectionHeader
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
-            title="When to use"
-            description="Where each subdomain draws the line between what this platform's components render and what stays Business Feature logic — Catalog, Orders, and Inventory each hold data, not the behavior that changes it."
+            title="When to reach for it"
+            description="Where Commerce Platform's responsibility ends and your application logic begins — Catalog, Orders, and Inventory display data; they don't decide what happens to it."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={whenToUseGuidance.map((topic) => ({ label: topic.label, value: topic.text }))} />
@@ -62,23 +75,10 @@ export default function CommercePlatformPage() {
       <SectionShell spacing="lg" divider>
         <div className="flex flex-col gap-10">
           <SectionHeader
-            id="examples"
-            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
-            title="Eight commerce patterns, live"
-            description="Each demo below is a real, working composition with real props — not a static screenshot. Try the Pricing demo's live base/sale price fields."
-            descriptionMaxWidth={false}
-          />
-          <CommercePlatformGallery />
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="States and responsive behavior"
-            description="Eight states this platform recognizes. Draft and Archived have no match in any existing status vocabulary, the same disclosed gap Product and Publishing Platform Components already found for the identical state names — while Syncing is the first Platform state to map onto HealthStatusValue verbatim."
+            description="The states this platform recognizes. Draft and Archived have no match in any existing status vocabulary — there's no shared concept of a content publish-state to map onto, so both render as a plain neutral badge instead of a borrowed status value."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={COMMERCE_STATES.map((item) => ({ label: item.state, value: item.note }))} />
@@ -109,7 +109,7 @@ export default function CommercePlatformPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="Zero new wrapper code — every Commerce component composes an already-certified Workflow, Pipeline, State Machine, or Operational component directly, checked against that component's own prop surface first."
+            description="Every Commerce component composes a Workflow, Pipeline, State Machine, or Operational component directly — no separate wrapper layer to learn on top of it."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={compositionGuidance.map((topic) => ({ label: topic.label, value: topic.text }))} />
@@ -136,7 +136,7 @@ export default function CommercePlatformPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Capabilities these components do not implement today, and what each would require."
+              description="Capabilities outside this platform's current scope, and what each would depend on."
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

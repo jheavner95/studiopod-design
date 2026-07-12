@@ -23,8 +23,8 @@ export default function StateMachinePage() {
           <SectionHeader
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
-            title="Nine regions, twelve components"
-            description="Every component in this family maps to one of the regions below — three of twelve delegate directly to Workflow Framework's own components (re-exported, not rebuilt), one composes Inspector Panel directly, and one composes Workflow Timeline directly; Node, Transition, Condition, Action, and Events are genuinely new."
+            title="Model a process as states, transitions, and guards"
+            description="State Machine renders a process as named states connected by transitions — each transition optionally gated by a condition and paired with actions that fire on enter, exit, or transition. Reach for it when a process's shape is genuinely stateful — an approval that can be reopened, a job that retries, a document with a real lifecycle — rather than a simple linear sequence, which Workflow Framework already covers well. It builds on Workflow Framework's shell and composes Inspector Panel for state detail, so teams already familiar with either can pick this up quickly."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -70,10 +70,10 @@ export default function StateMachinePage() {
             <Card className="flex flex-col gap-2">
               <span className="text-body-sm font-medium text-ink-primary">Distinct from Pipeline Components</span>
               <Body size="sm" muted>
-                Pipeline Components&rsquo; own PipelineStatus reuses Workflow Framework&rsquo;s WorkflowStateValue
-                verbatim for a business-pipeline stage list. This family declares its own independent StateValue
-                vocabulary — including a Terminal value with no WorkflowStateValue counterpart at all — for genuine
-                state-machine semantics rather than a relabeled pipeline status.
+                Pipeline Components&rsquo; own PipelineStatus reuses Workflow Framework&rsquo;s WorkflowStateValue for
+                a business-pipeline stage list. This family declares its own independent StateValue vocabulary —
+                including a Terminal value with no counterpart there — for genuine state-machine semantics rather
+                than a relabeled pipeline status.
               </Body>
             </Card>
           </CardGrid>
@@ -99,7 +99,7 @@ export default function StateMachinePage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one, plus how the machine adapts across viewport widths."
+            description="The eight statuses a state can hold, plus how the machine adapts across viewport widths."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={MACHINE_STATES.map((item) => ({ label: item.state, value: item.note }))} />
@@ -161,7 +161,7 @@ export default function StateMachinePage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Capabilities this system does not currently include:"
+              description="Capabilities the family doesn't support yet — worth knowing before you design around them:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

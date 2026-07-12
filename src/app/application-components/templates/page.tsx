@@ -4,7 +4,7 @@ import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from 
 import { getEntry } from "@/lib/design-system-navigation";
 import { TemplateCard } from "../_components/TemplateCard";
 import { FamilyCard } from "../_components/FamilyCard";
-import { PLATFORM_TEMPLATES, templateReadiness } from "../_data/templates";
+import { PLATFORM_TEMPLATES } from "../_data/templates";
 import { COMPONENT_FAMILIES } from "../_data/families";
 
 const entry = getEntry("templates")!;
@@ -13,10 +13,6 @@ const relatedEntries = [getEntry("architecture-doc")!, getEntry("business-featur
 const platformTemplatesFamily = COMPONENT_FAMILIES.find((family) => family.id === "platform-templates")!;
 const analyticsFamily = COMPONENT_FAMILIES.find((family) => family.id === "analytics")!;
 const intelligenceTemplate = PLATFORM_TEMPLATES.find((template) => template.id === "intelligence")!;
-
-const averageReadiness = Math.round(
-  PLATFORM_TEMPLATES.reduce((sum, template) => sum + templateReadiness(template), 0) / PLATFORM_TEMPLATES.length,
-);
 
 export default function TemplatesPage() {
   return (
@@ -35,10 +31,6 @@ export default function TemplatesPage() {
           <DescriptionList
             items={[
               { label: "Templates", value: `${PLATFORM_TEMPLATES.length} platform workspaces, one per StudioPOD domain.` },
-              {
-                label: "Average readiness",
-                value: `${averageReadiness}% — the mean of each template's required families' own completion, not a hand-typed number.`,
-              },
               { label: "Nature", value: "Specification, composed live from each required family's own data." },
             ]}
           />
@@ -51,14 +43,14 @@ export default function TemplatesPage() {
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
             title="When to use"
-            description="This page answers one question: what does a given platform screen depend on, and how close is that dependency to done? For the pieces themselves, use the other Overview & Meta pages."
+            description="This page answers one question: what does a given platform screen depend on? For the pieces themselves, use the other Overview & Meta pages."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
             <Card className="flex flex-col gap-2">
               <span className="text-body-sm font-medium text-ink-primary">Scoping a new workspace</span>
               <Body size="sm" muted>
-                Start here to see which component families a platform screen needs and which one is currently the long pole.
+                Start here to see which component families a platform screen needs.
               </Body>
             </Card>
             <Card className="flex flex-col gap-2">
@@ -91,37 +83,6 @@ export default function TemplatesPage() {
               <TemplateCard key={template.id} template={template} />
             ))}
           </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="behavior"
-            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
-            title="Behavior"
-            description="Nothing on this page is hand-typed — every number and link is resolved live against the family and inventory data underneath it."
-            descriptionMaxWidth={false}
-          />
-          <DescriptionList
-            items={[
-              {
-                label: "Readiness score",
-                value:
-                  "Each card's readiness badge is the average of its required families' own completion score, which itself weights each family's inventory items (Exists = 1, Partial = 0.5, Needed = 0).",
-              },
-              {
-                label: "Status line",
-                value:
-                  "Every card reads \"N% complete, based on required-family completion,\" reflecting each template's required families' own completion score.",
-              },
-              {
-                label: "Family links",
-                value:
-                  "Each required-family badge links to its anchor on the Architecture page, so the family blocking a template is always one click away.",
-              },
-            ]}
-          />
         </div>
       </SectionShell>
 
@@ -169,10 +130,10 @@ export default function TemplatesPage() {
                 <Body size="sm" muted>{intelligenceTemplate.layoutPattern}</Body>
               </Card>
               <Card className="flex flex-col gap-2 border-dashed">
-                <span className="text-body-sm font-medium text-ink-primary">Analytics family coverage</span>
+                <span className="text-body-sm font-medium text-ink-primary">Analytics family</span>
                 <Body size="sm" muted>
-                  {analyticsFamily.roadmapNotes} It backs both the Intelligence and Operations workspaces above. Analytics currently has
-                  no inventory-tracked components, so its readiness score is 0% under the scoring rule.
+                  {analyticsFamily.roadmapNotes} It backs both the Intelligence and Operations workspaces above, though it doesn&apos;t yet
+                  have any components of its own listed on this page.
                 </Body>
               </Card>
             </CardGrid>

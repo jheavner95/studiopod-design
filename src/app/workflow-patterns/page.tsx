@@ -28,7 +28,7 @@ const relatedGroups = [getGroup("components-overview")!, getGroup("applications-
 // library, 2 content groups this landing organizes.
 const STATS = [
   { label: "Platform templates", value: "7" },
-  { label: "Feature categories covered", value: "8 of 9" },
+  { label: "Feature categories", value: "8" },
   { label: "Example workflows", value: "6" },
   { label: "Pattern groups", value: String(contentGroups.length) },
 ];
@@ -44,7 +44,7 @@ export default function WorkflowPatternsPage() {
         purpose="Patterns is where you go for a proven starting shape instead of building a screen from scratch. It sits between Components, which documents individual widgets, and Applications, which shows full working platforms: a library of ready-made platform-screen and business-feature blueprints, plus a diagram library that turns any multi-step business process into a visual. It's built for engineers and designers assembling a new feature who need a starting layout or a process diagram, not a single primitive to look up or a finished product to study. Start with Platform Templates if you're laying out a new screen, or the Workflow Diagram Library if you need to visualize a process."
         whatYoullLearn={[
           "The two groups this section organizes — Platform Templates, the reusable platform-screen and business-feature blueprints assembled entirely from already-approved components, and the Workflow Diagram Library, which renders any multi-step process from structured data.",
-          "The seven platform-screen templates and the component families each one requires, plus the Business Feature Templates catalog covering eight of the nine standard feature categories.",
+          "The seven platform-screen templates and the component families each one requires, plus the Business Feature Templates catalog spanning eight standard feature categories.",
           "The four workflow shapes the diagram engine supports — linear, looping, branching, and parallel — and how to render any of six example workflows with a single component call.",
           "Why Patterns is the right stop for a recurring layout or process problem, rather than a single component (Components) or a finished platform (Applications).",
         ]}

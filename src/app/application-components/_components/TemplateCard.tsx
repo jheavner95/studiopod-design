@@ -1,22 +1,16 @@
 import Link from "next/link";
 import { Card, Badge, Body, Caption } from "@/components/ui";
 import { COMPONENT_FAMILIES } from "../_data/families";
-import { templateReadiness, type PlatformTemplate } from "../_data/templates";
+import type { PlatformTemplate } from "../_data/templates";
 
 export function TemplateCard({ template }: { template: PlatformTemplate }) {
   const families = template.requiredFamilyIds
     .map((id) => COMPONENT_FAMILIES.find((f) => f.id === id))
     .filter((f): f is (typeof COMPONENT_FAMILIES)[number] => f !== undefined);
-  const readiness = templateReadiness(template);
 
   return (
     <Card padding="lg" className="flex h-full flex-col gap-5">
-      <div className="flex items-start justify-between gap-3">
-        <span className="text-body-md font-medium text-ink-primary">{template.title}</span>
-        <Badge tone="neutral" size="sm" className="whitespace-nowrap">
-          {readiness}% ready
-        </Badge>
-      </div>
+      <span className="text-body-md font-medium text-ink-primary">{template.title}</span>
 
       <Body size="sm" muted>
         {template.purpose}
@@ -39,13 +33,6 @@ export function TemplateCard({ template }: { template: PlatformTemplate }) {
         <Caption className="text-ink-tertiary">Core layout pattern</Caption>
         <Body size="sm" muted className="min-w-0 break-words">
           {template.layoutPattern}
-        </Body>
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <Caption className="text-ink-tertiary">Readiness</Caption>
-        <Body size="sm" muted>
-          {readiness}% complete, based on required-family completion.
         </Body>
       </div>
 

@@ -24,8 +24,8 @@ export default function WorkflowFrameworkPage() {
           <SectionHeader
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
-            title="Nine regions, one framework"
-            description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component. This package defines the framework only; no workflow-specific business logic lives here."
+            title="A shared shell for multi-stage processes"
+            description="Workflow Framework gives operator-facing processes — an approval chain, a deployment, a multi-step onboarding flow — a consistent shell: a header, stages made of steps, transitions between them, and a footer for actions. Reach for it when a screen needs to show live, independent status for each step rather than a single progress bar. The framework renders structure and state; your application supplies the logic that decides what happens next. Each region below composes an existing Foundation or Operational component, so the visual language matches the rest of the system automatically."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -83,7 +83,7 @@ export default function WorkflowFrameworkPage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Eight states this family recognizes, grounded in the real implementation detail behind each one — plus how the shell responds as the viewport narrows."
+            description="The eight statuses a step or stage can hold, and how the shell adapts as the viewport narrows."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={WORKFLOW_STATES.map((item) => ({ label: item.state, value: item.note }))} />
@@ -145,7 +145,7 @@ export default function WorkflowFrameworkPage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Capabilities this system does not currently include:"
+              description="Capabilities the framework doesn't support yet — worth knowing before you design around them:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={3}>

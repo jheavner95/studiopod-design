@@ -4,8 +4,8 @@ export interface FormGuidanceRule {
 }
 
 export const FORM_GUIDANCE: FormGuidanceRule[] = [
-  { title: "Forms edit", explanation: "Every component in src/components/form/ accepts a value and an onChange — none of them render a read-only mode." },
-  { title: "Metadata presents", explanation: "The moment a value stops being editable, it's Foundation Metadata's job (MetadataValue, DescriptionList) to show it, not a disabled Form field." },
+  { title: "Forms edit", explanation: "Every form field accepts a value and an onChange handler — none of them render a read-only display mode." },
+  { title: "Metadata presents", explanation: "Once a value is no longer editable, display it with Foundation Metadata (MetadataValue, DescriptionList) rather than a disabled form field." },
   { title: "Validation should guide", explanation: "FieldError explains what to fix, not just that something's wrong — \"Enter a valid email\" over \"Invalid input.\"" },
   { title: "Do not overwhelm users", explanation: "FormSection and progressive disclosure exist specifically so a 20-field settings page never renders as one undifferentiated wall of inputs." },
   { title: "Group related fields", explanation: "FormSection titles a group; FormRow places short, related fields side by side within it — see Property Editing below." },

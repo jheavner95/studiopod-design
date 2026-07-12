@@ -24,7 +24,7 @@ export default function StatusHealthPage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Eight regions, one system"
-            description="Every component in this family maps to exactly one region below — most delegate directly to an already-certified Foundation or Operational component."
+            description="Every component in this family maps to exactly one region below — most delegate directly to an existing Foundation or Operational component."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={2}>

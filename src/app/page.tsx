@@ -79,16 +79,17 @@ export default function Home() {
         <div className="flex flex-col gap-6">
           <SectionBadge icon={<Boxes className="size-3.5" />}>StudioPOD Design System</SectionBadge>
           <Eyebrow tone="accent">What is this?</Eyebrow>
-          <Display>The design system behind every StudioPOD surface.</Display>
+          <Display>The design system behind StudioPOD.</Display>
           <Body size="lg" muted className="max-w-[var(--container-narrow)]">
-            StudioPOD Design System is the shared source of truth for the StudioPOD marketing site and the StudioPOD
-            application: the tokens, components, patterns, and architecture both products are built from. It&rsquo;s
-            for anyone building, assembling, or evaluating a StudioPOD screen — engineers reaching for a component,
-            designers assembling a new feature, and reviewers checking whether something is production-ready.
+            StudioPOD is the platform teams use to run production, commerce, and publishing end to end — from
+            artwork and orders to storefronts and shipped product. This design system is the shared library of
+            tokens, components, and patterns every one of those surfaces is built from, and the place to learn how
+            they fit together.
           </Body>
           <Body size="lg" muted className="max-w-[var(--container-narrow)]">
-            Everything on this site is organized around what you&rsquo;re trying to do. If you&rsquo;re not sure
-            where to start, the four cards below cover the most common reasons people come here first.
+            It&rsquo;s for designers finding a component, engineers composing a screen, and decision-makers wanting
+            to understand the architecture. If you&rsquo;re not sure where to start, the four cards below cover the
+            most common reasons people come here first.
           </Body>
         </div>
       </SectionShell>

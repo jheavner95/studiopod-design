@@ -10,7 +10,7 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   },
   {
     label: "Transition rules",
-    text: "This package holds no opinion on which states a machine may move between — StateTransition renders a line and an optional label, nothing more. Whether a real transition is allowed is entirely the caller's own domain logic, the same \"framework only\" stance Workflow Framework's own WorkflowTransition already takes, confirmed by a dedicated repo-wide audit that found no pre-existing formal transition-rule engine anywhere in this codebase for this package to consolidate.",
+    text: "This package holds no opinion on which states a machine may move between — StateTransition renders a line and an optional label, nothing more. Whether a transition is allowed is entirely your own domain logic to implement, the same \"framework only\" stance Workflow Framework's own WorkflowTransition takes.",
   },
   {
     label: "Guard conditions",

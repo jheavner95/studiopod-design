@@ -1,4 +1,4 @@
-import { SectionShell, CardGrid, DescriptionList } from "@/components/layout";
+import { SectionShell, CardGrid } from "@/components/layout";
 import { SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
@@ -21,7 +21,7 @@ export default function ArchitecturePage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Nine component families"
-            description="Six map directly onto the 40-item inventory. Analytics and Platform Templates currently have no items mapped to them, so both families score 0% by definition of the weighting formula."
+            description="Every screen in StudioPOD is built by composing these nine families, each owning one concern and depending only on the families before it."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -65,34 +65,6 @@ export default function ArchitecturePage() {
               <DependencyFanoutBlock key={fanout.id} fanout={fanout} />
             ))}
           </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg" divider>
-        <div className="flex flex-col gap-10">
-          <SectionHeader
-            id="behavior"
-            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
-            title="How completion is scored"
-            description="Every completion bar on the cards above is a weighted average against the live component inventory, not a hand-set number."
-            descriptionMaxWidth={false}
-          />
-          <DescriptionList
-            items={[
-              {
-                label: "Scoring weights",
-                value: "Exists = 1, Partial = 0.5, Needed = 0 — averaged across every inventory item the family names.",
-              },
-              {
-                label: "Families with no inventory items",
-                value: "Score 0% by definition — Analytics and Platform Templates currently have no items mapped to them, so the formula returns 0% for both.",
-              },
-              {
-                label: "Priority split",
-                value: "5 of the 9 families are High priority, 3 are Medium, 1 (Platform Templates) is Low — the composition layer sits last because it depends on everything above it.",
-              },
-            ]}
-          />
         </div>
       </SectionShell>
 

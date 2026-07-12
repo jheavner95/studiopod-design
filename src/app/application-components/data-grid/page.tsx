@@ -27,7 +27,7 @@ export default function DataGridPage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Overview"
-            description="Ten regions, top to bottom — every DataGrid* component below maps to exactly one, most delegating directly to a Foundation component underneath."
+            description="DataGrid turns a plain table into an operational surface — the searching, filtering, sorting, selecting, and bulk-acting that queues, lists, and inventories need beyond static display. It's assembled from ten focused regions, each mapping to one component below, most delegating straight to a Foundation Table primitive underneath."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
@@ -85,7 +85,7 @@ export default function DataGridPage() {
             id="behavior"
             eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
             title="Behavior"
-            description="Seven states a grid can be in, grounded in the real implementation detail behind each one, plus how the grid adapts — or deliberately doesn't — across screen sizes."
+            description="The states a grid moves through as data loads, empties, fills, and gets selected — plus how the grid adapts, or deliberately doesn't, across screen sizes."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={GRID_STATES.map((item) => ({ label: item.state, value: item.note }))} />
@@ -119,7 +119,7 @@ export default function DataGridPage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="How DataGrid holds up as row counts grow, and what's already built versus left for a real screen to prove it needs."
+            description="How DataGrid holds up as row counts grow, from pagination today to what a future screen might need next."
             descriptionMaxWidth={false}
           />
           <DescriptionList items={COMPOSITION_GUIDANCE.map((topic) => ({ label: topic.label, value: topic.text }))} />

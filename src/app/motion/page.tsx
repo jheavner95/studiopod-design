@@ -39,9 +39,9 @@ export default function MotionPlaygroundPage() {
           <SectionBadge icon={<Waves className="size-3.5" />}>Playground</SectionBadge>
           <Display>Motion engine</Display>
           <Body size="lg" muted className="max-w-[var(--container-narrow)]">
-            The reusable motion architecture every future illustration and page animation is built on: semantic
-            tokens, a global provider, five hooks, fourteen primitives, and the utilities that hold them together.
-            Nothing on this page is a homepage animation, it&apos;s the engine underneath one.
+            Try every motion primitive live — tokens, hooks, and entrance/emphasis effects — the same engine that
+            drives animation across the design system. Adjust the controls below and watch the effect update in
+            real time.
           </Body>
         </div>
       </SectionShell>

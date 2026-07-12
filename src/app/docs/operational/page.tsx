@@ -16,13 +16,7 @@ const siblingTierPages = tierModelEntries.filter((e) => e.id !== entry.id);
 const primaryEntryPoints = [getEntry("data-grid")!, getEntry("inspector-panel")!];
 const relatedGroups = [getGroup("components-overview")!, getGroup("playground-overview")!, getGroup("architecture-overview")!];
 
-// Real counts, verified against src/components/operational/ (113 component files,
-// excluding index.ts).
-const STATS = [
-  { label: "Pages in Tier Model", value: String(tierModelEntries.length) },
-  { label: "Real components", value: "113" },
-  { label: "Operational systems", value: "9" },
-];
+const STATS = [{ label: "Operational systems", value: "9" }];
 
 export default function DocsOperationalPage() {
   return (

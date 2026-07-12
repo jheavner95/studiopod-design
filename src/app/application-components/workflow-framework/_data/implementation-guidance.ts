@@ -10,7 +10,7 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   },
   {
     label: "Stage ownership",
-    text: "WorkflowStage owns its own title and overall WorkflowStatus — it does not compute that status from its children's individual statuses; the caller (the real business-logic layer this package explicitly excludes) decides what a stage's aggregate status should be.",
+    text: "WorkflowStage owns its own title and overall WorkflowStatus — it does not compute that status from its children's individual statuses; your application decides what a stage's aggregate status should be and passes it in.",
   },
   {
     label: "Step ownership",
@@ -18,11 +18,11 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   },
   {
     label: "Transition rules",
-    text: "WorkflowTransition carries no business logic about when a transition is allowed — it only renders a line and an optional label. Gating logic (can this stage actually proceed) is entirely the caller's responsibility, consistent with this package's \"framework only\" scope.",
+    text: "WorkflowTransition carries no business logic about when a transition is allowed — it only renders a line and an optional label. Gating logic (can this stage actually proceed) is entirely your application's responsibility.",
   },
   {
     label: "Progress reporting",
-    text: "WorkflowProgress expects a plain 0–1 value the caller computes and updates as work happens — the same contract Foundation Feedback's own ProgressBar already established, since this is a thin preset over it, not a new fill/animation implementation.",
+    text: "WorkflowProgress expects a plain 0–1 value that your application computes and updates as work happens — the same contract Foundation Feedback's own ProgressBar already uses, since this is a thin preset over it rather than a separate fill/animation system.",
   },
   {
     label: "Action placement",

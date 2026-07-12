@@ -10,7 +10,7 @@ export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   },
   {
     label: "When to use Foundation Table instead",
-    text: "When the shape is genuinely bespoke — a comparison matrix, a sticky-first-column reference table, a one-off layout that doesn't fit DataGrid's column/row/selection model (exactly the shape ResponsiveRulesTable, ScorecardTable, CertificationMatrix, and CoverageMatrix all are). Compose Table's own pieces directly rather than forcing DataGrid's column-accessor model onto non-tabular data.",
+    text: "When the shape is genuinely bespoke — a comparison matrix, a sticky-first-column reference table, or another one-off layout that doesn't fit DataGrid's column/row/selection model. Compose Table's own pieces directly rather than forcing DataGrid's column-accessor model onto non-tabular data.",
   },
   {
     label: "Performance guidance",

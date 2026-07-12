@@ -26,7 +26,7 @@ export default function FoundationTablePage() {
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
             title="Overview"
-            description="Seven regions, top to bottom — select one to see the component that owns it."
+            description="Select a region below to see which component renders it, from the toolbar down to the footer."
             descriptionMaxWidth={false}
           />
           <TableAnatomyExplorer />
@@ -39,7 +39,7 @@ export default function FoundationTablePage() {
             id="when-to-use"
             eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
             title="When to use"
-            description="The rules that decide when a table is the right shape, and how it should be configured once it is."
+            description="How to tell when a table is the right shape for your data, and how to configure it well once it is."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={4}>
@@ -61,12 +61,12 @@ export default function FoundationTablePage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Examples"
-            description="Nine named variants, each a real, live table built from the same underlying components — followed by all eleven cell types, rendered as a real table documenting itself."
+            description="Live, working tables built from the same underlying components you compose yourself, followed by a full reference of every cell type Table supports."
             descriptionMaxWidth={false}
           />
           <VariantGallery />
           <div className="flex flex-col gap-6">
-            <SectionHeader id="cell-types" title="Cell types" description="Eleven cell types, each with its own alignment, wrapping, truncation, and accessibility rules." descriptionMaxWidth={false} />
+            <SectionHeader id="cell-types" title="Cell types" description="Every cell type has its own alignment, wrapping, truncation, and accessibility rules." descriptionMaxWidth={false} />
             <CellTypesTable />
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function FoundationTablePage() {
             <SectionHeader
               id="states"
               title="States"
-              description="Six states a table can be in, switched live on one shared table below."
+              description="Switch between the states a table can be in, live, on the table below."
               descriptionMaxWidth={false}
             />
             <StatesDemo />
@@ -115,7 +115,7 @@ export default function FoundationTablePage() {
             id="composition"
             eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
             title="Composition"
-            description="How Table composes with the viewport across breakpoints — what's built in today, and what still relies on a caller's own judgment."
+            description="How Table adapts across breakpoints — what's handled automatically, and what still depends on how you configure your columns."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>
@@ -152,7 +152,7 @@ export default function FoundationTablePage() {
             <SectionHeader
               id="future-enhancements"
               title="Future enhancements"
-              description="Capabilities this system does not currently include:"
+              description="Capabilities not available in Table yet:"
               descriptionMaxWidth={false}
             />
             <CardGrid columns={4}>

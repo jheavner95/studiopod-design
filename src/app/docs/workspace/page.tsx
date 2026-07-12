@@ -18,14 +18,7 @@ const siblingShellPages = workspaceShellEntries.filter((e) => e.id !== entry.id)
 const primaryEntryPoints = [getEntry("workspace-framework")!, getEntry("workspace-header")!];
 const relatedGroups = [getGroup("components-overview")!, getGroup("applications-overview")!, getGroup("architecture-overview")!];
 
-// Real counts, verified against src/app/application-components/workspace-framework/_data/regions.ts
-// (7 region entries) and src/components/platform/*/ (8 *Workspace.tsx files: Commerce, Publishing,
-// Intelligence, Admin, Product, Operations, Integrations, Production).
-const STATS = [
-  { label: "Pages in Workspace Shell", value: String(workspaceShellEntries.length) },
-  { label: "Workspace regions", value: "7" },
-  { label: "Platform workspaces built on it", value: "8" },
-];
+const STATS = [{ label: "Workspace regions", value: "7" }];
 
 export default function DocsWorkspacePage() {
   return (

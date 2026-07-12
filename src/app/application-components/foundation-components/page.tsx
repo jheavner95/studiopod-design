@@ -4,13 +4,12 @@ import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { CatalogExplorer } from "./_components/CatalogExplorer";
-import { catalogSummary, stateFrequency, accessibilityFrequency } from "./_data/catalog";
+import { stateFrequency, accessibilityFrequency } from "./_data/catalog";
 import { FOUNDATION_BLOCKERS, resolveBlockers } from "./_data/readiness";
 import { MATURITY_LEVELS } from "../_data/maturity";
 import { FOUNDATION_DESIGN_RULES } from "./_data/design-rules";
 import { FOUNDATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
-const summary = catalogSummary();
 const requiredStateCounts = stateFrequency(3);
 const accessibilityCounts = accessibilityFrequency(2);
 const entry = getEntry("foundation-components")!;
@@ -26,50 +25,10 @@ export default function FoundationComponentsPage() {
           <SectionHeader
             id="overview"
             eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
-            title="Overview"
-            description="At-a-glance numbers for the whole Foundation-tier catalog — every count below is computed live from the data below it, nothing here is hand-typed."
+            title="The generic layer everything else builds from"
+            description="Foundation components carry zero business or workflow awareness — a Button doesn't know it's confirming an order, a Table doesn't know it's listing jobs. That's what makes them reusable: Operational, Workflow, and Platform components compose these directly rather than reaching for raw HTML or one-off styling."
             descriptionMaxWidth={false}
           />
-          <CardGrid columns={4}>
-            <Card className="flex flex-col gap-1">
-              <span className="text-display-2 font-semibold text-ink-primary">{summary.total}</span>
-              <Caption className="text-ink-tertiary">Total components</Caption>
-            </Card>
-            <Card className="flex flex-col gap-2">
-              <Caption className="text-ink-tertiary">By status</Caption>
-              <div className="flex flex-wrap gap-1.5">
-                <Badge tone="success" size="sm">
-                  {summary.byStatus.Exists} Exists
-                </Badge>
-                <Badge tone="warning" size="sm">
-                  {summary.byStatus.Partial} Partial
-                </Badge>
-                <Badge tone="neutral" size="sm">
-                  {summary.byStatus.Needed} Needed
-                </Badge>
-              </div>
-            </Card>
-            <Card className="flex flex-col gap-2 sm:col-span-2">
-              <Caption className="text-ink-tertiary">Maturity distribution</Caption>
-              <div className="flex flex-wrap gap-1.5">
-                {MATURITY_LEVELS.map(({ level }) => (
-                  <Badge key={level} tone="neutral" size="sm">
-                    {summary.byMaturity[level]} {level}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-            <Card className="flex flex-col gap-2 sm:col-span-4">
-              <Caption className="text-ink-tertiary">High-priority gaps ({summary.highPriorityGaps.length})</Caption>
-              <div className="flex flex-wrap gap-1.5">
-                {summary.highPriorityGaps.map((component) => (
-                  <Badge key={component.id} tone="warning" size="sm">
-                    {component.name}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-          </CardGrid>
         </div>
       </SectionShell>
 

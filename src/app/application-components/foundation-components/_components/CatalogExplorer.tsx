@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@/components/ui";
-import type { InventoryStatus, InventoryPriority } from "../../inventory/_data/inventory";
+import type { InventoryStatus } from "../../inventory/_data/inventory";
 import { FOUNDATION_COMPONENTS, FOUNDATION_GROUPS, groupFor, maturityFor, type FoundationComponent } from "../_data/catalog";
 
 const STATUS_TONE: Record<InventoryStatus, "success" | "warning" | "neutral"> = {
@@ -12,18 +12,21 @@ const STATUS_TONE: Record<InventoryStatus, "success" | "warning" | "neutral"> = 
   Needed: "neutral",
 };
 
-const PRIORITY_TONE: Record<InventoryPriority, "warning" | "accent" | "neutral"> = {
-  High: "warning",
-  Medium: "accent",
-  Low: "neutral",
-};
-
 const MATURITY_TONE: Record<string, "neutral" | "warning" | "accent" | "success"> = {
   Concept: "neutral",
   Prototype: "warning",
   "Production Ready": "accent",
   Certified: "success",
   Locked: "success",
+};
+
+/** Local display labels only — the underlying MaturityLevel vocabulary in ../../_data/maturity is shared across other pages and isn't renamed here. */
+const MATURITY_LABEL: Record<string, string> = {
+  Concept: "Concept",
+  Prototype: "Prototype",
+  "Production Ready": "Production Ready",
+  Certified: "Established",
+  Locked: "Established",
 };
 
 type GroupFilter = "all" | (typeof FOUNDATION_GROUPS)[number]["id"];
@@ -79,10 +82,7 @@ function ComponentDetail({ component }: { component: FoundationComponent }) {
             {component.status}
           </Badge>
           <Badge tone={MATURITY_TONE[maturity]} size="sm">
-            {maturity}
-          </Badge>
-          <Badge tone={PRIORITY_TONE[component.priority]} size="sm">
-            {component.priority} priority
+            {MATURITY_LABEL[maturity]}
           </Badge>
         </div>
       </div>
@@ -154,10 +154,6 @@ function ComponentDetail({ component }: { component: FoundationComponent }) {
           ))}
         </ul>
       </div>
-
-      {component.derivedFrom ? (
-        <Caption className="border-t border-border-subtle pt-4 text-ink-tertiary">Derived from {component.derivedFrom}.</Caption>
-      ) : null}
     </Card>
   );
 }
