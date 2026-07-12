@@ -153,8 +153,8 @@ function ValidationHealthDemo() {
         <StatusSummary items={[{ label: "3 passed", tone: "success" }, { label: "1 warning", tone: "warning" }, { label: "1 failed", tone: "error" }]} />
         <HealthIssueList
           issues={[
-            { id: "1", title: "Missing alt text", detail: "2 images are missing accessible alt text.", severity: "warning" },
-            { id: "2", title: "Broken destination link", detail: "The primary CTA links to a 404.", severity: "critical" },
+            { id: "1", title: "Color profile mismatch", detail: "2 Artwork Projects are missing an assigned color profile.", severity: "warning" },
+            { id: "2", title: "Bleed & safe zone violation", detail: "Artwork extends past the safe-zone boundary on Poster proof #118.", severity: "critical" },
           ]}
         />
       </div>
@@ -196,7 +196,7 @@ function IncidentViewDemo() {
         <StatusTimeline
           entries={[
             { id: "1", description: "Alert triggered — payment provider outage", actor: "System", timestamp: "14:02", icon: <HealthIndicator value="critical" /> },
-            { id: "2", description: "On-call engineer acknowledged", actor: "J. Rivera", timestamp: "14:05" },
+            { id: "2", description: "On-call engineer acknowledged", actor: "Marcus D.", timestamp: "14:05" },
             { id: "3", description: "Escalated to provider status page", actor: "System", timestamp: "14:10" },
           ]}
         />

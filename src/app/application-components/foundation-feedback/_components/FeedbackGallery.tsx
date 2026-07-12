@@ -34,8 +34,8 @@ function AlertDemo() {
       </Body>
       <div className="flex flex-col gap-2">
         {!dismissed ? (
-          <Alert tone="warning" title="Storage nearly full" onDismiss={() => setDismissed(true)}>
-            You&rsquo;ve used 92% of your workspace quota.
+          <Alert tone="warning" title="Render queue nearly full" onDismiss={() => setDismissed(true)}>
+            You&rsquo;ve used 92% of this cycle&rsquo;s production capacity.
           </Alert>
         ) : (
           <Alert tone="success">Dismissed — try reloading the gallery to bring it back.</Alert>
@@ -46,9 +46,9 @@ function AlertDemo() {
 }
 
 const TOAST_SAMPLES: { tone: FeedbackTone; title: string; message: string }[] = [
-  { tone: "success", title: "Published", message: "Hero banner is now live on Instagram." },
+  { tone: "success", title: "Published", message: "Holiday collection is now live on Instagram." },
   { tone: "error", title: "Upload failed", message: "The file exceeded the 50MB limit." },
-  { tone: "info", title: "Heads up", message: "3 new comments on this asset." },
+  { tone: "info", title: "Heads up", message: "3 new comments on this Artwork Project." },
 ];
 
 function ToastDemo() {
@@ -103,7 +103,7 @@ function NotificationDemo() {
         <Notification
           tone="success"
           title="Export complete"
-          message="12 assets exported to Q3 Launch / Social."
+          message="12 Production Packages exported to Launch campaign / Social."
           timestamp="2 minutes ago"
           onDismiss={() => setVisible(false)}
         />
@@ -138,7 +138,7 @@ function EmptyStateDemo() {
       <Body size="sm" muted>
         No data, no results, or a failed load — with illustration and a retry action.
       </Body>
-      <EmptyState title="No assets yet" description="Upload your first file to get started." action={<Button size="sm">Upload asset</Button>} />
+      <EmptyState title="No Production Packages yet" description="Create your first Artwork Project to get started." action={<Button size="sm">Upload asset</Button>} />
     </Card>
   );
 }
@@ -235,8 +235,8 @@ function ValidationSummaryDemo() {
       </Body>
       <ValidationSummary
         items={[
-          { field: "Title", message: "is required", severity: "error" },
-          { field: "Tags", message: "should have at least one entry", severity: "warning" },
+          { field: "Product title", message: "is required", severity: "error" },
+          { field: "Print provider", message: "must be selected", severity: "warning" },
         ]}
       />
     </Card>
@@ -252,7 +252,7 @@ function ToneStatesDemo() {
       </Body>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <SuccessState title="Publish succeeded" description="Live on 3 platforms." />
-        <WarningState title="Missing metadata" description="4 assets have no alt text." />
+        <WarningState title="Missing metadata" description="4 Artwork Projects have no color profile." />
         <ErrorState title="Failed to load" description="Check your connection and retry." action={<Button size="sm">Retry</Button>} />
         <InfoState title="New feature available" description="Try the new bulk-export flow." />
       </div>

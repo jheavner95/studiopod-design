@@ -12,12 +12,12 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: "1", name: "Homepage Banner", type: "Artwork Project" },
-  { id: "2", name: "Q4 Campaign", type: "Style" },
-  { id: "3", name: "Spring Catalog", type: "Ratio Set" },
-  { id: "4", name: "Product Photography", type: "Asset" },
-  { id: "5", name: "Summer Lookbook", type: "Artwork Project" },
-  { id: "6", name: "Email Header", type: "Asset" },
+  { id: "1", name: "Trailhead mug wrap", type: "Artwork Project" },
+  { id: "2", name: "Studio Tee — Black / M", type: "Style" },
+  { id: "3", name: "Sunset ridge tee — front print", type: "Ratio Set" },
+  { id: "4", name: "Poster proof #118", type: "Asset" },
+  { id: "5", name: "Batch run #204", type: "Artwork Project" },
+  { id: "6", name: "Holiday collection", type: "Asset" },
 ];
 
 /**

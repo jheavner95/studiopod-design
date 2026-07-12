@@ -52,10 +52,10 @@ function ExecutiveDashboardDemo() {
     <GalleryCard title="Executive Dashboard" description="A refreshable overview section — click Refresh to see the loading/refreshing state live.">
       <DashboardSection title="Company overview" description="Last 30 days" actions={<RefreshAction onRefresh={refresh} />} loading={loading} loadingLabel="Refreshing overview…">
         <DashboardGrid minWidgetWidth="220px">
-          <MetricCard value="$482K" label="Revenue" trendValue="+12.4%" trendDirection="up" />
-          <MetricCard value="3,204" label="Active accounts" trendValue="+2.1%" trendDirection="up" />
-          <MetricCard value="1.8%" label="Churn" trendValue="-0.3%" trendDirection="down" />
-          <MetricCard value="94" label="Health score" trendValue="flat" trendDirection="flat" />
+          <MetricCard value="$482K" label="Commerce revenue" trendValue="+12.4%" trendDirection="up" />
+          <MetricCard value="428" label="Active print jobs" trendValue="+2.1%" trendDirection="up" />
+          <MetricCard value="1.8%" label="Needs Validation rate" trendValue="-0.3%" trendDirection="down" />
+          <MetricCard value="94" label="Provider health score" trendValue="flat" trendDirection="flat" />
         </DashboardGrid>
       </DashboardSection>
     </GalleryCard>
@@ -84,9 +84,9 @@ function ProductionDashboardDemo() {
 }
 
 const PUBLISHING_JOBS: QueueRowJob[] = [
-  { id: "1", name: "Publish hero-banner.png", status: "running", priority: "high", progress: { processed: 6, total: 10 } },
-  { id: "2", name: "Publish product-shot-a.jpg", status: "queued", priority: "normal" },
-  { id: "3", name: "Publish brand-guidelines.pdf", status: "completed", priority: "low" },
+  { id: "1", name: "Publish Trailhead mug wrap", status: "running", priority: "high", progress: { processed: 6, total: 10 } },
+  { id: "2", name: "Publish Studio Tee — Black / M", status: "queued", priority: "normal" },
+  { id: "3", name: "Publish Poster proof #118", status: "completed", priority: "low" },
 ];
 
 function PublishingDashboardDemo() {
@@ -116,7 +116,7 @@ function CommerceDashboardDemo() {
             title="Revenue by channel"
             data={[
               { label: "Storefront", value: 42 },
-              { label: "Marketplace", value: 28 },
+              { label: "Etsy", value: 28 },
               { label: "Wholesale", value: 16 },
             ]}
             valueFormatter={(value) => `${value}K`}
@@ -172,9 +172,9 @@ function HealthDashboardDemo() {
 }
 
 const TIMELINE_ENTRIES: JobTimelineEntry[] = [
-  { id: "1", description: "Export catalog feed completed", actor: "System", timestamp: "10:05" },
-  { id: "2", description: "Publish hero-banner.png started", actor: "System", timestamp: "10:03" },
-  { id: "3", description: "Sync order #10236 queued", actor: "System", timestamp: "10:01" },
+  { id: "1", description: "Catalog refresh completed", actor: "System", timestamp: "10:05" },
+  { id: "2", description: "Publish Sunset ridge tee — front print started", actor: "System", timestamp: "10:03" },
+  { id: "3", description: "Batch run #204 queued", actor: "System", timestamp: "10:01" },
 ];
 
 function QueueDashboardDemo() {

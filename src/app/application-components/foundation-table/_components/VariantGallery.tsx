@@ -17,10 +17,10 @@ interface DemoItem {
 }
 
 const DEMO_ITEMS: DemoItem[] = [
-  { id: "1", name: "Homepage Banner", type: "Artwork Project", status: "Published", tone: "success", metric: 128 },
-  { id: "2", name: "Q4 Campaign", type: "Style", status: "Draft", tone: "neutral", metric: 42 },
-  { id: "3", name: "Spring Catalog", type: "Ratio Set", status: "In Review", tone: "warning", metric: 76 },
-  { id: "4", name: "Product Photography", type: "Asset", status: "Failed", tone: "error", metric: 9 },
+  { id: "1", name: "Trailhead mug wrap", type: "Artwork Project", status: "Published", tone: "success", metric: 128 },
+  { id: "2", name: "Studio Tee — Black / M", type: "Style", status: "Draft", tone: "neutral", metric: 42 },
+  { id: "3", name: "Sunset ridge tee — front print", type: "Ratio Set", status: "In Review", tone: "warning", metric: 76 },
+  { id: "4", name: "Poster proof #118", type: "Asset", status: "Failed", tone: "error", metric: 9 },
 ];
 
 function SimpleTableDemo() {
@@ -166,7 +166,7 @@ function ScrollableTableDemo() {
             <TableCell>{item.name}</TableCell>
             <TableCell>{item.type}</TableCell>
             <TableStatusCell label={item.status} tone={item.tone} />
-            <TableCell nowrap>J. Heavner</TableCell>
+            <TableCell nowrap>Priya N.</TableCell>
             <TableCell nowrap>3 days ago</TableCell>
             <TableCell nowrap>1 hour ago</TableCell>
             <TableCell align="right" nowrap>
@@ -186,7 +186,7 @@ function InspectorTableDemo() {
         <TableBody>
           {[
             ["Type", "Artwork Project"],
-            ["Owner", "J. Heavner"],
+            ["Owner", "Marcus D."],
             ["Created", "3 days ago"],
           ].map(([label, value]) => (
             <TableRow key={label}>

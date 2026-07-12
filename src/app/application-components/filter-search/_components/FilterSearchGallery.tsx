@@ -34,14 +34,14 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: "1", name: "Hero banner", type: "Image", status: "Published", updatedAt: "1d ago" },
-  { id: "2", name: "Product shot A", type: "Image", status: "Draft", updatedAt: "2d ago" },
-  { id: "3", name: "Brand guidelines", type: "Document", status: "Published", updatedAt: "3d ago" },
-  { id: "4", name: "Launch teaser", type: "Video", status: "Archived", updatedAt: "4d ago" },
-  { id: "5", name: "Social carousel", type: "Image", status: "Draft", updatedAt: "5d ago" },
-  { id: "6", name: "Onboarding script", type: "Document", status: "Published", updatedAt: "6d ago" },
-  { id: "7", name: "Style reference", type: "Image", status: "Archived", updatedAt: "1w ago" },
-  { id: "8", name: "Demo walkthrough", type: "Video", status: "Published", updatedAt: "2w ago" },
+  { id: "1", name: "Trailhead mug wrap", type: "Image", status: "Published", updatedAt: "1d ago" },
+  { id: "2", name: "Studio Tee — Black / M", type: "Image", status: "Draft", updatedAt: "2d ago" },
+  { id: "3", name: "Sunset ridge tee — front print", type: "Document", status: "Published", updatedAt: "3d ago" },
+  { id: "4", name: "Poster proof #118", type: "Video", status: "Archived", updatedAt: "4d ago" },
+  { id: "5", name: "Batch run #204", type: "Image", status: "Draft", updatedAt: "5d ago" },
+  { id: "6", name: "Holiday collection", type: "Document", status: "Published", updatedAt: "6d ago" },
+  { id: "7", name: "Launch campaign", type: "Image", status: "Archived", updatedAt: "1w ago" },
+  { id: "8", name: "Catalog refresh", type: "Video", status: "Published", updatedAt: "2w ago" },
 ];
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
@@ -218,16 +218,16 @@ function QueueSearchDemo() {
 function InspectorSearchDemo() {
   const [query, setQuery] = useState("");
   const properties = [
-    { label: "Name", value: "Hero banner" },
-    { label: "Type", value: "Image" },
-    { label: "Status", value: "Published" },
-    { label: "Size", value: "2 MB" },
-    { label: "Updated", value: "1d ago" },
+    { label: "Name", value: "Trailhead mug wrap" },
+    { label: "Type", value: "Drinkware" },
+    { label: "Status", value: "Shipped" },
+    { label: "Qty", value: "24 units" },
+    { label: "Updated", value: "2h ago" },
   ].filter((property) => property.label.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <GalleryCard title="Inspector Search" description="A compact SearchField narrowing an Inspector Panel's own property list.">
-      <InspectorPanel header={<InspectorHeader icon={<ImageIcon className="size-4" />} name="Hero banner" type="Image" status={{ label: "Published", tone: "success" }} />}>
+      <InspectorPanel header={<InspectorHeader icon={<ImageIcon className="size-4" />} name="Trailhead mug wrap" type="Drinkware" status={{ label: "Shipped", tone: "success" }} />}>
         <div className="p-3">
           <SearchField value={query} onChange={setQuery} placeholder="Search properties" />
         </div>
@@ -310,8 +310,8 @@ function CombinedSearchFilterDemo() {
   const [sortValue, setSortValue] = useState<string | null>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [historyEntries, setHistoryEntries] = useState([
-    { id: "1", query: "hero" },
-    { id: "2", query: "brand" },
+    { id: "1", query: "trailhead" },
+    { id: "2", query: "batch" },
   ]);
   const [historyOpen, setHistoryOpen] = useState(false);
 

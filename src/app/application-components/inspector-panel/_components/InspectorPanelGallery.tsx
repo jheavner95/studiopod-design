@@ -35,7 +35,7 @@ function SimpleInspectorDemo() {
   return (
     <GalleryCard title="Simple Inspector" description="Header, one section, a footer action — the minimum real composition.">
       <InspectorPanel
-        header={<InspectorHeader icon={<ImageIcon className="size-4" />} name="Hero banner.png" type="Image" status={{ label: "Published", tone: "success" }} />}
+        header={<InspectorHeader icon={<ImageIcon className="size-4" />} name="Trailhead mug wrap" type="Artwork Project" status={{ label: "Published", tone: "success" }} />}
         footer={
           <InspectorFooter>
             <InspectorActions>
@@ -49,7 +49,7 @@ function SimpleInspectorDemo() {
         <InspectorSection title="Identity">
           <InspectorGroup>
             <InspectorProperty label="ID" value="ast_4821" />
-            <InspectorProperty label="Owner" value="Jordan Lee" />
+            <InspectorProperty label="Owner" value="Priya N." />
             <InspectorProperty label="Created" value="Mar 12, 2026" />
           </InspectorGroup>
         </InspectorSection>
@@ -59,13 +59,13 @@ function SimpleInspectorDemo() {
 }
 
 function AssetInspectorDemo() {
-  const [name, setName] = useState("Hero banner.png");
+  const [name, setName] = useState("Poster proof #118");
   const [featured, setFeatured] = useState(true);
 
   return (
     <GalleryCard title="Asset Inspector" description="Read-only Identity plus editable Properties — fields edit in place, no separate edit mode.">
       <InspectorPanel
-        header={<InspectorHeader icon={<ImageIcon className="size-4" />} name={name} type="Image" status={{ label: "Published", tone: "success" }} />}
+        header={<InspectorHeader icon={<ImageIcon className="size-4" />} name={name} type="Print Job" status={{ label: "Published", tone: "success" }} />}
         footer={
           <InspectorFooter>
             <InspectorActions>
@@ -150,7 +150,7 @@ function CommerceInspectorDemo() {
         </InspectorSection>
         <InspectorSection title="Identity" collapsible={false}>
           <InspectorGroup>
-            <InspectorProperty label="SKU" value="TEE-BLK-M" />
+            <InspectorProperty label="SKU" value="TEE-ST-014" />
             <InspectorProperty label="Inventory" value="142 units" />
           </InspectorGroup>
         </InspectorSection>
@@ -162,7 +162,7 @@ function CommerceInspectorDemo() {
 function ValidationInspectorDemo() {
   return (
     <GalleryCard title="Validation Inspector" description="Panel-wide errors/warnings via InspectorValidation, separate from any one field's own state.">
-      <InspectorPanel header={<InspectorHeader icon={<Package className="size-4" />} name="Winter Collection" type="Product" status={{ label: "Draft", tone: "neutral" }} />}>
+      <InspectorPanel header={<InspectorHeader icon={<Package className="size-4" />} name="Holiday collection" type="Product" status={{ label: "Draft", tone: "neutral" }} />}>
         <InspectorSection title="Validation">
           <InspectorValidation
             items={[
@@ -184,15 +184,15 @@ function ValidationInspectorDemo() {
 function HistoryInspectorDemo() {
   return (
     <GalleryCard title="History Inspector" description="Newest first, collapsed to recent entries by default — try &ldquo;Show more&rdquo;.">
-      <InspectorPanel header={<InspectorHeader icon={<ImageIcon className="size-4" />} name="Hero banner.png" type="Image" />}>
+      <InspectorPanel header={<InspectorHeader icon={<ImageIcon className="size-4" />} name="Sunset ridge tee — front print" type="Artwork Project" />}>
         <InspectorSection title="Activity">
           <InspectorHistory
             entries={[
-              { id: "h1", description: "Published to Instagram", actor: "Jordan Lee", timestamp: "2h ago" },
-              { id: "h2", description: "Cropped to 4:5", actor: "Jordan Lee", timestamp: "5h ago" },
-              { id: "h3", description: "Uploaded", actor: "Jordan Lee", timestamp: "1d ago" },
-              { id: "h4", description: "Tagged \"campaign\"", actor: "Sam Rivera", timestamp: "1d ago" },
-              { id: "h5", description: "Created from template", actor: "Sam Rivera", timestamp: "2d ago" },
+              { id: "h1", description: "Published to Etsy", actor: "Priya N.", timestamp: "2h ago" },
+              { id: "h2", description: "Cropped to 4:5", actor: "Marcus D.", timestamp: "5h ago" },
+              { id: "h3", description: "Uploaded", actor: "Priya N.", timestamp: "1d ago" },
+              { id: "h4", description: "Tagged \"campaign\"", actor: "Marcus D.", timestamp: "1d ago" },
+              { id: "h5", description: "Created from template", actor: "Priya N.", timestamp: "2d ago" },
             ]}
           />
         </InspectorSection>
@@ -204,12 +204,12 @@ function HistoryInspectorDemo() {
 function ReadOnlyInspectorDemo() {
   return (
     <GalleryCard title="Read-only Inspector" description="Every property is a MetadataField — no edit controls, no footer actions.">
-      <InspectorPanel header={<InspectorHeader icon={<Package className="size-4" />} name="Audit Log Entry" type="System record" />}>
+      <InspectorPanel header={<InspectorHeader icon={<Package className="size-4" />} name="Batch run #204" type="Validation record" />}>
         <InspectorSection title="Details" collapsible={false}>
           <InspectorGroup>
-            <InspectorProperty label="Actor" value="System" />
-            <InspectorProperty label="Action" value="Auto-archived" />
-            <InspectorProperty label="Reason" value="90 days inactive" />
+            <InspectorProperty label="Actor" value="Marcus D." />
+            <InspectorProperty label="Action" value="Passed quality gate" />
+            <InspectorProperty label="Reason" value="All checks cleared" />
             <InspectorProperty label="Timestamp" value="Jul 9, 2026, 3:14 AM" />
           </InspectorGroup>
         </InspectorSection>
@@ -224,7 +224,7 @@ function MultiSectionInspectorDemo() {
   return (
     <GalleryCard title="Multi-section Inspector" description="InspectorTabs switching between panel views, each holding its own Sections.">
       <InspectorPanel
-        header={<InspectorHeader icon={<Megaphone className="size-4" />} name="Q3 Launch Campaign" type="Campaign" status={{ label: "Active", tone: "success" }} />}
+        header={<InspectorHeader icon={<Megaphone className="size-4" />} name="Launch campaign" type="Campaign" status={{ label: "Active", tone: "success" }} />}
         tabs={
           <InspectorTabs
             value={tab}
@@ -237,7 +237,7 @@ function MultiSectionInspectorDemo() {
             <InspectorTabPanel value="details">
               <InspectorSection title="Identity" collapsible={false}>
                 <InspectorGroup>
-                  <InspectorProperty label="Owner" value="Jordan Lee" />
+                  <InspectorProperty label="Owner" value="Marcus D." />
                   <InspectorProperty label="Platforms" value="Instagram, TikTok" />
                 </InspectorGroup>
               </InspectorSection>

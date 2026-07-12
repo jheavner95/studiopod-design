@@ -7,9 +7,9 @@ import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableSta
 import { TABLE_STATES } from "../_data/states";
 
 const ALL_ITEMS = [
-  { id: "1", name: "Homepage Banner", type: "Artwork Project", status: "Published", tone: "success" as const },
-  { id: "2", name: "Q4 Campaign", type: "Style", status: "Draft", tone: "neutral" as const },
-  { id: "3", name: "Spring Catalog", type: "Ratio Set", status: "In Review", tone: "warning" as const },
+  { id: "1", name: "Trailhead mug wrap", type: "Artwork Project", status: "Published", tone: "success" as const },
+  { id: "2", name: "Studio Tee — Black / M", type: "Style", status: "Draft", tone: "neutral" as const },
+  { id: "3", name: "Sunset ridge tee — front print", type: "Ratio Set", status: "In Review", tone: "warning" as const },
 ];
 
 function PillButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
@@ -54,12 +54,12 @@ export function StatesDemo() {
         <TableBody>
           {stateId === "loading" ? <TableLoadingState columns={3} /> : null}
           {stateId === "empty" ? (
-            <TableEmptyState colSpan={3} title="No items yet" description="Items you create will show up here." />
+            <TableEmptyState colSpan={3} title="No Production Packages yet" description="Production Packages you create will show up here." />
           ) : null}
           {stateId === "no-results" ? (
             <TableEmptyState
               colSpan={3}
-              title={"No results for “Q4”"}
+              title={"No results for “mug”"}
               description="Try a different search term, or clear your filters."
               action={
                 <Button variant="ghost" size="sm">

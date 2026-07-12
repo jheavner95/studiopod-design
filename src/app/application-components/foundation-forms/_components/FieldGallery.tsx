@@ -18,13 +18,13 @@ import {
 import { FIELD_DOCS, type FieldDoc } from "../_data/fields";
 
 function InputDemo() {
-  const [value, setValue] = useState("Homepage Banner");
-  return <InputField label="Name" required value={value} onChange={(e) => setValue(e.target.value)} />;
+  const [value, setValue] = useState("Trailhead mug wrap");
+  return <InputField label="Product title" required value={value} onChange={(e) => setValue(e.target.value)} />;
 }
 
 function TextareaDemo() {
   const [value, setValue] = useState("");
-  return <TextareaField label="Description" description="Shown on the object's own detail page." value={value} onChange={(e) => setValue(e.target.value)} placeholder="Optional notes" />;
+  return <TextareaField label="Product description" description="Shown on the product's own detail page." value={value} onChange={(e) => setValue(e.target.value)} placeholder="Optional notes" />;
 }
 
 function SelectDemo() {
@@ -100,7 +100,7 @@ function DatePickerDemo() {
 
 function FileUploadDemo() {
   const [files, setFiles] = useState<File[]>([]);
-  return <FileUploadField label="Attachment" files={files} onChange={setFiles} />;
+  return <FileUploadField label="Artwork file" files={files} onChange={setFiles} />;
 }
 
 const DEMO_BY_ID: Record<string, ComponentType> = {

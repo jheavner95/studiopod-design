@@ -30,12 +30,12 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: "1", name: "Hero banner", status: "Published" },
-  { id: "2", name: "Product shot A", status: "Draft" },
-  { id: "3", name: "Brand guidelines", status: "Published" },
-  { id: "4", name: "Launch teaser", status: "Archived" },
-  { id: "5", name: "Social carousel", status: "Draft" },
-  { id: "6", name: "Onboarding script", status: "Published" },
+  { id: "1", name: "Trailhead mug wrap", status: "Printing" },
+  { id: "2", name: "Studio Tee — Black / M", status: "Shipped" },
+  { id: "3", name: "Sunset ridge tee — front print", status: "Queued" },
+  { id: "4", name: "Poster proof #118", status: "Shipped" },
+  { id: "5", name: "Batch run #204", status: "Queued" },
+  { id: "6", name: "Holiday collection", status: "Shipped" },
 ];
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
@@ -199,14 +199,14 @@ function ConfirmationFlowDemo() {
         </BulkActionBar>
         {deleted ? (
           <Body size="sm" muted>
-            3 items deleted.
+            3 Production Packages deleted.
           </Body>
         ) : null}
         <BulkActionConfirmation
           open={open}
           onOpenChange={setOpen}
-          title="Delete 3 assets?"
-          description="This can't be undone. Assets will be removed from every platform they're published to."
+          title="Delete 3 Production Packages?"
+          description="This can't be undone. Production Packages will be removed from every platform they're published to."
           confirmLabel="Delete"
           destructive
           onConfirm={() => setDeleted(true)}
@@ -253,14 +253,14 @@ function ProgressFlowDemo() {
 
 function ConflictResolutionDemo() {
   const conflicts: BulkConflictEntry[] = [
-    { id: "1", name: "Product shot A", reason: "Locked by another editor" },
-    { id: "2", name: "Launch teaser", reason: "Missing required metadata" },
+    { id: "1", name: "Studio Tee — Black / M", reason: "Locked by another editor" },
+    { id: "2", name: "Batch run #204", reason: "Missing required metadata" },
   ];
 
   return (
     <GalleryCard title="Conflict Resolution" description="BulkResults' partial-success summary paired with BulkConflictList's itemized detail.">
       <div className="flex flex-col gap-3">
-        <BulkResults succeeded={4} failed={2} itemLabel="assets" />
+        <BulkResults succeeded={4} failed={2} itemLabel="Production Packages" />
         <BulkConflictList entries={conflicts} />
       </div>
     </GalleryCard>
@@ -284,12 +284,12 @@ function UndoFlowDemo() {
             }}
             disabled={deleted}
           >
-            Delete 5 items
+            Delete 5 Production Packages
           </BulkActionButton>
         </div>
         {deleted && !restored ? (
           <BulkUndo
-            message="5 items deleted."
+            message="5 Production Packages deleted."
             secondsRemaining={8}
             onUndo={() => {
               setRestored(true);

@@ -32,10 +32,10 @@ function GalleryCard({ title, description, children }: { title: string; descript
 }
 
 const PUBLISHING_JOBS: QueueRowJob[] = [
-  { id: "1", name: "Publish hero-banner.png", status: "running", priority: "high", progress: { processed: 6, total: 10 } },
-  { id: "2", name: "Publish product-shot-a.jpg", status: "queued", priority: "normal" },
-  { id: "3", name: "Publish brand-guidelines.pdf", status: "completed", priority: "low" },
-  { id: "4", name: "Publish launch-teaser.mp4", status: "failed", priority: "urgent" },
+  { id: "1", name: "Publish Trailhead mug wrap", status: "running", priority: "high", progress: { processed: 6, total: 10 } },
+  { id: "2", name: "Publish Studio Tee — Black / M", status: "queued", priority: "normal" },
+  { id: "3", name: "Publish Holiday collection", status: "completed", priority: "low" },
+  { id: "4", name: "Publish Launch campaign", status: "failed", priority: "urgent" },
 ];
 
 function PublishingQueueDemo() {
@@ -66,8 +66,8 @@ function PublishingQueueDemo() {
 }
 
 const PRODUCTION_JOBS: QueueRowJob[] = [
-  { id: "1", name: "Validate style-recipe-04", status: "running", priority: "normal", progress: { processed: 3, total: 8 } },
-  { id: "2", name: "Validate style-recipe-05", status: "blocked", priority: "high" },
+  { id: "1", name: "Render Batch run #204", status: "running", priority: "normal", progress: { processed: 3, total: 8 } },
+  { id: "2", name: "Validate Studio Tee — Black / M", status: "blocked", priority: "high" },
   { id: "3", name: "Validate style-recipe-06", status: "completed", priority: "normal" },
 ];
 
@@ -80,8 +80,8 @@ function ProductionQueueDemo() {
 }
 
 const COMMERCE_JOBS: QueueRowJob[] = [
-  { id: "1", name: "Sync order #10234", status: "completed", priority: "normal" },
-  { id: "2", name: "Sync order #10235", status: "completed", priority: "normal" },
+  { id: "1", name: "Sync order — Sunset ridge tee — front print", status: "completed", priority: "normal" },
+  { id: "2", name: "Sync order — Trailhead mug wrap", status: "completed", priority: "normal" },
   { id: "3", name: "Sync order #10236", status: "queued", priority: "high" },
 ];
 
@@ -107,7 +107,7 @@ function RetryQueueDemo() {
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-3 rounded-lg border border-border-subtle p-3">
           <div className="flex flex-col gap-1">
-            <span className="text-body-sm font-medium text-ink-primary">Export catalog feed</span>
+            <span className="text-body-sm font-medium text-ink-primary">Sync Catalog refresh</span>
             <QueueStatus value={status} />
           </div>
           <JobRetry
@@ -129,8 +129,8 @@ function RetryQueueDemo() {
 }
 
 const FAILED_JOBS: QueueRowJob[] = [
-  { id: "1", name: "Publish social-carousel.png", status: "failed", priority: "high" },
-  { id: "2", name: "Publish onboarding-script.pdf", status: "failed", priority: "normal" },
+  { id: "1", name: "Publish Catalog refresh", status: "failed", priority: "high" },
+  { id: "2", name: "Publish Poster proof #118", status: "failed", priority: "normal" },
 ];
 
 function FailedJobsDemo() {
@@ -138,15 +138,15 @@ function FailedJobsDemo() {
     <GalleryCard title="Failed Jobs" description="A filtered queue paired with JobError detail for the selected failure.">
       <div className="flex flex-col gap-3">
         <Queue title="Failed" caption="Failed jobs" jobs={FAILED_JOBS} />
-        <JobError title="Publish social-carousel.png failed">Provider timeout after 30s — the destination platform didn&rsquo;t respond in time.</JobError>
+        <JobError title="Publish Catalog refresh failed">Provider timeout after 30s — the destination platform didn&rsquo;t respond in time.</JobError>
       </div>
     </GalleryCard>
   );
 }
 
 const COMPLETED_JOBS: QueueRowJob[] = [
-  { id: "1", name: "Publish hero-banner.png", status: "completed", priority: "normal" },
-  { id: "2", name: "Publish brand-guidelines.pdf", status: "completed", priority: "low" },
+  { id: "1", name: "Publish Launch campaign", status: "completed", priority: "normal" },
+  { id: "2", name: "Publish Studio Tee — Black / M", status: "completed", priority: "low" },
 ];
 
 function CompletedJobsDemo() {
@@ -154,7 +154,7 @@ function CompletedJobsDemo() {
     <GalleryCard title="Completed Jobs" description="A filtered queue paired with JobResults for the most recent success.">
       <div className="flex flex-col gap-3">
         <Queue title="Completed" caption="Completed jobs" jobs={COMPLETED_JOBS} />
-        <JobResults success title="Publish hero-banner.png completed">Published to 3 platforms in 4.2s.</JobResults>
+        <JobResults success title="Publish Launch campaign completed">Published to 3 platforms in 4.2s.</JobResults>
       </div>
     </GalleryCard>
   );
@@ -172,7 +172,7 @@ function LiveQueueDemo() {
   }, [running, processed]);
 
   const jobs: QueueRowJob[] = [
-    { id: "1", name: "Batch export — 10 assets", status: running ? "running" : "completed", priority: "normal", progress: { processed, total } },
+    { id: "1", name: "Render Holiday collection — 10 units", status: running ? "running" : "completed", priority: "normal", progress: { processed, total } },
   ];
 
   return (
@@ -188,9 +188,9 @@ function LiveQueueDemo() {
 function JobDetailDemo() {
   const [filter, setFilter] = useState<QueueFilterValue>("all");
   const timeline: JobTimelineEntry[] = [
-    { id: "1", description: "Job queued", actor: "System", timestamp: "10:02" },
-    { id: "2", description: "Started running", actor: "System", timestamp: "10:03" },
-    { id: "3", description: "Completed successfully", actor: "System", timestamp: "10:05" },
+    { id: "1", description: "Job queued", actor: "Priya N.", timestamp: "10:02" },
+    { id: "2", description: "Started running", actor: "Marcus D.", timestamp: "10:03" },
+    { id: "3", description: "Completed successfully", actor: "Marcus D.", timestamp: "10:05" },
   ];
 
   return (
@@ -198,7 +198,7 @@ function JobDetailDemo() {
       <div className="flex flex-col gap-3">
         <QueueFilters value={filter} onChange={setFilter} />
         <JobCard
-          name="Publish hero-banner.png"
+          name="Publish Sunset ridge tee — front print"
           type="Publishing job"
           status="completed"
           priority="high"

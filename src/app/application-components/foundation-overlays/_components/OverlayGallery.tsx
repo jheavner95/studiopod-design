@@ -29,11 +29,11 @@ function DialogDemo() {
       </Button>
       <Dialog open={open} onOpenChange={setOpen} size="sm" labelledBy="demo-dialog-title" describedBy="demo-dialog-body">
         <span id="demo-dialog-title" className="text-body-md font-medium text-ink-primary">
-          Delete this asset?
+          Archive Poster proof #118?
         </span>
         <div id="demo-dialog-body">
           <Body size="sm" muted>
-            This can&rsquo;t be undone. The asset will be removed from every platform it&rsquo;s published to.
+            This can&rsquo;t be undone. The production package will be archived and removed from the active render queue.
           </Body>
         </div>
         <div className="flex justify-end gap-2 pt-2">
@@ -41,7 +41,7 @@ function DialogDemo() {
             Cancel
           </Button>
           <Button variant="primary" size="sm" onClick={() => setOpen(false)}>
-            Delete
+            Archive Production Package
           </Button>
         </div>
       </Dialog>
@@ -74,10 +74,10 @@ function DrawerDemo() {
       </div>
       <Drawer open={open} onOpenChange={setOpen} edge={edge} labelledBy="demo-drawer-title">
         <span id="demo-drawer-title" className="text-body-md font-medium text-ink-primary">
-          Asset details
+          Trailhead mug wrap — details
         </span>
         <Body size="sm" muted>
-          The {edge} edge variant — docked to the {edge} of the viewport, focus trapped while open.
+          Stage: Quality Gate. Assignee: Priya N. The {edge} edge variant — docked to the {edge} of the viewport, focus trapped while open.
         </Body>
       </Drawer>
     </Card>
@@ -160,10 +160,10 @@ function TooltipDemo() {
 }
 
 const COMMAND_PALETTE_ITEMS: CommandPaletteItem[] = [
-  { id: "new-asset", label: "Create new asset", group: "Actions", onSelect: () => {} },
-  { id: "publish", label: "Publish to platform", group: "Actions", onSelect: () => {} },
+  { id: "new-asset", label: "Start new Artwork Project", group: "Actions", onSelect: () => {} },
+  { id: "publish", label: "Publish Marketplace Listing", group: "Actions", onSelect: () => {} },
   { id: "invite", label: "Invite a teammate", group: "Actions", onSelect: () => {} },
-  { id: "go-library", label: "Go to Library", group: "Navigation destinations", onSelect: () => {} },
+  { id: "go-library", label: "Go to Render Queue", group: "Navigation destinations", onSelect: () => {} },
   { id: "go-queue", label: "Go to Publishing Queue", group: "Navigation destinations", onSelect: () => {} },
   { id: "go-settings", label: "Go to Settings", group: "Navigation destinations", onSelect: () => {} },
 ];

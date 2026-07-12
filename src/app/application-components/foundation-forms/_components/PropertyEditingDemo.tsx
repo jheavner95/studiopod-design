@@ -8,13 +8,13 @@ import { Card, Body, Caption, Expandable } from "@/components/ui";
 import { FormSection, PropertyEditor } from "@/components/form";
 
 function SimpleExample() {
-  const [name, setName] = useState("Homepage Banner");
+  const [name, setName] = useState("Trailhead mug wrap");
   const [size, setSize] = useState("2.4 MB");
   return (
     <PropertyEditor
       columns={2}
       fields={[
-        { id: "name", type: "text", label: "Name", value: name, onChange: setName },
+        { id: "name", type: "text", label: "Product title", value: name, onChange: setName },
         { id: "size", type: "text", label: "Size", value: size, onChange: setSize },
       ]}
     />
@@ -23,7 +23,7 @@ function SimpleExample() {
 
 function GroupedExample() {
   const [type, setType] = useState("artwork-project");
-  const [owner, setOwner] = useState("J. Heavner");
+  const [owner, setOwner] = useState("Priya N.");
   const [notify, setNotify] = useState(true);
   const [autoPublish, setAutoPublish] = useState(false);
   return (
@@ -51,14 +51,14 @@ function GroupedExample() {
 }
 
 function InspectorExample() {
-  const [name, setName] = useState("Homepage Banner");
+  const [name, setName] = useState("Poster proof #118");
   const [status, setStatus] = useState("draft");
   return (
     <Panel header={<span className="text-body-sm font-medium text-ink-primary">Inspector</span>} className="max-w-xs">
       <PropertyEditor
         columns={1}
         fields={[
-          { id: "name", type: "text", label: "Name", value: name, onChange: setName },
+          { id: "name", type: "text", label: "Job name", value: name, onChange: setName },
           { id: "status", type: "select", label: "Status", value: status, onChange: setStatus, options: [{ value: "draft", label: "Draft" }, { value: "published", label: "Published" }] },
         ]}
       />

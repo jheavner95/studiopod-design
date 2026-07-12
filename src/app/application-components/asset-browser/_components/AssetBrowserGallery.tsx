@@ -40,11 +40,29 @@ const TYPE_ICON: Record<Asset["type"], typeof ImageIcon> = {
   Style: Palette,
 };
 
+/** The three canonical products, cycled for procedural name generation below. */
+const PRODUCT_NAMES = ["Trailhead mug wrap", "Studio Tee — Black / M", "Sunset ridge tee — front print"];
+
+/** Per-category StudioPOD-flavored naming patterns, keyed by the makeAssets() seed prefix. */
+const NAME_GENERATORS: Record<string, (index: number) => string> = {
+  "hero-banner": (index) => `Launch campaign — hero banner #${4000 + index}`,
+  artwork: (index) => `Artwork Project #${2000 + index}`,
+  "product-shot": (index) => `${PRODUCT_NAMES[index % PRODUCT_NAMES.length]} — product shot ${index + 1}`,
+  "brand-style": (index) => `Style recipe #${String(index + 1).padStart(2, "0")}`,
+  brief: (index) => `Creative Brief #${300 + index}`,
+  photo: (index) => `${PRODUCT_NAMES[index % PRODUCT_NAMES.length]} — production photo ${index + 1}`,
+  clip: (index) => `Launch campaign — promo clip ${index + 1}`,
+  track: (index) => `Holiday collection — audio track ${index + 1}`,
+  doc: (index) => `Production Package — spec ${index + 1}`,
+  asset: (index) => `Production Artifact #${5000 + index}`,
+};
+
 function makeAssets(seedPrefix: string, count: number, type: Asset["type"], withThumbnails: boolean): Asset[] {
   const statuses: Asset["status"][] = ["Published", "Draft", "Archived", "Processing"];
+  const nameFor = NAME_GENERATORS[seedPrefix] ?? ((index: number) => `${seedPrefix} ${index + 1}`);
   return Array.from({ length: count }, (_, index) => ({
     id: `${seedPrefix}-${index}`,
-    name: `${seedPrefix} ${index + 1}`,
+    name: nameFor(index),
     type,
     status: statuses[index % statuses.length],
     size: `${(index % 20) + 1} MB`,

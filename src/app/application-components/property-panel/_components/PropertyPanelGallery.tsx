@@ -31,16 +31,16 @@ function GalleryCard({ title, description, children }: { title: string; descript
 }
 
 function BasicPropertiesDemo() {
-  const [name, setName] = useState("Hero banner.png");
+  const [name, setName] = useState("Trailhead mug wrap");
 
   return (
     <GalleryCard title="Basic Properties" description="A single section, a mix of read-only and one editable row.">
-      <PropertyPanel header={<InspectorHeader icon={<ImageIcon className="size-4" />} name={name} type="Image" />}>
+      <PropertyPanel header={<InspectorHeader icon={<ImageIcon className="size-4" />} name={name} type="Artwork Project" />}>
         <PropertySection title="Details" collapsible={false}>
           <PropertyGroup columns={1}>
             <PropertyEditor field={{ id: "name", type: "text", label: "Name", value: name, onChange: setName }} />
-            <PropertyRow label="Size" value="2.4 MB" />
-            <PropertyRow label="Uploaded" value="2h ago" />
+            <PropertyRow label="Type" value="Drinkware" />
+            <PropertyRow label="Updated" value="2h ago" />
           </PropertyGroup>
         </PropertySection>
       </PropertyPanel>
@@ -51,15 +51,15 @@ function BasicPropertiesDemo() {
 function GroupedPropertiesDemo() {
   return (
     <GalleryCard title="Grouped Properties" description="One section, two PropertyGroups clustering related fields separately.">
-      <PropertyPanel header={<InspectorHeader icon={<FileText className="size-4" />} name="Press release.pdf" type="Document" />}>
+      <PropertyPanel header={<InspectorHeader icon={<FileText className="size-4" />} name="Sunset ridge tee — front print" type="Artwork Project" />}>
         <PropertySection title="Document">
           <PropertyGroup title="General">
-            <PropertyRow label="Author" value="Jordan Lee" />
-            <PropertyRow label="Pages" value="4" />
+            <PropertyRow label="Assignee" value="Priya N." />
+            <PropertyRow label="Resolution" value="300 DPI" />
           </PropertyGroup>
           <PropertyGroup title="Metadata">
-            <PropertyRow label="Language" value="English" />
-            <PropertyRow label="License" value="Internal use" />
+            <PropertyRow label="Color profile" value="CMYK" />
+            <PropertyRow label="Print method" value="Direct-to-garment" />
           </PropertyGroup>
         </PropertySection>
       </PropertyPanel>
@@ -68,16 +68,16 @@ function GroupedPropertiesDemo() {
 }
 
 function AppearanceDemo() {
-  const [color, setColor] = useState("#7c5cff");
-  const [darkMode, setDarkMode] = useState(true);
+  const [color, setColor] = useState("#0f6dbf");
+  const [highRes, setHighRes] = useState(true);
 
   return (
     <GalleryCard title="Appearance" description="PropertyColor's swatch+hex editor alongside a PropertyToggle.">
-      <PropertyPanel header={<InspectorHeader icon={<Palette className="size-4" />} name="Brand theme" type="Theme" />}>
+      <PropertyPanel header={<InspectorHeader icon={<Palette className="size-4" />} name="Standard quality profile" type="Quality Gate" />}>
         <PropertySection title="Appearance" collapsible={false}>
           <PropertyGroup columns={1}>
-            <PropertyColor label="Accent color" value={color} onChange={setColor} />
-            <PropertyToggle label="Dark mode" checked={darkMode} onChange={setDarkMode} />
+            <PropertyColor label="Proof color" value={color} onChange={setColor} />
+            <PropertyToggle label="High-resolution proof (300+ DPI)" checked={highRes} onChange={setHighRes} />
           </PropertyGroup>
         </PropertySection>
       </PropertyPanel>
@@ -86,22 +86,22 @@ function AppearanceDemo() {
 }
 
 function PublishingDemo() {
-  const [platform, setPlatform] = useState("instagram");
+  const [marketplace, setMarketplace] = useState("etsy");
   const [autoPublish, setAutoPublish] = useState(false);
 
   return (
     <GalleryCard title="Publishing" description="PropertySelect for a platform choice, PropertyToggle for automation.">
-      <PropertyPanel header={<InspectorHeader icon={<Megaphone className="size-4" />} name="Q3 Launch — Instagram" type="Publishing target" status={{ label: "Scheduled", tone: "accent" }} />}>
+      <PropertyPanel header={<InspectorHeader icon={<Megaphone className="size-4" />} name="Holiday collection" type="Marketplace Listing" status={{ label: "Scheduled", tone: "accent" }} />}>
         <PropertySection title="Publishing" collapsible={false}>
           <PropertyGroup columns={1}>
             <PropertySelect
-              label="Platform"
-              value={platform}
-              onChange={setPlatform}
+              label="Marketplace"
+              value={marketplace}
+              onChange={setMarketplace}
               options={[
-                { value: "instagram", label: "Instagram" },
-                { value: "tiktok", label: "TikTok" },
-                { value: "facebook", label: "Facebook" },
+                { value: "etsy", label: "Etsy" },
+                { value: "shopify", label: "Shopify" },
+                { value: "amazon", label: "Amazon" },
               ]}
             />
             <PropertyToggle label="Auto-publish when approved" checked={autoPublish} onChange={setAutoPublish} />
@@ -147,17 +147,17 @@ function CommerceDemo() {
 function AdvancedSettingsDemo() {
   return (
     <GalleryCard title="Advanced Settings" description="A PropertySection defaulting to collapsed — progressive disclosure for rarely-touched fields.">
-      <PropertyPanel header={<InspectorHeader icon={<Settings2 className="size-4" />} name="Encoding profile" type="System setting" />}>
+      <PropertyPanel header={<InspectorHeader icon={<Settings2 className="size-4" />} name="Batch run #204" type="Production Package" />}>
         <PropertySection title="Common" collapsible={false}>
           <PropertyGroup>
-            <PropertyRow label="Format" value="MP4" />
-            <PropertyRow label="Resolution" value="1080p" />
+            <PropertyRow label="Print resolution" value="300 DPI" />
+            <PropertyRow label="Bleed" value="0.125 in" />
           </PropertyGroup>
         </PropertySection>
         <PropertySection title="Advanced" defaultOpen={false}>
           <PropertyGroup columns={1}>
-            <PropertyRow label="Bitrate cap" value="12 Mbps" />
-            <PropertyRow label="Keyframe interval" value="2s" />
+            <PropertyRow label="Color space" value="CMYK" />
+            <PropertyRow label="ICC profile" value="GRACoL2013" />
           </PropertyGroup>
         </PropertySection>
       </PropertyPanel>
@@ -168,12 +168,12 @@ function AdvancedSettingsDemo() {
 function ReadOnlyDemo() {
   return (
     <GalleryCard title="Read-only" description="Every row is PropertyLabel/PropertyValue — no editors, no footer actions.">
-      <PropertyPanel header={<InspectorHeader icon={<FileText className="size-4" />} name="Audit Log Entry" type="System record" />}>
+      <PropertyPanel header={<InspectorHeader icon={<FileText className="size-4" />} name="Batch run #204" type="Validation record" />}>
         <PropertySection title="Details" collapsible={false}>
           <PropertyGroup>
-            <PropertyRow label="Actor" value="System" />
-            <PropertyRow label="Action" value="Auto-archived" />
-            <PropertyRow label="Reason" value="90 days inactive" />
+            <PropertyRow label="Actor" value="Priya N." />
+            <PropertyRow label="Action" value="Passed quality gate" />
+            <PropertyRow label="Reason" value="All checks cleared" />
             <PropertyRow label="Timestamp" value="Jul 9, 2026, 3:14 AM" />
           </PropertyGroup>
         </PropertySection>
@@ -183,19 +183,19 @@ function ReadOnlyDemo() {
 }
 
 function MixedEditorsDemo() {
-  const [title, setTitle] = useState("Summer Sale");
-  const [quantity, setQuantity] = useState(10);
+  const [title, setTitle] = useState("Launch campaign");
+  const [quantity, setQuantity] = useState(250);
   const [category, setCategory] = useState("apparel");
   const [featured, setFeatured] = useState(false);
   const [color, setColor] = useState("#22c55e");
 
   return (
     <GalleryCard title="Mixed Editors" description="All five PropertyEditor field types together — text, number, select, switch, color.">
-      <PropertyPanel header={<InspectorHeader icon={<Settings2 className="size-4" />} name="Campaign template" type="Template" />}>
+      <PropertyPanel header={<InspectorHeader icon={<Settings2 className="size-4" />} name="Launch campaign" type="Marketplace Listing" />}>
         <PropertySection title="Fields" collapsible={false}>
           <PropertyGroup columns={1}>
-            <PropertyEditor field={{ id: "title", type: "text", label: "Title", value: title, onChange: setTitle }} />
-            <PropertyEditor field={{ id: "quantity", type: "number", label: "Quantity", value: quantity, onChange: setQuantity, min: 0 }} />
+            <PropertyEditor field={{ id: "title", type: "text", label: "Listing title", value: title, onChange: setTitle }} />
+            <PropertyEditor field={{ id: "quantity", type: "number", label: "Print run size", value: quantity, onChange: setQuantity, min: 0 }} />
             <PropertyEditor
               field={{
                 id: "category",
@@ -209,8 +209,8 @@ function MixedEditorsDemo() {
                 ],
               }}
             />
-            <PropertyEditor field={{ id: "featured", type: "switch", label: "Featured", value: featured, onChange: setFeatured }} />
-            <PropertyEditor field={{ id: "color", type: "color", label: "Tag color", value: color, onChange: setColor }} />
+            <PropertyEditor field={{ id: "featured", type: "switch", label: "Featured placement", value: featured, onChange: setFeatured }} />
+            <PropertyEditor field={{ id: "color", type: "color", label: "Accent color", value: color, onChange: setColor }} />
           </PropertyGroup>
         </PropertySection>
       </PropertyPanel>
