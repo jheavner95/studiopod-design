@@ -11,7 +11,7 @@ import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
 import { PRODUCTION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 
 const entry = getEntry("production-platform")!;
-const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("product-platform")!, getEntry("production-workspace-feature")!];
+const relatedComponents = [getEntry("platform-architecture-doc")!, getEntry("product-platform")!];
 
 export default function ProductionPlatformPage() {
   return (

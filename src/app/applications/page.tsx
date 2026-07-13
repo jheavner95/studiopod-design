@@ -12,17 +12,14 @@ const entry = getEntry("applications")!;
 // every other top-level landing page does.
 const groups = getGroupsForSection("applications").filter((group) => group.id !== "applications-overview");
 const platformsGroup = groups.find((group) => group.id === "platforms")!;
-const businessFeaturesGroup = groups.find((group) => group.id === "business-features")!;
 
 const platformEntries = getGroupEntries("platforms");
-const businessFeatureEntries = getGroupEntries("business-features");
-const allChildren = [...platformEntries, ...businessFeatureEntries];
+const allChildren = [...platformEntries];
 
 const primaryEntryPoints = [
   getEntry("production-platform")!,
   getEntry("commerce-platform")!,
   getEntry("intelligence-platform")!,
-  getEntry("production-workspace-feature")!,
 ];
 const relatedGroups = [getGroup("platform-architecture")!, getGroup("platform-templates")!, getGroup("application-composition")!];
 
@@ -32,7 +29,6 @@ const relatedGroups = [getGroup("platform-architecture")!, getGroup("platform-te
 const STATS = [
   { label: "Domain platforms", value: String(platformEntries.length) },
   { label: "Real components", value: "96" },
-  { label: "Business Features", value: String(businessFeatureEntries.length) },
 ];
 
 /**
@@ -59,11 +55,6 @@ const PLATFORM_BLURBS: Record<string, string> = {
     "How StudioPOD talks to the outside world — a registry of available providers, per-connection health, field-level mappings to each provider, live sync state, and the diagnostics behind Reconnect, Sync now, and Disconnect.",
 };
 
-const BUSINESS_FEATURE_BLURBS: Record<string, string> = {
-  "production-workspace-feature":
-    "A fully wired Production Workspace screen — its own header, canvas, inspector, validation, metrics, actions, and dialogs, running on local state and mock data — the Production platform tier composed into an actual feature, not just a diagram.",
-};
-
 export default function ApplicationsPage() {
   return (
     <DocsShell entry={entry} toc={<DocsTableOfContents />}>
@@ -72,10 +63,9 @@ export default function ApplicationsPage() {
       </DocsPageHeader>
 
       <DocsSectionLanding
-        purpose="Applications is the eight domain-specific platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, and Integrations — plus the Business Feature that composes them, presented as application compositions rather than simply another documentation page. Every platform here scopes the Foundation, Operational, and Workflow tiers into screens a real StudioPOD user would recognize, almost entirely by re-exporting existing components; the Business Feature goes one step further, wiring one of those platforms into an actual running screen with local state and mock data."
+        purpose="Applications is the eight domain-specific platform libraries — Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, and Integrations — presented as application compositions rather than simply another documentation page. Every platform here scopes the Foundation, Operational, and Workflow tiers into screens a real StudioPOD user would recognize, almost entirely by re-exporting existing components."
         whatYoullLearn={[
           "The eight domain platforms and what each one actually does for a StudioPOD user — not a component count, but the job it performs: running production, managing a product, publishing, transacting commerce, surfacing intelligence, operating the system, administering it, or integrating it with the outside world.",
-          "Production Workspace, the current example of the Business Feature pattern, and how it composes the Production platform tier into an actual running screen.",
           "Why this section is distinct from Components and Patterns: these are domain compositions carrying real StudioPOD business vocabulary — Order, Artwork, Provider Connection — not generic, reusable building blocks.",
           "Where to go next for the architecture behind these compositions — Platform Architecture and Application Composition.",
         ]}
@@ -96,28 +86,6 @@ export default function ApplicationsPage() {
           <CardGrid columns={3} gap="md">
             {platformEntries.map((item) => (
               <DocsLinkCard key={item.id} href={item.href} title={item.title} description={PLATFORM_BLURBS[item.id] ?? item.description} />
-            ))}
-          </CardGrid>
-        </div>
-      </SectionShell>
-
-      <SectionShell spacing="lg">
-        <div className="flex flex-col gap-6">
-          <SectionHeader
-            id="business-features"
-            eyebrow={<Eyebrow tone="accent">{businessFeaturesGroup.title}</Eyebrow>}
-            title="The Business Feature"
-            description={businessFeaturesGroup.description}
-            descriptionMaxWidth={false}
-          />
-          <CardGrid columns={businessFeatureEntries.length === 1 ? 2 : 3} gap="md">
-            {businessFeatureEntries.map((item) => (
-              <DocsLinkCard
-                key={item.id}
-                href={item.href}
-                title={item.title}
-                description={BUSINESS_FEATURE_BLURBS[item.id] ?? item.description}
-              />
             ))}
           </CardGrid>
         </div>

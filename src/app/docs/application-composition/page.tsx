@@ -17,7 +17,6 @@ import { APPLICATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 const entry = getEntry("application-composition-doc")!;
 const relatedComponents = [
   getEntry("platform-architecture-doc")!,
-  getEntry("production-workspace-feature")!,
   getEntry("workflows-library")!,
   getEntry("business-features-doc")!,
   getEntry("templates")!,
@@ -62,7 +61,7 @@ const LAYER_TRAILHEAD_NOTE: Record<string, string> = {
   operational: "Data Grid lists the Trailhead mug wrap as one row among every job in production.",
   workflow: "Pipeline Components track its production stage without knowing what a “mug wrap” even is.",
   platform: "Production Platform's own inspector shows its SKU — MUG-TH-014.",
-  "business-features": "Production Workspace lets Marcus D. advance it through Validation, live.",
+  "business-features": "A Business Feature is where an object like this would move through review before shipping.",
   application: "It ships, sells, and its Performance Intelligence shapes the next Creative Brief.",
 };
 
@@ -72,9 +71,8 @@ interface RealApplicationEntry {
   note: string;
 }
 
-/** The five real, composed applications this page's story points to — not hypothetical destinations, live pages built from the same six-tier stack above. */
+/** The four real, composed applications this page's story points to — not hypothetical destinations, live pages built from the same six-tier stack above. */
 const REAL_APPLICATIONS: RealApplicationEntry[] = [
-  { entryId: "production-workspace-feature", icon: <LayoutDashboard className="size-5" />, note: "Watch the Trailhead mug wrap move through Validation, live." },
   { entryId: "publishing-platform", icon: <Rocket className="size-5" />, note: "The same layers publish Poster proof #118 to Etsy and Shopify." },
   { entryId: "commerce-platform", icon: <ShoppingCart className="size-5" />, note: "Route a Studio Tee order from catalog to fulfillment." },
   { entryId: "product-platform", icon: <Boxes className="size-5" />, note: "Catalog every SKU, from the Trailhead mug wrap to a Holiday collection." },
@@ -162,7 +160,7 @@ export default function ApplicationCompositionPage() {
             id="real-applications"
             eyebrow={<Eyebrow tone="accent">Real applications</Eyebrow>}
             title="The same composition model builds every platform"
-            description="Not five different architectures — one, composed five different ways. Each of these is a live page, not a mockup."
+            description="Not four different architectures — one, composed four different ways. Each of these is a live page, not a mockup."
             descriptionMaxWidth={false}
           />
           <CardGrid columns={3}>

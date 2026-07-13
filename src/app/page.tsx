@@ -102,7 +102,6 @@ const FEATURED_ENTRY_IDS: { id: string; icon: ReactNode }[] = [
   { id: "foundation-table", icon: <Table className="size-5" /> },
   { id: "property-panel", icon: <SlidersHorizontal className="size-5" /> },
   { id: "workflow-framework", icon: <Waypoints className="size-5" /> },
-  { id: "production-workspace-feature", icon: <Rocket className="size-5" /> },
   { id: "platform-architecture-doc", icon: <Compass className="size-5" /> },
   { id: "application-composition-doc", icon: <Boxes className="size-5" /> },
 ];
@@ -251,7 +250,7 @@ export default function Home() {
       <FeatureGridComposition
         eyebrow={<SectionBadge>Worth a look</SectionBadge>}
         title="Featured pages"
-        description="Six pages that show the breadth of the system — pick one and jump in."
+        description="Five pages that show the breadth of the system — pick one and jump in."
         columns={3}
         items={FEATURED_ENTRY_IDS.map(({ id, icon }) => {
           const entry = getEntry(id)!;
