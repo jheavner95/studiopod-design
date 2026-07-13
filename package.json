@@ -9,6 +9,7 @@
     "lint": "eslint",
     "package:build": "cd packages/design-system && tsup",
     "package:typecheck": "tsc --noEmit -p packages/design-system/tsconfig.json",
+    "package:api-check": "node packages/design-system/scripts/check-api.mjs",
     "package:pack": "npm pack ./packages/design-system --pack-destination ./packages/design-system",
     "package:inspect": "tar -tzf packages/design-system/studiopod-design-system-*.tgz"
   },
