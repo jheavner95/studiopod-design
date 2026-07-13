@@ -50,13 +50,13 @@ export function DescriptionList({ items, className, layout = "responsive", borde
         >
           <dt
             className={cn(
-              "min-w-0 text-body-sm font-medium text-ink-primary",
+              "min-w-0 text-body-sm text-ink-secondary",
               layout !== "stacked" && "sm:max-w-[110px] lg:max-w-[220px]",
             )}
           >
             {item.label}
           </dt>
-          <dd className="min-w-0 break-words text-body-sm text-ink-secondary">{item.value}</dd>
+          <dd className="min-w-0 break-words text-body-sm font-medium text-ink-primary">{item.value}</dd>
         </div>
       ))}
     </dl>
