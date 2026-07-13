@@ -49,3 +49,14 @@ export const densityPaddingMap: Record<TableDensity, string> = {
   compact: "px-3 py-2",
   dense: "px-2 py-1.5",
 };
+
+/**
+ * Header cells share body cells' horizontal padding (columns must stay aligned) but use a
+ * shorter vertical measure — the header row is metadata about the data, not a row of it, and
+ * should read as a lighter band above the denser body rather than matching its height 1:1.
+ */
+export const headerDensityPaddingMap: Record<TableDensity, string> = {
+  comfortable: "px-4 py-2",
+  compact: "px-3 py-1.5",
+  dense: "px-2 py-1",
+};

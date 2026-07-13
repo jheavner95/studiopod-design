@@ -3,7 +3,7 @@
 import type { MouseEvent } from "react";
 import { Checkbox } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { useTableDensity, densityPaddingMap } from "./Table";
+import { useTableDensity, densityPaddingMap, headerDensityPaddingMap } from "./Table";
 
 interface TableSelectionCellProps {
   checked: boolean;
@@ -20,7 +20,10 @@ export function TableSelectionCell({ checked, onChange, label, indeterminate = f
   const density = useTableDensity();
   const Component = as;
   return (
-    <Component className={cn(densityPaddingMap[density], "w-10")} onClick={(event: MouseEvent) => event.stopPropagation()}>
+    <Component
+      className={cn(as === "th" ? headerDensityPaddingMap[density] : densityPaddingMap[density], "w-10")}
+      onClick={(event: MouseEvent) => event.stopPropagation()}
+    >
       <Checkbox
         checked={checked}
         indeterminate={indeterminate}

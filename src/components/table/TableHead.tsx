@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTableDensity, densityPaddingMap } from "./Table";
+import { useTableDensity, headerDensityPaddingMap } from "./Table";
 
 type CellAlign = "left" | "center" | "right";
 export type SortDirection = "asc" | "desc" | null;
@@ -41,7 +41,7 @@ export function TableHead({
       scope={scope}
       aria-sort={sortable ? (sortDirection === "asc" ? "ascending" : sortDirection === "desc" ? "descending" : "none") : undefined}
       className={cn(
-        densityPaddingMap[density],
+        headerDensityPaddingMap[density],
         alignMap[align],
         "whitespace-nowrap text-metadata text-ink-tertiary",
         sticky && "sticky left-0 z-10 bg-surface",
