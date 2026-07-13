@@ -11,6 +11,7 @@
     "package:typecheck": "tsc --noEmit -p packages/design-system/tsconfig.json",
     "package:api-check": "node packages/design-system/scripts/check-api.mjs",
     "package:css-check": "node packages/design-system/scripts/check-css.mjs",
+    "package:use-client-check": "node packages/design-system/scripts/check-use-client.mjs",
     "package:pack": "npm pack ./packages/design-system --pack-destination ./packages/design-system",
     "package:inspect": "tar -tzf packages/design-system/studiopod-design-system-*.tgz"
   },

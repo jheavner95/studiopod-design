@@ -47,6 +47,7 @@ npm run package:build       # tsup — ESM output + type declarations + CSS
 npm run package:typecheck   # standalone tsc check
 npm run package:api-check   # verify the export surface matches api-baseline/*.json
 npm run package:css-check   # verify dist/styles.css still contains the @theme block + canonical tokens (see below)
+npm run package:use-client-check  # verify index/marketing/illustrations still begin with "use client" (see below)
 ```
 
 Output goes to `packages/design-system/dist/`. Nothing here modifies the repo's own documentation app or its build.
@@ -83,6 +84,10 @@ or, once the tarball is hosted somewhere reachable by both repos, via a `file:` 
 Import `@studiopod/design-system/styles.css` once, wherever your app's own Tailwind entry CSS lives, alongside your own `@import "tailwindcss";`. This package does not run Tailwind's compiler itself — the CSS is a plain concatenation of the canonical token files, and your app's own Tailwind v4 build discovers the `@theme` block inside via the normal import graph, exactly as this repo's own app does today.
 
 This package ships its own empty `postcss.config.mjs` for exactly this reason: `tsup`'s bundled PostCSS integration walks up the directory tree looking for a config, and without a package-local one it would find and apply this repo's own (Tailwind-enabled) root config while building `styles.css` in isolation — silently pruning the entire `@theme` block as "unused" content. `npm run package:css-check` guards against this regressing.
+
+## Client components
+
+`index`, `marketing`, and `illustrations` export real client components (hooks, context providers, framer-motion primitives) and must carry a `"use client"` directive so Next.js App Router consumers don't try to run them as Server Components. Because `tsup.config.ts` sets `treeshake: true`, esbuild drops any module-level directive prologue during bundling — even one placed as the literal first line of an entry's own source — so `scripts/inject-use-client.mjs` (wired in via `onSuccess`) prepends it as plain text after the build finishes. `dist/tokens.js` is deliberately excluded (pure constants, no React import). `npm run package:use-client-check` guards against this regressing.
 
 ## What's intentionally excluded
 
