@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "package:build": "cd packages/design-system && tsup",
+    "package:typecheck": "tsc --noEmit -p packages/design-system/tsconfig.json",
+    "package:pack": "npm pack ./packages/design-system --pack-destination ./packages/design-system",
+    "package:inspect": "tar -tzf packages/design-system/studiopod-design-system-*.tgz"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -26,6 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
+    "tsup": "^8.5.1",
     "typescript": "^5"
   }
 }
