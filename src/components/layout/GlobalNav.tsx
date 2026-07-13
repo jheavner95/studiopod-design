@@ -92,7 +92,7 @@ export function GlobalNav() {
                 href={section.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "focus-ring whitespace-nowrap rounded-md border-b-2 px-0.5 pb-[3px] text-caption font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+                  "focus-ring whitespace-nowrap border-b-2 px-0.5 pb-[3px] text-caption font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
                   active
                     ? "border-accent-400 text-ink-primary"
                     : "border-transparent text-ink-tertiary hover:border-accent-400/40 hover:text-ink-secondary",
