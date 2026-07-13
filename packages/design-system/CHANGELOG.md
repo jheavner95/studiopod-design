@@ -4,6 +4,13 @@ All notable changes to `@studiopod/design-system` are documented here. Format lo
 
 ## 0.1.0 — unreleased (not published)
 
+### Fixed (RM-6 corrective patch — discovered during Web integration, before adoption)
+
+- **`dist/styles.css` was silently missing its entire `@theme` block** (all color/radius/shadow/spacing/easing custom properties from `theme.css`) in the tarball certified at the end of RM-5.5 (shasum `d15dfacebf111214fcb262a18333dde17b318193`). Root cause: `tsup`'s bundled PostCSS integration (via `postcss-load-config`) walks up the directory tree from its `cwd` looking for a PostCSS config, found the documentation app's root `postcss.config.mjs` (which configures `@tailwindcss/postcss`), and silently ran this package's `styles.css` entry through Tailwind's compiler in total isolation — with no content files to scan for utility usage, Tailwind pruned the entire `@theme` block as "unused." This package was never meant to run Tailwind's own compiler (see `README.md`'s CSS section); it ships plain concatenated token CSS for the consumer's own Tailwind build to process.
+- Fixed by adding a package-local, empty `postcss.config.mjs` in `packages/design-system/` — `postcss-load-config` finds the nearer config first and never reaches the root one. No canonical token values, ordering, or public exports changed; verified via byte-level diff against the five source CSS files (only difference: esbuild's own CSS printer inserts a formatting space after `radial-gradient(`, present whenever this content is bundled through esbuild at all).
+- Added `scripts/check-css.mjs` (`npm run package:css-check`) — an automated regression check asserting `@theme` and representative tokens from all five canonical source files are present, and in the correct order, in `dist/styles.css`. Not caught earlier because RM-4/RM-5/RM-5.5's CSS verification checked import ordering and generic selector markers, never the literal `@theme` keyword or a representative custom property.
+- Version stays at `0.1.0` (not bumped) per the same pre-adoption exception RM-5.5 used: this fix landed before any real consumer (RM-6's `studiopod-web` integration) actually adopted the package. See the corrective-patch commit message for the exact re-packed tarball shasum (not recorded here, since this file itself ships inside the tarball and editing it changes the hash it would be documenting).
+
 ### Added (RM-4)
 
 - Initial package scaffold: `.` (root), `/tokens`, `/marketing`, `/illustrations`, `/styles.css` entry points, compiling directly from canonical `studiopod-design` source via tsup/esbuild.
