@@ -1,3 +1,5 @@
+import { Lightbulb, FolderOpen, Layers, ShieldCheck, Package, Rocket, ShoppingCart, Sparkles, type LucideIcon } from "lucide-react";
+
 /**
  * The single canonical set of StudioPOD production vocabulary, demo data, and
  * recurring personas. Any page that needs an example product, job, person, or
@@ -63,6 +65,23 @@ export const CANONICAL_PRODUCTION_FLOW = [
   { id: "commerce", title: "Commerce", description: "Take the order, capture payment, and route it to fulfillment." },
   { id: "performance-intelligence", title: "Performance Intelligence", description: "Learn from sell-through and feed recommendations back into the next brief." },
 ] as const;
+
+/**
+ * One icon per canonical production-flow stage, keyed by stage id — import
+ * from here wherever a stage is drawn so "Creative Brief" (etc.) renders as
+ * the same icon on the homepage, in workflow examples, and in the production
+ * pipeline, instead of each diagram hand-picking its own.
+ */
+export const CANONICAL_PRODUCTION_FLOW_ICONS: Record<string, LucideIcon> = {
+  "creative-brief": Lightbulb,
+  "artwork-project": FolderOpen,
+  composition: Layers,
+  validation: ShieldCheck,
+  "production-package": Package,
+  publishing: Rocket,
+  commerce: ShoppingCart,
+  "performance-intelligence": Sparkles,
+};
 
 /**
  * The canonical production glossary — one preferred term per concept.

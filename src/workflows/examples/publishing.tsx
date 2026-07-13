@@ -1,5 +1,8 @@
-import { Package, Rocket, Store, Activity } from "lucide-react";
+import { Store, Activity } from "lucide-react";
 import type { Workflow } from "../types";
+import { CANONICAL_PRODUCTION_FLOW_ICONS } from "@/lib/canonical";
+
+const { "production-package": Package, publishing: Rocket } = CANONICAL_PRODUCTION_FLOW_ICONS;
 
 /** Looping flow: Monitoring feeds back into Publishing, since a live listing is continuously refreshed rather than published once. */
 export const publishing: Workflow = {

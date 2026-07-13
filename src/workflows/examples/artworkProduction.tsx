@@ -1,5 +1,13 @@
-import { Lightbulb, FolderOpen, Layers, ShieldCheck, Package } from "lucide-react";
 import type { Workflow } from "../types";
+import { CANONICAL_PRODUCTION_FLOW_ICONS } from "@/lib/canonical";
+
+const {
+  "creative-brief": Lightbulb,
+  "artwork-project": FolderOpen,
+  composition: Layers,
+  validation: ShieldCheck,
+  "production-package": Package,
+} = CANONICAL_PRODUCTION_FLOW_ICONS;
 
 /** Linear, five-stage flow — the first five stages of StudioPOD's canonical production flow, from a creative brief to a packaged, manufacturing-ready artifact. */
 export const artworkProduction: Workflow = {

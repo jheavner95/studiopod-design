@@ -1,5 +1,11 @@
-import { Sparkles, TrendingUp, Lightbulb } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import type { Workflow } from "../types";
+import { CANONICAL_PRODUCTION_FLOW_ICONS } from "@/lib/canonical";
+
+const {
+  "performance-intelligence": Sparkles,
+  "creative-brief": Lightbulb,
+} = CANONICAL_PRODUCTION_FLOW_ICONS;
 
 /**
  * The loop that closes StudioPOD's production flow — Performance Intelligence

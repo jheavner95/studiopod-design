@@ -12,6 +12,7 @@ export function WorkflowRail({ workflow, className }: WorkflowRailProps) {
   const steps = workflow.steps.map((step) => ({
     label: step.title,
     status: toSystemStatus(resolveStepStatus(step)),
+    icon: step.icon,
   }));
 
   return <ProgressRail steps={steps} className={className} />;

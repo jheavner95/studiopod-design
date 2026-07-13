@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AnimatedNode } from "./AnimatedNode";
@@ -10,6 +11,7 @@ import type { SystemStatus } from "./StatusIndicator";
 interface ProgressRailStep {
   label: string;
   status: SystemStatus;
+  icon?: ReactNode;
 }
 
 interface ProgressRailProps {
@@ -50,7 +52,7 @@ export function ProgressRail({ steps, className }: ProgressRailProps) {
       )}
       {steps.map((step) => (
         <div key={step.label} className="relative z-[var(--z-raised)] flex flex-col items-center gap-2">
-          <AnimatedNode status={step.status} size="sm" />
+          <AnimatedNode status={step.status} icon={step.icon} size="sm" />
           <span className="text-caption text-ink-tertiary">{step.label}</span>
         </div>
       ))}
