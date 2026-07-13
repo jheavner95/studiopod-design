@@ -14,7 +14,10 @@
     "*.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "API.md",
+    "VERSIONING.md",
+    "CHANGELOG.md"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -39,7 +42,8 @@
   },
   "scripts": {
     "build": "tsup --config ./tsup.config.ts",
-    "typecheck": "tsc --noEmit -p ./tsconfig.json"
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
+    "api-check": "node ./scripts/check-api.mjs"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
