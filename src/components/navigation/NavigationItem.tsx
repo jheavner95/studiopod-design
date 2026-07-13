@@ -65,7 +65,7 @@ export function NavigationItem({
 
   const sharedClassName = cn(
     BASE,
-    active ? "bg-accent-soft/30 text-accent-300" : "text-ink-tertiary hover:bg-surface-hover hover:text-ink-primary",
+    active ? "bg-accent-soft/30 font-semibold text-accent-300" : "text-ink-tertiary hover:bg-surface-hover hover:text-ink-primary",
     disabled && "pointer-events-none opacity-40",
     isCollapsed && "justify-center px-2",
     className,

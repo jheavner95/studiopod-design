@@ -51,16 +51,16 @@ export function DocsSidebarGroup({ group }: DocsSidebarGroupProps) {
     <Expandable
       defaultOpen={containsActive || group.endsWith("-overview") || group === "overview"}
       trigger={
-        <div className="flex w-full items-center justify-between gap-2 px-2 py-1.5">
-          <span className="text-caption font-semibold uppercase tracking-wide text-ink-tertiary">{groupMeta?.title}</span>
-          <ChevronDown className="size-3.5 shrink-0 text-ink-tertiary transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)] group-aria-expanded:rotate-180" aria-hidden />
+        <div className="flex w-full items-center justify-between gap-2 px-2 py-2">
+          <span className="text-body-sm font-semibold text-ink-secondary">{groupMeta?.title}</span>
+          <ChevronDown className="size-3.5 shrink-0 text-ink-secondary transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)] group-aria-expanded:rotate-180" aria-hidden />
         </div>
       }
       triggerClassName={cn("group rounded-md hover:bg-canvas-raised")}
     >
       <NavigationGroup>
         {entries.map((entry) => (
-          <NavigationItem key={entry.id} href={entry.href} active={entry.href === pathname}>
+          <NavigationItem key={entry.id} href={entry.href} active={entry.href === pathname} level={1}>
             {entry.title}
           </NavigationItem>
         ))}

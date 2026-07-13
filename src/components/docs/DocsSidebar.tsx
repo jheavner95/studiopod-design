@@ -32,9 +32,9 @@ export function DocsSidebar({ section }: DocsSidebarProps) {
 
   return (
     <SideNavigation aria-label={sectionMeta?.title ?? "Documentation"}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         {sectionMeta?.title ? (
-          <span className="px-3 text-caption font-semibold uppercase tracking-wide text-ink-tertiary">{sectionMeta.title}</span>
+          <span className="px-3 text-metadata font-semibold text-ink-tertiary">{sectionMeta.title}</span>
         ) : null}
         {groups.map((groupId) => (
           <DocsSidebarGroup key={groupId} group={groupId} />
