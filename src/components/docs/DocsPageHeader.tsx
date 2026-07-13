@@ -8,8 +8,15 @@ interface DocsPageHeaderProps {
   children?: ReactNode;
 }
 
-/** Title, description, and classification badge — all derived from the entry's own registry record, never restated per page. */
+/**
+ * Title, description, and classification badge — all derived from the entry's own registry record,
+ * never restated per page. Title scale follows the entry's pageType: "landing" and "architecture"
+ * pages keep the full hero Display size, while the far more numerous "reference" and "pattern" pages
+ * (the vast majority of the site) use a more compact heading scale so the title doesn't overpower a
+ * page whose job is to get the reader into examples quickly.
+ */
 export function DocsPageHeader({ entry, children }: DocsPageHeaderProps) {
+  const isCompactTitle = entry.pageType === "reference" || entry.pageType === "pattern";
   return (
     <div className="flex flex-col gap-4">
       {entry.badge ? (
@@ -19,7 +26,7 @@ export function DocsPageHeader({ entry, children }: DocsPageHeaderProps) {
           </Badge>
         </Inline>
       ) : null}
-      <Display>{entry.title}</Display>
+      <Display className={isCompactTitle ? "text-heading-1" : undefined}>{entry.title}</Display>
       <Body size="lg" muted className="max-w-[var(--container-narrow)]">
         {entry.description}
       </Body>

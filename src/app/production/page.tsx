@@ -22,10 +22,10 @@ export default function ProductionPlaygroundPage() {
   return (
     <IllustrationDevProvider>
       <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
-        <SectionShell spacing="xl">
-          <div className="flex flex-col gap-6">
+        <SectionShell spacing="lg">
+          <div className="flex flex-col gap-4">
             <SectionBadge icon={<ShieldCheck className="size-3.5" />}>Historical Reference</SectionBadge>
-            <Display>Production and validation library</Display>
+            <Display className="text-heading-1">Production and validation library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD ensures production quality, built on the motion,
               illustration, workflow, and platform architecture engines:{" "}

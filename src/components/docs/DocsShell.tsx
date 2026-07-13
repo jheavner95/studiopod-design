@@ -50,7 +50,7 @@ export function DocsShell({ entry, children, toc }: DocsShellProps) {
           <DocsSidebar section={entry.section} />
         </aside>
 
-        <main className="flex min-w-0 flex-1 flex-col gap-10">
+        <main className="flex min-w-0 flex-1 flex-col gap-6">
           {children}
           <DocsPageNavigation entry={entry} />
         </main>

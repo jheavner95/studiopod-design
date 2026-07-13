@@ -99,8 +99,8 @@ const FUTURE_ENHANCEMENTS = [
 export default function CompositionsPage() {
   return (
     <PageShell background={<SystemGrid />}>
-      <SectionShell spacing="xl">
-        <div className="flex flex-col gap-6">
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-4">
           <SectionBadge icon={<Boxes className="size-3.5" />}>{entrySection.title} / {entryGroup.title}</SectionBadge>
           <Display>Composition playground</Display>
           <Body size="lg" muted className="max-w-[var(--container-narrow)]">

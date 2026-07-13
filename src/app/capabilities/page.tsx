@@ -39,10 +39,10 @@ export default function CapabilitiesPlaygroundPage() {
   return (
     <IllustrationDevProvider>
       <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
-        <SectionShell spacing="xl">
-          <div className="flex flex-col gap-6">
+        <SectionShell spacing="lg">
+          <div className="flex flex-col gap-4">
             <SectionBadge icon={<Blocks className="size-3.5" />}>Historical Reference</SectionBadge>
-            <Display>Marketplace and AI capability library</Display>
+            <Display className="text-heading-1">Marketplace and AI capability library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD integrates AI, publishing, and commerce providers through a
               provider-agnostic capability architecture:{" "}

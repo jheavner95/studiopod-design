@@ -38,10 +38,10 @@ export default function PlatformsPlaygroundPage() {
   return (
     <IllustrationDevProvider>
       <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
-        <SectionShell spacing="xl">
-          <div className="flex flex-col gap-6">
+        <SectionShell spacing="lg">
+          <div className="flex flex-col gap-4">
             <SectionBadge icon={<Network className="size-3.5" />}>Historical Reference</SectionBadge>
-            <Display>Platform architecture library</Display>
+            <Display className="text-heading-1">Platform architecture library</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
               Reusable diagrams that explain how StudioPOD&apos;s platforms relate, built on the illustration and
               workflow engines:{" "}

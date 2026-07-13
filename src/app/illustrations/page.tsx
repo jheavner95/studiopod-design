@@ -72,8 +72,8 @@ export default function IllustrationsPlaygroundPage() {
   return (
     <IllustrationDevProvider>
       <PageShell background={<SystemGrid />} className={DOCK_CLEARANCE_CLASS}>
-        <SectionShell spacing="xl">
-          <div className="flex flex-col gap-6">
+        <SectionShell spacing="lg">
+          <div className="flex flex-col gap-4">
             <SectionBadge icon={<Boxes className="size-3.5" />}>Playground</SectionBadge>
             <Display>Illustration engine</Display>
             <Body size="lg" muted className="max-w-[var(--container-narrow)]">
