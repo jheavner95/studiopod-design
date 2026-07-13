@@ -20,6 +20,8 @@
 # production
 /build
 /dist
+packages/*/dist
+*.tgz
 
 # typescript
 *.tsbuildinfo
