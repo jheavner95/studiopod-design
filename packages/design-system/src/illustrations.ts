@@ -22,8 +22,19 @@
  * "types"/"utils"/"components" subpaths directly, instead of the
  * combined barrel, excludes "examples" (and therefore canonical.ts)
  * without needing an explicit per-symbol list.
+ *
+ * "@/illustrations" is imported the same way, from its "types"/"layout"/
+ * "utils"/"primitives" subpaths rather than its combined barrel, to
+ * exclude its "dev" subfolder (IllustrationDevProvider/useIllustrationDev/
+ * useIllustrationDevControls/IllustrationDevState) — a diagram-authoring
+ * debug overlay (node bounds, anchor points, connector routing, grid,
+ * animation-path visualization) explicitly scoped to the documentation
+ * playground in its own source comments, not consumer-facing API.
  */
-export * from "@/illustrations";
+export * from "@/illustrations/types";
+export * from "@/illustrations/layout";
+export * from "@/illustrations/utils";
+export * from "@/illustrations/primitives";
 export * from "@/components/illustration";
 export * from "@/workflows/types";
 export * from "@/workflows/utils";

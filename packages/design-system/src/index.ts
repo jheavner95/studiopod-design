@@ -183,26 +183,21 @@ export {
 // Motion — React composition components (FadeIn/SlideUp/StaggerGroup/etc.)
 export * from "@/components/motion";
 
-// Motion — lower-level engine (tokens, transition/stagger/sequence
-// builders, and the Fade/Slide/Scale/Expand/Collapse/Crossfade/Pulse/
-// Highlight/Progress/ConnectorFlow/PublishFlow/QueueFlow primitives it's
-// built from). A separate, required transitive dependency of several of
-// the folders above (SelectableCard, ProgressBar, Toast, Popover,
-// CommandPalette, Drawer, Menu, Tooltip, Dialog) — not part of the
-// originally-scoped folder list, but unavoidable: 21 files across the
-// approved scope import from it and the package cannot build without it.
-// Its own Stagger/StaggerGroup/StaggerItem primitives collide with
-// "@/components/motion"'s (a different, framer-motion-variant-based
-// implementation) above — the composition-level one keeps the bare
-// name since the marketing compositions already depend on that exact
-// shape; the engine's versions are re-exported under an "Engine*" prefix.
-export * from "@/motion";
-export { StaggerGroup, StaggerItem } from "@/components/motion";
-export {
-  Stagger as EngineStagger,
-  StaggerGroup as EngineStaggerGroup,
-  StaggerItem as EngineStaggerItem,
-} from "@/motion";
+// Note: "@/motion" (the lower-level engine — tokens, transition/stagger/
+// sequence builders, and the Fade/Slide/Scale/Expand/Collapse/Crossfade/
+// Pulse/Highlight/Progress/ConnectorFlow/PublishFlow/QueueFlow primitives
+// it's built from) is a required transitive dependency of several folders
+// above (SelectableCard, ProgressBar, Toast, Popover, CommandPalette,
+// Drawer, Menu, Tooltip, Dialog all import from it directly) and remains
+// bundled — but is deliberately NOT re-exported here. RM-4 exposed it
+// publicly (with its Stagger/StaggerGroup/StaggerItem renamed to
+// Engine-prefixed names to avoid colliding with "@/components/motion"'s
+// own Stagger); RM-5.5's public API review reclassified it as internal:
+// it's a low-level implementation primitive set (resolveDuration,
+// transition, stagger, sequence, etc.) that consumers don't need
+// directly, not a stable public surface. Removing it also removes the
+// collision, so "@/components/motion"'s Stagger/StaggerGroup/StaggerItem
+// no longer need any override.
 
 // Operational component family. Four names collide with folders already
 // exported above, resolved as follows: StatusSummary is dropped (exact
