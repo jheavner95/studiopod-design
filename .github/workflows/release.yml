@@ -4,10 +4,12 @@ name: Release @studiopod/design-system
 # DS-0.6 — release pipeline for @studiopod/design-system.
 #
 # REGISTRY: GitHub Packages (https://npm.pkg.github.com). PRIVATE.
-# The package must never reach npmjs; three independent things prevent it:
-#   1. package.json#publishConfig.registry pins the target registry
-#   2. package.json#private (removed only at first release, see §D)
-#   3. this workflow's `registry-url` + scope
+# The package must never reach npmjs. `private: true` was removed in Phase D, so
+# the guard is now package.json#publishConfig.registry, which overrides npm's
+# default registry.npmjs.org. Verified, not assumed —
+# `npm publish --dry-run --loglevel=verbose` reports:
+#   npm notice Publishing to https://npm.pkg.github.com with tag latest
+# This workflow's `registry-url` + scope pin the same target independently.
 #
 # SCOPE: GitHub Packages requires the npm scope to equal the repo owner.
 # @studiopod/design-system therefore requires the repo to live at
@@ -15,10 +17,14 @@ name: Release @studiopod/design-system
 # `studiopod` organization in DS-0.6 Phase A. If the repo ever moves back to a
 # personal account, publishing breaks and the scope must change with it.
 #
-# The `publish` job stays INERT until BOTH exist:
+# Releasing requires BOTH:
 #   vars.DS_REGISTRY     repository variable = https://npm.pkg.github.com
 #   secrets.DS_NPM_TOKEN repository secret   = publish credential
-# If either is missing the job SKIPS with a warning rather than failing.
+# Both the dry-run and publish jobs FAIL (not skip) when either is missing.
+# An earlier revision skipped instead: an operator who asked for a release would
+# have got a green run that published nothing. Silence is the worst outcome for
+# an explicit request, so it is an error now.
+#
 # `verify` runs on every push and PR regardless.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -85,15 +91,22 @@ jobs:
       - name: Pack (dry run)
         run: npm pack --dry-run
 
+      # `npm pack --pack-destination` does NOT create the directory; it exits
+      # 254 (ENOENT) if it is missing. Hence the explicit mkdir.
       - name: Upload packed artifact for inspection
-        run: npm pack --pack-destination /tmp/ds-pack
-        continue-on-error: true
+        run: |
+          mkdir -p /tmp/ds-pack
+          npm pack --pack-destination /tmp/ds-pack
 
+      # No `continue-on-error` and no `if-no-files-found: ignore` here: both were
+      # present originally and between them they masked a real ENOENT failure,
+      # letting this job report green while packing nothing. A pack failure must
+      # fail the job.
       - uses: actions/upload-artifact@v4
         with:
           name: design-system-tarball
           path: /tmp/ds-pack/*.tgz
-          if-no-files-found: ignore
+          if-no-files-found: error
 
   # ── Dry run: exercise the release path, publish nothing ───────────────────
   # Phase C. Everything the real release does EXCEPT `npm publish`, the version
@@ -123,15 +136,42 @@ jobs:
         working-directory: packages/design-system
         run: npm run verify
 
-      - name: Report distribution configuration
+      # Reports configuration AND enforces it. Reporting alone was a trap: the
+      # publish job skips (not fails) when unconfigured, so a green dry run with
+      # missing secrets would be followed by a "successful" release that
+      # published nothing. Failing here makes "dry run green" actually mean
+      # "ready to publish".
+      #
+      # Never prints either value. DS_NPM_TOKEN is reported only as set/NOT SET;
+      # DS_REGISTRY is a repository variable (a public URL, not a secret) and is
+      # echoed so the target can be confirmed. GitHub additionally masks secret
+      # values in logs, but this step does not rely on that.
+      - name: Report + enforce distribution configuration
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
           DS_NPM_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: |
-          echo "DS_REGISTRY   set: $([ -n "$DS_REGISTRY" ] && echo yes || echo NO)"
-          echo "DS_NPM_TOKEN  set: $([ -n "$DS_NPM_TOKEN" ] && echo yes || echo NO)"
-          echo "publishConfig: $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
-          echo "private:       $(node -p "require('./packages/design-system/package.json').private ?? false")"
+          REG_SET=$([ -n "$DS_REGISTRY" ]  && echo yes || echo "NOT SET")
+          TOK_SET=$([ -n "$DS_NPM_TOKEN" ] && echo yes || echo "NOT SET")
+          echo "DS_REGISTRY    set: $REG_SET   value: ${DS_REGISTRY:-<unset>}"
+          echo "DS_NPM_TOKEN   set: $TOK_SET   (value never printed)"
+          echo "publishConfig     : $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
+          echo "private           : $(node -p "require('./packages/design-system/package.json').private ?? false")"
+
+          FAIL=0
+          if [ -z "$DS_REGISTRY" ]; then
+            echo "::error title=DS_REGISTRY not set::Add repository VARIABLE DS_REGISTRY = https://npm.pkg.github.com (Settings -> Secrets and variables -> Actions -> Variables)."
+            FAIL=1
+          elif [ "$DS_REGISTRY" != "https://npm.pkg.github.com" ]; then
+            echo "::error title=DS_REGISTRY unexpected::Expected https://npm.pkg.github.com, got '$DS_REGISTRY'."
+            FAIL=1
+          fi
+          if [ -z "$DS_NPM_TOKEN" ]; then
+            echo "::error title=DS_NPM_TOKEN not set::Add repository SECRET DS_NPM_TOKEN (classic PAT, write:packages scope only)."
+            FAIL=1
+          fi
+          [ "$FAIL" = "0" ] || { echo "Distribution is not configured — a real release would SKIP publishing and look green."; exit 1; }
+          echo "OK — distribution configured; a real release would publish."
 
       # Restores via a byte-exact backup, NOT `git checkout -- package.json`.
       # `git checkout` restores the last COMMITTED state, which silently destroys
@@ -157,9 +197,13 @@ jobs:
           cmp -s /tmp/pkg.backup.json package.json || { echo "::error::package.json not byte-identical after dry run"; exit 1; }
           rm -f /tmp/pkg.backup.json
 
+      # `npm pack --pack-destination` does NOT create the directory; it exits
+      # 254 (ENOENT) if it is missing. This is what failed run #2.
       - name: Pack the real tarball
         working-directory: packages/design-system
-        run: npm pack --pack-destination /tmp/ds-pack
+        run: |
+          mkdir -p /tmp/ds-pack
+          npm pack --pack-destination /tmp/ds-pack
 
       - name: Verify PACKED tarball contents (not just the working tree)
         run: |
@@ -203,26 +247,24 @@ jobs:
       contents: write   # version commit, tag, GitHub release
       packages: write   # publish to GitHub Packages
     steps:
+      # FAILS rather than skips. A skip here was the dangerous design: the
+      # operator explicitly asked to publish, so quietly doing nothing and
+      # reporting green is the worst outcome. If you asked for a release and it
+      # cannot happen, that is an error.
       - name: Gate — is distribution configured?
-        id: gate
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
           DS_NPM_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: |
-          if [ -z "$DS_REGISTRY" ] || [ -z "$DS_NPM_TOKEN" ]; then
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=Publish skipped::DS_REGISTRY variable and/or DS_NPM_TOKEN secret are not set. Complete the owner-action checklist in docs/DISTRIBUTION.md §7 before releasing."
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
+          [ -n "$DS_REGISTRY" ]  || { echo "::error title=DS_REGISTRY not set::Set the DS_REGISTRY variable to https://npm.pkg.github.com. See docs/DISTRIBUTION.md §7."; exit 1; }
+          [ -n "$DS_NPM_TOKEN" ] || { echo "::error title=DS_NPM_TOKEN not set::Add the DS_NPM_TOKEN secret (classic PAT, write:packages). See docs/DISTRIBUTION.md §7."; exit 1; }
+          echo "Distribution configured — proceeding to publish."
 
       - uses: actions/checkout@v4
-        if: steps.gate.outputs.configured == 'true'
         with:
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
-        if: steps.gate.outputs.configured == 'true'
         with:
           node-version: 20
           cache: npm
@@ -230,11 +272,9 @@ jobs:
           scope: "@studiopod"
 
       - name: Install (deterministic)
-        if: steps.gate.outputs.configured == 'true'
         run: npm ci
 
       - name: Configure git identity
-        if: steps.gate.outputs.configured == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -242,7 +282,6 @@ jobs:
       # Version the PACKAGE, tag as design-system-vX.Y.Z so the tag namespace
       # stays distinct from any future package in this repo.
       - name: Create version
-        if: steps.gate.outputs.configured == 'true'
         id: version
         working-directory: packages/design-system
         run: |
@@ -251,7 +290,6 @@ jobs:
           echo "Bumped to ${NEW}"
 
       - name: Commit + tag
-        if: steps.gate.outputs.configured == 'true'
         run: |
           V="${{ steps.version.outputs.version }}"
           git add packages/design-system/package.json package-lock.json
@@ -262,14 +300,12 @@ jobs:
       # prepublishOnly re-runs build+typecheck+api-check here — the gate cannot
       # be bypassed by publishing directly.
       - name: Publish
-        if: steps.gate.outputs.configured == 'true'
         working-directory: packages/design-system
         env:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm publish
 
       - name: Generate release notes
-        if: steps.gate.outputs.configured == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
