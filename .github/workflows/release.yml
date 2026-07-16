@@ -1,0 +1,280 @@
+name: Release @studiopod/design-system
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DS-0.6 — release pipeline for @studiopod/design-system.
+#
+# REGISTRY: GitHub Packages (https://npm.pkg.github.com). PRIVATE.
+# The package must never reach npmjs; three independent things prevent it:
+#   1. package.json#publishConfig.registry pins the target registry
+#   2. package.json#private (removed only at first release, see §D)
+#   3. this workflow's `registry-url` + scope
+#
+# SCOPE: GitHub Packages requires the npm scope to equal the repo owner.
+# @studiopod/design-system therefore requires the repo to live at
+# github.com/studiopod/* — which is why studiopod-design was transferred to the
+# `studiopod` organization in DS-0.6 Phase A. If the repo ever moves back to a
+# personal account, publishing breaks and the scope must change with it.
+#
+# The `publish` job stays INERT until BOTH exist:
+#   vars.DS_REGISTRY     repository variable = https://npm.pkg.github.com
+#   secrets.DS_NPM_TOKEN repository secret   = publish credential
+# If either is missing the job SKIPS with a warning rather than failing.
+# `verify` runs on every push and PR regardless.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "SemVer bump (see packages/design-system/VERSIONING.md)"
+        required: true
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+      dry_run:
+        description: "Run every step but do not publish or push tags"
+        required: false
+        type: boolean
+        default: true
+
+concurrency:
+  group: ds-release-${{ github.ref }}
+  cancel-in-progress: false
+
+# Minimum permissions: default everything to read-only, then grant write
+# per-job, only where it is actually needed (see the `publish` job).
+permissions:
+  contents: read
+
+jobs:
+  # ── Always-on quality gate ────────────────────────────────────────────────
+  verify:
+    name: Verify package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read        # checkout only — cannot tag, publish, or release
+    defaults:
+      run:
+        working-directory: packages/design-system
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Deterministic installs: `npm ci` fails if package-lock.json is out of
+      # sync with package.json, which is the property we want in CI.
+      - name: Install (deterministic)
+        run: npm ci
+        working-directory: .
+
+      # `verify` = build && typecheck && api-check. Identical to the package's
+      # own prepublishOnly hook, so CI runs exactly the gate a publish runs.
+      - name: Build, typecheck, API baseline
+        run: npm run verify
+
+      - name: Verify exports resolve
+        run: node ./scripts/check-exports.mjs
+
+      # Proves the tarball contents are correct WITHOUT publishing.
+      - name: Pack (dry run)
+        run: npm pack --dry-run
+
+      - name: Upload packed artifact for inspection
+        run: npm pack --pack-destination /tmp/ds-pack
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: design-system-tarball
+          path: /tmp/ds-pack/*.tgz
+          if-no-files-found: ignore
+
+  # ── Dry run: exercise the release path, publish nothing ───────────────────
+  # Phase C. Everything the real release does EXCEPT `npm publish`, the version
+  # commit, and the tag push — so version calculation and the release commands
+  # are proven before a credential is ever used.
+  dry-run:
+    name: Release dry run
+    needs: verify
+    if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read   # cannot tag, publish, or release — enforced, not promised
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: "@studiopod"
+
+      - name: Install (deterministic)
+        run: npm ci
+
+      - name: Full verification pipeline
+        working-directory: packages/design-system
+        run: npm run verify
+
+      - name: Report distribution configuration
+        env:
+          DS_REGISTRY: ${{ vars.DS_REGISTRY }}
+          DS_NPM_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: |
+          echo "DS_REGISTRY   set: $([ -n "$DS_REGISTRY" ] && echo yes || echo NO)"
+          echo "DS_NPM_TOKEN  set: $([ -n "$DS_NPM_TOKEN" ] && echo yes || echo NO)"
+          echo "publishConfig: $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
+          echo "private:       $(node -p "require('./packages/design-system/package.json').private ?? false")"
+
+      # Restores via a byte-exact backup, NOT `git checkout -- package.json`.
+      # `git checkout` restores the last COMMITTED state, which silently destroys
+      # any uncommitted change to the file. That is harmless on a clean CI
+      # checkout but catastrophic if this step is ever run locally — which is
+      # exactly how it wiped the Phase A edits during DS-0.6 authoring. A backup
+      # round-trip is correct in both environments.
+      - name: Version calculation (computed, then reverted)
+        working-directory: packages/design-system
+        run: |
+          CUR=$(node -p "require('./package.json').version")
+          cp package.json /tmp/pkg.backup.json
+          npm version "${{ inputs.release_type }}" --no-git-tag-version --allow-same-version >/dev/null
+          NEXT=$(node -p "require('./package.json').version")
+          cp /tmp/pkg.backup.json package.json
+          REVERTED=$(node -p "require('./package.json').version")
+          echo "current  : $CUR"
+          echo "bump     : ${{ inputs.release_type }}"
+          echo "would be : $NEXT"
+          echo "tag      : design-system-v$NEXT"
+          echo "reverted : $REVERTED"
+          test "$CUR" = "$REVERTED" || { echo "::error::dry run mutated package.json"; exit 1; }
+          cmp -s /tmp/pkg.backup.json package.json || { echo "::error::package.json not byte-identical after dry run"; exit 1; }
+          rm -f /tmp/pkg.backup.json
+
+      - name: Pack the real tarball
+        working-directory: packages/design-system
+        run: npm pack --pack-destination /tmp/ds-pack
+
+      - name: Verify PACKED tarball contents (not just the working tree)
+        run: |
+          cd /tmp/ds-pack && tar -xzf ./*.tgz
+          echo "--- files that would ship ---"; find package -type f | sort
+          echo
+          head -c 13 package/dist/index.js | grep -q '"use client"' \
+            && echo "OK   index.js retains \"use client\"" \
+            || { echo "::error::published index.js is MISSING \"use client\""; exit 1; }
+          grep -q "@theme" package/dist/styles.css \
+            && echo "OK   styles.css retains @theme" \
+            || { echo "::error::published styles.css is MISSING its @theme block"; exit 1; }
+          for f in index tokens marketing illustrations; do
+            test -s "package/dist/$f.js"   || { echo "::error::missing dist/$f.js";   exit 1; }
+            test -s "package/dist/$f.d.ts" || { echo "::error::missing dist/$f.d.ts"; exit 1; }
+          done
+          echo "OK   all 9 export targets present in the tarball"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: design-system-dryrun-tarball
+          path: /tmp/ds-pack/*.tgz
+
+      - name: Release commands that WOULD run
+        run: |
+          echo "npm version ${{ inputs.release_type }} --no-git-tag-version"
+          echo "git commit -m 'release(design-system): vX.Y.Z'"
+          echo "git tag -a design-system-vX.Y.Z"
+          echo "git push origin HEAD --follow-tags"
+          echo "npm publish            # -> https://npm.pkg.github.com (private)"
+          echo "gh release create design-system-vX.Y.Z --generate-notes"
+          echo "DRY RUN — none of the above were executed."
+
+  # ── Release (inert until configured) ──────────────────────────────────────
+  publish:
+    name: Publish
+    needs: verify
+    if: github.event_name == 'workflow_dispatch' && inputs.dry_run == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # version commit, tag, GitHub release
+      packages: write   # publish to GitHub Packages
+    steps:
+      - name: Gate — is distribution configured?
+        id: gate
+        env:
+          DS_REGISTRY: ${{ vars.DS_REGISTRY }}
+          DS_NPM_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: |
+          if [ -z "$DS_REGISTRY" ] || [ -z "$DS_NPM_TOKEN" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Publish skipped::DS_REGISTRY variable and/or DS_NPM_TOKEN secret are not set. Complete the owner-action checklist in docs/DISTRIBUTION.md §7 before releasing."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.configured == 'true'
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.configured == 'true'
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: ${{ vars.DS_REGISTRY }}
+          scope: "@studiopod"
+
+      - name: Install (deterministic)
+        if: steps.gate.outputs.configured == 'true'
+        run: npm ci
+
+      - name: Configure git identity
+        if: steps.gate.outputs.configured == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Version the PACKAGE, tag as design-system-vX.Y.Z so the tag namespace
+      # stays distinct from any future package in this repo.
+      - name: Create version
+        if: steps.gate.outputs.configured == 'true'
+        id: version
+        working-directory: packages/design-system
+        run: |
+          NEW=$(npm version "${{ inputs.release_type }}" --no-git-tag-version)
+          echo "version=${NEW#v}" >> "$GITHUB_OUTPUT"
+          echo "Bumped to ${NEW}"
+
+      - name: Commit + tag
+        if: steps.gate.outputs.configured == 'true'
+        run: |
+          V="${{ steps.version.outputs.version }}"
+          git add packages/design-system/package.json package-lock.json
+          git commit -m "release(design-system): v${V}"
+          git tag -a "design-system-v${V}" -m "@studiopod/design-system v${V}"
+          git push origin HEAD --follow-tags
+
+      # prepublishOnly re-runs build+typecheck+api-check here — the gate cannot
+      # be bypassed by publishing directly.
+      - name: Publish
+        if: steps.gate.outputs.configured == 'true'
+        working-directory: packages/design-system
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: npm publish
+
+      - name: Generate release notes
+        if: steps.gate.outputs.configured == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V="${{ steps.version.outputs.version }}"
+          gh release create "design-system-v${V}" \
+            --title "@studiopod/design-system v${V}" \
+            --generate-notes \
+            --notes-file <(sed -n "/^## ${V}/,/^## /p" packages/design-system/CHANGELOG.md || echo "See CHANGELOG.md")

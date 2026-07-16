@@ -4,9 +4,12 @@
   "description": "StudioPOD's shared design system: tokens, UI/layout/form/feedback/navigation/overlay/table/metadata primitives, motion and illustration engines, and marketing compositions, for the Web and App products.",
   "private": true,
   "license": "UNLICENSED",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jheavner95/studiopod-design.git",
+    "url": "https://github.com/studiopod/studiopod-design.git",
     "directory": "packages/design-system"
   },
   "type": "module",
@@ -43,7 +46,10 @@
   "scripts": {
     "build": "tsup --config ./tsup.config.ts",
     "typecheck": "tsc --noEmit -p ./tsconfig.json",
-    "api-check": "node ./scripts/check-api.mjs"
+    "api-check": "node ./scripts/check-api.mjs",
+    "exports-check": "node ./scripts/check-exports.mjs",
+    "verify": "npm run build && npm run typecheck && npm run api-check && npm run exports-check",
+    "prepublishOnly": "npm run verify"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
