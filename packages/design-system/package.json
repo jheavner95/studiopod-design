@@ -2,14 +2,13 @@
   "name": "@studiopod/design-system",
   "version": "0.1.0",
   "description": "StudioPOD's shared design system: tokens, UI/layout/form/feedback/navigation/overlay/table/metadata primitives, motion and illustration engines, and marketing compositions, for the Web and App products.",
-  "private": true,
   "license": "UNLICENSED",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/studiopod/studiopod-design.git",
+    "url": "git+https://github.com/studiopod/studiopod-design.git",
     "directory": "packages/design-system"
   },
   "type": "module",
