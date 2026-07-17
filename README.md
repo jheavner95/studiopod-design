@@ -23,6 +23,7 @@ It exists because building each surface with its own one-off components produces
 - **Accessibility** — automated `axe-core` checks as part of the standard test suite, not a separate manual pass.
 - **Testing** — Vitest and Testing Library for component behavior, Playwright for real-browser visual regression.
 - **Verification** — one consolidated `verify`/`verify:fast`/`verify:full` pipeline covering typecheck, lint, tests, build, and package integrity — the same commands CI runs.
+- **Certification** — a canonical checklist and per-component registry for tracking production-readiness, distinguishing automated checks from the ones that genuinely require human review.
 
 ## Repository structure
 
@@ -81,6 +82,7 @@ This repository's own documentation site (run `npm run dev` and visit `/document
 - [docs/TESTING.md](./docs/TESTING.md) — testing philosophy, conventions, and how to add a test
 - [docs/VERIFICATION.md](./docs/VERIFICATION.md) — the verification pipeline, its layers, and CI behavior
 - [docs/DISTRIBUTION.md](./docs/DISTRIBUTION.md) — how `@studiopod/design-system` is versioned and released
+- [docs/CERTIFICATION.md](./docs/CERTIFICATION.md) — the production-readiness checklist and how a component earns Certified status
 - [docs/engineering-notes/](./docs/engineering-notes/) — the architectural record of how this system was built, including findings, tradeoffs, and decisions later phases relied on
 
 ## Contributing

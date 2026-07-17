@@ -5,13 +5,13 @@
   "description": "StudioPOD Design System — the documentation site, playgrounds, and source of the @studiopod/design-system package.",
   "license": "MIT",
   "author": "StudioPOD",
-  "homepage": "https://github.com/studiopod/studiopod-design#readme",
+  "homepage": "https://github.com/jheavner95/studiopod-design#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/studiopod/studiopod-design.git"
+    "url": "git+https://github.com/jheavner95/studiopod-design.git"
   },
   "bugs": {
-    "url": "https://github.com/studiopod/studiopod-design/issues"
+    "url": "https://github.com/jheavner95/studiopod-design/issues"
   },
   "scripts": {
     "dev": "next dev",
@@ -26,6 +26,7 @@
     "test:e2e": "playwright test",
     "test:e2e:update": "playwright test --update-snapshots",
     "docs:coverage": "node scripts/docs-coverage.mjs",
+    "certification:report": "node scripts/certification-report.mjs",
     "package:build": "cd packages/design-system && tsup",
     "package:typecheck": "tsc --noEmit -p packages/design-system/tsconfig.json",
     "package:api-check": "node packages/design-system/scripts/check-api.mjs",

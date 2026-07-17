@@ -14,3 +14,30 @@ export { Panel } from "./Panel";
 export { ScrollArea, type ScrollDirection } from "./ScrollArea";
 export { Separator, type SeparatorOrientation } from "./Separator";
 export { DescriptionList, type DescriptionListItem, type DescriptionListLayout } from "./DescriptionList";
+
+// Workspace — generic application-shell primitive (DS-1B2). Distinct from
+// PageShell: PageShell wraps a scrolling document, Workspace owns a fixed
+// viewport whose content region scrolls.
+export {
+  Workspace,
+  WorkspaceHeader,
+  WorkspaceToolbar,
+  WorkspaceBody,
+  WorkspaceNavigation,
+  WorkspaceContent,
+  WorkspaceInspector,
+  WorkspaceFooter,
+  workspaceDensityPadding,
+  workspaceDensityHeaderHeight,
+} from "./Workspace";
+export type {
+  WorkspaceProps,
+  WorkspaceHeaderProps,
+  WorkspaceToolbarProps,
+  WorkspaceBodyProps,
+  WorkspaceNavigationProps,
+  WorkspaceContentProps,
+  WorkspaceInspectorProps,
+  WorkspaceFooterProps,
+  WorkspaceDensity,
+} from "./Workspace";

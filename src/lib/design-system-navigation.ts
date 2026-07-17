@@ -200,7 +200,8 @@ export const NAV_REGISTRY: NavEntry[] = [
   // ---------------------------------------------------------------------
   // Components — Layout
   // ---------------------------------------------------------------------
-  { id: "foundation-layout", title: "Layout", href: "/application-components/foundation-layout", section: "components", group: "layout", order: 0, description: "Use these layout primitives to arrange and space content consistently across a page or screen.", badge: "foundation", pageType: "reference" },
+  { id: "foundation-layout", title: "Layout", href: "/application-components/foundation-layout", section: "components", group: "layout", order: 0, description: "Use these layout primitives to arrange and space content consistently across a page or screen.", badge: "foundation", pageType: "reference", next: "foundation-workspace" },
+  { id: "foundation-workspace", title: "Workspace", href: "/application-components/foundation-workspace", section: "components", group: "layout", order: 1, description: "Use the Workspace primitive to build the full-bleed application shell a tool lives in — header, toolbar, navigation, content, inspector, and status regions, composed from real components, not configured.", badge: "foundation", pageType: "reference", previous: "foundation-layout", related: ["docs-workspace", "workspace-framework"], aliases: ["Distinct from Workspace Shell (/docs/workspace, the architecture concept) and Workspace Framework (/application-components/workspace-framework, the shell's layering rules) — this page documents the reusable src/components/layout/Workspace.tsx primitive itself."] },
 
   // ---------------------------------------------------------------------
   // Components — Navigation

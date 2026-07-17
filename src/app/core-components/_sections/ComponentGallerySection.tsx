@@ -17,6 +17,7 @@ import {
   Caption,
 } from "@/components/ui";
 import { PreviewSection, StateLabel } from "@/app/docs/_components/DocsShowcase";
+import { CertificationPanel } from "@/components/docs";
 
 export function ComponentGallerySection() {
   return (
@@ -70,6 +71,13 @@ export function ComponentGallerySection() {
               <Button leadingIcon={<Zap className="size-4" />}>With icon</Button>
             </div>
           </div>
+        </div>
+
+        {/* DS-1F pilot: the one live CertificationPanel instance this phase adds — see
+            docs/CERTIFICATION.md. Deliberately only on Button; adding more is DS-2+ work. */}
+        <div>
+          <Caption className="mb-4">Certification</Caption>
+          <CertificationPanel componentName="Button" className="max-w-md" />
         </div>
 
         {/* Cards */}

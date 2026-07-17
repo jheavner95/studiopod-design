@@ -47,8 +47,10 @@
     "typecheck": "tsc --noEmit -p ./tsconfig.json",
     "api-check": "node ./scripts/check-api.mjs",
     "exports-check": "node ./scripts/check-exports.mjs",
-    "verify": "npm run build && npm run typecheck && npm run api-check && npm run exports-check",
-    "prepublishOnly": "npm run verify"
+    "verify": "npm run build && npm run typecheck && npm run api-check && npm run css-check && npm run use-client-check && npm run exports-check",
+    "prepublishOnly": "npm run verify",
+    "css-check": "node ./scripts/check-css.mjs",
+    "use-client-check": "node ./scripts/check-use-client.mjs"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",

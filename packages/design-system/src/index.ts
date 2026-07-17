@@ -39,6 +39,27 @@ export { Grid, type GridStrategy, type GridGap } from "@/components/layout/Grid"
 export { Cluster } from "@/components/layout/Cluster";
 export { Surface, type SurfaceElevation, type SurfacePadding } from "@/components/layout/Surface";
 export { Panel } from "@/components/layout/Panel";
+export {
+  Workspace,
+  WorkspaceHeader,
+  WorkspaceToolbar,
+  WorkspaceBody,
+  WorkspaceNavigation,
+  WorkspaceContent,
+  WorkspaceInspector,
+  WorkspaceFooter,
+  workspaceDensityPadding,
+  workspaceDensityHeaderHeight,
+  type WorkspaceProps,
+  type WorkspaceHeaderProps,
+  type WorkspaceToolbarProps,
+  type WorkspaceBodyProps,
+  type WorkspaceNavigationProps,
+  type WorkspaceContentProps,
+  type WorkspaceInspectorProps,
+  type WorkspaceFooterProps,
+  type WorkspaceDensity,
+} from "@/components/layout/Workspace";
 export { ScrollArea, type ScrollDirection } from "@/components/layout/ScrollArea";
 export { Separator, type SeparatorOrientation } from "@/components/layout/Separator";
 export {
