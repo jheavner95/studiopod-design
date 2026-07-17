@@ -24,6 +24,10 @@ export function DocsSearchTrigger({ className, compact }: DocsSearchTriggerProps
     group: getGroup(entry.group)?.title ?? entry.group,
     area: getSection(entry.section)?.title,
     pageType: entry.pageType,
+    // Matches the description and any aliases too, not just the title —
+    // `aliases` previously had zero consumers despite its own doc-comment
+    // (design-system-navigation.ts) describing it as search/wayfinding data.
+    keywords: [entry.description, ...(entry.aliases ?? [])],
     onSelect: () => router.push(entry.href),
   }));
 

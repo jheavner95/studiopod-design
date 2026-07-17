@@ -17,6 +17,8 @@ export interface CommandPaletteItem {
   area?: string;
   /** e.g. "reference", "landing", "certification" — the kind of page this destination is. */
   pageType?: string;
+  /** Extra terms matched against but never displayed — e.g. a page's description or its prior names/aliases, so a search for a word that's only in the description (not the title) still finds it. */
+  keywords?: string[];
   onSelect: () => void;
 }
 
@@ -78,7 +80,11 @@ export function CommandPalette({ open, onOpenChange, items, placeholder = "Searc
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return q.length === 0 ? items : items.filter((item) => item.label.toLowerCase().includes(q));
+    if (q.length === 0) return items;
+    return items.filter((item) => {
+      if (item.label.toLowerCase().includes(q)) return true;
+      return (item.keywords ?? []).some((keyword) => keyword.toLowerCase().includes(q));
+    });
   }, [items, query]);
 
   const groups = useMemo(() => {

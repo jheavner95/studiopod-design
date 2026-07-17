@@ -14,6 +14,7 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:update": "playwright test --update-snapshots",
+    "docs:coverage": "node scripts/docs-coverage.mjs",
     "package:build": "cd packages/design-system && tsup",
     "package:typecheck": "tsc --noEmit -p packages/design-system/tsconfig.json",
     "package:api-check": "node packages/design-system/scripts/check-api.mjs",

@@ -1,6 +1,6 @@
 # Verification
 
-One coherent verification system, not a scattered set of overlapping scripts. This document is the canonical guide to what runs, when, why, and what to do when it fails. For the audit that motivated this consolidation and the reasoning behind each decision, see [docs/engineering-notes/10-verification-pipeline.md](./engineering-notes/10-verification-pipeline.md). For the test suite specifically (Vitest/Testing Library/Playwright), see [docs/TESTING.md](./TESTING.md) — this document is about how everything, tests included, is orchestrated together.
+One coherent verification system, not a scattered set of overlapping scripts. This document is the canonical guide to what runs, when, why, and what to do when it fails. For the audit that motivated this consolidation and the reasoning behind each decision, see [docs/engineering-notes/10-verification-pipeline.md](./engineering-notes/10-verification-pipeline.md). For the test suite specifically (Vitest/Testing Library/Playwright), see [docs/TESTING.md](./TESTING.md) — this document is about how everything, tests included, is orchestrated together. For documentation/navigation-registry integrity specifically (a normal part of `npm test`, needing no pipeline changes of its own), see [docs/DOCUMENTATION.md](./DOCUMENTATION.md).
 
 ## 1. Philosophy: three layers, no ambiguity
 

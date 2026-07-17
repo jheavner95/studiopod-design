@@ -193,7 +193,7 @@ export const NAV_REGISTRY: NavEntry[] = [
   // Components — Overview & Foundations
   // ---------------------------------------------------------------------
   { id: "application-components", title: "Components", href: "/application-components", section: "components", group: "components-overview", order: 0, description: "Browse the full library of reusable interface components, organized by family so you can quickly find the piece you need.", pageType: "landing", next: "foundations", aliases: ["Formerly the DS-0.3/Application Components tier landing"] },
-  { id: "foundation-components", title: "Foundation Catalog", href: "/application-components/foundation-components", section: "components", group: "components-overview", order: 1, description: "Look up any foundational component's purpose, required states, and accessibility support, or browse the full catalog at a glance.", badge: "reference", pageType: "reference", related: ["foundation-layout", "foundation-table"] },
+  { id: "foundation-components", title: "Foundation Catalog", href: "/application-components/foundation-components", section: "components", group: "components-overview", order: 1, description: "Look up any foundational component's purpose, required states, and accessibility support, or browse the full catalog at a glance.", badge: "reference", pageType: "reference", related: ["foundation-layout", "foundation-table", "foundation-metadata"] },
   { id: "foundations", title: "Foundations", href: "/foundations", section: "components", group: "foundations-tokens", order: 0, description: "Learn about the structural and motion building blocks that every other component family is built on.", badge: "foundation", pageType: "landing", previous: "application-components", next: "tokens" },
   { id: "tokens", title: "Tokens", href: "/tokens", section: "components", group: "foundations-tokens", order: 1, description: "Look up the color, typography, spacing, radius, and shadow values that keep every component visually consistent.", badge: "foundation", pageType: "reference", previous: "foundations" },
 
@@ -365,4 +365,22 @@ export function getNext(entry: NavEntry): NavEntry | undefined {
 
 export function getRelated(entry: NavEntry): NavEntry[] {
   return (entry.related ?? []).map((id) => getEntry(id)).filter((e): e is NavEntry => !!e);
+}
+
+/**
+ * `entry.related`, resolved and shaped for `DocsRelatedGrid` — the pairing
+ * DS-1E's audit found missing: every consuming page hand-built its own
+ * `[getEntry(id)!, ...]` array instead of reading `entry.related` through
+ * `getRelated`, so the two mechanisms drifted (see
+ * docs/engineering-notes/11-documentation-infrastructure.md §1 for the
+ * concrete case this was caught on). Prefer this over hand-rolling the same
+ * map in a new page — see docs/DOCUMENTATION.md "How to add a page."
+ */
+export function getRelatedLinks(entry: NavEntry): { id: string; href: string; title: string; description: string }[] {
+  return getRelated(entry).map((related) => ({
+    id: related.id,
+    href: related.href,
+    title: related.title,
+    description: related.description,
+  }));
 }

@@ -2,7 +2,7 @@ import { SectionShell, CardGrid } from "@/components/layout";
 import { DescriptionList } from "@/components/metadata";
 import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@/components/ui";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
-import { getEntry } from "@/lib/design-system-navigation";
+import { getEntry, getRelatedLinks } from "@/lib/design-system-navigation";
 import { CatalogExplorer } from "./_components/CatalogExplorer";
 import { stateFrequency, accessibilityFrequency } from "./_data/catalog";
 import { FOUNDATION_BLOCKERS, resolveBlockers } from "./_data/readiness";
@@ -13,7 +13,7 @@ import { FOUNDATION_FUTURE_EXTENSIONS } from "./_data/future-extensions";
 const requiredStateCounts = stateFrequency(3);
 const accessibilityCounts = accessibilityFrequency(2);
 const entry = getEntry("foundation-components")!;
-const relatedComponents = [getEntry("foundation-layout")!, getEntry("foundation-table")!, getEntry("foundation-metadata")!];
+const relatedComponents = getRelatedLinks(entry);
 
 export default function FoundationComponentsPage() {
   return (
