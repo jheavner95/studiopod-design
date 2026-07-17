@@ -18,8 +18,8 @@ export const FEEDBACK_ANATOMY: FeedbackAnatomyRegion[] = [
   },
   {
     name: "Blocking",
-    description: "Nothing in this family blocks the page the way Dialog/Drawer do — every component here stays in normal document flow. LoadingState is the closest thing to blocking, since it typically replaces the content it's covering for.",
-    components: "LoadingState (region-blocking, not page-blocking)",
+    description: "Nothing in this family blocks the page the way Dialog/Drawer do — every component here stays in normal document flow. LoadingState and Skeleton are the closest thing to blocking, since they typically replace the content they're covering for — LoadingState with a spinner + label when no shape is known yet, Skeleton with a shape-accurate placeholder when it is.",
+    components: "LoadingState, Skeleton (both region-blocking, not page-blocking)",
   },
   {
     name: "Non-blocking",

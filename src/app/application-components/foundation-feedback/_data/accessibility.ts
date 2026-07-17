@@ -6,11 +6,15 @@ export interface FeedbackAccessibilityTopic {
 export const FEEDBACK_ACCESSIBILITY_TOPICS: FeedbackAccessibilityTopic[] = [
   {
     label: "ARIA live regions",
-    text: "Alert, Banner, InlineMessage, EmptyState/SuccessState/WarningState/ErrorState/InfoState, LoadingState, and ValidationSummary all render role=\"status\" (polite) or role=\"alert\" (assertive, error tone only) directly on their own root — feedbackRole(tone) in Alert.tsx is the single shared rule every tone-aware component in this family applies. Toast's viewport is a dedicated aria-live=\"polite\" aria-atomic=\"false\" region so each new toast is announced individually as it's added.",
+    text: "Alert, Banner, InlineMessage, EmptyState/SuccessState/WarningState/ErrorState/InfoState, LoadingState, StatusIndicator, and ValidationSummary all render role=\"status\" (polite) or role=\"alert\" (assertive, error tone only) directly on their own root — feedbackRole(tone) in Alert.tsx is the single shared rule every tone-aware component in this family applies. StatusIndicator's own role was added in DS-5D — previously the only component in the family with no ARIA wiring at all, so a status transition (idle -> active -> error) was rendered purely visually. Toast's viewport is a dedicated aria-live=\"polite\" aria-atomic=\"false\" region so each new toast is announced individually as it's added.",
   },
   {
     label: "Announcements",
     text: "Nothing in this family introduces a second, separate announcement layer on top of its own role — the live region *is* the announcement. A ProgressBar/ProgressRing's percentage is exposed via aria-valuenow, not a redundant visually-hidden string.",
+  },
+  {
+    label: "Shared announcement infrastructure",
+    text: "LiveRegionProvider/useAnnounce (src/components/feedback/LiveRegion.tsx, mounted once at the app root) is the one case this family needs a message announced without a persistent, visible element to carry a role on — ValidationSummary uses it today, to announce \"Validation passed\" when a form's errors clear and its own role=\"alert\"/role=\"status\" region unmounts (an unmounted region can't announce its own removal). Every other component in this family owns a real, rendered element to carry role=\"status\"/\"alert\" on directly, so it doesn't need useAnnounce — DS-5D confirmed this is the correct default (reach for your own role first) with LiveRegion reserved for the transition-to-empty/removal case a role alone can't cover.",
   },
   {
     label: "Focus management",
