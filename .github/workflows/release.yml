@@ -56,7 +56,46 @@ permissions:
   contents: read
 
 jobs:
-  # ── Always-on quality gate ────────────────────────────────────────────────
+  # ── Always-on quality gate: Layer 1, fast (DS-1D) ──────────────────────────
+  # Runs `npm run verify:fast` (scripts/verify.mjs) — app typecheck, test-tree
+  # typecheck, ESLint, and the Vitest/jsdom component suite (DS-1C). All four
+  # are fast, deterministic, and OS-independent, which is exactly why they're
+  # grouped as one tier developers are expected to run constantly locally —
+  # see docs/VERIFICATION.md. No Playwright here: its screenshot baselines
+  # are OS-specific (see e2e/README.md; committed baselines are suffixed
+  # `-darwin.png`, this runner is `ubuntu-latest`) — wiring it in without
+  # Linux-generated baselines would fail every run for the wrong reason.
+  # `npm run test:e2e` stays local-only until a Linux baseline set exists.
+  fast:
+    name: Verify (fast)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install (deterministic)
+        run: npm ci
+
+      - name: verify:fast — typecheck, lint, unit tests
+        run: npm run verify:fast
+
+  # ── Always-on quality gate: Layer 2, package (DS-1D) ───────────────────────
+  # `npm run verify` HERE resolves against packages/design-system's OWN
+  # package.json (see working-directory below) — a package-scoped build +
+  # typecheck + API-baseline + CSS + use-client + exports check, identical to
+  # its own `prepublishOnly` hook, so CI runs exactly the gate a publish
+  # runs. This is a DIFFERENT script from the repo-root `npm run verify`
+  # (scripts/verify.mjs) this same DS-1D phase introduces — root's `verify`
+  # runs this job's fast tier PLUS the app build PLUS this package's verify
+  # (via `npm run package:verify`, the unambiguous root-level bridge to this
+  # exact script). Two scripts, same name, deliberately kept — see
+  # docs/VERIFICATION.md "Two things named verify" for why that's fine.
   verify:
     name: Verify package
     runs-on: ubuntu-latest
@@ -79,13 +118,13 @@ jobs:
         run: npm ci
         working-directory: .
 
-      # `verify` = build && typecheck && api-check. Identical to the package's
-      # own prepublishOnly hook, so CI runs exactly the gate a publish runs.
-      - name: Build, typecheck, API baseline
+      # build && typecheck && api-check && css-check && use-client-check &&
+      # exports-check, all in one call — exports-check is already the last
+      # step of this script, so there is deliberately no separate standalone
+      # "verify exports" step after this one (an earlier revision ran
+      # exports-check twice for exactly that reason).
+      - name: Build, typecheck, API baseline, CSS, use-client, exports
         run: npm run verify
-
-      - name: Verify exports resolve
-        run: node ./scripts/check-exports.mjs
 
       # Proves the tarball contents are correct WITHOUT publishing.
       - name: Pack (dry run)
@@ -114,7 +153,7 @@ jobs:
   # are proven before a credential is ever used.
   dry-run:
     name: Release dry run
-    needs: verify
+    needs: [verify, fast]
     if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
     runs-on: ubuntu-latest
     permissions:
@@ -132,6 +171,17 @@ jobs:
       - name: Install (deterministic)
         run: npm ci
 
+      # Re-runs the same package verify the `verify` job above already ran
+      # successfully (this job `needs: [verify, fast]`, so correctness is
+      # already proven) — necessary anyway because GitHub Actions jobs don't
+      # share a filesystem: this job needs its OWN `dist/` on disk to pack a
+      # real tarball in the steps below, and there is no `dist/` without a
+      # rebuild. Sharing it via actions/upload-artifact +
+      # actions/download-artifact instead of rebuilding is the clear
+      # optimization opportunity DS-1D leaves for a future pass (see
+      # docs/VERIFICATION.md "Known limitations") — not done here to avoid
+      # adding artifact-passing complexity to an already carefully-tuned
+      # release pipeline in the same change that's meant to be simplifying it.
       - name: Full verification pipeline
         working-directory: packages/design-system
         run: npm run verify
@@ -240,7 +290,7 @@ jobs:
   # ── Release (inert until configured) ──────────────────────────────────────
   publish:
     name: Publish
-    needs: verify
+    needs: [verify, fast]
     if: github.event_name == 'workflow_dispatch' && inputs.dry_run == false
     runs-on: ubuntu-latest
     permissions:

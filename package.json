@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint",
     "test": "vitest run",
     "test:typecheck": "tsc --noEmit -p tsconfig.test.json",
@@ -18,8 +19,14 @@
     "package:api-check": "node packages/design-system/scripts/check-api.mjs",
     "package:css-check": "node packages/design-system/scripts/check-css.mjs",
     "package:use-client-check": "node packages/design-system/scripts/check-use-client.mjs",
+    "package:exports-check": "node packages/design-system/scripts/check-exports.mjs",
+    "package:verify": "cd packages/design-system && npm run verify",
     "package:pack": "npm pack ./packages/design-system --pack-destination ./packages/design-system",
-    "package:inspect": "tar -tzf packages/design-system/studiopod-design-system-*.tgz"
+    "package:inspect": "tar -tzf packages/design-system/studiopod-design-system-*.tgz",
+    "verify:fast": "node scripts/verify.mjs fast",
+    "verify": "node scripts/verify.mjs default",
+    "verify:full": "node scripts/verify.mjs full",
+    "release:verify": "npm run verify:full"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

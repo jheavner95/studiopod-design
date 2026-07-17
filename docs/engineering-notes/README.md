@@ -15,6 +15,7 @@ These notes are plain repo documentation, not part of the Next.js app (`src/app/
 7. [Application Composition Lessons](./07-application-composition-lessons.md) — how the one real Business Feature composed the tier stack, and the two real bugs its promotion review caught.
 8. [Production Workspace Retrospective](./08-production-workspace-retrospective.md) — why the mock existed, its composition/state/accessibility patterns, and why it was removed.
 9. [Test Infrastructure (DS-1C)](./09-test-infrastructure.md) — the audit that found zero test tooling, the Vitest/Testing Library/axe-core/Playwright stack chosen (and Storybook/Chromatic deliberately not), the `Button` pilot suite, and the known limitations (single theme, no Linux visual baselines yet) future phases should close.
+10. [Verification Pipeline Consolidation (DS-1D)](./10-verification-pipeline.md) — the audit that found a duplicate exports-check and ESLint never running in CI, the three-tier `verify`/`verify:fast`/`verify:full` structure and shared `scripts/verify.mjs` runner adopted, why the root/package `verify` naming collision was resolved by documentation rather than a rename, and the CI duplication (dry-run's package rebuild) deliberately left for a future pass.
 
 ## What was deliberately not preserved
 
