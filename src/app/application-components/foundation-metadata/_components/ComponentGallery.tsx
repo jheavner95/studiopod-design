@@ -16,6 +16,8 @@ import {
   HealthSummary,
   StatGroup,
   TagCollection,
+  EmptyMetadata,
+  LoadingMetadata,
 } from "@/components/metadata";
 import { METADATA_COMPONENTS } from "../_data/components";
 
@@ -104,6 +106,18 @@ function LiveDemo({ id }: { id: string }) {
       );
     case "tag-collection":
       return <TagCollection tags={["Marketing", "Q4", "Approved", "Homepage"]} />;
+    case "empty-metadata":
+      return (
+        <div className="max-w-sm">
+          <EmptyMetadata title="No metadata yet" description="Fields will appear here once this object has data." />
+        </div>
+      );
+    case "loading-metadata":
+      return (
+        <div className="max-w-sm">
+          <LoadingMetadata rows={3} />
+        </div>
+      );
     default:
       return null;
   }

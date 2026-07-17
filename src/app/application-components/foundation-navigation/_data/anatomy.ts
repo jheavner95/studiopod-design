@@ -14,7 +14,7 @@ export const NAVIGATION_ANATOMY: NavigationAnatomyRegion[] = [
   {
     name: "Workspace",
     description: "The primary sidebar for moving between an app's top-level sections, expandable or collapsed to icons.",
-    components: "SideNavigation, composed from NavigationSection/NavigationGroup/NavigationItem",
+    components: "SideNavigation, composed from NavigationSection/NavigationGroup/NavigationItem, with NavigationDivider for a plain separator between groups when no group heading is needed",
   },
   {
     name: "Section",

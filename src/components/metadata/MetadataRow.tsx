@@ -25,13 +25,23 @@ const labelWrapClass: Record<MetadataRowLayout, string> = {
   inline: "shrink-0",
 };
 
+/**
+ * DS-5F: renders as a real <dl>/<dt>/<dd> — previously a plain div/span
+ * structure with no list or label-value semantics at all, running as an
+ * unrelated parallel system to DescriptionList's own real <dl>. dt/dd use
+ * `contents` so they add zero layout footprint (MetadataLabel/MetadataValue's
+ * own spans remain the actual flex items, byte-identical to before) while
+ * still giving assistive tech a real label-value association.
+ */
 export function MetadataRow({ label, value, className, layout = "responsive" }: MetadataRowProps) {
   return (
-    <div className={cn("flex", containerClass[layout], className)}>
-      <div className={labelWrapClass[layout]}>
-        <MetadataLabel>{label}</MetadataLabel>
-      </div>
-      <MetadataValue>{value}</MetadataValue>
-    </div>
+    <dl className={cn("flex", containerClass[layout], className)}>
+      <dt className="contents">
+        <MetadataLabel className={labelWrapClass[layout]}>{label}</MetadataLabel>
+      </dt>
+      <dd className="contents">
+        <MetadataValue>{value}</MetadataValue>
+      </dd>
+    </dl>
   );
 }

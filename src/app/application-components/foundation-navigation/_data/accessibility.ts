@@ -21,6 +21,14 @@ export const NAVIGATION_ACCESSIBILITY_TOPICS: NavigationAccessibilityTopic[] = [
     text: "Every one of these renders a real <nav> with an accessible label, and marks the current item with aria-current=\"page\" (or \"step\" for Stepper) rather than relying on color alone.",
   },
   {
+    label: "Roving tabindex applies to widgets, not to plain link lists — a deliberate split, not an inconsistency",
+    text: "Tabs, TreeNavigation, and the Overlay System's Menu (which Breadcrumbs' overflow composes) all implement roving tabindex because each is an ARIA widget pattern (tablist/tree/menu) that owns its own internal arrow-key navigation. SideNavigation, TopNavigation, NavigationRail, and ContextNavigation deliberately do NOT — each renders a plain nav landmark full of ordinary links, where the WAI-ARIA Authoring Practices call for normal Tab-stop-per-link behavior, not a widget's roving tabindex. DS-5E's family audit confirmed this split is correct as-is; do not \"fix\" the landmark-list group to add roving tabindex.",
+  },
+  {
+    label: "NavigationRail: activeId prop for plain href-based rails",
+    text: "DS-5E fix — a plain (non-scrollSpy) NavigationRail previously had no way to mark any item as current at all, since it only tracked activeId internally via its scroll-spy observer. It now accepts an optional activeId prop, matching TopNavigation's own activeHref pattern, so a caller-controlled rail can render aria-current correctly too.",
+  },
+  {
     label: "Focus is never trapped outside an overlay",
     text: "Nothing in this family traps Tab focus — that behavior belongs to the Overlay System (Dialog, Drawer, Menu), which this family composes rather than duplicates (Breadcrumbs' overflow and CommandNavigation's trigger both reuse Overlay's Menu/CommandPalette directly).",
   },

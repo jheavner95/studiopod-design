@@ -6,6 +6,8 @@ export interface TopNavigationItemDef {
   id: string;
   label: string;
   href: string;
+  icon?: ReactNode;
+  badge?: ReactNode;
 }
 
 interface TopNavigationProps {
@@ -36,6 +38,8 @@ export function TopNavigation({ brand, items, activeHref, trailing, sticky = tru
               key={item.id}
               href={item.href}
               active={item.href === activeHref}
+              icon={item.icon}
+              badge={item.badge}
               className="w-auto gap-0 rounded-none bg-transparent p-0 text-caption font-medium hover:bg-transparent"
             >
               {item.label}

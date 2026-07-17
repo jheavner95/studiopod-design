@@ -22,6 +22,7 @@ import {
   NavigationSection,
   NavigationGroup,
   NavigationItem,
+  NavigationDivider,
   type TreeNode,
 } from "@/components/navigation";
 import type { CommandPaletteItem } from "@/components/overlay";
@@ -291,6 +292,28 @@ function TooltipHint() {
   );
 }
 
+/** DS-5E: previously undocumented anywhere in this docs site despite being a public, exported primitive. */
+function NavigationDividerDemo() {
+  return (
+    <Card className="flex flex-col gap-3">
+      <span className="text-body-md font-medium text-ink-primary">Navigation Divider</span>
+      <Body size="sm" muted>
+        A plain separator between groups or sections, for when no group heading is needed.
+      </Body>
+      <div className="flex flex-col">
+        <span className="text-body-sm text-ink-secondary">Library</span>
+        <NavigationDivider />
+        <span className="text-body-sm text-ink-secondary">Operations</span>
+      </div>
+      <div className="flex h-8 items-center">
+        <span className="text-body-sm text-ink-secondary">Assets</span>
+        <NavigationDivider orientation="vertical" />
+        <span className="text-body-sm text-ink-secondary">Reports</span>
+      </div>
+    </Card>
+  );
+}
+
 /** Every named component in this system, each with real state and real interaction — not a static screenshot. */
 export function NavigationGallery() {
   return (
@@ -313,6 +336,9 @@ export function NavigationGallery() {
       </CardGrid>
       <CardGrid columns={2}>
         <CommandNavigationDemo />
+        <NavigationDividerDemo />
+      </CardGrid>
+      <CardGrid columns={2}>
         <Card className="flex flex-col justify-center gap-2">
           <TooltipHint />
         </Card>

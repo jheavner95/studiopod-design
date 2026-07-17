@@ -3,7 +3,18 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button, Caption } from "@/components/ui";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableStatusCell, TableEmptyState, TableLoadingState } from "@/components/table";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableStatusCell,
+  TableEmptyState,
+  TableLoadingState,
+  TableFooter,
+} from "@/components/table";
 import { TABLE_STATES } from "../_data/states";
 
 const ALL_ITEMS = [
@@ -93,6 +104,14 @@ export function StatesDemo() {
               ))
             : null}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3} className="text-caption text-ink-tertiary">
+              Showing {stateId === "filtered" ? 1 : ALL_ITEMS.length} of {ALL_ITEMS.length} items — rendered outside the scrolling body, so it
+              never counts against a fixed-height ScrollArea.
+            </TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
 
       <Caption className="text-ink-tertiary">{selected.presentation}</Caption>

@@ -10,6 +10,7 @@ import { INFORMATION_HIERARCHY } from "./_data/hierarchy";
 import { METADATA_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { METADATA_GUIDANCE } from "./_data/implementation-guidance";
 import { METADATA_FUTURE_EXTENSIONS } from "./_data/future-extensions";
+import { METADATA_COMPONENTS } from "./_data/components";
 
 const entry = getEntry("foundation-metadata")!;
 const relatedComponents = [getEntry("foundation-layout")!, getEntry("foundation-forms")!, getEntry("foundation-table")!];
@@ -60,7 +61,7 @@ export default function FoundationMetadataPage() {
             id="examples"
             eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
             title="Examples"
-            description="Ten components, each with a live example plus when — and when not — to reach for it."
+            description={`${METADATA_COMPONENTS.length} components, each with a live example plus when — and when not — to reach for it.`}
             descriptionMaxWidth={false}
           />
           <ComponentGallery />

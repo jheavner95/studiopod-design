@@ -8,6 +8,7 @@ export interface NavigationRailItemDef {
   id: string;
   label: string;
   icon?: ReactNode;
+  badge?: ReactNode;
   /** For a plain rail (scrollSpy off) — the destination this item links to. */
   href?: string;
 }
@@ -19,6 +20,13 @@ interface NavigationRailProps {
   collapsed?: boolean;
   /** Highlights whichever item's matching in-page #id section is currently in view and scrolls to it on click — generalizes the scroll-spy pattern already hand-built once for src/app/design-system/_components/PlaygroundNav.tsx. */
   scrollSpy?: boolean;
+  /**
+   * DS-5E: which item counts as current when scrollSpy is off — a plain href-based
+   * rail otherwise never marked anything active (no aria-current, no visual state)
+   * since it had no way to know which destination the caller is already on. Ignored
+   * when scrollSpy is true, since the observer owns activeId in that mode.
+   */
+  activeId?: string;
   "aria-label"?: string;
   className?: string;
 }
@@ -29,10 +37,12 @@ export function NavigationRail({
   orientation = "vertical",
   collapsed = false,
   scrollSpy = false,
+  activeId: controlledActiveId,
   "aria-label": ariaLabel = "Section",
   className,
 }: NavigationRailProps) {
-  const [activeId, setActiveId] = useState<string | undefined>(items[0]?.id);
+  const [scrollSpyActiveId, setScrollSpyActiveId] = useState<string | undefined>(items[0]?.id);
+  const activeId = scrollSpy ? scrollSpyActiveId : controlledActiveId;
 
   useEffect(() => {
     if (!scrollSpy) return;
@@ -41,7 +51,7 @@ export function NavigationRail({
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
+          if (entry.isIntersecting) setScrollSpyActiveId(entry.target.id);
         }
       },
       { rootMargin: "-10% 0px -70% 0px", threshold: 0 },
@@ -55,7 +65,13 @@ export function NavigationRail({
     <NavigationCollapsedContext.Provider value={collapsed}>
       <nav aria-label={ariaLabel} className={cn("flex gap-1", orientation === "vertical" ? "flex-col" : "flex-row items-center", className)}>
         {items.map((item) => (
-          <NavigationItem key={item.id} href={scrollSpy ? `#${item.id}` : item.href} icon={item.icon} active={scrollSpy ? item.id === activeId : undefined}>
+          <NavigationItem
+            key={item.id}
+            href={scrollSpy ? `#${item.id}` : item.href}
+            icon={item.icon}
+            badge={item.badge}
+            active={item.id === activeId}
+          >
             {item.label}
           </NavigationItem>
         ))}
