@@ -273,7 +273,7 @@ export default function FoundationWorkspacePage() {
                 Don&rsquo;t
               </Badge>
               <Body size="sm" muted>
-                Reach for resizable panels here. Resizing is explicitly a future SplitView primitive&rsquo;s job —
+                Reach for resizable panels here. Compose <code>SplitView</code> inside a region instead —
                 Workspace has no drag-to-resize API on purpose.
               </Body>
             </Card>
@@ -312,7 +312,7 @@ export default function FoundationWorkspacePage() {
           />
           <DescriptionList
             items={[
-              { label: "SplitView (future)", value: "Resizing and drag-to-adjust panel widths are explicitly out of Workspace's scope — WorkspaceBody exists as a plain row specifically so a future SplitView primitive has a place to slot in without Workspace needing a breaking change. Workspace does not anticipate SplitView's API; it just doesn't block it." },
+              { label: "SplitView", value: "Resizing and drag-to-adjust panel widths are out of Workspace's scope by design — compose SplitView inside a region (typically WorkspaceContent) to divide it into resizable panes. WorkspaceBody exists as a plain row specifically so SplitView has a place to slot in without Workspace needing a breaking change; Workspace still doesn't anticipate SplitView's API, it just doesn't block it." },
               { label: "Future application layouts", value: "Any new layout shape (e.g. a canvas-first or timeline-first tool) should compose Workspace's existing regions first — a new top-level layout primitive is justified only once a real pattern can't be expressed through Header/Toolbar/Navigation/Content/Inspector/Footer at all, not as a starting assumption." },
             ]}
           />

@@ -215,3 +215,68 @@ describe("pilot: Workspace — automated certification checks", () => {
     }
   });
 });
+
+describe("pilot: SplitView — automated certification checks", () => {
+  const splitView = getCertificationRecord("SplitView")!;
+
+  it("has a certification record", () => {
+    expect(splitView).toBeDefined();
+    expect(splitView.sourcePath).toBe("src/components/layout/SplitView.tsx");
+  });
+
+  it("is deliberately not marked Certified — the honest DS-3 finding, not an oversight", () => {
+    // Same reasoning as Workspace's own record: every applicable automated
+    // check passes, but the parallel maturity vocabulary's "Certified" bar
+    // requires adoption by a real (non-playground) screen, and DS-3's scope
+    // forbids migrating a page to close that gap this phase.
+    expect(splitView.level).toBe("Production Ready");
+  });
+
+  it("tokens: checkTokenBypasses runs against the real source and finds zero bypasses", () => {
+    expect(checkTokenBypasses(splitView.sourcePath)).toEqual([]);
+  });
+
+  it("testing: checkTestCoverage confirms SplitView.test.tsx has all three describe blocks", () => {
+    const coverage = checkTestCoverage(splitView.sourcePath);
+    expect(coverage.testFileExists).toBe(true);
+    expect(coverage.hasUnitTests).toBe(true);
+    expect(coverage.hasInteractionTests).toBe(true);
+    expect(coverage.hasAccessibilityTests).toBe(true);
+  });
+
+  it("release: checkExportStatus confirms SplitView, SplitPane, and SplitDivider all ship in the published package", () => {
+    expect(checkExportStatus("SplitView")).toEqual({ exported: true, entryPoint: "index" });
+    expect(checkExportStatus("SplitPane")).toEqual({ exported: true, entryPoint: "index" });
+    expect(checkExportStatus("SplitDivider")).toEqual({ exported: true, entryPoint: "index" });
+  });
+
+  it("visual: checkVisualBaseline confirms committed Playwright screenshots exist for both projects", () => {
+    const baseline = checkVisualBaseline("SplitView");
+    expect(baseline.hasVisualSpec).toBe(true);
+    // 6 screenshots x 2 projects (desktop/mobile) — see splitview-gallery.visual.spec.ts.
+    expect(baseline.snapshotCount).toBe(12);
+  });
+
+  it("every automated checklist item SplitView claims as complete is backed by a real, passing check", () => {
+    const completed = new Set(splitView.completedChecks);
+
+    if (completed.has("testing-unit") || completed.has("testing-interaction") || completed.has("testing-accessibility")) {
+      const coverage = checkTestCoverage(splitView.sourcePath);
+      if (completed.has("testing-unit")) expect(coverage.hasUnitTests).toBe(true);
+      if (completed.has("testing-interaction")) expect(coverage.hasInteractionTests).toBe(true);
+      if (completed.has("testing-accessibility")) expect(coverage.hasAccessibilityTests).toBe(true);
+    }
+
+    if (completed.has("release-exported") || completed.has("release-in-package")) {
+      expect(checkExportStatus("SplitView").exported).toBe(true);
+    }
+
+    if (completed.has("visual-baseline") || completed.has("visual-responsive")) {
+      expect(checkVisualBaseline("SplitView").hasVisualSpec).toBe(true);
+    }
+
+    if (completed.has("tokens-no-bypasses")) {
+      expect(checkTokenBypasses(splitView.sourcePath)).toEqual([]);
+    }
+  });
+});

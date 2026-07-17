@@ -2,6 +2,22 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## Unreleased
+
+### Added
+
+- **`Workspace` family** — `Workspace`, `WorkspaceHeader`, `WorkspaceToolbar`, `WorkspaceBody`, `WorkspaceNavigation`, `WorkspaceContent`, `WorkspaceInspector`, `WorkspaceFooter`, plus `workspaceDensityPadding`/`workspaceDensityHeaderHeight` and their prop types. The full-bleed application-shell primitive: header/toolbar/navigation/content/inspector/status regions, server-component-safe (no `"use client"` in the family), density via a `data-density` attribute and Tailwind group-variants rather than React context.
+- **`SplitView` family** — `SplitView`, `SplitPane`, `SplitDivider`, plus their prop types. Divides a region (typically `WorkspaceContent`) into independently resizable, scrollable panes — pointer, touch, and keyboard resizing (WAI-ARIA Window Splitter pattern), controlled/uncontrolled sizing, consumer-controlled and interactive collapse. Requires a client boundary (the family's actual interactivity, unlike `Workspace`).
+- **`--container-shell`** token (`theme.css` / shipped `styles.css`) — the outer site-shell width bound, distinct from the existing `--container-{narrow,content,wide}` content-width tokens.
+
+### Removed
+
+- **`--color-ink-inverse`** token — confirmed unused anywhere in this package or the documentation site, and never documented on the public tokens page or `API.md`. Removed directly rather than through `VERSIONING.md`'s standard one-release deprecation window: that window exists to protect a real, documented consumer-facing contract, and this value was never surfaced as one — it shipped in `styles.css` (technically installable via `var(--color-ink-inverse)` in a consumer's own CSS) but was never named on the public tokens page or in any prior CHANGELOG entry as something to depend on. If a real consumer *is* relying on it despite that, this is the breaking change to react to — flagged here explicitly rather than buried in a routine "Removed" line.
+
+## 0.1.1 — first published release
+
+Version-only bump from the `0.1.0` content below — published through the real GitHub Packages release pipeline once the interlocks documented under "Removed (RM-5.5)" and "Added (RM-4)" were cleared (see `DISTRIBUTION.md` §7). No functional changes from `0.1.0`.
+
 ## 0.1.0 — unreleased (not published)
 
 ### Fixed (second RM-6 corrective patch — discovered during Web integration, before adoption)

@@ -23,7 +23,8 @@ const fixedColumnsMap: Record<1 | 2 | 3 | 4 | 5 | 6, string> = {
   6: "grid-cols-1 sm:grid-cols-3 lg:grid-cols-6",
 };
 
-const gapMap: Record<GridGap, string> = {
+/** Exported so CardGrid — a fixed-breakpoint specialization of this same grid — shares one gap scale instead of redeclaring an identical copy. */
+export const gapMap: Record<GridGap, string> = {
   sm: "gap-4",
   md: "gap-6",
   lg: "gap-8",

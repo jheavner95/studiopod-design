@@ -74,7 +74,7 @@ export function GlobalNav() {
 
   return (
     <header className="sticky top-0 z-[var(--z-sticky)] border-b border-border-subtle bg-canvas/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[2160px] items-center gap-6 px-[var(--spacing-gutter)] py-2.5">
+      <div className="mx-auto flex max-w-[var(--container-shell)] items-center gap-6 px-[var(--spacing-gutter)] py-2.5">
         <Link href="/" className="focus-ring flex shrink-0 items-center gap-2 rounded-md">
           <Boxes className="size-4 text-accent-400" aria-hidden />
           <span className="hidden whitespace-nowrap text-body-sm font-semibold text-ink-primary sm:inline">

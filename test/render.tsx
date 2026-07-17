@@ -62,6 +62,31 @@ export function getAnnouncement(priority: "polite" | "assertive"): string {
  * always-false default; call this inside a test, not in setup, so the
  * override never leaks into unrelated tests.
  */
+/**
+ * Overrides `Element.prototype.getBoundingClientRect` for the duration of
+ * one test so pointer-drag math (SplitView, or anything else measuring its
+ * own container to convert pixel deltas to percentages) has real, non-zero
+ * numbers to work with — jsdom has no layout engine, so every element's
+ * real rect is always `{ width: 0, height: 0, ... }`. Returns the same
+ * fixed rect for every element; tests that need per-element rects should
+ * mock more narrowly themselves.
+ */
+export function mockBoundingClientRect(rect: Partial<DOMRect>) {
+  const full: DOMRect = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    toJSON: () => ({}),
+    ...rect,
+  };
+  Element.prototype.getBoundingClientRect = () => full;
+}
+
 export function mockMatchMedia(matches: (query: string) => boolean) {
   Object.defineProperty(window, "matchMedia", {
     writable: true,

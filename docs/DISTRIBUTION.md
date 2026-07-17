@@ -123,7 +123,7 @@ If `DS_REGISTRY` or `DS_NPM_TOKEN` is missing, the publish job **skips with a wa
 
 ### 4.4 What the gate catches
 
-- **`api-check`** — any change to the 841 public exports (543 index / 5 tokens / 44 marketing / 249 illustrations). Drift fails the build; an intentional API change requires `node scripts/check-api.mjs --write` and a deliberate commit.
+- **`api-check`** — any change to the public exports (569 index / 5 tokens / 44 marketing / 249 illustrations as of DS-4; this count grows as the design system does — see `packages/design-system/api-baseline/*.json` for the live figures, not this line). Drift fails the build; an intentional API change requires `node scripts/check-api.mjs --write` and a deliberate commit.
 - **`exports-check`** — every `exports` target exists, is real ESM, ships inside `files`, keeps `"use client"` on client entries, and keeps the `@theme` block in `styles.css`.
 
 Those last two are not hypothetical: the DS's two most recent commits fixed exactly those regressions (tsup silently stripping `"use client"`, and silently stripping `@theme`). The checker is mutation-tested against both.
@@ -182,10 +182,10 @@ npm deprecate @studiopod/design-system@0.2.0 "Broken tokens; use 0.2.1"
 
 ## 7. Owner-action checklist
 
-Items 1–7 are done, verified by the real artifacts they were supposed to produce (a live `publishConfig`, a real `design-system-v0.1.1` tag, a repository transferred to the `studiopod` org so GitHub Packages' scope rule is satisfied — see `.github/workflows/release.yml`'s own header comment). Items 8–10 concern the two *consumer* repos (`studiopod-app`, `studiopod-web`), which this repo has no visibility into — confirm their state directly rather than assuming.
+Items 1, 3–7 are done, verified by the real artifacts they were supposed to produce (a live `publishConfig`, a real `design-system-v0.1.1` tag). **Item 2 has since regressed** — see its own line below; this was true when this checklist was first written but is not true as of DS-4. Items 8–10 concern the two *consumer* repos (`studiopod-app`, `studiopod-web`), which this repo has no visibility into — confirm their state directly rather than assuming.
 
 - [x] **1. Choose the registry** (§2). **Chosen: GitHub Packages.**
-- [x] **2. Registry account / org setup** — the repo lives at `github.com/studiopod/studiopod-design`, which is what GitHub Packages' scope rule requires for `@studiopod/design-system`.
+- [ ] **2. Registry account / org setup — REGRESSED.** GitHub Packages requires the npm scope (`@studiopod`) to equal the repo owner (`.github/workflows/release.yml`'s own header comment: "If the repo ever moves back to a personal account, publishing breaks and the scope must change with it"). The repo now lives at `github.com/jheavner95/studiopod-design` — a personal account, not the `studiopod` org — so that requirement is currently **not** satisfied, and a publish attempt under the current `@studiopod/design-system` name/registry combination should be expected to fail. This is not a new problem introduced by DS-4; it was identified and flagged earlier (the repo moved organizations mid-project) but not resolved, since the fix is an owner decision (move the repo back to a `studiopod`-owned org, or change the package scope/registry to match wherever it actually lives) that this phase does not make on its own. Resolve before the next real publish attempt.
 - [x] **3. Remove the publish interlock**
   - `packages/design-system/package.json`: `"private": true"` removed (DS-0.6 Phase D).
   - Registry pin is live: `"publishConfig": { "registry": "https://npm.pkg.github.com" }`.

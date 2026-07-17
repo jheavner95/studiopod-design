@@ -27,6 +27,7 @@
     "test:e2e:update": "playwright test --update-snapshots",
     "docs:coverage": "node scripts/docs-coverage.mjs",
     "certification:report": "node scripts/certification-report.mjs",
+    "token:report": "node scripts/token-report.mjs",
     "package:build": "cd packages/design-system && tsup",
     "package:typecheck": "tsc --noEmit -p packages/design-system/tsconfig.json",
     "package:api-check": "node packages/design-system/scripts/check-api.mjs",

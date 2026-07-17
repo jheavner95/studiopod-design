@@ -26,7 +26,9 @@ import { cn } from "@/lib/utils";
  * `WorkspaceBody` exists because header/footer stack vertically while
  * navigation/content/inspector sit in a horizontal row. Something has to own
  * that row and its `min-h-0`; making it explicit keeps the tree honest and
- * gives a future SplitView a place to slot in. Every region is optional.
+ * gives `SplitView` (src/components/layout/SplitView.tsx) a place to slot
+ * in — e.g. as `WorkspaceContent`'s children, to divide it into resizable
+ * panes. Every region is optional.
  *
  * ─── Anatomy: this maps onto the canonical six-tier workspace blueprint ─────
  *
@@ -66,7 +68,8 @@ import { cn } from "@/lib/utils";
  *
  * No route knowledge, no workspace IDs, no navigation logic, no storage, no
  * hardcoded inspector width, no product concepts. Inspector sizing is the
- * consumer's (`width`), and resizing belongs to a future SplitView primitive.
+ * consumer's (`width`), and drag-to-resize belongs to `SplitView` — compose
+ * it inside a region rather than asking Workspace to grow a resize API.
  *
  * Also no ref forwarding. The package supports React 18 and 19, and a plain
  * `ref` prop only works on 19 — on 18 a function component never receives it,

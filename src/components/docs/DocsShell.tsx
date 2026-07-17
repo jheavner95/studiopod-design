@@ -45,7 +45,7 @@ interface DocsShellProps {
 export function DocsShell({ entry, children, toc }: DocsShellProps) {
   return (
     <div className="flex flex-col">
-      <div className="mx-auto flex w-full max-w-[2160px] flex-1 items-start gap-8 px-[var(--spacing-gutter)] py-8">
+      <div className="mx-auto flex w-full max-w-[var(--container-shell)] flex-1 items-start gap-8 px-[var(--spacing-gutter)] py-8">
         <aside className="sticky top-14 hidden shrink-0 self-start md:block">
           <DocsSidebar section={entry.section} />
         </aside>

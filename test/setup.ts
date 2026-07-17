@@ -42,3 +42,15 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => false,
   }),
 });
+
+// jsdom implements no part of the Pointer Events capture API — any component
+// that drags via setPointerCapture (SplitDivider) throws "is not a function"
+// the moment a pointerdown test fires without this. No-op stubs are enough:
+// capture semantics (routing subsequent events to the same element even off
+// its bounds) are a real-browser guarantee Playwright verifies; jsdom tests
+// only need the calls to not throw.
+Element.prototype.setPointerCapture = function () {};
+Element.prototype.releasePointerCapture = function () {};
+Element.prototype.hasPointerCapture = function () {
+  return false;
+};

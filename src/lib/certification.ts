@@ -288,6 +288,38 @@ export const CERTIFICATION_REGISTRY: ComponentCertificationRecord[] = [
       "DS-2 pilot: not 'Certified', deliberately. checkTokenBypasses() returns zero findings against Workspace.tsx — all four tokens-* items pass cleanly, better than Button's one accepted exception. a11y-keyboard/a11y-focus are left off completedChecks (not failed — not applicable in Button's sense): Workspace is a layout shell that owns no interactive elements of its own, so there is nothing for userEvent.tab()/.keyboard() to exercise the way Button's own click/focus surface is exercised; its 'interaction' test instead verifies the controlled `collapsed` prop transitions correctly via rerender, which is the actual contract this primitive owns. Manual checks (identity-purpose, identity-usage, api-defaults, api-composable, a11y-screen-reader, a11y-color-independence, docs-overview, docs-anatomy, docs-variants, docs-do-dont, release-in-docs) were reviewed against the live /application-components/foundation-workspace docs page and passed, following the same convention as Button: manual review outcomes are recorded here in prose, not checked off, since nothing here machine-verifies them. The one deliberate, honest gap: the parallel maturity vocabulary this framework mirrors (src/app/application-components/_data/maturity.ts) defines 'Certified' as Production Ready plus 'used in at least one real (non-playground) screen.' DS-2's own scope explicitly forbids migrating an application page to Workspace ('Do not migrate application pages'), so that bar cannot be honestly met in this phase — awarding 'Certified' here would satisfy this framework's own checklist while quietly diverging from what that label means elsewhere in the Foundation Catalog. 'Production Ready' is the accurate level until a real (non-playground) screen adopts Workspace; see docs/CERTIFICATION.md for how to close this gap.",
     lastReviewed: "2026-07-17",
   },
+  {
+    componentName: "SplitView",
+    sourcePath: "src/components/layout/SplitView.tsx",
+    level: "Production Ready",
+    completedChecks: [
+      "identity-related",
+      "api-type-safe",
+      "a11y-keyboard",
+      "a11y-focus",
+      "a11y-aria",
+      "responsive-desktop",
+      "responsive-mobile",
+      "motion-reduced",
+      "tokens-no-hardcoded-color",
+      "tokens-no-hardcoded-spacing",
+      "tokens-no-hardcoded-typography",
+      "tokens-no-bypasses",
+      "docs-examples",
+      "testing-unit",
+      "testing-interaction",
+      "testing-accessibility",
+      "visual-baseline",
+      "visual-responsive",
+      "perf-build",
+      "release-exported",
+      "release-in-package",
+      "release-in-verification",
+    ],
+    notes:
+      "DS-3 pilot: not 'Certified', for the same deliberate reason as Workspace — see below. Unlike Workspace, SplitDivider genuinely owns interactive keyboard behavior (Arrow/Shift+Arrow/Home/End/Enter), so a11y-keyboard and a11y-focus are honestly included here, backed by real userEvent.keyboard()/tab() tests, not left off as 'not applicable' the way Workspace's were. checkTokenBypasses() returns zero findings against SplitView.tsx — all four tokens-* items pass cleanly. Pointer-drag resizing is verified twice, deliberately: Vitest/jsdom (SplitView.test.tsx) checks the resize math against a mocked container rect, since jsdom has no real layout engine; the Playwright spec (e2e/visual/splitview-gallery.visual.spec.ts) drags the divider with real mouse events against real layout as the authoritative browser-level proof dragging actually works, plus a real-keyboard-resize test and a real-Enter-collapse screenshot. Manual checks (identity-purpose, identity-usage, api-defaults, api-composable, a11y-screen-reader, a11y-color-independence, docs-overview, docs-anatomy, docs-variants, docs-do-dont, release-in-docs) were reviewed against the live /application-components/foundation-splitview docs page and passed, following the same convention as Button/Workspace: manual review outcomes are recorded here in prose, not checked off. One open manual note worth flagging rather than silently passing: the divider's active-drag state (bg-accent-500) is currently conveyed primarily by color — its ARIA valuenow and the panes' own visible size change are the non-color signals, but there's no separate non-color indicator on the divider itself while dragging. The same deliberate gap as Workspace's own record: the parallel maturity vocabulary (src/app/application-components/_data/maturity.ts) defines 'Certified' as Production Ready plus 'used in at least one real (non-playground) screen,' and DS-3's own scope explicitly forbids migrating an application page to SplitView. 'Production Ready' is the accurate level until a real screen adopts it.",
+    lastReviewed: "2026-07-17",
+  },
 ];
 
 export function getCertificationRecord(componentName: string): ComponentCertificationRecord | undefined {

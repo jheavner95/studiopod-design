@@ -41,3 +41,9 @@ export type {
   WorkspaceFooterProps,
   WorkspaceDensity,
 } from "./Workspace";
+
+// SplitView — pane-composition primitive (DS-3). Owns dividing a region
+// (typically a WorkspaceContent) into resizable panes; Workspace owns
+// overall page structure and stays untouched by this.
+export { SplitView, SplitPane, SplitDivider } from "./SplitView";
+export type { SplitViewProps, SplitPaneProps, SplitDividerProps, SplitOrientation } from "./SplitView";

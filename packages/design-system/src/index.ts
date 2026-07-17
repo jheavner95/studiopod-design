@@ -60,6 +60,15 @@ export {
   type WorkspaceFooterProps,
   type WorkspaceDensity,
 } from "@/components/layout/Workspace";
+export {
+  SplitView,
+  SplitPane,
+  SplitDivider,
+  type SplitViewProps,
+  type SplitPaneProps,
+  type SplitDividerProps,
+  type SplitOrientation,
+} from "@/components/layout/SplitView";
 export { ScrollArea, type ScrollDirection } from "@/components/layout/ScrollArea";
 export { Separator, type SeparatorOrientation } from "@/components/layout/Separator";
 export {

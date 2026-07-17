@@ -8,8 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/studiopod/studiopod-design.git",
+    "url": "git+https://github.com/jheavner95/studiopod-design.git",
     "directory": "packages/design-system"
+  },
+  "homepage": "https://github.com/jheavner95/studiopod-design/tree/main/packages/design-system#readme",
+  "bugs": {
+    "url": "https://github.com/jheavner95/studiopod-design/issues"
   },
   "type": "module",
   "sideEffects": [

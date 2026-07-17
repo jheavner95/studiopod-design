@@ -43,7 +43,6 @@
   --color-ink-secondary: #94a3b8;
   --color-ink-tertiary: #64748b;
   --color-ink-disabled: #475569;
-  --color-ink-inverse: #0a0e17;
 
   /* ---------------------------------------------------------------- */
   /* Accent — the app's primary blue (buttons, active nav, links),      */
@@ -129,6 +128,11 @@
   --container-narrow: 720px;
   --container-content: 1200px;
   --container-wide: 1440px;
+  /* The outer site-shell bound (GlobalNav's inner row, DocsShell) — wider
+     than any content container on purpose: it caps the chrome itself on
+     ultra-wide monitors without constraining page content to --container-wide.
+     DS-4: previously a raw 2160px repeated in both call sites. */
+  --container-shell: 2160px;
 
   /* ---------------------------------------------------------------- */
   /* Easing curves (also mirrored in lib/tokens.ts for framer-motion)   */
