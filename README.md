@@ -1,112 +1,96 @@
 # StudioPOD Design System
 
-## Purpose
+The shared design language of StudioPOD, the Production Operating System — one source of truth for tokens, components, patterns, and application composition, consumed by both the marketing site and the product. This repository is the documentation site itself and the source of `@studiopod/design-system`, the package both surfaces build from, so a button, a table, or a workflow diagram looks, behaves, and composes the same way wherever it appears.
 
-This repository is the **StudioPOD Design System** — the shared source of truth for tokens, primitives, and patterns consumed by both the future **StudioPOD marketing site** and the **StudioPOD application**. It is no longer a marketing-site-in-progress: the marketing composition work this project started as is now one package among several, not the project's goal.
+It exists because building each surface with its own one-off components produces exactly the drift a shared system is meant to prevent: two teams solving the same interaction problem twice, and a product that looks like several different products stitched together. Everything here is built so that doesn't happen — one layered set of primitives, engines, and patterns, documented and verified in the open.
 
-Rather than hand-building UI with one-off styles per product, this project builds a layered set of reusable, data-driven engines and component packages first. Web and App both consume these packages rather than reimplementing tokens, primitives, or diagram logic independently.
+## Core philosophy
 
-## Packages
+- **Production-first.** Every component here is built to ship in a real product screen, not just to look good in isolation on a docs page.
+- **Reusable by construction.** Higher-level pieces (patterns, application compositions) are always built by composing lower-level primitives — never by duplicating them.
+- **Accessibility-first.** Keyboard operability, focus handling, and reduced-motion support are part of a component's definition, not an afterthought added later.
+- **Documentation-driven.** The documentation site is not a wrapper around the components — it's built from the same registry and contracts the components themselves are held to, so the docs can't silently drift from what's real.
+- **One system, two surfaces.** The same primitives, patterns, and architecture are used across StudioPOD's marketing site and its application — not two related-but-different component sets.
 
-The system is organized into seven packages, each with its own section at `/foundations`, `/tokens`, `/core-components`, `/marketing-components`, `/application-components`, `/workflow-patterns`, and `/documentation` (a persistent top nav links between all of them):
+## What's here
 
-| Package | Route | What it covers |
-|---|---|---|
-| **Foundations** | `/foundations` | Layout system, motion engine, illustration engine — the structural and motion bedrock everything else builds on. |
-| **Tokens** | `/tokens` | Raw foundation color ramps and semantic color/typography/spacing/radius/shadow tokens. |
-| **Core Components** | `/core-components` | The shared UI kit: buttons, cards, badges, form inputs, and controls. |
-| **Marketing Components** | `/marketing-components` | Reusable marketing page-section compositions — reclassified as early design-system examples, not the final site. |
-| **Application Components** | `/application-components` | The operational libraries the StudioPOD app is built from (platform architecture, production/validation, capability library). **The next major focus.** |
-| **Workflow Patterns** | `/workflow-patterns` | Reusable patterns for visualizing StudioPOD's processes end to end. |
-| **Documentation** | `/documentation` | Where principles, package structure, and contribution workflow are written down. |
+- **Design tokens** — color, typography, spacing, radius, shadow, and motion values as the single source every other layer builds on.
+- **Components** — the shared UI kit: layout, navigation, data display, forms, overlays, feedback, search and filter, inspector and property editing, and workflow/process primitives.
+- **Patterns** — reusable compositions for recurring problems: platform templates and the process-diagram library.
+- **Application composition** — real domain platforms (Production, Product, Publishing, Commerce, Intelligence, Operations, Administration, Integrations) assembled from the same component and pattern layers, as evidence the system produces real screens, not just isolated examples.
+- **Documentation site** — the Next.js app in this repository, with a page for every documented component family, pattern, and architectural relationship.
+- **Playground** — interactive exploration tools for the token, motion, and illustration engines, kept separate from reference documentation.
+- **Accessibility** — automated `axe-core` checks as part of the standard test suite, not a separate manual pass.
+- **Testing** — Vitest and Testing Library for component behavior, Playwright for real-browser visual regression.
+- **Verification** — one consolidated `verify`/`verify:fast`/`verify:full` pipeline covering typecheck, lint, tests, build, and package integrity — the same commands CI runs.
 
-Each package page currently links out to its existing implementation (the developer playgrounds below) — nothing has been deleted in this restructure, only reclassified and given a home in the new navigation.
-
-## Technology Stack
-
-- **[Next.js 16](https://nextjs.org/)** (App Router, Turbopack).
-- **[React 19](https://react.dev/)** with the Server/Client Component boundary used deliberately throughout.
-- **TypeScript** in strict mode, no `any`, exhaustive prop typing across every package.
-- **[Tailwind CSS v4](https://tailwindcss.com/)** using its CSS-first `@theme` configuration (no `tailwind.config.ts`); design tokens live as CSS custom properties in `src/styles/`.
-- **[Framer Motion](https://www.framer.com/motion/)** underneath the custom Motion Engine's semantic primitives.
-- **[lucide-react](https://lucide.dev/)** for iconography.
-- **Vercel** as the deployment target.
-
-## Architecture Overview
-
-The codebase is organized as a stack of engines and libraries, each built only on the layers beneath it:
+## Repository structure
 
 ```
-Design System (tokens, typography, layout, UI primitives)
-        ↓
-Motion Engine        (src/motion, src/hooks, src/providers)
-        ↓
-Illustration Engine  (src/illustrations)
-        ↓
-Workflow Engine      (src/workflows)               → Workflow Patterns package
-        ↓
-Platform Architecture Library (src/platforms)      ┐
-Production & Validation Library (src/production)   ├→ Application Components package
-Capability Library (src/capabilities)              ┘
-        ↓
-Marketing Compositions (src/compositions)          → Marketing Components package
+src/app/                 The documentation site itself — one route per section (see docs/DOCUMENTATION.md)
+src/components/          Component families: ui, layout, navigation, table, form, overlay,
+                          feedback, metadata, docs, operational, workflow, platform
+src/motion/               The motion engine — semantic timing/easing tokens and primitives
+src/illustrations/        The data-driven diagram engine (nodes, connections, layout)
+src/workflows/            Workflow diagram library, built on the illustration engine
+src/platforms/            Platform architecture diagram library
+src/production/           Production & validation diagram library
+src/capabilities/         Capability/provider diagram library
+src/compositions/         Reusable marketing page-section compositions
+src/lib/                  Canonical demo data, the navigation registry, page contracts,
+                          and the showcase-registry pattern for example metadata
+packages/design-system/   The publishable @studiopod/design-system npm package —
+                          built from this repo's own src/ (see its own README)
+docs/                     Contributor guides (testing, verification, documentation,
+                          distribution) and docs/engineering-notes/ (architecture history)
+test/                     Shared Vitest utilities (render, accessibility, fixtures)
+e2e/                      Playwright visual-regression specs
+scripts/                  Verification runner and documentation-coverage reporting
 ```
 
-Key architectural rules enforced throughout:
-
-- **Everything renders from structured data.** Every diagram, workflow, and architecture is a plain data value (e.g. `<WorkflowDiagram workflow={data} />`, `<PlatformArchitectureDiagram architecture={data} />`); there is no page-specific rendering logic.
-- **No duplicated rendering logic.** Each higher layer composes the primitives beneath it (illustration nodes/connections, motion primitives, workflow diagrams) instead of reimplementing them.
-- **Container-based responsiveness.** Diagrams measure their own container width via `ResizeObserver` rather than relying on viewport media queries, so they remain correct even embedded in a narrower parent.
-- **Accessibility and reduced motion are first-class.** Every motion primitive respects a global reduced-motion preference, and interactive diagrams support keyboard navigation and ARIA labeling.
-- Each engine ships with its own developer playground (`/design-system`, `/motion`, `/illustrations`, `/workflows`, `/platforms`, `/production`, `/capabilities`, `/compositions`) used to build and verify the primitives in isolation.
-
-## Current Milestone
-
-The full engine/library build-out (MS-1.x/MS-2.x) and a visual foundation lock (MS-2A/MS-2B) are complete and certified. The project has since repositioned from "marketing site in progress" to "design system product" — the milestone history below reflects work done under the original framing:
-
-| Milestone | Description |
-|---|---|
-| MS-1.1 | Design System Foundation: tokens, typography, layout, UI/motion/illustration primitives |
-| MS-1.2 | Design System Showcase & Playground |
-| MS-1.3 | Marketing Composition System: 11 reusable page-section compositions |
-| MS-2.1 | Motion Engine & Tokens: semantic motion tokens, provider, hooks, 14 primitives |
-| MS-2.2 | Illustration Engine: data-driven diagram engine (nodes, connections, groups, layouts) |
-| MS-2.3 | Workflow Diagram Library: reusable workflow visualizations built on the illustration engine |
-| MS-2.4 | Platform Architecture Library: reusable architecture diagrams built on the workflow engine |
-| MS-2.5 | Production & Validation Library: reusable production/validation visualizations |
-| MS-2.6 | Capability Library: provider-agnostic AI/publishing/commerce capability diagrams |
-| MS-2A | Token audit against the StudioPOD app reference and WCAG contrast verification |
-| MS-2B | Visual foundation lock: collision fixes, typography/component/motion polish, accessibility re-verification |
-
-## Roadmap
-
-With the full package set in place and the repo repositioned as a design system product:
-
-- **Application Components is the next major focus** — building out real operational UI (not just diagrams explaining it) for the StudioPOD application, consuming the existing platform/production/capability libraries as a starting point.
-- Marketing page construction is paused, not planned next — the Marketing Components package stays as-is (early examples) until application work is further along.
-- Each of the seven package placeholder pages will grow into full section pages as their content is built out.
-
-## Development Workflow
+## Quick start
 
 ```bash
-npm install        # install dependencies
-npm run dev         # start the dev server at http://localhost:3000
-npm run build        # production build (also type-checks)
-npm run lint          # ESLint
-npx tsc --noEmit     # standalone TypeScript check
+# Install
+npm install
+
+# Development
+npm run dev              # start the docs site at http://localhost:3000
+
+# Build
+npm run build             # production build (Next.js)
+
+# Verification
+npm run verify:fast       # typecheck + lint + tests — the fast, constant-use command
+npm run verify             # verify:fast + build + package verification — the pre-merge gate
+npm run verify:full        # verify + package pack integrity — the most complete local check
+
+# Testing
+npm test                   # Vitest — component behavior and accessibility
+npm run test:watch          # Vitest, watch mode
+npm run test:e2e             # Playwright — visual regression (local only; see docs/TESTING.md)
 ```
 
-Every engine/library has a corresponding developer playground route for visual QA:
+See [docs/VERIFICATION.md](./docs/VERIFICATION.md) for what each command checks and why they're layered this way.
 
-- `/design-system`: tokens, typography, motion, illustration, and component showcase
-- `/compositions`: the 11 marketing compositions with desktop/mobile previews
-- `/motion`: the motion engine's tokens, hooks, and primitives
-- `/illustrations`: the illustration engine's node/connection/layout system
-- `/workflows`: the workflow diagram library
-- `/platforms`: the platform architecture library
-- `/production`: the production & validation library
-- `/capabilities`: the capability library
+## Documentation
 
-The established workflow for every change in this repository is: implement in small verified batches, run `npx tsc --noEmit` and `npx eslint .` after each batch, run `npm run build` at natural checkpoints, then visually verify in a browser (desktop, mobile, and reduced-motion) before considering a milestone done.
+This repository's own documentation site (run `npm run dev` and visit `/documentation`) is the primary reference for components, patterns, and architecture. Contributor-facing guides live in `docs/`:
 
-> **Note:** This project intentionally targets a customized fork of Next.js with breaking changes from the version most tooling assumes. See `AGENTS.md` before making changes that touch Next.js APIs or conventions.
+- [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md) — how pages, related-links, and example data register themselves, and what's validated automatically
+- [docs/TESTING.md](./docs/TESTING.md) — testing philosophy, conventions, and how to add a test
+- [docs/VERIFICATION.md](./docs/VERIFICATION.md) — the verification pipeline, its layers, and CI behavior
+- [docs/DISTRIBUTION.md](./docs/DISTRIBUTION.md) — how `@studiopod/design-system` is versioned and released
+- [docs/engineering-notes/](./docs/engineering-notes/) — the architectural record of how this system was built, including findings, tradeoffs, and decisions later phases relied on
+
+## Contributing
+
+This project is not yet accepting external contributions in a structured way — that workflow is still being defined. If you've found an issue or have a suggestion, open a GitHub issue in the meantime. This section will expand once a contribution process exists.
+
+## License
+
+[MIT](./LICENSE).
+
+## Closing
+
+StudioPOD is a Production Operating System, not a design system alone, a workflow tool, or a UI library — and this repository is what keeps its design language coherent as that system grows. Every layer here exists so a new screen gets built by composing what already exists, correctly, rather than by reinventing it.

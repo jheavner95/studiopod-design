@@ -2,6 +2,17 @@
   "name": "studiopod-design",
   "version": "0.1.0",
   "private": true,
+  "description": "StudioPOD Design System — the documentation site, playgrounds, and source of the @studiopod/design-system package.",
+  "license": "MIT",
+  "author": "StudioPOD",
+  "homepage": "https://github.com/studiopod/studiopod-design#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/studiopod/studiopod-design.git"
+  },
+  "bugs": {
+    "url": "https://github.com/studiopod/studiopod-design/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

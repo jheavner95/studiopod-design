@@ -1,6 +1,6 @@
 # @studiopod/design-system — Distribution
 
-**Status: PREPARED, NOT LIVE.** The package is publish-ready in every respect except the two decisions only an owner can make: **which registry**, and **the credential**. Nothing here has been published. Both consumers still install from their current sources and were deliberately left untouched (§6).
+**Status: PUBLISHING IS LIVE.** The two owner decisions this document originally left open — which registry, and the credential — were made in DS-0.6: the registry is **GitHub Packages**, the publish interlock (`private: true`) is removed, `publishConfig.registry` is pinned, and `DS_REGISTRY`/`DS_NPM_TOKEN` are configured. The package has been versioned and released through the real automated pipeline (`design-system-v0.1.1`, tagged and pushed by `.github/workflows/release.yml`'s `publish` job). §7's checklist below reflects what's actually been done and what's still open — item 3 (backfilling a `## 0.1.1` `CHANGELOG.md` entry) and items 8–10 (whether `studiopod-app`/`studiopod-web` have actually cut over — outside this repo, not verifiable from here) are the two loose ends worth checking before treating distribution as fully closed out. Consumer cutover (§8) was still deliberately unapplied as of this document's last full pass — confirm current state before assuming it's done.
 
 Read §7 first if you just want the checklist.
 
@@ -8,12 +8,12 @@ Read §7 first if you just want the checklist.
 
 ## 1. Current state (the honest version)
 
-| | Today | Target |
+| | As of DS-0.6 | Target |
 |---|---|---|
-| `studiopod-app` | `file:vendor/studiopod-design-system-0.1.0.tgz` — a **171 KB binary committed to the app repo** (DS-0) | `@studiopod/design-system@^X.Y.Z` from a registry |
-| `studiopod-web` | `file:../studiopod-design/packages/design-system/studiopod-design-system-0.1.0.tgz` — a **relative path to a tarball outside its own repo** | same |
-| Registry | none | **owner decision — §2** |
-| Published versions | **none.** `0.1.0` has never been published | `0.1.0` (first release) |
+| `studiopod-app` | `file:vendor/studiopod-design-system-0.1.0.tgz` — a **171 KB binary committed to the app repo** (DS-0), unless cut over since — verify in that repo, not here | `@studiopod/design-system@^X.Y.Z` from the registry |
+| `studiopod-web` | `file:../studiopod-design/packages/design-system/studiopod-design-system-0.1.0.tgz` — a **relative path to a tarball outside its own repo**, unless cut over since — verify in that repo, not here | same |
+| Registry | **GitHub Packages** (`https://npm.pkg.github.com`) — chosen, live | done |
+| Published versions | **`0.1.1`**, released through the automated workflow | ongoing |
 
 `studiopod-web`'s current link cannot work on Vercel: the sibling repo does not exist there. `studiopod-app`'s vendored tarball *does* work on Vercel, but only because a human remembers to re-vendor it. Both violate DS-0.5's "no vendored binaries / no relative package links" rules. **That is the whole point of this work package** — and it is not fixed until §7 is done.
 
@@ -50,7 +50,7 @@ Whatever you choose, the pipeline is already registry-agnostic: set `vars.DS_REG
 
 ## 3. Installation guide (consumers)
 
-**Applies after §7. Do not run these yet.**
+The registry side of §7 (items 1–7) is done — these steps apply now. Items 8–10 (consumer cutover) are what's still unconfirmed.
 
 ### 3.1 `.npmrc` — only if the registry requires auth
 
@@ -182,34 +182,22 @@ npm deprecate @studiopod/design-system@0.2.0 "Broken tokens; use 0.2.1"
 
 ## 7. Owner-action checklist
 
-Everything below needs credentials or external services. **I did none of it, and nothing here has been verified end-to-end.**
+Items 1–7 are done, verified by the real artifacts they were supposed to produce (a live `publishConfig`, a real `design-system-v0.1.1` tag, a repository transferred to the `studiopod` org so GitHub Packages' scope rule is satisfied — see `.github/workflows/release.yml`'s own header comment). Items 8–10 concern the two *consumer* repos (`studiopod-app`, `studiopod-web`), which this repo has no visibility into — confirm their state directly rather than assuming.
 
-- [ ] **1. Choose the registry** (§2). This decides everything downstream.
-- [ ] **2. Registry account / org setup**
-  - GitHub Packages: nothing — the repo already implies the registry.
-  - npm: own the **`@studiopod`** scope on npmjs (create the org). Private also needs a paid plan.
-- [ ] **3. Remove the publish interlock**
-  - `packages/design-system/package.json`: delete `"private": true`.
-  - Add the registry pin so publish can never default to public npm by accident:
-    ```json
-    "publishConfig": { "registry": "https://npm.pkg.github.com" }
-    ```
-    (or `https://registry.npmjs.org`; for npm-public also add `"access": "public"`).
-  - If publishing publicly, replace `"license": "UNLICENSED"` and add a LICENSE file — there is currently none.
-- [ ] **4. Create the token** — *you must do this; I must not handle credentials.*
-  - GitHub Packages: CI's built-in `GITHUB_TOKEN` can publish. A **separate PAT with `read:packages`** is still needed for *installs* (Vercel + laptops).
-  - npm: an **automation** token with publish rights.
-- [ ] **5. Configure the DS repo** (Settings → Secrets and variables → Actions)
-  - Variable **`DS_REGISTRY`** = the registry URL.
-  - Secret **`DS_NPM_TOKEN`** = the publish token.
-  - Until both exist the publish job skips — by design.
-- [ ] **6. Rehearse** — run the workflow with **`dry_run` checked**. Confirm `verify` is green and inspect the uploaded tarball artifact.
-- [ ] **7. First publish** — run with `dry_run` unchecked. Confirm `0.1.0` (or `0.1.1`) appears in the registry.
-- [ ] **8. Vercel configuration** — *skip entirely for npm-public.*
-  - Add `NPM_TOKEN` env var to **both** `studiopod-app` and `studiopod-web` (all environments).
-  - Note the expiry date somewhere you will actually see it. **PAT expiry breaks every build simultaneously.**
-- [ ] **9. Consumer cutover** — only after §7.7 succeeds. Per §8.
-- [ ] **10. Deployment verification** — deploy both consumers and confirm the DS resolves from the registry, styles render, and no `@source` breakage.
+- [x] **1. Choose the registry** (§2). **Chosen: GitHub Packages.**
+- [x] **2. Registry account / org setup** — the repo lives at `github.com/studiopod/studiopod-design`, which is what GitHub Packages' scope rule requires for `@studiopod/design-system`.
+- [x] **3. Remove the publish interlock**
+  - `packages/design-system/package.json`: `"private": true"` removed (DS-0.6 Phase D).
+  - Registry pin is live: `"publishConfig": { "registry": "https://npm.pkg.github.com" }`.
+  - `packages/design-system/package.json` still declares `"license": "UNLICENSED"` — the *repository* now has a root `LICENSE` (MIT, see the root README), but whether the *published package's* own license/distribution model should also change is a separate, deliberate decision this document doesn't make for you. Leaving it `UNLICENSED` on GitHub Packages (private-by-registry-default, auth required to install) is a valid choice independent of the source repo being public.
+  - `CHANGELOG.md` still has no `## 0.1.1` heading (still reads "0.1.0 — unreleased (not published)" at the top) — worth backfilling so the release notes GitHub generated for `design-system-v0.1.1` (which fall back to "See CHANGELOG.md" when no matching heading exists) have real content to point to.
+- [x] **4. Create the token** — done; the publish job has run successfully.
+- [x] **5. Configure the DS repo** (Settings → Secrets and variables → Actions) — `DS_REGISTRY`/`DS_NPM_TOKEN` are set; the publish job no longer skips.
+- [x] **6. Rehearse** — exercised via `dry_run`.
+- [x] **7. First publish** — `0.1.1` has been released through the workflow.
+- [ ] **8. Vercel configuration** — *skip entirely for npm-public.* Not verifiable from this repo — confirm directly in `studiopod-app`/`studiopod-web`'s own Vercel projects whether `NPM_TOKEN` is set.
+- [ ] **9. Consumer cutover** — per §8. Not verifiable from this repo.
+- [ ] **10. Deployment verification** — deploy both consumers and confirm the DS resolves from the registry, styles render, and no `@source` breakage. Not verifiable from this repo.
 
 ---
 
@@ -261,11 +249,11 @@ This one **fixes a currently-broken production install**, not just a tidiness is
 
 | Rule | Status |
 |---|---|
-| no vendored binaries | ⏳ `studiopod-app/vendor/*.tgz` is removed at cutover (§8.1). **Still present today.** |
-| no relative package links | ⏳ `studiopod-web`'s `file:../…` is removed at cutover (§8.2). **Still present today.** |
+| no vendored binaries | ⏳ `studiopod-app/vendor/*.tgz` is removed at cutover (§8.1) — a registry now exists to cut over to; whether that cutover has happened is only verifiable in `studiopod-app` itself. |
+| no relative package links | ⏳ `studiopod-web`'s `file:../…` is removed at cutover (§8.2) — same caveat: verify in `studiopod-web`, not here. |
 | no manual package replacement | ✅ CI is the only release path; `prepublishOnly` re-gates manual publishes |
 | deterministic installs | ✅ `npm ci` in CI; lockfile-pinned consumers |
 | reproducible builds | ✅ `npm run verify` reproduces `dist/` from source; API + export baselines enforce it |
 | one canonical package | ✅ `@studiopod/design-system`, one repo, one exports map |
 
-The first two are **not satisfied yet** and cannot be until a registry exists. That is the honest reason DS-0.5 is *CERTIFIED WITH DEFERRED ITEMS*.
+The first two were blocked on "no registry exists" at DS-0.5 certification time — that blocker is gone (§7). What remains open is confirming the two consumer repos have actually cut over now that there's a registry to cut over to; that confirmation can only happen in those repos, not this one.
