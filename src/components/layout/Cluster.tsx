@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Inline, type InlineGap } from "./Inline";
 
-interface ClusterProps {
+export interface ClusterProps {
   children: ReactNode;
   className?: string;
   gap?: InlineGap;

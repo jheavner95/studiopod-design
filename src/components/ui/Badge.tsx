@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { STATUS_TONE_PILL_CLASSES, type StatusTone } from "@/lib/tone";
+
+/** Re-exported at this path for compatibility and discoverability — src/lib/tone.ts is the canonical owner (DS-5B); Badge is merely this type's most natural, most-consumed name. */
+export type { StatusTone };
 
 const badgeStyles = cva("inline-flex w-fit items-center gap-1.5 rounded-full font-medium", {
   variants: {
-    tone: {
-      neutral: "bg-neutral-soft text-neutral",
-      accent: "bg-accent-soft text-accent-400",
-      success: "bg-success-soft text-success",
-      warning: "bg-warning-soft text-warning",
-      error: "bg-error-soft text-error",
-    },
+    tone: STATUS_TONE_PILL_CLASSES,
     size: {
       sm: "px-2 py-0.5 text-[11px] leading-4",
       md: "px-2.5 py-1 text-caption",

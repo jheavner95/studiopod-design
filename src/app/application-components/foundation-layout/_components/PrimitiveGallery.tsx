@@ -3,7 +3,21 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Card, Badge, Body, Caption, Heading, Button, TextInput, Textarea } from "@/components/ui";
-import { Stack, Inline, Grid, Cluster, Surface, Panel, ScrollArea, Separator, DescriptionList } from "@/components/layout";
+import {
+  Stack,
+  Inline,
+  Grid,
+  Cluster,
+  Surface,
+  Panel,
+  ScrollArea,
+  Separator,
+  DescriptionList,
+  CardGrid,
+  ContentColumns,
+  Container,
+  SectionShell,
+} from "@/components/layout";
 import { LAYOUT_PRIMITIVES, catalogEntryFor } from "../_data/primitives";
 
 const ELEVATIONS = ["none", "subtle", "card", "panel", "floating"] as const;
@@ -114,6 +128,49 @@ function LiveDemo({ id }: { id: string }) {
             ]}
           />
         </div>
+      );
+    case "card-grid":
+      return (
+        <CardGrid columns={3} gap="sm">
+          {Array.from({ length: 6 }, (_, i) => (
+            <Card key={i} padding="sm" className="flex h-20 items-center justify-center">
+              <Caption className="text-ink-tertiary">Card {i + 1}</Caption>
+            </Card>
+          ))}
+        </CardGrid>
+      );
+    case "content-columns":
+      return (
+        <ContentColumns
+          gap="sm"
+          ratio="narrow-wide"
+          primary={
+            <Surface elevation="card" padding="sm" className="flex h-24 items-center justify-center">
+              <Caption className="text-ink-tertiary">Primary</Caption>
+            </Surface>
+          }
+          secondary={
+            <Surface elevation="card" padding="sm" className="flex h-24 items-center justify-center">
+              <Caption className="text-ink-tertiary">Secondary</Caption>
+            </Surface>
+          }
+        />
+      );
+    case "container":
+      return (
+        <div className="flex flex-col gap-2">
+          {(["narrow", "content", "wide"] as const).map((size) => (
+            <Container key={size} size={size} className="rounded-lg border border-dashed border-border-subtle py-2">
+              <Caption className="text-ink-tertiary">size=&quot;{size}&quot;</Caption>
+            </Container>
+          ))}
+        </div>
+      );
+    case "section-shell":
+      return (
+        <SectionShell spacing="sm" background="surface" divider className="rounded-lg border border-border-subtle">
+          <Caption className="text-ink-tertiary">spacing=&quot;sm&quot; background=&quot;surface&quot; divider</Caption>
+        </SectionShell>
       );
     default:
       return null;

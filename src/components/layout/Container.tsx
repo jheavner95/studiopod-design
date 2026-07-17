@@ -10,7 +10,7 @@ const sizeMap: Record<ContainerSize, string> = {
   full: "max-w-none",
 };
 
-interface ContainerProps {
+export interface ContainerProps {
   children: ReactNode;
   size?: ContainerSize;
   className?: string;

@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { pulseVariants } from "./variants";
 import { useMotionPreference } from "./MotionPreference";
+import type { StatusTone } from "@/lib/tone";
 
-export type PulseTone = "accent" | "success" | "warning" | "error" | "neutral";
+/** DS-5B: the exact same five-value set as StatusTone (src/lib/tone.ts) — an alias, not a fresh union, since a dot's tone and a badge's tone are the same semantic concept even though their rendered recipe (solid dot vs. pill) differs. Kept as its own exported name since PulseStatus's own tone prop is more naturally read this way. */
+export type PulseTone = StatusTone;
 
 const toneMap: Record<PulseTone, string> = {
   accent: "bg-accent-500",

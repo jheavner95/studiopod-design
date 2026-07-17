@@ -1,14 +1,14 @@
 export { Button, type ButtonProps } from "./Button";
 export { Card, INTERACTIVE_CARD_CLASSES } from "./Card";
 export { SelectableCard, type SelectableCardProps } from "./SelectableCard";
-export { Badge } from "./Badge";
+export { Badge, type StatusTone } from "./Badge";
 export { SectionBadge } from "./SectionBadge";
 export { Eyebrow } from "./Eyebrow";
 export { SectionHeader } from "./SectionHeader";
 export { StatCard } from "./StatCard";
 export { FeatureCard } from "./FeatureCard";
-export { GlassPanel } from "./GlassPanel";
-export { SurfacePanel } from "./SurfacePanel";
+export { GlassPanel, type GlassPanelProps } from "./GlassPanel";
+export { SurfacePanel, type SurfacePanelProps } from "./SurfacePanel";
 export { CTAGroup } from "./CTAGroup";
 export { Skeleton, type SkeletonVariant } from "./Skeleton";
 export { Expandable } from "./Expandable";

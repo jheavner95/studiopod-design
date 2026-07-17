@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useMotion, useMotionEnabled } from "@/hooks";
-import type { ProgressTone } from "./ProgressBar";
+import { PROGRESS_TONE_CLASSES, type ProgressTone } from "./ProgressBar";
 
+/** DS-5B: reads the stroke half of the shared fill/stroke pair ProgressBar owns — was an independent, hand-typed copy of the same four colors before this consolidation. */
 const TONE_STROKE: Record<ProgressTone, string> = {
-  accent: "stroke-accent-500",
-  success: "stroke-success",
-  warning: "stroke-warning",
-  error: "stroke-error",
+  accent: PROGRESS_TONE_CLASSES.accent.stroke,
+  success: PROGRESS_TONE_CLASSES.success.stroke,
+  warning: PROGRESS_TONE_CLASSES.warning.stroke,
+  error: PROGRESS_TONE_CLASSES.error.stroke,
 };
 
 interface ProgressRingProps {

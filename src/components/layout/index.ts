@@ -1,19 +1,35 @@
-export { Container, type ContainerSize } from "./Container";
+export { Container, type ContainerSize, type ContainerProps } from "./Container";
 export { PageShell } from "./PageShell";
-export { SectionShell } from "./SectionShell";
-export { ContentColumns } from "./ContentColumns";
-export { CardGrid } from "./CardGrid";
+export {
+  SectionShell,
+  type SectionShellProps,
+  type SectionShellBackground,
+  type SectionShellSpacing,
+} from "./SectionShell";
+export {
+  ContentColumns,
+  type ContentColumnsProps,
+  type ContentColumnsRatio,
+  type ContentColumnsGap,
+  type ContentColumnsAlign,
+} from "./ContentColumns";
+export { CardGrid, type CardGridProps, type CardGridColumns } from "./CardGrid";
 export { GlobalNav } from "./GlobalNav";
 export { Footer } from "./Footer";
-export { Stack, type StackGap, type StackAlign, type StackJustify } from "./Stack";
-export { Inline, type InlineGap, type InlineAlign, type InlineJustify } from "./Inline";
-export { Grid, type GridStrategy, type GridGap } from "./Grid";
-export { Cluster } from "./Cluster";
-export { Surface, type SurfaceElevation, type SurfacePadding } from "./Surface";
-export { Panel } from "./Panel";
-export { ScrollArea, type ScrollDirection } from "./ScrollArea";
-export { Separator, type SeparatorOrientation } from "./Separator";
-export { DescriptionList, type DescriptionListItem, type DescriptionListLayout } from "./DescriptionList";
+export { Stack, type StackProps, type StackGap, type StackAlign, type StackJustify } from "./Stack";
+export { Inline, type InlineProps, type InlineGap, type InlineAlign, type InlineJustify } from "./Inline";
+export { Grid, type GridProps, type GridStrategy, type GridGap } from "./Grid";
+export { Cluster, type ClusterProps } from "./Cluster";
+export { Surface, type SurfaceProps, type SurfaceElevation, type SurfacePadding } from "./Surface";
+export { Panel, type PanelProps } from "./Panel";
+export { ScrollArea, type ScrollAreaProps, type ScrollDirection } from "./ScrollArea";
+export { Separator, type SeparatorProps, type SeparatorOrientation } from "./Separator";
+export {
+  DescriptionList,
+  type DescriptionListProps,
+  type DescriptionListItem,
+  type DescriptionListLayout,
+} from "./DescriptionList";
 
 // Workspace — generic application-shell primitive (DS-1B2). Distinct from
 // PageShell: PageShell wraps a scrolling document, Workspace owns a fixed

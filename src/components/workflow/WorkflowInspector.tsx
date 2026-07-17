@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 import { InspectorPanel, InspectorHeader, InspectorSection, InspectorProperty } from "@/components/operational";
 import type { WorkflowNodeStatus } from "./WorkflowNode";
-
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 const STATUS_TONE: Record<WorkflowNodeStatus, StatusTone> = {
   idle: "neutral",

@@ -1,18 +1,12 @@
 import type { ReactNode } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const TONE_STYLES = {
-  neutral: "bg-neutral-soft text-neutral",
-  accent: "bg-accent-soft text-accent-400",
-  success: "bg-success-soft text-success",
-  warning: "bg-warning-soft text-warning",
-  error: "bg-error-soft text-error",
-} as const;
+import { STATUS_TONE_PILL_CLASSES, type StatusTone } from "@/lib/tone";
 
 interface FilterChipProps {
   label: ReactNode;
-  tone?: keyof typeof TONE_STYLES;
+  /** DS-5B: reads the same shared pill treatment Badge does — was an independent, byte-identical copy before this consolidation. */
+  tone?: StatusTone;
   onRemove?: () => void;
   className?: string;
 }
@@ -25,7 +19,7 @@ interface FilterChipProps {
  */
 export function FilterChip({ label, tone = "neutral", onRemove, className }: FilterChipProps) {
   return (
-    <span className={cn("inline-flex w-fit items-center gap-1 rounded-full py-0.5 pl-2.5 font-medium text-caption", onRemove ? "pr-1" : "pr-2.5", TONE_STYLES[tone], className)}>
+    <span className={cn("inline-flex w-fit items-center gap-1 rounded-full py-0.5 pl-2.5 font-medium text-caption", onRemove ? "pr-1" : "pr-2.5", STATUS_TONE_PILL_CLASSES[tone], className)}>
       {label}
       {onRemove ? (
         <button

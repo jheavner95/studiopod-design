@@ -83,6 +83,7 @@ This repository's own documentation site (run `npm run dev` and visit `/document
 - [docs/VERIFICATION.md](./docs/VERIFICATION.md) — the verification pipeline, its layers, and CI behavior
 - [docs/DISTRIBUTION.md](./docs/DISTRIBUTION.md) — how `@studiopod/design-system` is versioned and released
 - [docs/TOKENS.md](./docs/TOKENS.md) — the token architecture: hierarchy, ownership, naming, adding/deprecating a token, consumer imports
+- [docs/TONE.md](./docs/TONE.md) — the semantic tone system: StatusTone, tone vs. status vs. severity, supported values, adding/avoiding a new tone
 - [docs/CERTIFICATION.md](./docs/CERTIFICATION.md) — the production-readiness checklist and how a component earns Certified status
 - [docs/engineering-notes/](./docs/engineering-notes/) — the architectural record of how this system was built, including findings, tradeoffs, and decisions later phases relied on
 

@@ -3,8 +3,7 @@
 import { Badge } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { useTableDensity, densityPaddingMap } from "./Table";
-
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 interface TableStatusCellProps {
   label: string;

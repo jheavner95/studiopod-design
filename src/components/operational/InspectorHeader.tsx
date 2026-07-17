@@ -2,8 +2,7 @@ import type { ReactNode } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IdentityBlock } from "@/components/metadata";
-
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 interface InspectorHeaderProps {
   icon?: ReactNode;

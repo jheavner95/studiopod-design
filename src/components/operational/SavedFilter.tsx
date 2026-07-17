@@ -1,6 +1,7 @@
 import { Plus, X } from "lucide-react";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { STATUS_TONE_PILL_CLASSES } from "@/lib/tone";
 
 export interface SavedFilterEntry {
   id: string;
@@ -17,9 +18,16 @@ interface SavedFilterProps {
   className?: string;
 }
 
+/**
+ * DS-5B: `active`/`inactive` are this component's own, more meaningful
+ * names for a toggle-like state — kept instead of adopting `StatusTone`'s
+ * `accent`/`neutral` naming here, since "active filter" reads better than
+ * "accent filter." The underlying classes are the shared pill treatment
+ * (`STATUS_TONE_PILL_CLASSES`), not a second independent copy of it.
+ */
 const TONE = {
-  active: "bg-accent-soft text-accent-400",
-  inactive: "bg-neutral-soft text-neutral",
+  active: STATUS_TONE_PILL_CLASSES.accent,
+  inactive: STATUS_TONE_PILL_CLASSES.neutral,
 } as const;
 
 /** Named, reusable filter combinations — apply one with a click, or save the current search/filter/sort state as a new one. */

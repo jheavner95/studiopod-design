@@ -12,14 +12,20 @@ interface WorkflowStepProps {
   className?: string;
 }
 
-const MARKER_ICON: Partial<Record<WorkflowStateValue, typeof Check>> = {
+/**
+ * DS-5B: exported so PipelineStep — a sibling component sharing this exact
+ * marker idiom for the same WorkflowStateValue — imports these four maps
+ * directly instead of keeping a byte-identical, independently hand-typed
+ * copy (found during the DS-5B tone-mapping audit).
+ */
+export const MARKER_ICON: Partial<Record<WorkflowStateValue, typeof Check>> = {
   completed: Check,
   failed: X,
   blocked: AlertTriangle,
   cancelled: Ban,
 };
 
-const MARKER_TONE: Record<WorkflowStateValue, string> = {
+export const MARKER_TONE: Record<WorkflowStateValue, string> = {
   "not-started": "border border-border-strong text-ink-tertiary",
   ready: "border border-border-strong text-ink-tertiary",
   running: "bg-accent-500 text-white",
@@ -30,7 +36,7 @@ const MARKER_TONE: Record<WorkflowStateValue, string> = {
   cancelled: "border border-border-subtle text-ink-tertiary",
 };
 
-const LABEL_TONE: Record<WorkflowStateValue, string> = {
+export const LABEL_TONE: Record<WorkflowStateValue, string> = {
   "not-started": "text-ink-tertiary",
   ready: "text-ink-tertiary",
   running: "text-ink-primary",
@@ -47,7 +53,7 @@ const LABEL_TONE: Record<WorkflowStateValue, string> = {
  * icon is aria-hidden). "running" is omitted: it's covered by aria-current
  * below. "not-started"/"ready" are omitted as unannounced default states.
  */
-const STATUS_LABEL: Partial<Record<WorkflowStateValue, string>> = {
+export const STATUS_LABEL: Partial<Record<WorkflowStateValue, string>> = {
   waiting: "Waiting",
   blocked: "Blocked",
   completed: "Completed",

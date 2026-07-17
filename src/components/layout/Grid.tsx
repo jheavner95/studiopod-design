@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 export type GridStrategy = 1 | 2 | 3 | 4 | 5 | 6 | "auto-fit" | "auto-fill";
 export type GridGap = "sm" | "md" | "lg";
 
-interface GridProps {
+export interface GridProps {
   children: ReactNode;
   className?: string;
   /** A fixed responsive column count (matches CardGrid's own breakpoints), or an auto-fit/auto-fill track driven by minChildWidth. */
@@ -36,6 +36,15 @@ export const gapMap: Record<GridGap, string> = {
  * left-aligned at their target width) — the same distinction CSS itself
  * draws. Use CardGrid instead when the content is specifically a card
  * collection at one of its four fixed breakpoints.
+ *
+ * DS-5A: Grid's 3-level gap scale (sm/md/lg only, no xs/xl/none) is scoped
+ * to card-collection density, not unified with Stack/Inline's 6-level
+ * scales — audited and kept separate rather than merged into one universal
+ * gap vocabulary. Its `md`/`lg` values happen to equal Stack's, which is
+ * coincidence, not a hidden shared dependency worth extracting: forcing
+ * one abstraction across three components whose actual named levels don't
+ * even line up (Grid has no xs/xl) would cost more clarity than it buys.
+ * See docs/engineering-notes/14-spacing-consolidation.md.
  */
 export function Grid({ children, className, columns = 3, minChildWidth = "240px", gap = "md" }: GridProps) {
   const isAuto = columns === "auto-fit" || columns === "auto-fill";

@@ -70,8 +70,13 @@ export function Body({ children, className, as = "p", size = "md", muted = false
   );
 }
 
-export function Caption({ children, className, as = "p" }: TypographyProps) {
-  return createElement(as, { className: cn("text-caption text-ink-secondary", className) }, children);
+interface CaptionProps extends TypographyProps {
+  /** For pairing this text with another element via aria-labelledby (e.g. ProgressBar's label naming its progressbar) — mirrors Heading's own id prop. */
+  id?: string;
+}
+
+export function Caption({ children, className, as = "p", id }: CaptionProps) {
+  return createElement(as, { id, className: cn("text-caption text-ink-secondary", className) }, children);
 }
 
 export function Metadata({ children, className, as = "span" }: TypographyProps) {

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 export type SeparatorOrientation = "horizontal" | "vertical";
 
-interface SeparatorProps {
+export interface SeparatorProps {
   className?: string;
   orientation?: SeparatorOrientation;
   /** Shrinks the separator in from both ends, for use inside padded content rather than flush against a container's edge. */

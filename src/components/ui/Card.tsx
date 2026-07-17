@@ -1,22 +1,16 @@
 import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
-
-type CardPadding = "sm" | "md" | "lg";
+import { STRUCTURAL_PADDING_MAP, type SurfacePadding } from "@/lib/spacing";
 
 interface CardProps {
   children: ReactNode;
   className?: string;
-  padding?: CardPadding;
+  /** DS-5A: widened from sm/md/lg to include "none", matching Surface/Panel's own padding vocabulary — Card shares their exact padding scale (it always has), so it shares their type too. Purely additive; every existing sm/md/lg usage is unaffected. */
+  padding?: SurfacePadding;
   as?: ElementType;
   /** Adds hover lift + border emphasis — use for clickable/linkable cards. */
   interactive?: boolean;
 }
-
-const paddingMap: Record<CardPadding, string> = {
-  sm: "p-4",
-  md: "p-6",
-  lg: "p-8",
-};
 
 /**
  * DS-8.1 Part 8 — the one interactive-surface treatment (elevation, border,
@@ -34,7 +28,7 @@ export function Card({ children, className, padding = "md", as: Component = "div
     <Component
       className={cn(
         "rounded-lg border border-border bg-surface",
-        paddingMap[padding],
+        STRUCTURAL_PADDING_MAP[padding],
         interactive && INTERACTIVE_CARD_CLASSES,
         className,
       )}

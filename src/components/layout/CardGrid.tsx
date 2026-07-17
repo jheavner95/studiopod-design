@@ -2,16 +2,16 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { gapMap, type GridGap } from "./Grid";
 
-type GridColumns = 2 | 3 | 4 | 6;
+export type CardGridColumns = 2 | 3 | 4 | 6;
 
-interface CardGridProps {
+export interface CardGridProps {
   children: ReactNode;
-  columns?: GridColumns;
+  columns?: CardGridColumns;
   gap?: GridGap;
   className?: string;
 }
 
-const columnsMap: Record<GridColumns, string> = {
+const columnsMap: Record<CardGridColumns, string> = {
   2: "sm:grid-cols-2",
   3: "sm:grid-cols-2 lg:grid-cols-3",
   4: "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",

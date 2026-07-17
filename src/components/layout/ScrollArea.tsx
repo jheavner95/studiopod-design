@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export type ScrollDirection = "vertical" | "horizontal" | "both";
 
-interface ScrollAreaProps {
+export interface ScrollAreaProps {
   children: ReactNode;
   className?: string;
   direction?: ScrollDirection;

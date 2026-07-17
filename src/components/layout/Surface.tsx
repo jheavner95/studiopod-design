@@ -1,10 +1,12 @@
 import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { STRUCTURAL_PADDING_MAP, type SurfacePadding } from "@/lib/spacing";
 
 export type SurfaceElevation = "none" | "subtle" | "card" | "panel" | "floating";
-export type SurfacePadding = "none" | "sm" | "md" | "lg";
+/** Re-exported at this same path for compatibility — src/lib/spacing.ts is the canonical owner (DS-5A); Surface was merely the first public consumer this type's name was coined for. */
+export type { SurfacePadding };
 
-interface SurfaceProps {
+export interface SurfaceProps {
   children: ReactNode;
   className?: string;
   elevation?: SurfaceElevation;
@@ -23,13 +25,6 @@ const elevationMap: Record<SurfaceElevation, string> = {
   floating: "shadow-floating",
 };
 
-const paddingMap: Record<SurfacePadding, string> = {
-  none: "p-0",
-  sm: "p-4",
-  md: "p-6",
-  lg: "p-8",
-};
-
 /** The base elevated-background treatment every panel-like component sits on — Card, Panel, and the rest of the design system's own surfaces all reduce to this. */
 export function Surface({ children, className, elevation = "none", border = true, padding = "none", as: Component = "div", role }: SurfaceProps) {
   return (
@@ -39,7 +34,7 @@ export function Surface({ children, className, elevation = "none", border = true
         "rounded-lg bg-surface",
         border && "border border-border-subtle",
         elevationMap[elevation],
-        paddingMap[padding],
+        STRUCTURAL_PADDING_MAP[padding],
         className,
       )}
     >

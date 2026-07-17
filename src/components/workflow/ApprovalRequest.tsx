@@ -2,9 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { IdentityBlock } from "@/components/metadata";
 import type { ApprovalStateValue } from "./ApprovalStatus";
-
-/** Mirrors IdentityBlock's own (unexported) status tone union. */
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 const REQUEST_TONE: Record<ApprovalStateValue, StatusTone> = {
   pending: "neutral",

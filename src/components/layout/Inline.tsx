@@ -5,7 +5,7 @@ export type InlineGap = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 export type InlineAlign = "start" | "center" | "end" | "baseline" | "stretch";
 export type InlineJustify = "start" | "center" | "end" | "between";
 
-interface InlineProps {
+export interface InlineProps {
   children: ReactNode;
   className?: string;
   gap?: InlineGap;
@@ -40,7 +40,16 @@ const justifyMap: Record<InlineJustify, string> = {
   between: "justify-between",
 };
 
-/** Horizontal composition — toolbars, metadata rows, badge groups. Overflow is handled by wrapping, not by scrolling; use ScrollArea instead when a single unbroken row is required. */
+/**
+ * Horizontal composition — toolbars, metadata rows, badge groups. Overflow
+ * is handled by wrapping, not by scrolling; use ScrollArea instead when a
+ * single unbroken row is required.
+ *
+ * DS-5A: Inline's gap scale runs tighter than Stack's at every shared level
+ * on purpose — see Stack's own doc comment for the reasoning (vertical
+ * blocks vs. horizontal row items) and the audit this deliberately retains
+ * rather than unifies.
+ */
 export function Inline({ children, className, gap = "md", align = "center", justify = "start", wrap = true, as: Component = "div" }: InlineProps) {
   return (
     <Component

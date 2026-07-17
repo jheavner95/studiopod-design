@@ -2,21 +2,21 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Container, type ContainerSize } from "./Container";
 
-type SectionBackground = "transparent" | "raised" | "surface";
-type SectionSpacing = "xs" | "sm" | "md" | "lg" | "xl";
+export type SectionShellBackground = "transparent" | "raised" | "surface";
+export type SectionShellSpacing = "xs" | "sm" | "md" | "lg" | "xl";
 
-interface SectionShellProps {
+export interface SectionShellProps {
   children: ReactNode;
   className?: string;
   containerSize?: ContainerSize;
-  spacing?: SectionSpacing;
-  background?: SectionBackground;
+  spacing?: SectionShellSpacing;
+  background?: SectionShellBackground;
   /** Adds a subtle top border to separate this section from the previous one. */
   divider?: boolean;
   id?: string;
 }
 
-const spacingMap: Record<SectionSpacing, string> = {
+const spacingMap: Record<SectionShellSpacing, string> = {
   xs: "py-[var(--spacing-section-xs)]",
   sm: "py-[var(--spacing-section-sm)]",
   md: "py-[var(--spacing-section-md)]",
@@ -24,7 +24,7 @@ const spacingMap: Record<SectionSpacing, string> = {
   xl: "py-[var(--spacing-section-xl)]",
 };
 
-const backgroundMap: Record<SectionBackground, string> = {
+const backgroundMap: Record<SectionShellBackground, string> = {
   transparent: "bg-transparent",
   raised: "bg-canvas-raised",
   surface: "bg-surface",

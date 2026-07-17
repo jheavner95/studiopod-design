@@ -3,16 +3,17 @@ export interface LayoutFutureExtension {
   description: string;
 }
 
-/** Layout concepts the current nine primitives make room for but don't implement yet — reserved, not promised. */
+/**
+ * Layout concepts the current primitive family (see ./primitives.ts's
+ * LAYOUT_PRIMITIVES for the live count) makes room for but doesn't
+ * implement yet — reserved, not promised.
+ *
+ * "Split Pane" / "Resizable Panels" were both listed here until DS-3
+ * shipped SplitView (src/components/layout/SplitView.tsx) — see
+ * /application-components/foundation-splitview. Removed rather than left
+ * stale: they're not future extensions anymore, they're a real primitive.
+ */
 export const LAYOUT_FUTURE_EXTENSIONS: LayoutFutureExtension[] = [
-  {
-    title: "Split Pane",
-    description: "Two adjacent regions sharing a draggable boundary — the structural basis a future Resizable Panels primitive would build on.",
-  },
-  {
-    title: "Resizable Panels",
-    description: "Panel's own drag-to-resize extension — not included because it needs pointer-tracking state this primitive layer intentionally doesn't own.",
-  },
   {
     title: "Dock Layout",
     description: "Panels that can be rearranged, floated, or docked to an edge — the eventual home for a fully customizable workspace layout.",

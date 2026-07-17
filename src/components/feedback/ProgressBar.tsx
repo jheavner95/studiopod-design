@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useMotion, useMotionEnabled } from "@/hooks";
@@ -9,11 +9,29 @@ import { Caption } from "@/components/ui";
 
 export type ProgressTone = "accent" | "success" | "warning" | "error";
 
+/**
+ * DS-5B: one shared source of truth for the fill/stroke pair per tone —
+ * ProgressBar's `bg-*` fill and ProgressRing's `stroke-*` outline are the
+ * same color applied to two different CSS properties, so they're declared
+ * together here instead of as two independently hand-typed Records
+ * (`./ProgressRing` imports this directly rather than keeping its own
+ * copy). Every value is a full, static class string, not a
+ * template-literal construction — Tailwind's build-time scanner only
+ * recognizes literal class-name text in source files, so a `` `bg-${x}` ``
+ * style computed string would silently generate no CSS at all.
+ */
+export const PROGRESS_TONE_CLASSES: Record<ProgressTone, { fill: string; stroke: string }> = {
+  accent: { fill: "bg-accent-500", stroke: "stroke-accent-500" },
+  success: { fill: "bg-success", stroke: "stroke-success" },
+  warning: { fill: "bg-warning", stroke: "stroke-warning" },
+  error: { fill: "bg-error", stroke: "stroke-error" },
+};
+
 const TONE_FILL: Record<ProgressTone, string> = {
-  accent: "bg-accent-500",
-  success: "bg-success",
-  warning: "bg-warning",
-  error: "bg-error",
+  accent: PROGRESS_TONE_CLASSES.accent.fill,
+  success: PROGRESS_TONE_CLASSES.success.fill,
+  warning: PROGRESS_TONE_CLASSES.warning.fill,
+  error: PROGRESS_TONE_CLASSES.error.fill,
 };
 
 interface ProgressBarProps {
@@ -40,12 +58,19 @@ export function ProgressBar({ value = 0, indeterminate = false, label, showPerce
   const { speed } = useMotion();
   const clamped = Math.min(1, Math.max(0, value));
   const percentage = Math.round(clamped * 100);
+  const labelId = useId();
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
       {label || (showPercentage && !indeterminate) ? (
         <div className="flex items-center justify-between gap-2">
-          {label ? <Caption className="text-ink-secondary">{label}</Caption> : <span />}
+          {label ? (
+            <Caption id={labelId} className="text-ink-secondary">
+              {label}
+            </Caption>
+          ) : (
+            <span />
+          )}
           {showPercentage && !indeterminate ? <Caption className="text-ink-tertiary">{percentage}%</Caption> : null}
         </div>
       ) : null}
@@ -54,7 +79,8 @@ export function ProgressBar({ value = 0, indeterminate = false, label, showPerce
         aria-valuenow={indeterminate ? undefined : percentage}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label={indeterminate && !label ? "Loading" : undefined}
+        aria-labelledby={label ? labelId : undefined}
+        aria-label={!label && indeterminate ? "Loading" : undefined}
       >
         {indeterminate ? (
           <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-border">

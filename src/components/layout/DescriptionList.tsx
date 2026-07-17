@@ -8,7 +8,7 @@ export interface DescriptionListItem {
 
 export type DescriptionListLayout = "stacked" | "responsive" | "two-column";
 
-interface DescriptionListProps {
+export interface DescriptionListProps {
   items: DescriptionListItem[];
   className?: string;
   layout?: DescriptionListLayout;

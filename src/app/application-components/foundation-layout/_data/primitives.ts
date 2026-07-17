@@ -92,7 +92,7 @@ export const LAYOUT_PRIMITIVES: LayoutPrimitiveDoc[] = [
       { label: "Elevation", note: "Five tiers (none/subtle/card/panel/floating) reuse the design system's own semantic shadow scale directly — never a hand-typed box-shadow value." },
       { label: "Borders", note: "border defaults to true. Turn it off only for a Surface that's meant to visually blend into its parent (e.g. a nested region inside an already-bordered Panel)." },
       { label: "Backgrounds", note: "Always bg-surface — Surface doesn't expose a background prop, since a component needing a different background is choosing a different visual role, not a Surface variant." },
-      { label: "Padding", note: "Defaults to none — Surface is the bare treatment other components add their own padding on top of. Card and Panel both apply padding themselves rather than inheriting Surface's." },
+      { label: "Padding", note: "Defaults to none — Surface is the bare treatment other components add their own padding on top of. Card and Panel both apply padding themselves rather than inheriting Surface's — and, since DS-5A, all three read the exact same none/sm/md/lg scale from one shared map (src/lib/spacing.ts), not three independent copies." },
     ],
     usage: "<Surface elevation=\"card\">{children}</Surface> — the layer Card, Panel, and every other bordered/elevated container in this system ultimately reduces to.",
     responsiveNotes: "No responsive behavior of its own — elevation and borders read the same at every breakpoint.",
@@ -107,7 +107,7 @@ export const LAYOUT_PRIMITIVES: LayoutPrimitiveDoc[] = [
     topics: [
       { label: "Fixed", note: "Today's Panel is a fixed-width/fixed-height content region by default — width and height are controlled entirely through className, same as any other component." },
       { label: "Flexible", note: "A Panel with no explicit width/height className grows to fill its flex or grid parent — the flexible case needs no special prop, just the absence of a fixed size." },
-      { label: "Resizable", note: "Not implemented. A drag-to-resize Panel needs pointer-tracking state this primitive intentionally doesn't own — see Future Enhancements below (Resizable Panels)." },
+      { label: "Resizable", note: "Not a Panel capability, and not going to become one — drag-to-resize is SplitView's job (src/components/layout/SplitView.tsx, DS-3). Compose a resizable region from SplitPane/SplitDivider instead of expecting Panel itself to grow pointer-tracking state." },
       { label: "Collapsible", note: "Not implemented. Collapse/expand needs its own open state and transition, which belongs to a future composed component built on top of Panel, not Panel itself." },
     ],
     usage: "<Panel header={<Heading level={4}>Title</Heading>}>{children}</Panel> — a bounded workspace subdivision built directly on Surface.",
@@ -167,6 +167,73 @@ export const LAYOUT_PRIMITIVES: LayoutPrimitiveDoc[] = [
     commonMistakes: [
       "Hand-rolling the dl/dt/dd + border-b + first:pt-0 block again in a new page instead of importing DescriptionList — the exact duplication this primitive exists to end.",
       "Using layout=\"two-column\" for values long enough to need to wrap onto their own line at mobile width.",
+    ],
+  },
+  {
+    id: "card-grid",
+    name: "Card Grid",
+    examples: ["Feature grids", "Stat grids", "Pipeline step collections", "Every card-based section on this docs site"],
+    topics: [
+      { label: "Fixed breakpoints only", note: "columns accepts exactly 2, 3, 4, or 6 — not an arbitrary count. Reach for Grid directly instead when the content needs a column count outside this set, or an auto-fit/auto-fill track." },
+      { label: "Shared gap scale", note: "Reads the same sm/md/lg gap map Grid exports (src/components/layout/Grid.tsx's gapMap) — DS-5A confirmed this is one shared scale, not two independent copies that happen to agree." },
+      { label: "Relationship to Grid", note: "CardGrid is Grid's fixed-breakpoint specialization for card collections specifically — same underlying CSS Grid mechanics, narrower and more opinionated API." },
+    ],
+    usage: "<CardGrid columns={3}>{cards}</CardGrid> — the design system's most-used layout primitive (78 usage sites as of DS-5C): reach for this by default for any card collection with a known, fixed target column count.",
+    responsiveNotes: "Each fixed column count collapses through the same sm:/lg: breakpoints as Grid's own fixed mode — a 4-column grid becomes 1 column on mobile, 2 at sm:, 3 at md:, 4 at lg:.",
+    commonMistakes: [
+      "Reaching for Grid with a manually matched columns value instead of CardGrid when the content actually is a card collection — CardGrid communicates that intent to the next reader.",
+      "Requesting an unsupported column count (e.g. 5) — CardGrid's type only accepts 2, 3, 4, or 6.",
+    ],
+  },
+  {
+    id: "content-columns",
+    name: "Content Columns",
+    examples: ["Not yet used anywhere in this docs site — see below"],
+    topics: [
+      { label: "Purpose", note: "Pairs exactly two major content blocks — e.g. long-form copy alongside a diagram or screenshot — collapsing to one stacked column on mobile. Not a general-purpose grid; use CardGrid or Grid for peer collections of three or more items." },
+      { label: "Ratio", note: "even/narrow-wide/wide-narrow controls the desktop column-width split; all three stack identically on mobile, so the ratio choice only matters above the md: breakpoint." },
+      { label: "Gap register", note: "Its gap scale (gap-8/12/16) sits an order of magnitude looser than every item-level gap primitive in this system — DS-5A confirmed this is deliberate: it's page-level column separation, not item spacing." },
+      { label: "Adoption status", note: "Fully implemented and tested, but DS-5C's audit found zero real usage sites in this docs site today — built ahead of the page shape it's meant for, not broken or unfinished. Reach for it the next time a page needs exactly this two-block asymmetric split." },
+    ],
+    usage: "<ContentColumns primary={<Copy />} secondary={<Diagram />} ratio=\"narrow-wide\" /> — for a page section that is genuinely two major, asymmetric content blocks, not a peer collection.",
+    responsiveNotes: "Single stacked column below md:; the ratio prop only takes effect at md: and above.",
+    commonMistakes: [
+      "Reaching for ContentColumns when the two children are actually same-weight peers — CardGrid columns={2} communicates that relationship more accurately than an asymmetric-implying primary/secondary split.",
+      "Nesting ContentColumns inside itself to build a three-or-more-block layout — compose Grid or CardGrid instead once there are more than two blocks.",
+    ],
+  },
+  {
+    id: "container",
+    name: "Container",
+    examples: ["Footer", "SectionShell (composed internally, on every section of this page)"],
+    topics: [
+      { label: "Width bounds", note: "Four fixed max-widths (narrow/content/wide/full), each reading a --container-* token — never a hand-typed max-w-[Npx] value." },
+      { label: "Relationship to SectionShell", note: "Container is the lower-level primitive SectionShell wraps directly for its own width bound — reach for Container on its own only when a caller needs the width bound without SectionShell's vertical rhythm and background (Footer is the one real example today)." },
+      { label: "The gutter", note: "px-[var(--spacing-gutter)] is a fluid, clamp()-based token — Container's horizontal inset grows smoothly with viewport width rather than stepping at breakpoints." },
+      { label: "Polymorphic tag", note: "as lets a caller render Container as <main>, <section>, or any other element — Footer.tsx uses the div default; a caller needing a specific landmark role sets as explicitly." },
+    ],
+    usage: "<Container size=\"wide\">{children}</Container> — reach for this directly only when SectionShell's vertical padding and background aren't wanted; otherwise use SectionShell, which already composes this.",
+    responsiveNotes: "No breakpoint-stepped behavior — both the width bound and the gutter are either a fixed token or a fluid clamp() value at every viewport width.",
+    commonMistakes: [
+      "Hand-writing mx-auto max-w-* px-* directly instead of reaching for Container — the exact className combination this primitive exists to replace.",
+      "Reaching for Container directly for an ordinary page section instead of SectionShell, losing that section's consistent vertical rhythm with its neighbors.",
+    ],
+  },
+  {
+    id: "section-shell",
+    name: "Section Shell",
+    examples: ["Every top-level section on every foundation and platform documentation page — 82 usage sites"],
+    topics: [
+      { label: "Vertical rhythm", note: "spacing (xs–xl) reads a fluid, clamp()-based --spacing-section-* token — the page-level rhythm scale, distinct from Stack/Inline/Grid's item-level gap scale (see this page's own Spacing section)." },
+      { label: "Container composed internally", note: "Every SectionShell wraps its children directly in a Container at the given containerSize — callers never need to nest a Container themselves inside one." },
+      { label: "Background tiers", note: "transparent (default)/raised/surface — the same three-tier vocabulary used for alternating section backgrounds down a long page, without introducing a fourth ad hoc background value." },
+      { label: "Divider", note: "divider adds a single top border, for visually separating adjacent sections that share the same background tier and would otherwise read as one continuous block." },
+    ],
+    usage: "<SectionShell spacing=\"lg\" divider>{children}</SectionShell> — the default wrapper for any top-level page section; this very page uses it for every section shown above.",
+    responsiveNotes: "Spacing tokens are fluid (clamp()-based) rather than breakpoint-stepped, so vertical rhythm scales smoothly with viewport height/width instead of jumping at fixed widths.",
+    commonMistakes: [
+      "Hand-writing a py-* value plus a manual Container wrapper instead of SectionShell, losing consistent rhythm with neighboring sections.",
+      "Picking a spacing value inconsistent with the surrounding sections' own rhythm, producing visibly uneven vertical spacing down the page.",
     ],
   },
 ];

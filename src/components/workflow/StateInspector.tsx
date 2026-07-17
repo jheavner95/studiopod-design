@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 import { InspectorPanel, InspectorHeader, InspectorSection, InspectorProperty } from "@/components/operational";
 import type { StateValue } from "./StateNode";
-
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 const STATE_TONE: Record<StateValue, StatusTone> = {
   initial: "neutral",

@@ -6,11 +6,13 @@ import { Surface, Stack } from "@/components/layout";
 import { Body } from "@/components/ui";
 import { feedbackRole } from "@/components/feedback/Alert";
 import { useAnnounce } from "@/components/feedback/LiveRegion";
+import { FIELD_MESSAGE_TEXT, type FieldMessageTone } from "./FieldError";
 
 export interface ValidationSummaryItem {
   field: string;
   message: string;
-  severity: "error" | "warning";
+  /** DS-5B: reuses FieldError's own FieldMessageTone rather than an independently declared "error"|"warning" union of the same two values. */
+  severity: FieldMessageTone;
   /** An anchor id to jump to the field in question, if the form has one. */
   href?: string;
 }
@@ -22,7 +24,6 @@ interface ValidationSummaryProps {
 }
 
 const SEVERITY_ICON = { error: AlertCircle, warning: AlertTriangle };
-const SEVERITY_COLOR = { error: "text-error", warning: "text-warning" };
 
 /**
  * An aggregate list of every field's own error/warning, surfaced once
@@ -66,7 +67,7 @@ export function ValidationSummary({ items, title = "Please review the following"
               const Icon = SEVERITY_ICON[item.severity];
               const content = (
                 <span className="flex items-start gap-2 text-body-sm text-ink-secondary">
-                  <Icon className={`mt-0.5 size-4 shrink-0 ${SEVERITY_COLOR[item.severity]}`} aria-hidden />
+                  <Icon className={`mt-0.5 size-4 shrink-0 ${FIELD_MESSAGE_TEXT[item.severity]}`} aria-hidden />
                   <span className="min-w-0 break-words">
                     <span className="font-medium text-ink-primary">{item.field}:</span> {item.message}
                   </span>

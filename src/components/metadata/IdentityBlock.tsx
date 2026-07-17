@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 import { Inline, Stack } from "@/components/layout";
 import { Badge } from "@/components/ui";
-
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 interface IdentityBlockProps {
   icon?: ReactNode;

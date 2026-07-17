@@ -1,37 +1,46 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type ColumnRatio = "even" | "narrow-wide" | "wide-narrow";
-type ColumnGap = "sm" | "md" | "lg";
-type ColumnAlign = "start" | "center";
+export type ContentColumnsRatio = "even" | "narrow-wide" | "wide-narrow";
+export type ContentColumnsGap = "sm" | "md" | "lg";
+export type ContentColumnsAlign = "start" | "center";
 
-interface ContentColumnsProps {
+export interface ContentColumnsProps {
   primary: ReactNode;
   secondary: ReactNode;
-  ratio?: ColumnRatio;
-  gap?: ColumnGap;
-  align?: ColumnAlign;
+  ratio?: ContentColumnsRatio;
+  gap?: ContentColumnsGap;
+  align?: ContentColumnsAlign;
   className?: string;
 }
 
-const ratioMap: Record<ColumnRatio, string> = {
+const ratioMap: Record<ContentColumnsRatio, string> = {
   even: "md:grid-cols-2",
   "narrow-wide": "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]",
   "wide-narrow": "md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]",
 };
 
-const gapMap: Record<ColumnGap, string> = {
+const gapMap: Record<ContentColumnsGap, string> = {
   sm: "gap-8",
   md: "gap-12",
   lg: "gap-16",
 };
 
-const alignMap: Record<ColumnAlign, string> = {
+const alignMap: Record<ContentColumnsAlign, string> = {
   start: "items-start",
   center: "items-center",
 };
 
-/** Two-column layout that collapses to a single stacked column on mobile. */
+/**
+ * Two-column layout that collapses to a single stacked column on mobile.
+ *
+ * DS-5A: its gap scale (gap-8/12/16) sits in a categorically larger
+ * register than Stack/Inline/Grid's item-level gaps (gap-2 through gap-12)
+ * — audited and kept as intentional, not drift: this is page-level column
+ * separation (two major content blocks), not item-level spacing, and
+ * warrants more breathing room at every named level. See
+ * docs/engineering-notes/14-spacing-consolidation.md.
+ */
 export function ContentColumns({
   primary,
   secondary,

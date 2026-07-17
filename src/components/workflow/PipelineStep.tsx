@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { Check, X, AlertTriangle, Ban } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import type { WorkflowStateValue } from "./WorkflowStatus";
+import { MARKER_ICON, MARKER_TONE, LABEL_TONE, STATUS_LABEL } from "./WorkflowStep";
 
 interface PipelineStepProps {
   label: ReactNode;
@@ -12,54 +12,16 @@ interface PipelineStepProps {
   className?: string;
 }
 
-const MARKER_ICON: Partial<Record<WorkflowStateValue, typeof Check>> = {
-  completed: Check,
-  failed: X,
-  blocked: AlertTriangle,
-  cancelled: Ban,
-};
-
-const MARKER_TONE: Record<WorkflowStateValue, string> = {
-  "not-started": "border border-border-strong text-ink-tertiary",
-  ready: "border border-border-strong text-ink-tertiary",
-  running: "bg-accent-500 text-white",
-  waiting: "border border-border-strong text-ink-tertiary",
-  blocked: "bg-warning text-white",
-  completed: "bg-success text-white",
-  failed: "bg-error text-white",
-  cancelled: "border border-border-subtle text-ink-tertiary",
-};
-
-const LABEL_TONE: Record<WorkflowStateValue, string> = {
-  "not-started": "text-ink-tertiary",
-  ready: "text-ink-tertiary",
-  running: "text-ink-primary",
-  waiting: "text-ink-tertiary",
-  blocked: "text-ink-primary",
-  completed: "text-ink-primary",
-  failed: "text-ink-primary",
-  cancelled: "text-ink-tertiary line-through",
-};
-
-/**
- * Screen-reader-only status text — the marker's status is otherwise
- * conveyed solely by icon + color, both unavailable to assistive tech (the
- * icon is aria-hidden). "running" is omitted: it's covered by aria-current
- * below. "not-started"/"ready" are omitted as unannounced default states.
- */
-const STATUS_LABEL: Partial<Record<WorkflowStateValue, string>> = {
-  waiting: "Waiting",
-  blocked: "Blocked",
-  completed: "Completed",
-  failed: "Failed",
-  cancelled: "Cancelled",
-};
-
 /**
  * One step within a PipelineStage — a status marker keyed to Workflow
  * Framework's own WorkflowStateValue, in WorkflowStep's own visual idiom
  * (independent per-item status, not a shared cursor model). PipelineConnector,
  * not this component, renders the line between steps.
+ *
+ * DS-5B: imports its marker/label/icon maps directly from WorkflowStep
+ * rather than keeping its own copy — the two were byte-identical (same
+ * WorkflowStateValue, same four Records), found during the tone-mapping
+ * consolidation audit.
  *
  * Name collision, checked and documented rather than missed: a differently-
  * scoped PipelineStep already exists at src/components/illustration/

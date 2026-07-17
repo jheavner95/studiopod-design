@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui";
 import { Inline } from "@/components/layout";
-
-type StatusTone = "neutral" | "accent" | "success" | "warning" | "error";
+import type { StatusTone } from "@/lib/tone";
 
 export interface StatusSummaryItem {
   label: string;

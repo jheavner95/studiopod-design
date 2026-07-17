@@ -28,17 +28,39 @@ export * from "@/components/ui";
 // doc-site imports) the moment anything is imported from it — even
 // though nothing here re-exports them onward. Importing each file
 // directly avoids ever loading GlobalNav.tsx/Footer.tsx at all.
-export { Container, type ContainerSize } from "@/components/layout/Container";
+export { Container, type ContainerSize, type ContainerProps } from "@/components/layout/Container";
 export { PageShell } from "@/components/layout/PageShell";
-export { SectionShell } from "@/components/layout/SectionShell";
-export { ContentColumns } from "@/components/layout/ContentColumns";
-export { CardGrid } from "@/components/layout/CardGrid";
-export { Stack, type StackGap, type StackAlign, type StackJustify } from "@/components/layout/Stack";
-export { Inline, type InlineGap, type InlineAlign, type InlineJustify } from "@/components/layout/Inline";
-export { Grid, type GridStrategy, type GridGap } from "@/components/layout/Grid";
-export { Cluster } from "@/components/layout/Cluster";
-export { Surface, type SurfaceElevation, type SurfacePadding } from "@/components/layout/Surface";
-export { Panel } from "@/components/layout/Panel";
+export {
+  SectionShell,
+  type SectionShellProps,
+  type SectionShellBackground,
+  type SectionShellSpacing,
+} from "@/components/layout/SectionShell";
+export {
+  ContentColumns,
+  type ContentColumnsProps,
+  type ContentColumnsRatio,
+  type ContentColumnsGap,
+  type ContentColumnsAlign,
+} from "@/components/layout/ContentColumns";
+export { CardGrid, type CardGridProps, type CardGridColumns } from "@/components/layout/CardGrid";
+export { Stack, type StackProps, type StackGap, type StackAlign, type StackJustify } from "@/components/layout/Stack";
+export {
+  Inline,
+  type InlineProps,
+  type InlineGap,
+  type InlineAlign,
+  type InlineJustify,
+} from "@/components/layout/Inline";
+export { Grid, type GridProps, type GridStrategy, type GridGap } from "@/components/layout/Grid";
+export { Cluster, type ClusterProps } from "@/components/layout/Cluster";
+export {
+  Surface,
+  type SurfaceProps,
+  type SurfaceElevation,
+  type SurfacePadding,
+} from "@/components/layout/Surface";
+export { Panel, type PanelProps } from "@/components/layout/Panel";
 export {
   Workspace,
   WorkspaceHeader,
@@ -69,10 +91,11 @@ export {
   type SplitDividerProps,
   type SplitOrientation,
 } from "@/components/layout/SplitView";
-export { ScrollArea, type ScrollDirection } from "@/components/layout/ScrollArea";
-export { Separator, type SeparatorOrientation } from "@/components/layout/Separator";
+export { ScrollArea, type ScrollAreaProps, type ScrollDirection } from "@/components/layout/ScrollArea";
+export { Separator, type SeparatorProps, type SeparatorOrientation } from "@/components/layout/Separator";
 export {
   DescriptionList,
+  type DescriptionListProps,
   type DescriptionListItem,
   type DescriptionListLayout,
 } from "@/components/layout/DescriptionList";
