@@ -25,13 +25,20 @@ describe("Button", () => {
       expect(link).toHaveAttribute("href", "/docs");
     });
 
-    it.each([["primary"], ["secondary"], ["outline"], ["ghost"]] as const)(
+    it.each([["primary"], ["secondary"], ["outline"], ["ghost"], ["destructive"]] as const)(
       "renders the %s variant without throwing",
       (variant) => {
         render(<Button variant={variant}>Action</Button>);
         expect(screen.getByRole("button", { name: "Action" })).toBeInTheDocument();
       },
     );
+
+    it("applies the error token to the destructive variant (DS-5G)", () => {
+      render(<Button variant="destructive">Delete</Button>);
+      // Composed from the DS --color-error token via the `error` colour utility,
+      // not an application colour and not a new token.
+      expect(screen.getByRole("button", { name: "Delete" })).toHaveClass("bg-error");
+    });
 
     it.each([["sm"], ["md"], ["lg"]] as const)("renders the %s size without throwing", (size) => {
       render(<Button size={size}>Action</Button>);

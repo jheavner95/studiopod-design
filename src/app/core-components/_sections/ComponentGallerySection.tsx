@@ -63,6 +63,7 @@ export function ComponentGallerySection() {
               <Button variant="secondary">Secondary</Button>
               <Button variant="outline">Outline</Button>
               <Button variant="ghost">Ghost</Button>
+              <Button variant="destructive">Delete</Button>
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Button size="sm">Small</Button>

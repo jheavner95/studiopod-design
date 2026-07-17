@@ -14,6 +14,17 @@ const buttonStyles = cva(
           "border border-border bg-surface text-ink-primary hover:border-border-strong hover:bg-surface-hover",
         outline: "border border-border-strong text-ink-primary hover:bg-surface-hover",
         ghost: "text-ink-secondary hover:bg-surface-hover hover:text-ink-primary",
+        // destructive — a prominent, irreversible action (delete / discard / remove).
+        // Solid weight mirrors `primary` (bg-accent → bg-error, both white-on-fill),
+        // so a destructive button reads as the strong action it is. Composed from the
+        // DS's existing --color-error token (via the `error` colour utility) — the same
+        // token MenuItem/BulkActionButton already use for their `destructive` prop, and
+        // NO new token, NO application colour. This adds a fifth Button variant that
+        // aligns the DS's established `destructive` vocabulary with Button's variant
+        // mechanism (DS-5G). Success is deliberately NOT added — see DS-5G decision:
+        // it has no action precedent in the DS (a status/feedback tone only) and confirm
+        // actions are `primary`.
+        destructive: "bg-error text-white hover:bg-error/90 active:bg-error/95",
       },
       size: {
         sm: "h-8 px-3 text-body-sm",
@@ -42,7 +53,14 @@ type ButtonAsLink = CommonProps & { href: string; target?: string; rel?: string 
 
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-/** Primary interactive primitive. Renders a <Link> when `href` is passed, a <button> otherwise. */
+/**
+ * Primary interactive primitive. Renders a <Link> when `href` is passed, a <button> otherwise.
+ *
+ * Variants: `primary` (default) · `secondary` · `outline` · `ghost` · `destructive`.
+ * `destructive` is for irreversible actions (delete/discard/remove); use `primary` for
+ * confirm/approve/save. There is intentionally no `success` variant — green is a status
+ * tone in this system, not an action colour (DS-5G).
+ */
 export function Button(props: ButtonProps) {
   const size = props.size ?? "md";
   const spinner = <Loader2 className={cn("animate-spin", spinnerSizeMap[size])} aria-hidden />;
