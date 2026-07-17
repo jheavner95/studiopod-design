@@ -1,0 +1,108 @@
+name: Release recovery (publish an existing tag)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DS-5G Release Recovery.
+#
+# Recovers a release whose version/commit/tag already exist but whose
+# `npm publish` failed (e.g. the v0.2.0 E401 auth failure). This publishes the
+# EXISTING tagged artifact — it does NOT bump the version, create a commit, or
+# create a tag. It is the safe counterpart to release.yml's publish job, which
+# is coupled to a version bump and therefore cannot be re-run without producing
+# a NEW version.
+#
+# Safety invariants:
+#   • checks out the exact tag the operator names
+#   • asserts packages/design-system/package.json === the expected version, and
+#     FAILS loudly if not (so you can never publish the wrong bytes under a
+#     version label)
+#   • runs the full certified verification (build/typecheck/api/css/use-client/
+#     exports) AND prepublishOnly runs again inside `npm publish`
+#   • no `npm publish --force`, no tag rewrite, no commit
+#   • auth is GITHUB_TOKEN (see release.yml — the failed PAT is not used)
+#
+# This is a documented, retained operational tool: release recovery is rare but
+# recurring enough (auth expiry, transient registry failure) to keep.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to publish (must already exist)"
+        required: true
+        type: string
+        default: design-system-v0.2.0
+      expected_version:
+        description: "Exact package version the tag must contain — a mismatch aborts"
+        required: true
+        type: string
+        default: 0.2.0
+
+concurrency:
+  group: ds-release-recovery
+  cancel-in-progress: false
+
+permissions:
+  contents: read     # checkout only — this workflow never writes refs
+  packages: write    # publish to GitHub Packages
+
+jobs:
+  recover:
+    name: Publish existing ${{ inputs.tag }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the exact tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Assert version matches the tag (abort on mismatch)
+        working-directory: packages/design-system
+        run: |
+          ACTUAL=$(node -p "require('./package.json').version")
+          echo "tag=${{ inputs.tag }}  expected=${{ inputs.expected_version }}  actual=$ACTUAL"
+          if [ "$ACTUAL" != "${{ inputs.expected_version }}" ]; then
+            echo "::error title=Version mismatch::Tag ${{ inputs.tag }} contains version $ACTUAL, not ${{ inputs.expected_version }}. Refusing to publish."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: ${{ vars.DS_REGISTRY }}
+          scope: "@studiopod"
+
+      - name: Install (deterministic)
+        run: npm ci
+
+      # Full certified verification — recovery does not weaken any gate.
+      - name: Verify package
+        working-directory: packages/design-system
+        run: npm run verify
+
+      - name: Pack (inspect the exact artifact)
+        working-directory: packages/design-system
+        run: |
+          mkdir -p /tmp/ds-pack
+          npm pack --pack-destination /tmp/ds-pack
+          echo "--- files that will ship ---"
+          cd /tmp/ds-pack && tar -tzf ./*.tgz | sort
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: recovered-tarball
+          path: /tmp/ds-pack/*.tgz
+          if-no-files-found: error
+
+      # No --force. prepublishOnly re-runs the full verify inside this step.
+      # GITHUB_TOKEN (auto-provisioned) is the credential; the failed PAT is gone.
+      - name: Publish the existing version
+        working-directory: packages/design-system
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm publish
+
+      - name: Confirm
+        run: echo "Published @studiopod/design-system@${{ inputs.expected_version }} from tag ${{ inputs.tag }}. No version bump, no commit, no tag created."

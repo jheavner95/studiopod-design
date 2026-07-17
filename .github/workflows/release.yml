@@ -17,10 +17,12 @@ name: Release @studiopod/design-system
 # `studiopod` organization in DS-0.6 Phase A. If the repo ever moves back to a
 # personal account, publishing breaks and the scope must change with it.
 #
-# Releasing requires BOTH:
+# Releasing requires ONE repository setting:
 #   vars.DS_REGISTRY     repository variable = https://npm.pkg.github.com
-#   secrets.DS_NPM_TOKEN repository secret   = publish credential
-# Both the dry-run and publish jobs FAIL (not skip) when either is missing.
+# Publish auth is the auto-provisioned GITHUB_TOKEN (job has `packages: write`) —
+# NO publish PAT. The former secrets.DS_NPM_TOKEN was retired in DS-5G Release
+# Recovery: that PAT failed with E401 during the v0.2.0 release. The dry-run and
+# publish jobs FAIL (not skip) when DS_REGISTRY is missing.
 # An earlier revision skipped instead: an operator who asked for a release would
 # have got a green run that published nothing. Silence is the worst outcome for
 # an explicit request, so it is an error now.
@@ -192,36 +194,27 @@ jobs:
       # published nothing. Failing here makes "dry run green" actually mean
       # "ready to publish".
       #
-      # Never prints either value. DS_NPM_TOKEN is reported only as set/NOT SET;
-      # DS_REGISTRY is a repository variable (a public URL, not a secret) and is
-      # echoed so the target can be confirmed. GitHub additionally masks secret
-      # values in logs, but this step does not rely on that.
+      # Publish auth is the auto-provisioned GITHUB_TOKEN (DS-5G Release
+      # Recovery), so a real release needs no publish SECRET — only the
+      # DS_REGISTRY variable. DS_NPM_TOKEN is intentionally no longer referenced:
+      # the old PAT is what failed with E401 and is being retired.
       - name: Report + enforce distribution configuration
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
-          DS_NPM_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: |
-          REG_SET=$([ -n "$DS_REGISTRY" ]  && echo yes || echo "NOT SET")
-          TOK_SET=$([ -n "$DS_NPM_TOKEN" ] && echo yes || echo "NOT SET")
-          echo "DS_REGISTRY    set: $REG_SET   value: ${DS_REGISTRY:-<unset>}"
-          echo "DS_NPM_TOKEN   set: $TOK_SET   (value never printed)"
+          echo "DS_REGISTRY    set: $([ -n "$DS_REGISTRY" ] && echo yes || echo "NOT SET")   value: ${DS_REGISTRY:-<unset>}"
+          echo "publish auth      : GITHUB_TOKEN (auto-provisioned; job has packages: write)"
           echo "publishConfig     : $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
           echo "private           : $(node -p "require('./packages/design-system/package.json').private ?? false")"
 
-          FAIL=0
           if [ -z "$DS_REGISTRY" ]; then
             echo "::error title=DS_REGISTRY not set::Add repository VARIABLE DS_REGISTRY = https://npm.pkg.github.com (Settings -> Secrets and variables -> Actions -> Variables)."
-            FAIL=1
+            exit 1
           elif [ "$DS_REGISTRY" != "https://npm.pkg.github.com" ]; then
             echo "::error title=DS_REGISTRY unexpected::Expected https://npm.pkg.github.com, got '$DS_REGISTRY'."
-            FAIL=1
+            exit 1
           fi
-          if [ -z "$DS_NPM_TOKEN" ]; then
-            echo "::error title=DS_NPM_TOKEN not set::Add repository SECRET DS_NPM_TOKEN (classic PAT, write:packages scope only)."
-            FAIL=1
-          fi
-          [ "$FAIL" = "0" ] || { echo "Distribution is not configured — a real release would SKIP publishing and look green."; exit 1; }
-          echo "OK — distribution configured; a real release would publish."
+          echo "OK — distribution configured (GITHUB_TOKEN auth); a real release would publish."
 
       # Restores via a byte-exact backup, NOT `git checkout -- package.json`.
       # `git checkout` restores the last COMMITTED state, which silently destroys
@@ -301,14 +294,16 @@ jobs:
       # operator explicitly asked to publish, so quietly doing nothing and
       # reporting green is the worst outcome. If you asked for a release and it
       # cannot happen, that is an error.
+      # Publish auth is now the auto-provisioned GITHUB_TOKEN, so no publish
+      # SECRET is required — only the registry URL variable. (The old
+      # DS_NPM_TOKEN requirement was removed in DS-5G Release Recovery; that PAT
+      # is what failed with E401.)
       - name: Gate — is distribution configured?
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
-          DS_NPM_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: |
-          [ -n "$DS_REGISTRY" ]  || { echo "::error title=DS_REGISTRY not set::Set the DS_REGISTRY variable to https://npm.pkg.github.com. See docs/DISTRIBUTION.md §7."; exit 1; }
-          [ -n "$DS_NPM_TOKEN" ] || { echo "::error title=DS_NPM_TOKEN not set::Add the DS_NPM_TOKEN secret (classic PAT, write:packages). See docs/DISTRIBUTION.md §7."; exit 1; }
-          echo "Distribution configured — proceeding to publish."
+          [ -n "$DS_REGISTRY" ] || { echo "::error title=DS_REGISTRY not set::Set the DS_REGISTRY variable to https://npm.pkg.github.com. See docs/DISTRIBUTION.md §7."; exit 1; }
+          echo "Distribution configured (GITHUB_TOKEN auth) — proceeding to publish."
 
       - uses: actions/checkout@v4
         with:
@@ -347,12 +342,21 @@ jobs:
           git tag -a "design-system-v${V}" -m "@studiopod/design-system v${V}"
           git push origin HEAD --follow-tags
 
-      # prepublishOnly re-runs build+typecheck+api-check here — the gate cannot
-      # be bypassed by publishing directly.
+      # prepublishOnly re-runs the full verify here — the gate cannot be bypassed
+      # by publishing directly.
+      #
+      # Auth: the built-in GITHUB_TOKEN, NOT a PAT. The prior DS_NPM_TOKEN PAT
+      # failed with E401 ("User cannot be authenticated with the token provided")
+      # during the v0.2.0 release — a hand-managed PAT that was revoked/expired
+      # (the same class of secret that leaked earlier). GITHUB_TOKEN is
+      # auto-provisioned per run, always valid, and — with this job's
+      # `packages: write` permission and the package being owned by this repo's
+      # org — sufficient to publish. No secret to rotate, expire, or leak.
+      # (DS-5G Release Recovery.)
       - name: Publish
         working-directory: packages/design-system
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm publish
 
       - name: Generate release notes
