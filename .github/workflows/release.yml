@@ -11,18 +11,26 @@ name: Release @studiopod/design-system
 #   npm notice Publishing to https://npm.pkg.github.com with tag latest
 # This workflow's `registry-url` + scope pin the same target independently.
 #
-# SCOPE: GitHub Packages requires the npm scope to equal the repo owner.
-# @studiopod/design-system therefore requires the repo to live at
-# github.com/studiopod/* — which is why studiopod-design was transferred to the
-# `studiopod` organization in DS-0.6 Phase A. If the repo ever moves back to a
-# personal account, publishing breaks and the scope must change with it.
+# SCOPE (cross-owner, by design): the repo is jheavner95/studiopod-design (a
+# User — kept public so it deploys on Vercel's free plan) while the package is
+# @studiopod (the studiopod org). These owners INTENTIONALLY differ. GitHub
+# Packages ties GITHUB_TOKEN's write to the repo owner, so GITHUB_TOKEN cannot
+# publish @studiopod from this repo — which is precisely why publishing uses a
+# PAT (secrets.DS_NPM_TOKEN) owned by a studiopod-org member with write:packages.
+# That PAT crosses the owner boundary; it is what published 0.1.1. (An earlier
+# note here claimed the repo "must" live under the org — that was wrong;
+# corrected in the DS-5G revised release recovery.)
 #
-# Releasing requires ONE repository setting:
+# Releasing requires:
 #   vars.DS_REGISTRY     repository variable = https://npm.pkg.github.com
-# Publish auth is the auto-provisioned GITHUB_TOKEN (job has `packages: write`) —
-# NO publish PAT. The former secrets.DS_NPM_TOKEN was retired in DS-5G Release
-# Recovery: that PAT failed with E401 during the v0.2.0 release. The dry-run and
-# publish jobs FAIL (not skip) when DS_REGISTRY is missing.
+#   secrets.DS_NPM_TOKEN classic PAT (write:packages), owned by a studiopod-org
+#                        member. It reaches ONLY the publish step (below).
+# Publish auth is a PAT, NOT GITHUB_TOKEN — deliberately. The repo is
+# jheavner95/studiopod-design (User; public for Vercel's free plan) while the
+# package is @studiopod (org). GITHUB_TOKEN is scoped to the repo owner and
+# cannot publish across that boundary; a studiopod-member PAT can (it published
+# 0.1.1). The dry-run and publish jobs FAIL (not skip) when DS_REGISTRY is
+# missing; a missing/invalid DS_NPM_TOKEN surfaces as a publish-step npm error.
 # An earlier revision skipped instead: an operator who asked for a release would
 # have got a green run that published nothing. Silence is the worst outcome for
 # an explicit request, so it is an error now.
@@ -194,16 +202,15 @@ jobs:
       # published nothing. Failing here makes "dry run green" actually mean
       # "ready to publish".
       #
-      # Publish auth is the auto-provisioned GITHUB_TOKEN (DS-5G Release
-      # Recovery), so a real release needs no publish SECRET — only the
-      # DS_REGISTRY variable. DS_NPM_TOKEN is intentionally no longer referenced:
-      # the old PAT is what failed with E401 and is being retired.
+      # This step checks only DS_REGISTRY. The publish PAT (DS_NPM_TOKEN) reaches
+      # ONLY the publish step, so a dry run never needs the credential; a
+      # missing/invalid PAT surfaces at the real publish step as an npm error.
       - name: Report + enforce distribution configuration
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           echo "DS_REGISTRY    set: $([ -n "$DS_REGISTRY" ] && echo yes || echo "NOT SET")   value: ${DS_REGISTRY:-<unset>}"
-          echo "publish auth      : GITHUB_TOKEN (auto-provisioned; job has packages: write)"
+          echo "publish auth      : PAT (DS_NPM_TOKEN), wired only into the publish step"
           echo "publishConfig     : $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
           echo "private           : $(node -p "require('./packages/design-system/package.json').private ?? false")"
 
@@ -214,7 +221,7 @@ jobs:
             echo "::error title=DS_REGISTRY unexpected::Expected https://npm.pkg.github.com, got '$DS_REGISTRY'."
             exit 1
           fi
-          echo "OK — distribution configured (GITHUB_TOKEN auth); a real release would publish."
+          echo "OK — registry configured; a real release would publish (PAT auth at publish step)."
 
       # Restores via a byte-exact backup, NOT `git checkout -- package.json`.
       # `git checkout` restores the last COMMITTED state, which silently destroys
@@ -294,16 +301,14 @@ jobs:
       # operator explicitly asked to publish, so quietly doing nothing and
       # reporting green is the worst outcome. If you asked for a release and it
       # cannot happen, that is an error.
-      # Publish auth is now the auto-provisioned GITHUB_TOKEN, so no publish
-      # SECRET is required — only the registry URL variable. (The old
-      # DS_NPM_TOKEN requirement was removed in DS-5G Release Recovery; that PAT
-      # is what failed with E401.)
+      # This gate checks only the DS_REGISTRY variable. The publish PAT
+      # (DS_NPM_TOKEN) is wired ONLY into the publish step, never here.
       - name: Gate — is distribution configured?
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           [ -n "$DS_REGISTRY" ] || { echo "::error title=DS_REGISTRY not set::Set the DS_REGISTRY variable to https://npm.pkg.github.com. See docs/DISTRIBUTION.md §7."; exit 1; }
-          echo "Distribution configured (GITHUB_TOKEN auth) — proceeding to publish."
+          echo "Distribution registry configured — proceeding to publish (PAT auth at the publish step)."
 
       - uses: actions/checkout@v4
         with:
@@ -345,18 +350,21 @@ jobs:
       # prepublishOnly re-runs the full verify here — the gate cannot be bypassed
       # by publishing directly.
       #
-      # Auth: the built-in GITHUB_TOKEN, NOT a PAT. The prior DS_NPM_TOKEN PAT
-      # failed with E401 ("User cannot be authenticated with the token provided")
-      # during the v0.2.0 release — a hand-managed PAT that was revoked/expired
-      # (the same class of secret that leaked earlier). GITHUB_TOKEN is
-      # auto-provisioned per run, always valid, and — with this job's
-      # `packages: write` permission and the package being owned by this repo's
-      # org — sufficient to publish. No secret to rotate, expire, or leak.
-      # (DS-5G Release Recovery.)
+      # Auth: a PAT (secrets.DS_NPM_TOKEN), and it MUST be a PAT here — not
+      # GITHUB_TOKEN. This is a deliberate cross-owner architecture: the repo is
+      # jheavner95/studiopod-design (a User — public, so it deploys on Vercel's
+      # free plan) while the package namespace is @studiopod (the studiopod org).
+      # GITHUB_TOKEN's packages:write is scoped to the REPO owner (jheavner95),
+      # so it cannot publish to the @studiopod org namespace — it would be denied.
+      # A classic PAT belonging to a user who is a studiopod-org member with
+      # write:packages CAN publish across that boundary (this is exactly how 0.1.1
+      # was published). The v0.2.0 E401 was that PAT being invalid/expired, not
+      # the mechanism being wrong. The token reaches ONLY this step (see the gate,
+      # which no longer receives it). See docs/DS-5G-Release-Recovery-Revised.md.
       - name: Publish
         working-directory: packages/design-system
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm publish
 
       - name: Generate release notes
