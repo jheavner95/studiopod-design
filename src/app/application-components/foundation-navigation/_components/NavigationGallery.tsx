@@ -57,6 +57,47 @@ function TabsDemo() {
   );
 }
 
+/**
+ * DS-5O — the same tab bar at both densities. `size` is set once on `Tabs` and
+ * reaches every `Tab` through context; `sm` (28px) is the operational density
+ * for workspace headers and inspector panes.
+ */
+function TabsSizeDemo() {
+  const [md, setMd] = useState("overview");
+  const [sm, setSm] = useState("overview");
+  return (
+    <Card className="flex flex-col gap-4">
+      <span className="text-body-md font-medium text-ink-primary">Tabs — size</span>
+      <div className="flex flex-col gap-1">
+        <Body size="sm" muted>
+          md (default) — 38px
+        </Body>
+        <Tabs value={md} onValueChange={setMd}>
+          <TabsList aria-label="Sections at md">
+            <Tab value="overview">Overview</Tab>
+            <Tab value="history" count={3}>
+              History
+            </Tab>
+          </TabsList>
+        </Tabs>
+      </div>
+      <div className="flex flex-col gap-1">
+        <Body size="sm" muted>
+          sm — 28px, for dense workspace headers
+        </Body>
+        <Tabs value={sm} onValueChange={setSm} size="sm">
+          <TabsList aria-label="Sections at sm">
+            <Tab value="overview">Overview</Tab>
+            <Tab value="history" count={3}>
+              History
+            </Tab>
+          </TabsList>
+        </Tabs>
+      </div>
+    </Card>
+  );
+}
+
 function SegmentedControlDemo() {
   const [value, setValue] = useState<"day" | "week" | "month">("week");
   return (
@@ -67,6 +108,21 @@ function SegmentedControlDemo() {
       </Body>
       <SegmentedControl
         aria-label="Time range"
+        value={value}
+        onChange={setValue}
+        options={[
+          { value: "day", label: "Day" },
+          { value: "week", label: "Week" },
+          { value: "month", label: "Month" },
+        ]}
+      />
+      <Body size="sm" muted>
+        DS-5O — size: md (above, unchanged) and sm (below, 28px). At sm the segment takes an explicit
+        height, since the pill track's own padding sits outside it.
+      </Body>
+      <SegmentedControl
+        aria-label="Time range, compact"
+        size="sm"
         value={value}
         onChange={setValue}
         options={[
@@ -320,6 +376,7 @@ export function NavigationGallery() {
     <div className="flex flex-col gap-6">
       <CardGrid columns={2}>
         <TabsDemo />
+        <TabsSizeDemo />
         <SegmentedControlDemo />
         <BreadcrumbsDemo />
         <PaginationDemo />

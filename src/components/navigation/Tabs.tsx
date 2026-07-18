@@ -2,11 +2,19 @@
 
 import { createContext, useContext, useId, type KeyboardEvent, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import {
+  CONTROL_ICON_SLOT_CLASSES,
+  CONTROL_TAB_CLASSES,
+  CONTROL_TAB_COUNT_CLASSES,
+  type ControlSize,
+} from "@/lib/control-size";
 
 interface TabsContextValue {
   value: string;
   onValueChange: (value: string) => void;
   idPrefix: string;
+  /** DS-5O: provided by `Tabs` so every `Tab` inherits it — never passed per tab. */
+  size: ControlSize;
 }
 
 const TabsContext = createContext<TabsContextValue | null>(null);
@@ -21,6 +29,13 @@ interface TabsProps {
   value: string;
   onValueChange: (value: string) => void;
   children: ReactNode;
+  /**
+   * DS-5O — the shared `ControlSize` scale. `md` (default) is the traditional
+   * page tab bar; `sm` (~28px) is the operational density for workspace
+   * headers, inspector tabs, and other dense surfaces. Set it once here — it
+   * reaches every `Tab` through context.
+   */
+  size?: ControlSize;
   className?: string;
 }
 
@@ -30,10 +45,10 @@ interface TabsProps {
  * from SegmentedControl: that's a choice input (role="radiogroup"), this is a navigation
  * pattern that changes which content panel is visible.
  */
-export function Tabs({ value, onValueChange, children, className }: TabsProps) {
+export function Tabs({ value, onValueChange, children, size = "md", className }: TabsProps) {
   const idPrefix = useId();
   return (
-    <TabsContext.Provider value={{ value, onValueChange, idPrefix }}>
+    <TabsContext.Provider value={{ value, onValueChange, idPrefix, size }}>
       <div className={cn("flex flex-col gap-3", className)}>{children}</div>
     </TabsContext.Provider>
   );
@@ -103,7 +118,9 @@ export function Tab({ value, children, disabled = false, count, className }: Tab
       tabIndex={selected ? 0 : -1}
       onClick={() => !disabled && ctx.onValueChange(value)}
       className={cn(
-        "focus-ring flex shrink-0 items-center gap-1.5 whitespace-nowrap border-b-2 px-3 py-2 text-body-sm font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+        "focus-ring flex shrink-0 items-center gap-1.5 whitespace-nowrap border-b-2 font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+        CONTROL_TAB_CLASSES[ctx.size],
+        CONTROL_ICON_SLOT_CLASSES[ctx.size],
         selected ? "border-accent-400 text-ink-primary" : "border-transparent text-ink-tertiary hover:text-ink-secondary",
         disabled && "pointer-events-none opacity-40",
         className,
@@ -111,7 +128,9 @@ export function Tab({ value, children, disabled = false, count, className }: Tab
     >
       {children}
       {count !== undefined ? (
-        <span className="rounded-full bg-surface-hover px-1.5 py-0.5 text-caption text-ink-tertiary">{count}</span>
+        <span className={cn("rounded-full bg-surface-hover text-ink-tertiary", CONTROL_TAB_COUNT_CLASSES[ctx.size])}>
+          {count}
+        </span>
       ) : null}
     </button>
   );

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@test/render";
 import { runA11yCheck } from "@test/a11y";
 import { Tabs, TabsList, Tab, TabPanel } from "./Tabs";
+import { CONTROL_TAB_CLASSES, CONTROL_TAB_COUNT_CLASSES } from "@/lib/control-size";
 
 function ThreeTabs({ value, onValueChange }: { value: string; onValueChange: (value: string) => void }) {
   return (
@@ -87,6 +88,88 @@ describe("Tabs", () => {
       history.focus();
       history.dispatchEvent(new KeyboardEvent("keydown", { key: "Home", bubbles: true, cancelable: true }));
       expect(onValueChange).toHaveBeenCalledWith("overview");
+    });
+  });
+
+  /**
+   * DS-5O — the size scale, provided once on `Tabs` and reaching every `Tab`
+   * through context. Assertions read the shared `control-size` maps rather
+   * than literal class strings, so the scale stays the single source of truth.
+   */
+  describe("size (DS-5O)", () => {
+    it("defaults to md, preserving pre-DS-5O rendering", () => {
+      render(<ThreeTabs value="overview" onValueChange={() => {}} />);
+      const tab = screen.getByRole("tab", { name: "Overview" });
+      for (const cls of CONTROL_TAB_CLASSES.md.split(" ")) {
+        expect(tab).toHaveClass(cls);
+      }
+      expect(tab).toHaveClass("px-3", "py-2", "text-body-sm");
+    });
+
+    it("propagates size through context — every Tab inherits it without being passed one", () => {
+      render(
+        <Tabs value="overview" onValueChange={() => {}} size="sm">
+          <TabsList aria-label="Sections">
+            <Tab value="overview">Overview</Tab>
+            <Tab value="history">History</Tab>
+          </TabsList>
+        </Tabs>,
+      );
+      for (const name of ["Overview", "History"]) {
+        const tab = screen.getByRole("tab", { name });
+        for (const cls of CONTROL_TAB_CLASSES.sm.split(" ")) {
+          expect(tab).toHaveClass(cls);
+        }
+        expect(tab).not.toHaveClass("py-2");
+        expect(tab).not.toHaveClass("text-body-sm");
+      }
+    });
+
+    it("scales the count badge with the tab's density", () => {
+      render(
+        <Tabs value="overview" onValueChange={() => {}} size="sm">
+          <TabsList aria-label="Sections">
+            <Tab value="overview" count={3}>
+              Overview
+            </Tab>
+          </TabsList>
+        </Tabs>,
+      );
+      for (const cls of CONTROL_TAB_COUNT_CLASSES.sm.split(" ")) {
+        expect(screen.getByText("3")).toHaveClass(cls);
+      }
+    });
+
+    it("keeps the underline, selection and disabled treatment identical across sizes", () => {
+      render(
+        <Tabs value="overview" onValueChange={() => {}} size="sm">
+          <TabsList aria-label="Sections">
+            <Tab value="overview">Overview</Tab>
+            <Tab value="details" disabled>
+              Details
+            </Tab>
+          </TabsList>
+        </Tabs>,
+      );
+      expect(screen.getByRole("tab", { name: "Overview" })).toHaveClass("border-b-2", "border-accent-400");
+      expect(screen.getByRole("tab", { name: "Details" })).toBeDisabled();
+      expect(screen.getByRole("tab", { name: "Details" })).toHaveClass("opacity-40");
+    });
+
+    it("sm keeps keyboard navigation working", () => {
+      const onValueChange = vi.fn();
+      render(
+        <Tabs value="overview" onValueChange={onValueChange} size="sm">
+          <TabsList aria-label="Sections">
+            <Tab value="overview">Overview</Tab>
+            <Tab value="history">History</Tab>
+          </TabsList>
+        </Tabs>,
+      );
+      const overview = screen.getByRole("tab", { name: "Overview" });
+      overview.focus();
+      overview.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, cancelable: true }));
+      expect(onValueChange).toHaveBeenCalledWith("history");
     });
   });
 

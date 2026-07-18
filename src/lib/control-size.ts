@@ -95,3 +95,49 @@ export const CONTROL_CHEVRON_CLASSES: Record<ControlSize, string> = {
   sm: "right-2 size-3.5",
   md: "right-3 size-4",
 };
+
+/**
+ * DS-5O — navigation joins the same scale. A `Tab` is a bottom-bordered button,
+ * so its height is padding + line-height + the 2px underline: `sm` computes to
+ * 8 + 18.2 + 2 ≈ **28px** (the operational density workspace headers and
+ * inspector tabs use), and `md` preserves the original
+ * `px-3 py-2 text-body-sm` rendering byte for byte.
+ */
+export const CONTROL_TAB_CLASSES: Record<ControlSize, string> = {
+  sm: "px-2.5 py-1 text-caption",
+  md: "px-3 py-2 text-body-sm",
+};
+
+/** The count/badge pill a `Tab` renders after its label — it tracks the tab's own density. */
+export const CONTROL_TAB_COUNT_CLASSES: Record<ControlSize, string> = {
+  sm: "px-1 py-0 text-metadata",
+  md: "px-1.5 py-0.5 text-caption",
+};
+
+/**
+ * A `SegmentedControl` segment. Unlike a tab, the segment sits inside a
+ * `p-0.5` pill track, so padding alone can't land the *outer* control on the
+ * scale — `sm` therefore pins the segment at **h-6**, which plus the track's
+ * 4px gives the 28px outer height `sm` means everywhere else in this system.
+ * `md` stays padding-driven and unchanged.
+ *
+ * There is no separately-positioned indicator to keep in sync: the active pill
+ * is a background fill on the segment itself, so it follows this sizing for
+ * free.
+ */
+export const CONTROL_SEGMENT_CLASSES: Record<ControlSize, string> = {
+  sm: "h-6 px-2.5 text-caption",
+  md: "px-3 py-1.5 text-body-sm",
+};
+
+/**
+ * The pill track the segments sit inside. Its padding and 1px border are
+ * *outside* the segment, so they count toward the control's outer height —
+ * measured live, `h-6` + `p-0.5` + border rendered 30px, not the 28 `sm`
+ * means. `sm` therefore tightens the track to `p-px`: 24 + 2 + 2 = **28**.
+ * `md` keeps `p-0.5` and its original 40px.
+ */
+export const CONTROL_SEGMENT_TRACK_CLASSES: Record<ControlSize, string> = {
+  sm: "p-px",
+  md: "p-0.5",
+};

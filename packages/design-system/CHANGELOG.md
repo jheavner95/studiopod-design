@@ -2,6 +2,19 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.6.0
+
+### Added
+
+- **`size?: "sm" | "md"` on `Tabs`** (DS-5O) — set **once on `Tabs`** and delivered to every `Tab` through context, so a tab bar is never sized item by item. `sm` renders a **28px** tab, the operational density workspace headers and inspector panes use; `md` is the default and preserves the previous `px-3 py-2 text-body-sm` rendering exactly (measured live at 40px, unchanged). A `Tab`'s count badge tracks the same density.
+- **`size?: "sm" | "md"` on `SegmentedControl`** (DS-5O) — `sm` renders the **whole pill at 28px**; `md` is the default and unchanged (40px). The active fill is a background on the segment itself, so it follows the size automatically — there is no separately-positioned indicator to keep in sync.
+
+### Changed
+
+- **Navigation now reads its sizing from the shared `src/lib/control-size.ts` scale** (DS-5O) instead of hardcoding padding, joining `Button`, `Badge`, `Dialog`, `IconButton` and the form family on one `ControlSize` vocabulary. **No new size names were introduced.** With this, no component family in the system sits outside the scale.
+  - `sm` on `SegmentedControl` also tightens the pill **track** to `p-px`: the track's padding and 1px border sit *outside* the segment, so sizing the segment alone left the control at 30px. Caught by live measurement rather than class assertions, and now pinned by a test.
+- **Both defaults are `md`, so every existing consumer renders identically.** The change is purely additive.
+
 ## 0.5.0
 
 ### Added
