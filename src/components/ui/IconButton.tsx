@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { type GlyphSize } from "@/lib/control-size";
 import { Button, type ButtonProps } from "./Button";
 
 /**
@@ -36,7 +37,12 @@ const iconButtonGlyphStyles = {
   lg: "[&_svg]:size-5",
 } as const;
 
-export type IconButtonSize = keyof typeof iconButtonSizeStyles;
+/**
+ * DS-5P: an alias of the shared four-step glyph scale, not a second
+ * declaration of the same four names. The pixel maps above stay here because
+ * they are button *footprints*; the vocabulary lives in `@/lib/control-size`.
+ */
+export type IconButtonSize = GlyphSize;
 
 export interface IconButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children" | "aria-label"> {

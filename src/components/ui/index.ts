@@ -15,7 +15,7 @@ export { Skeleton, type SkeletonVariant } from "./Skeleton";
 export { Expandable } from "./Expandable";
 export { Display, Heading, Body, Caption, Metadata } from "./Typography";
 export { TextInput, type TextInputProps, type FieldStatus } from "./TextInput";
-export type { ControlSize } from "@/lib/control-size";
+export type { ControlSize, GlyphSize } from "@/lib/control-size";
 export { Textarea, type TextareaProps } from "./Textarea";
 export { Select, type SelectProps, type SelectOption } from "./Select";
 export { Combobox, type ComboboxProps, type ComboboxOption } from "./Combobox";

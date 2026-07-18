@@ -49,4 +49,41 @@ describe("TableEmptyState", () => {
       expect(await runA11yCheck(container)).toHaveNoA11yViolations();
     });
   });
+
+  /** DS-5P — the same ControlSize vocabulary, scaling the cell padding only. */
+  describe("size (DS-5P)", () => {
+    it("defaults to md and keeps the original py-12", () => {
+      const { container } = render(
+        <table>
+          <tbody>
+            <TableEmptyState title="No rows" colSpan={3} />
+          </tbody>
+        </table>,
+      );
+      expect(container.querySelector("td")).toHaveClass("py-12");
+    });
+
+    it("tightens to py-6 at sm for compact tables", () => {
+      const { container } = render(
+        <table>
+          <tbody>
+            <TableEmptyState title="No rows" colSpan={3} size="sm" />
+          </tbody>
+        </table>,
+      );
+      expect(container.querySelector("td")).toHaveClass("py-6");
+      expect(container.querySelector("td")).not.toHaveClass("py-12");
+    });
+
+    it("still spans every column at sm", () => {
+      const { container } = render(
+        <table>
+          <tbody>
+            <TableEmptyState title="No rows" colSpan={5} size="sm" />
+          </tbody>
+        </table>,
+      );
+      expect(container.querySelector("td")).toHaveAttribute("colspan", "5");
+    });
+  });
 });

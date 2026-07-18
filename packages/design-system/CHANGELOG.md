@@ -2,6 +2,22 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.7.0
+
+### Added
+
+- **`Spinner`** (DS-5P) — the **bare tier** of the loading family: a busy indicator and nothing else, for embedding inside a layout the application owns (status rows, toolbars, table overlays, cards, menus, inline labels). Sizes `xs`/`sm`/`md`/`lg` (12/14/16/24px) on the shared glyph scale.
+  - **`aria-hidden` by default, `role="status"` only when given a `label`.** This is the design, not an oversight: the dominant real usage is a glyph beside visible text inside a container the caller has *already* marked `role="status"`/`aria-live`, and announcing there would nest one live region inside another and double-announce. A label is the signal that the spinner is the sole indication anything is happening.
+- **`size?: "sm" | "md"` on `EmptyState`** (DS-5P) — `md` (default) is the primary page-level state and renders exactly as before (44px badge, `py-10`); `sm` is the operational density for inspectors, table regions, library panels and console cards (**28px badge**, `py-8`, compact type). The title stays a real `<h4>` at both steps — `sm` shrinks the type only, so density never costs semantics.
+- **`size?: "sm" | "md"` on `TableEmptyState`** — same vocabulary, scaling cell padding only (`py-12` → `py-6`); its type is already dense at both steps because a table body is an operational surface.
+- **`GlyphSize`** type exported — the four-step scale (`xs`/`sm`/`md`/`lg`) for glyph-shaped things.
+
+### Changed
+
+- **`LoadingState` now composes `Spinner`** instead of owning a second copy of the same `Loader2 + animate-spin`. The same correction DS-5M made when `ComboboxField` came to compose `Combobox`. Its three sizes stay *region* dimensions (16/24/32px) passed through `className`, so **the rendering is unchanged**.
+- **`IconButtonSize` is now an alias of `GlyphSize`**, not a second declaration of the same four names. No behaviour change — the per-component pixel maps stay with their components, since an icon button's glyph is sized relative to its button footprint while a bare spinner is sized absolutely.
+- **Every default is unchanged, so this release is purely additive for existing consumers.**
+
 ## 0.6.0
 
 ### Added

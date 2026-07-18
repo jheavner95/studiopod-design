@@ -10,6 +10,7 @@ import {
   InlineMessage,
   EmptyState,
   LoadingState,
+  Spinner,
   Skeleton,
   ProgressBar,
   ProgressRing,
@@ -139,6 +140,60 @@ function EmptyStateDemo() {
         No data, no results, or a failed load — with illustration and a retry action.
       </Body>
       <EmptyState title="No Production Packages yet" description="Create your first Artwork Project to get started." action={<Button size="sm">Upload asset</Button>} />
+      <Body size="sm" muted>
+        DS-5P — size: <strong>md</strong> (above) is the primary page-level state.{" "}
+        <strong>sm</strong> (below, 28px icon) is the operational density for inspectors,
+        table regions, library panels, and console cards.
+      </Body>
+      <EmptyState size="sm" title="No results" description="Try a different filter." action={<Button size="sm">Clear filters</Button>} />
+    </Card>
+  );
+}
+
+/**
+ * DS-5P — the bare tier. Every example here is the shape the composed tier
+ * cannot serve: a glyph inside a layout the caller owns.
+ */
+function SpinnerDemo() {
+  return (
+    <Card className="flex flex-col gap-3">
+      <span className="text-body-md font-medium text-ink-primary">Spinner</span>
+      <Body size="sm" muted>
+        The bare busy indicator, for embedding in a layout you own. Silent (aria-hidden) by
+        default so it never nests a live region inside the caller&apos;s; pass a label only when
+        it stands alone.
+      </Body>
+
+      <div className="flex items-end gap-4">
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <div key={size} className="flex flex-col items-center gap-1.5">
+            <Spinner size={size} />
+            <span className="text-caption text-ink-tertiary">{size}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* The caller owns the live region; the spinner stays silent inside it. */}
+      <div role="status" aria-live="polite" className="flex items-center gap-2 text-body-sm text-ink-secondary">
+        <Spinner size="sm" />
+        Saving to your library…
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Button size="sm" loading>
+          In a button
+        </Button>
+        <span className="text-caption text-ink-tertiary">
+          (Button owns this one via its own `loading` prop)
+        </span>
+      </div>
+
+      <Body size="sm" muted>
+        Use <strong>Spinner</strong> for a glyph inside your layout · <strong>LoadingState</strong>{" "}
+        for a whole region · <strong>Skeleton</strong> when content has a known shape ·{" "}
+        <strong>ProgressRing</strong> only for real progress (it is a progressbar, not a busy
+        indicator).
+      </Body>
     </Card>
   );
 }
@@ -278,6 +333,7 @@ export function FeedbackGallery() {
           <EmptyStateDemo />
         </CardGrid>
         <CardGrid columns={2}>
+          <SpinnerDemo />
           <LoadingStateDemo />
           <SkeletonDemo />
         </CardGrid>

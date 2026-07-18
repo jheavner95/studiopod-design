@@ -27,6 +27,36 @@
 export type ControlSize = "sm" | "md";
 
 /**
+ * DS-5P — the four-step scale for things that are a *glyph* rather than a
+ * control: an icon button's footprint, a spinner. It extends `ControlSize`
+ * downward (`xs`) and upward (`lg`) because dense table hover-actions and
+ * table-overlay spinners demonstrably need those steps (DS-5L's "design
+ * around demonstrated need"), while keeping the same four names the rest of
+ * the system already uses — no component invents its own vocabulary.
+ *
+ * `IconButtonSize` is an alias of this type, not a second declaration.
+ * Per-component pixel maps still differ (an icon button's glyph is sized
+ * relative to its button footprint; a bare spinner is sized absolutely), so
+ * the *scale* is shared here while each map stays with its component's
+ * concern — the same split `CONTROL_TAB_CLASSES` vs `CONTROL_SEGMENT_CLASSES`
+ * already uses.
+ */
+export type GlyphSize = "xs" | "sm" | "md" | "lg";
+
+/**
+ * `Spinner`'s glyph. Absolute sizes, since a bare spinner is dropped into a
+ * caller-owned row rather than sized by a parent control: `xs` 12px for a
+ * dense inline activity dot, `sm` 14px beside caption text, `md` 16px (the
+ * default) beside body text, `lg` 24px for a region or table overlay.
+ */
+export const CONTROL_SPINNER_CLASSES: Record<GlyphSize, string> = {
+  xs: "size-3",
+  sm: "size-3.5",
+  md: "size-4",
+  lg: "size-6",
+};
+
+/**
  * The bordered single-line frame `TextInput`/`SearchInput` render around their
  * input. `sm` pins an explicit h-8; `md` keeps the original padding-driven
  * height (no explicit height) so it renders exactly as before.
@@ -106,6 +136,20 @@ export const CONTROL_CHEVRON_CLASSES: Record<ControlSize, string> = {
 export const CONTROL_TAB_CLASSES: Record<ControlSize, string> = {
   sm: "px-2.5 py-1 text-caption",
   md: "px-3 py-2 text-body-sm",
+};
+
+/**
+ * DS-5P — `EmptyState`'s density. `md` reproduces the pre-DS-5P rendering
+ * exactly (a `size-11` icon badge, `py-10`); `sm` is the operational density
+ * every dense surface needs — inspectors, table regions, library panels and
+ * console cards — landing the icon badge at 28px.
+ */
+export const CONTROL_EMPTY_STATE_CLASSES: Record<
+  ControlSize,
+  { wrapper: string; badge: string; icon: string; gap: string }
+> = {
+  sm: { wrapper: "gap-2 py-8", badge: "size-7", icon: "size-3.5", gap: "gap-0.5" },
+  md: { wrapper: "gap-3 py-10", badge: "size-11", icon: "size-5", gap: "gap-1" },
 };
 
 /** The count/badge pill a `Tab` renders after its label — it tracks the tab's own density. */

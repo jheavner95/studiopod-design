@@ -9,6 +9,7 @@ export { LiveRegionProvider, useAnnounce } from "./LiveRegion";
 
 export { EmptyState, type EmptyStateProps, type EmptyStateTone } from "./EmptyState";
 export { LoadingState } from "./LoadingState";
+export { Spinner, type SpinnerProps, type SpinnerSize } from "./Spinner";
 export { Skeleton, type SkeletonVariant } from "./Skeleton";
 
 export { ProgressBar, type ProgressTone } from "./ProgressBar";
