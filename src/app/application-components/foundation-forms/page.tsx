@@ -7,6 +7,7 @@ import { FieldGallery } from "./_components/FieldGallery";
 import { FieldStatesDemo } from "./_components/FieldStatesDemo";
 import { ValidationDemo } from "./_components/ValidationDemo";
 import { PropertyEditingDemo } from "./_components/PropertyEditingDemo";
+import { ControlTierDemo } from "./_components/ControlTierDemo";
 import { FIELD_STATE_DOCS } from "./_data/states";
 import { FORM_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
 import { FORM_GUIDANCE } from "./_data/implementation-guidance";
@@ -65,6 +66,19 @@ export default function FoundationFormsPage() {
             descriptionMaxWidth={false}
           />
           <FieldGallery />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="control-tiers"
+            eyebrow={<Eyebrow tone="accent">Control tiers</Eyebrow>}
+            title="Control tier vs field tier"
+            description="Every control renders bare when given no label or helper text — the control only, intrinsically sized, for toolbars, filter bars, tables and inspectors. Pass a label (or use a Field wrapper) and you get the stacked form field. Size sm lands on h-8, the same height Button's own sm renders."
+            descriptionMaxWidth={false}
+          />
+          <ControlTierDemo />
         </div>
       </SectionShell>
 

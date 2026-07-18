@@ -1,4 +1,5 @@
 export { Button, type ButtonProps } from "./Button";
+export { IconButton, type IconButtonProps, type IconButtonSize } from "./IconButton";
 export { Card, INTERACTIVE_CARD_CLASSES } from "./Card";
 export { SelectableCard, type SelectableCardProps } from "./SelectableCard";
 export { Badge, type StatusTone } from "./Badge";
@@ -14,8 +15,10 @@ export { Skeleton, type SkeletonVariant } from "./Skeleton";
 export { Expandable } from "./Expandable";
 export { Display, Heading, Body, Caption, Metadata } from "./Typography";
 export { TextInput, type TextInputProps, type FieldStatus } from "./TextInput";
+export type { ControlSize } from "@/lib/control-size";
 export { Textarea, type TextareaProps } from "./Textarea";
 export { Select, type SelectProps, type SelectOption } from "./Select";
+export { Combobox, type ComboboxProps, type ComboboxOption } from "./Combobox";
 export { Checkbox, type CheckboxProps } from "./Checkbox";
 export { RadioGroup, type RadioGroupProps, type RadioOption } from "./RadioGroup";
 export { ToggleSwitch, type ToggleSwitchProps } from "./ToggleSwitch";

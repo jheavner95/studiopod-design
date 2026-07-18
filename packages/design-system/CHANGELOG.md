@@ -2,6 +2,22 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.4.0
+
+### Added
+
+- **A bare control tier across the form family** (DS-5M, per the DS-5L architecture review). `TextInput`, `Textarea`, `Select`, `Checkbox`, `ToggleSwitch`, `SearchInput`, and the new `Combobox` now render **only the control** when given no `label` and no `helperText` — no stacked `flex flex-col` wrapper, no forced `w-full`, intrinsically sized — so they drop straight into toolbars, filter bars, and table rows. Passing `label`/`helperText` renders the stacked field exactly as before, so **every existing consumer is unchanged**. Bare usage takes its accessible name from `aria-label`/`aria-labelledby`.
+- **`size?: "sm" | "md"`** on all seven controls, from a new shared scale in `src/lib/control-size.ts`. **`sm` lands on `h-8` — the exact height `Button`'s own `sm` renders** — so a control and a button in the same row align without hand-tuning. `md` is the default and preserves the previous padding-driven sizing byte for byte. *Documented exception:* `Textarea`'s `sm` sizes padding and text only — a textarea takes its height from `rows`, so pinning one would be wrong.
+- **`Combobox`** — the bare typeahead control tier, extracted from `ComboboxField` (ARIA combobox pattern, Arrow/Enter/Escape, `role="listbox"` popup). `ComboboxField` now composes it instead of owning a second copy of the keyboard and listbox logic.
+- **`leadingIcon`** on `Select` and `Combobox` — the filter-bar affordance operational rows rely on (`TextInput` already had one).
+- **`IconButton`** — an icon-only button **built on `Button`** rather than beside it, so variants, focus ring, disabled, and loading can never drift. `aria-label` is **required** by the type. Square at `sm` (size-8) and `md` (size-10); `ghost` is the default variant.
+- **`aria-label` / `aria-labelledby`** are now explicit props on `ToggleSwitch` and `SearchInput`, which previously had no accessible-name path when rendered without a visible label.
+- **`ControlSize`** type exported.
+
+### Changed
+
+- Nothing removed or renamed; `md` remains every control's default. The one behavioural difference is that a control given neither `label` nor `helperText` no longer emits a wrapper `<div>` — the change that makes the operational tier possible.
+
 ## 0.3.0
 
 ### Added
