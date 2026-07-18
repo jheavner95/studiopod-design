@@ -2,7 +2,13 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
-## Unreleased
+## 0.2.2
+
+### Added
+
+- **`Badge` gains an optional `dot` prop** (DS-5I) — renders a static, decorative indicator dot inside the pill, before the label, inheriting the badge's own `tone` (no second tone to pass). Purely additive: `dot` defaults to `false`, so every existing `<Badge>` renders identically, and the export surface is unchanged (a prop addition, not a new export). The dot is `aria-hidden` — the label text always carries the meaning. It is a static in-pill indicator, **not** a `PulseStatus` (the standalone/animated "live" status dot) and **not** a `StatusIndicator` (the dot-plus-label status row); those remain the primitives for those cases (DS-5B Classification 2 — same five-tone concept, different rendered recipe). Backed by a new internal `STATUS_TONE_DOT_CLASSES` map in `src/lib/tone.ts` alongside `STATUS_TONE_PILL_CLASSES`. No new tones: `StatusTone` stays `neutral`/`accent`/`success`/`warning`/`error`; presentation aliases (`info`/`blue` → `accent`) and lifecycle states (`draft`/`archived` → resolved to a canonical tone) are the consumer's mapping, not Badge tones (DS-5H). See `docs/DS-5H-Badge-Semantic-Architecture.md`.
+
+## 0.2.1
 
 ### Added
 

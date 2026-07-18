@@ -121,6 +121,14 @@ export function ComponentGallerySection() {
               <Badge tone="warning">Warning</Badge>
               <Badge tone="error">Error</Badge>
             </div>
+            {/* DS-5I: optional static indicator dot, tone inherited from the badge. */}
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge dot tone="neutral">Draft</Badge>
+              <Badge dot tone="accent">Active</Badge>
+              <Badge dot tone="success">Published</Badge>
+              <Badge dot tone="warning">Queued</Badge>
+              <Badge dot tone="error">Failed</Badge>
+            </div>
             <div className="flex flex-wrap items-center gap-3">
               <SectionBadge icon={<Workflow className="size-3.5" />}>Platform</SectionBadge>
               <SectionBadge>No icon variant</SectionBadge>

@@ -43,3 +43,22 @@ export const STATUS_TONE_PILL_CLASSES: Record<StatusTone, string> = {
   warning: "bg-warning-soft text-warning",
   error: "bg-error-soft text-error",
 };
+
+/**
+ * The solid dot treatment a badge renders for its OPTIONAL leading indicator
+ * (DS-5I). Each value is the solid fill matching that tone's pill *text* color
+ * — so the dot reads as part of the same label, its tone inherited from the
+ * badge rather than passed a second time. This is a static, decorative dot
+ * inside the pill; it is deliberately NOT `PulseStatus`'s recipe (the
+ * standalone/animated "live" dot, DS-5B Classification 2) — the same five-key
+ * tone concept, a different rendered recipe. Every value is a complete,
+ * statically written class string so Tailwind's build-time scanner generates it
+ * (the dynamic-string hazard engineering note 15 warns about).
+ */
+export const STATUS_TONE_DOT_CLASSES: Record<StatusTone, string> = {
+  neutral: "bg-neutral",
+  accent: "bg-accent-400",
+  success: "bg-success",
+  warning: "bg-warning",
+  error: "bg-error",
+};
