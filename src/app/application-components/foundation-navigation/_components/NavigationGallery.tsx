@@ -118,7 +118,7 @@ function SegmentedControlDemo() {
       />
       <Body size="sm" muted>
         DS-5O — size: md (above, unchanged) and sm (below, 28px). At sm the segment takes an explicit
-        height, since the pill track's own padding sits outside it.
+        height and the track tightens, since track padding and border sit outside the segment.
       </Body>
       <SegmentedControl
         aria-label="Time range, compact"
