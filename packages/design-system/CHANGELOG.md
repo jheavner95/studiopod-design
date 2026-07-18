@@ -2,6 +2,18 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.5.0
+
+### Added
+
+- **`IconButton` gains a `pressed?: boolean`** (DS-5N) — the ARIA toggle-button pattern for an icon button that is currently on (a pinned filter, an active canvas tool). Renders `aria-pressed` plus a selected treatment, without overriding the variant the consumer chose. Left `undefined` for a plain action button, so `aria-pressed` is absent rather than `"false"`.
+- **`IconButton` glyph sizing per footprint** — a 24px button no longer carries a 20px icon.
+
+### Changed
+
+- **`IconButton`'s size scale is now four steps: `xs` 24 · `sm` 28 · **`md` 32 (default)** · `lg` 40** (DS-5N), replacing the two-step `sm` 32 / `md` 40 introduced in 0.4.0. `md` is `Button`'s own `sm` and the control tier's `sm` (h-8), so an icon button sits flush beside either in a toolbar row; `lg` is `Button`'s `md` (h-10). `xs`/`sm` sit below that floor because dense table hover-actions and inspector rows demonstrably need them (DS-5L's "design around demonstrated need").
+  - **This renames the two existing steps** (old `sm`=32 → new `md`; old `md`=40 → new `lg`) and changes the default from 40px to 32px. Done deliberately now: `IconButton` shipped in 0.4.0 and **has no consumers yet**, so the realignment is free at this moment and would be breaking at any later one. No other component is affected.
+
 ## 0.4.0
 
 ### Added

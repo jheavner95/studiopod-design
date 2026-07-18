@@ -63,8 +63,8 @@ export function ControlTierDemo() {
           <ToggleSwitch aria-label="Live updates" size="sm" checked={live} onChange={setLive} />
           <Caption className="text-ink-tertiary">Live</Caption>
           <span className="flex-1" />
-          <IconButton aria-label="Edit" size="sm" icon={<Pencil />} />
-          <IconButton aria-label="Delete" size="sm" variant="destructive" icon={<Trash2 />} />
+          <IconButton aria-label="Edit" icon={<Pencil />} />
+          <IconButton aria-label="Delete" variant="destructive" icon={<Trash2 />} />
         </div>
       </Demo>
 

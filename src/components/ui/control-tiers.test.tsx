@@ -241,11 +241,30 @@ describe("DS-5M — IconButton", () => {
     expect(screen.getByTestId("trash")).toBeInTheDocument();
   });
 
-  it("is square at sm and md, aligned to Button's heights", () => {
-    const { rerender } = render(<IconButton aria-label="a" size="sm" icon={<svg />} />);
+  it("DS-5N: four square steps — xs 24 · sm 28 · md 32 (default) · lg 40", () => {
+    const cases: Array<["xs" | "sm" | "md" | "lg", string]> = [
+      ["xs", "size-6"],
+      ["sm", "size-7"],
+      ["md", "size-8"],
+      ["lg", "size-10"],
+    ];
+    const { rerender } = render(<IconButton aria-label="a" icon={<svg />} />);
+    // default is md (32) — Button's own sm height, so it lines up in a toolbar
     expect(screen.getByRole("button", { name: "a" })).toHaveClass("size-8");
-    rerender(<IconButton aria-label="a" size="md" icon={<svg />} />);
-    expect(screen.getByRole("button", { name: "a" })).toHaveClass("size-10");
+    for (const [size, cls] of cases) {
+      rerender(<IconButton aria-label="a" size={size} icon={<svg />} />);
+      expect(screen.getByRole("button", { name: "a" })).toHaveClass(cls);
+    }
+  });
+
+  it("DS-5N: pressed renders the ARIA toggle-button state", () => {
+    const { rerender } = render(<IconButton aria-label="Pin" icon={<svg />} />);
+    // absent (not "false") for a plain action button
+    expect(screen.getByRole("button", { name: "Pin" })).not.toHaveAttribute("aria-pressed");
+    rerender(<IconButton aria-label="Pin" icon={<svg />} pressed />);
+    expect(screen.getByRole("button", { name: "Pin", pressed: true })).toBeInTheDocument();
+    rerender(<IconButton aria-label="Pin" icon={<svg />} pressed={false} />);
+    expect(screen.getByRole("button", { name: "Pin", pressed: false })).toBeInTheDocument();
   });
 
   it("stays square inside a flex toolbar row — shrink-0, not a collapsible flex item", () => {
