@@ -8,7 +8,16 @@ import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 import { DialogContext } from "./dialog-context";
 
-export type DrawerEdge = "right" | "bottom";
+/**
+ * DS-5Q — `left` joins the edge vocabulary. `right` remains the default and
+ * the inspector/detail convention; `bottom` is the mobile sheet; `left` is the
+ * navigation convention (a library or nav panel docked to the reading edge in
+ * LTR). Added on demonstrated need: the application pairs a left-docked device
+ * library with a right-docked settings panel on the same screen, so flipping
+ * either to another edge would change the interaction model rather than
+ * express it.
+ */
+export type DrawerEdge = "left" | "right" | "bottom";
 
 interface DrawerProps {
   open: boolean;
@@ -24,13 +33,23 @@ interface DrawerProps {
 }
 
 const edgePanelClass: Record<DrawerEdge, string> = {
+  left: "inset-y-0 left-0 h-full w-full max-w-md",
   right: "inset-y-0 right-0 h-full w-full max-w-md",
   bottom: "inset-x-0 bottom-0 max-h-[85vh] w-full",
 };
 
+/** Where the panel sits before it slides in — mirrored on the x axis for `left`. */
 const edgeOffscreen: Record<DrawerEdge, { x?: string; y?: string }> = {
+  left: { x: "-100%" },
   right: { x: "100%" },
   bottom: { y: "100%" },
+};
+
+/** The border faces the content, so it sits on the edge opposite the dock. */
+const edgeBorderClass: Record<DrawerEdge, string> = {
+  left: "border-r",
+  right: "border-l",
+  bottom: "border-t",
 };
 
 /**
@@ -111,7 +130,7 @@ export function Drawer({
                 transition={motionEnabled ? transition({ duration: "normal", ease: "enter", speed }) : undefined}
                 className={cn(
                   "absolute flex flex-col gap-4 overflow-y-auto border-border-subtle bg-surface p-6 shadow-[var(--shadow-modal)]",
-                  edge === "right" ? "border-l" : "border-t",
+                  edgeBorderClass[edge],
                   edgePanelClass[edge],
                   className,
                 )}

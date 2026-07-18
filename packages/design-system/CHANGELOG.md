@@ -2,6 +2,20 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.8.0
+
+### Added
+
+- **`DrawerEdge` gains `"left"`** (DS-5Q) — the edge vocabulary is now `left | right | bottom`. `right` remains the default and the inspector/detail convention, `bottom` is the mobile sheet, and `left` is the navigation convention (a library or nav panel docked to the reading edge in LTR).
+  - **Added on demonstrated, *paired* need.** One usage is normally thin evidence (DS-5L), but the consuming application renders a left-docked device library **and** a right-docked settings panel on the same screen. Neither existing edge could express that: `right` collides with the inspector's meaning and position, and `bottom` converts a persistent library into a mobile sheet — changing the interaction model to work around an API limit. The alternative, a `className` position override in the application, would re-implement Drawer positioning outside this system.
+  - `left` mirrors `right` on the x axis and nothing else: `left-0` instead of `right-0`, `x: "-100%"` instead of `x: "100%"`, and `border-r` instead of `border-l` (**the border faces the content**, so a left drawer borders on its right).
+  - Focus trap, Escape, backdrop dismiss, body lock, portal and the shared `DialogContext` are edge-independent and untouched. `left` adds **no** reduced-motion branch — motion is disabled globally and `left` only changes the sign of an offset.
+
+### Changed
+
+- The panel border moved from a two-way ternary (`edge === "right" ? "border-l" : "border-t"`) into an `edgeBorderClass` map. With three edges a two-way ternary silently mislabels one of them.
+- **`right` remains the default, so every existing `Drawer` consumer is unchanged.** Widening an accepted input union is additive, not breaking.
+
 ## 0.7.0
 
 ### Added

@@ -106,9 +106,15 @@ function DrawerDemo() {
     <Card className="flex flex-col gap-3">
       <span className="text-body-md font-medium text-ink-primary">Drawer</span>
       <Body size="sm" muted>
-        Slides in from an edge without fully blocking the page — Right edge and Bottom edge variants.
+        Slides in from an edge without fully blocking the page. DS-5Q — three edges:
+        <strong> left</strong> for navigation and library panels,{" "}
+        <strong>right</strong> (default) for inspectors and detail,{" "}
+        <strong>bottom</strong> for mobile sheets.
       </Body>
       <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" size="sm" onClick={() => openWith("left")}>
+          Open left drawer
+        </Button>
         <Button variant="secondary" size="sm" onClick={() => openWith("right")}>
           Open right drawer
         </Button>
