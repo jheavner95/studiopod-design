@@ -2,6 +2,17 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.3.0
+
+### Added
+
+- **Dialog composition family** (DS-5K) — `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogBody`, `DialogFooter`, `DialogClose`. `Dialog` (and `Drawer`) become composed rather than configured: structure is assembled from these parts instead of passed as `title`/`footer` props. **`DialogTitle` and `DialogDescription` auto-register** their generated ids so the surface sets `aria-labelledby`/`aria-describedby` with **zero consumer id-plumbing** — via a shared internal `DialogContext` that both `Dialog` and `Drawer` provide (one implementation; the same parts compose inside a `Drawer`). `DialogClose` renders the canonical ✕ (`aria-label="Close"`) and closes via context. Backward compatible: a bare `<Dialog>{children}</Dialog>` still works, and `labelledBy`/`describedBy` remain as explicit override escape-hatches.
+- **`ConfirmDialog`** (DS-5K) — the canonical confirmation convenience, built on `Dialog size="sm"` + the composition parts + the DS `Button`. Props: `open`, `onOpenChange`, `onConfirm`, `title`, `description?`, `confirmLabel?`, `cancelLabel?`, `tone?: "default" | "destructive"`, `loading?`. `role="alertdialog"`; Escape cancels; focus defaults to the safe action (Cancel renders first); `loading` disables both actions and blocks dismissal. **No `warning` tone** — a confirm action is `default` or `destructive` (aligns with the DS-5G Button decision). No application logic — the consumer owns copy and intent. Resolves the DS-6.4 gap.
+
+### Changed
+
+- **`Dialog`/`Drawer`: `dismissible` now also gates Escape** (previously it gated only backdrop click). A non-dismissible surface (`dismissible={false}`, e.g. blocking progress or a confirm mid-submit) is now inescapable by keyboard as well — the correct semantics for a blocking dialog. Default `dismissible={true}` so Escape still closes by default. `Dialog` also gains an optional `role?: "dialog" | "alertdialog"` (default `"dialog"`), and `Drawer` gains `describedBy` for parity. All additive/backward-compatible.
+
 ## 0.2.2
 
 ### Added

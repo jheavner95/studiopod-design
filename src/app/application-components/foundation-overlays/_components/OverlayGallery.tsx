@@ -6,6 +6,13 @@ import { CardGrid } from "@/components/layout";
 import { Card, Button, Body, Caption } from "@/components/ui";
 import {
   Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogBody,
+  DialogFooter,
+  DialogClose,
+  ConfirmDialog,
   Drawer,
   type DrawerEdge,
   Popover,
@@ -16,35 +23,72 @@ import {
   type CommandPaletteItem,
 } from "@/components/overlay";
 
+// DS-5K: the canonical composition pattern — structure assembled from Dialog* parts,
+// with DialogTitle/DialogDescription auto-wiring aria-labelledby/describedby (no ids).
 function DialogDemo() {
   const [open, setOpen] = useState(false);
   return (
     <Card className="flex flex-col gap-3">
       <span className="text-body-md font-medium text-ink-primary">Dialog</span>
       <Body size="sm" muted>
-        A focused, modal surface — focus trapped inside, Escape and backdrop click both close it.
+        A focused, modal surface composed from Dialog* parts — focus trapped inside, Escape and backdrop click both close it.
       </Body>
       <Button variant="secondary" size="sm" onClick={() => setOpen(true)} className="w-fit">
-        Open confirmation dialog
+        Open dialog
       </Button>
-      <Dialog open={open} onOpenChange={setOpen} size="sm" labelledBy="demo-dialog-title" describedBy="demo-dialog-body">
-        <span id="demo-dialog-title" className="text-body-md font-medium text-ink-primary">
-          Archive Poster proof #118?
-        </span>
-        <div id="demo-dialog-body">
+      <Dialog open={open} onOpenChange={setOpen} size="md">
+        <DialogHeader>
+          <DialogTitle>Rename production package</DialogTitle>
+          <DialogDescription>Changing the name updates its slug across the render queue.</DialogDescription>
+          <DialogClose />
+        </DialogHeader>
+        <DialogBody>
           <Body size="sm" muted>
-            This can&rsquo;t be undone. The production package will be archived and removed from the active render queue.
+            The composition parts own layout, scroll, and accessibility — the consumer supplies only content.
           </Body>
-        </div>
-        <div className="flex justify-end gap-2 pt-2">
-          <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>
+        </DialogBody>
+        <DialogFooter>
+          <Button variant="secondary" size="sm" onClick={() => setOpen(false)}>
             Cancel
           </Button>
           <Button variant="primary" size="sm" onClick={() => setOpen(false)}>
-            Archive Production Package
+            Save
           </Button>
-        </div>
+        </DialogFooter>
       </Dialog>
+    </Card>
+  );
+}
+
+// DS-5K: the confirmation convenience — Cancel + Confirm, destructive tone, loading.
+function ConfirmDialogDemo() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  return (
+    <Card className="flex flex-col gap-3">
+      <span className="text-body-md font-medium text-ink-primary">ConfirmDialog</span>
+      <Body size="sm" muted>
+        A destructive confirmation — <code>role=&quot;alertdialog&quot;</code>, focus defaults to Cancel, loading disables both actions.
+      </Body>
+      <Button variant="destructive" size="sm" onClick={() => setOpen(true)} className="w-fit">
+        Delete style
+      </Button>
+      <ConfirmDialog
+        open={open}
+        onOpenChange={(next) => !loading && setOpen(next)}
+        onConfirm={() => {
+          setLoading(true);
+          window.setTimeout(() => {
+            setLoading(false);
+            setOpen(false);
+          }, 900);
+        }}
+        title="Delete style?"
+        description="This permanently removes the style and cannot be undone."
+        confirmLabel={loading ? "Deleting…" : "Delete"}
+        tone="destructive"
+        loading={loading}
+      />
     </Card>
   );
 }
@@ -72,13 +116,18 @@ function DrawerDemo() {
           Open bottom drawer
         </Button>
       </div>
-      <Drawer open={open} onOpenChange={setOpen} edge={edge} labelledBy="demo-drawer-title">
-        <span id="demo-drawer-title" className="text-body-md font-medium text-ink-primary">
-          Trailhead mug wrap — details
-        </span>
-        <Body size="sm" muted>
-          Stage: Quality Gate. Assignee: Priya N. The {edge} edge variant — docked to the {edge} of the viewport, focus trapped while open.
-        </Body>
+      {/* DS-5K: Drawer reuses the exact same Dialog* composition parts (one shared context). */}
+      <Drawer open={open} onOpenChange={setOpen} edge={edge}>
+        <DialogHeader>
+          <DialogTitle>Trailhead mug wrap — details</DialogTitle>
+          <DialogDescription>Stage: Quality Gate · Assignee: Priya N.</DialogDescription>
+          <DialogClose />
+        </DialogHeader>
+        <DialogBody>
+          <Body size="sm" muted>
+            The {edge} edge variant — docked to the {edge} of the viewport, focus trapped while open. Same parts as Dialog.
+          </Body>
+        </DialogBody>
       </Drawer>
     </Card>
   );
@@ -189,6 +238,7 @@ export function OverlayGallery() {
   return (
     <CardGrid columns={3}>
       <DialogDemo />
+      <ConfirmDialogDemo />
       <DrawerDemo />
       <PopoverDemo />
       <MenuDemo />

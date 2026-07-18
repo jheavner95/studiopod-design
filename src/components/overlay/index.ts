@@ -5,5 +5,7 @@ export { Popover } from "./Popover";
 export { Menu } from "./Menu";
 export { MenuItem, type MenuItemProps } from "./MenuItem";
 export { Dialog, type DialogSize } from "./Dialog";
+export { DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose } from "./DialogParts";
+export { ConfirmDialog, type ConfirmTone } from "./ConfirmDialog";
 export { Drawer, type DrawerEdge } from "./Drawer";
 export { CommandPalette, type CommandPaletteItem } from "./CommandPalette";
