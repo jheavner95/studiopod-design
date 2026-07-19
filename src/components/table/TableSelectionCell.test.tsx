@@ -54,11 +54,62 @@ describe("TableSelectionCell", () => {
       expect(screen.getByRole("checkbox")).toBeDisabled();
     });
 
-    it("calls onChange with the new checked value", () => {
+    it("calls onChange with the new checked value as the first argument", () => {
       const onChange = vi.fn();
       renderCell({ onChange });
       fireEvent.click(screen.getByRole("checkbox"));
-      expect(onChange).toHaveBeenCalledWith(true);
+      expect(onChange.mock.calls[0][0]).toBe(true);
+    });
+
+    it("passes the native change event as the second argument", () => {
+      const onChange = vi.fn();
+      renderCell({ onChange });
+      fireEvent.click(screen.getByRole("checkbox"));
+      const event = onChange.mock.calls[0][1];
+      expect(event).toBeDefined();
+      expect(event.target).toBe(screen.getByRole("checkbox"));
+      expect(event.nativeEvent).toBeInstanceOf(Event);
+    });
+
+    it("exposes modifier keys so a caller can drive a modifier-aware selection model", () => {
+      // The blocking case this argument exists for: a caller must be able to
+      // tell a plain click from a shift-click at runtime, not just by types.
+      const seen: Array<{ checked: boolean; shiftKey: boolean }> = [];
+      renderCell({
+        onChange: (checked, event) =>
+          seen.push({ checked, shiftKey: (event.nativeEvent as MouseEvent).shiftKey }),
+      });
+      const checkbox = screen.getByRole("checkbox");
+      fireEvent.click(checkbox, { shiftKey: true });
+      fireEvent.click(checkbox, { shiftKey: false });
+      expect(seen).toEqual([
+        { checked: true, shiftKey: true },
+        { checked: true, shiftKey: false },
+      ]);
+    });
+
+    it("keeps one-argument callbacks working unchanged", () => {
+      // Backward compatibility: every consumer migrated before this change
+      // ignores the second argument.
+      const received: boolean[] = [];
+      const legacy = (checked: boolean) => { received.push(checked); };
+      renderCell({ onChange: legacy });
+      fireEvent.click(screen.getByRole("checkbox"));
+      expect(received).toEqual([true]);
+    });
+
+    it("keeps the disabled state on the underlying input", () => {
+      // Asserted as state rather than "onChange never fires": fireEvent
+      // dispatches programmatically and does not model the browser's own
+      // gating of disabled controls, so an event-based assertion here would
+      // be testing the test library, not this component.
+      renderCell({ onChange: () => {}, disabled: true });
+      expect(screen.getByRole("checkbox")).toBeDisabled();
+    });
+
+    it("still reports indeterminate on the underlying checkbox", () => {
+      renderCell({ indeterminate: true });
+      expect((screen.getByRole("checkbox") as HTMLInputElement).indeterminate).toBe(true);
     });
 
     it("stops the click from propagating to a parent row's own onClick", () => {
