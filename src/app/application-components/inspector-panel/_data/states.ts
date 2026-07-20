@@ -5,7 +5,7 @@ export interface InspectorStateNote {
 
 export const INSPECTOR_STATES: InspectorStateNote[] = [
   { state: "Loading", note: "InspectorPanel's loading prop swaps the body for Foundation Feedback's LoadingState — the header and footer stay put so the panel's shape doesn't shift." },
-  { state: "Empty", note: "InspectorPanel's emptyState prop swaps the body for Foundation Feedback's EmptyState — nothing is selected yet, distinct from a selected object that failed to load." },
+  { state: "Empty", note: "InspectorPanel's isEmpty prop swaps the body for an empty state — nothing is selected yet, distinct from a selected object that failed to load. Pass an element to emptyState to own the title and description yourself; omit it for the default \"Nothing selected\". A string is still accepted and becomes the description under that fixed title (the pre-DS-6.9C3B contract). Omitting isEmpty falls back to the truthiness of emptyState, so callers written before isEmpty existed are unchanged." },
   { state: "Read-only", note: "InspectorProperty's read mode (label/value via MetadataField) is the default for any field the caller doesn't pass an edit control for — there's no panel-wide read-only toggle, each property decides independently." },
   { state: "Editing", note: "A property is editing the instant its InspectorProperty renders a Foundation Forms field as children instead of a label/value pair — matching the Inspector Workspace's own \"no separate edit-mode toggle\" guidance." },
   { state: "Validation Errors", note: "InspectorValidation renders Foundation Feedback's ValidationSummary, which escalates to role=\"alert\" the instant any item's severity is \"error\"." },

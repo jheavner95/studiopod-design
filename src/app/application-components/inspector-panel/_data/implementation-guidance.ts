@@ -5,6 +5,10 @@ export interface ImplementationGuidanceTopic {
 
 export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   {
+    label: "Empty-state ownership",
+    text: "Drive the empty state from isEmpty, set from your own selection state — not from whether emptyState happens to be present. Pass a full EmptyState element when the panel needs its own wording (\"No asset selected\", \"Select a layer to inspect\"); omit emptyState entirely for the default. Passing a bare string still works and still renders as the description under \"Nothing selected\", but new code should prefer an element so the title says something specific.",
+  },
+  {
     label: "Inspector hierarchy",
     text: "InspectorPanel → InspectorSection → InspectorGroup → InspectorProperty is the full nesting depth this family supports — a Property never contains another Section. If content needs a second level of grouping beyond Group, it belongs in its own Section instead of a deeper Group.",
   },

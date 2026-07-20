@@ -4,6 +4,7 @@ import { runA11yCheck } from "@test/a11y";
 import { InspectorPanel, type InspectorPanelProps } from "./InspectorPanel";
 import { PropertyPanel as PropertyPanelAlias } from "./PropertyPanel";
 import { InspectorHeader } from "./InspectorHeader";
+import { EmptyState } from "@/components/feedback";
 
 function panel(props: Partial<InspectorPanelProps> = {}) {
   return <InspectorPanel header={<InspectorHeader name="Hero Image" />} {...props} />;
@@ -78,37 +79,89 @@ describe("InspectorPanel", () => {
       expect(screen.queryByText("Pick something")).not.toBeInTheDocument();
       expect(screen.queryByText("Body")).not.toBeInTheDocument();
     });
+
+    it("prefers loading over an explicit isEmpty — precedence is loading, empty, children", () => {
+      render(panel({ loading: true, isEmpty: true, emptyState: <span>Nothing here</span>, children: <p>Body</p> }));
+      expect(screen.queryByText("Nothing here")).not.toBeInTheDocument();
+      expect(screen.queryByText("Nothing selected")).not.toBeInTheDocument();
+      expect(screen.queryByText("Body")).not.toBeInTheDocument();
+    });
   });
 
   describe("empty state", () => {
-    it("renders the empty state in place of children when supplied", () => {
-      render(panel({ emptyState: "Select an asset to inspect", children: <p>Body</p> }));
-      expect(screen.getByText("Select an asset to inspect")).toBeInTheDocument();
-      expect(screen.queryByText("Body")).not.toBeInTheDocument();
+    describe("isEmpty ownership (DS-6.9C3B / R1)", () => {
+      it("renders children when isEmpty is false, even with an emptyState supplied", () => {
+        render(panel({ isEmpty: false, emptyState: <span>Nothing here</span>, children: <p>Body</p> }));
+        expect(screen.getByText("Body")).toBeInTheDocument();
+        expect(screen.queryByText("Nothing here")).not.toBeInTheDocument();
+      });
+
+      it("renders the empty state when isEmpty is true, suppressing children", () => {
+        render(panel({ isEmpty: true, emptyState: <span>Nothing here</span>, children: <p>Body</p> }));
+        expect(screen.getByText("Nothing here")).toBeInTheDocument();
+        expect(screen.queryByText("Body")).not.toBeInTheDocument();
+      });
+
+      it("renders the default empty state when isEmpty is true and no node is given", () => {
+        render(panel({ isEmpty: true, children: <p>Body</p> }));
+        expect(screen.getByText("Nothing selected")).toBeInTheDocument();
+        expect(screen.queryByText("Body")).not.toBeInTheDocument();
+      });
     });
 
-    it("renders children when emptyState is omitted", () => {
-      render(panel({ children: <p>Body</p> }));
-      expect(screen.getByText("Body")).toBeInTheDocument();
+    describe("custom empty content", () => {
+      it("renders a supplied element as given — the caller owns its title", () => {
+        render(
+          panel({
+            isEmpty: true,
+            emptyState: <EmptyState title="No asset selected" description="Pick one from the list." />,
+            children: <p>Body</p>,
+          }),
+        );
+        // The caller's title wins; the old hardcoded one must not appear.
+        expect(screen.getByText("No asset selected")).toBeInTheDocument();
+        expect(screen.getByText("Pick one from the list.")).toBeInTheDocument();
+        expect(screen.queryByText("Nothing selected")).not.toBeInTheDocument();
+      });
+
+      it("renders arbitrary non-EmptyState content untouched", () => {
+        render(panel({ isEmpty: true, emptyState: <button type="button">Create the first asset</button> }));
+        expect(screen.getByRole("button", { name: "Create the first asset" })).toBeInTheDocument();
+        expect(screen.queryByText("Nothing selected")).not.toBeInTheDocument();
+      });
     });
 
-    /**
-     * DS-6.9C2 finding R1, pinned as behaviour rather than asserted as correct.
-     * `emptyState` is truthy-checked rather than driven by an explicit
-     * `isEmpty` flag, and the EmptyState title is hardcoded to "Nothing
-     * selected" with the caller's node used as the DESCRIPTION. A caller who
-     * passes a constant emptyState therefore never renders children at all.
-     * These two tests exist so that if R1 changes the contract, the change is
-     * deliberate and visible rather than silent.
-     */
-    it("hardcodes the empty-state title and demotes the caller's node to description", () => {
-      render(panel({ emptyState: "Select an asset to inspect", children: <p>Body</p> }));
-      expect(screen.getByText("Nothing selected")).toBeInTheDocument();
-    });
+    describe("backwards compatibility", () => {
+      /**
+       * The pre-R1 contract: a truthy `emptyState` alone switched the panel to
+       * its empty state, and a string became the DESCRIPTION under the fixed
+       * title "Nothing selected". Both are preserved so no existing caller
+       * had to change.
+       */
+      it("a string still renders as the description under the fixed title", () => {
+        render(panel({ emptyState: "Select an asset to inspect", children: <p>Body</p> }));
+        expect(screen.getByText("Nothing selected")).toBeInTheDocument();
+        expect(screen.getByText("Select an asset to inspect")).toBeInTheDocument();
+        expect(screen.queryByText("Body")).not.toBeInTheDocument();
+      });
 
-    it("suppresses children whenever emptyState is truthy — even with content available", () => {
-      render(panel({ emptyState: <span>Always passed</span>, children: <p>Real content</p> }));
-      expect(screen.queryByText("Real content")).not.toBeInTheDocument();
+      it("a string still obeys isEmpty when the caller opts in", () => {
+        render(panel({ isEmpty: false, emptyState: "Select an asset to inspect", children: <p>Body</p> }));
+        expect(screen.getByText("Body")).toBeInTheDocument();
+        expect(screen.queryByText("Nothing selected")).not.toBeInTheDocument();
+      });
+
+      it("without isEmpty, a truthy emptyState still switches the panel", () => {
+        render(panel({ emptyState: <span>Legacy node</span>, children: <p>Body</p> }));
+        expect(screen.getByText("Legacy node")).toBeInTheDocument();
+        expect(screen.queryByText("Body")).not.toBeInTheDocument();
+      });
+
+      it("without isEmpty and without emptyState, children render normally", () => {
+        render(panel({ children: <p>Body</p> }));
+        expect(screen.getByText("Body")).toBeInTheDocument();
+        expect(screen.queryByText("Nothing selected")).not.toBeInTheDocument();
+      });
     });
   });
 
@@ -139,6 +192,10 @@ describe("InspectorPanel", () => {
       expect(await runA11yCheck(loading)).toHaveNoA11yViolations();
       const { container: empty } = render(panel({ emptyState: "Nothing here" }));
       expect(await runA11yCheck(empty)).toHaveNoA11yViolations();
+      const { container: customEmpty } = render(
+        panel({ isEmpty: true, emptyState: <EmptyState title="No asset selected" /> }),
+      );
+      expect(await runA11yCheck(customEmpty)).toHaveNoA11yViolations();
     });
   });
 });
