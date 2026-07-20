@@ -9,7 +9,18 @@ interface InspectorHeaderProps {
   name: ReactNode;
   type?: ReactNode;
   status?: { label: string; tone?: StatusTone };
-  /** A dismiss control — pass when the Inspector renders inside a Drawer/mobile view. */
+  /**
+   * **This is the inspector's dismiss/close affordance.** Pass it and the
+   * header renders a close button labelled "Close inspector"; omit it and no
+   * dismiss control appears at all.
+   *
+   * The name says `onCollapse` for historical reasons — it dismisses the
+   * inspector, it does not collapse it to a rail. There is no separate
+   * `onClose` prop, and no other component in this family owns dismissal.
+   *
+   * Typical callers: an inspector inside a `Drawer`, or a persistent
+   * `WorkspaceInspector` the user can close.
+   */
   onCollapse?: () => void;
   className?: string;
 }

@@ -14,6 +14,10 @@ import { InspectorStatus } from "./InspectorStatus";
 import { InspectorHistory, type InspectorHistoryEntry } from "./InspectorHistory";
 import { InspectorValidation } from "./InspectorValidation";
 import { PropertyGroup } from "./PropertyGroup";
+import { PropertyActions } from "./PropertyActions";
+import { PropertyLabel } from "./PropertyLabel";
+import { PropertyValue } from "./PropertyValue";
+import { MetadataLabel, MetadataValue } from "@/components/metadata";
 import { PropertyGroup as MetadataPropertyGroup } from "@/components/metadata";
 
 describe("InspectorProperty", () => {
@@ -304,5 +308,37 @@ describe("InspectorActions inside InspectorFooter", () => {
     );
     await user.click(screen.getByRole("button", { name: "Publish" }));
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+/**
+ * DS-6.9C3C — the three Property aliases the C3A scope list omitted. They are
+ * pure re-exports, so their behaviour is already covered through their targets;
+ * what needs asserting is that they remain aliases and never quietly become
+ * second implementations. Every export graduating to Stable carries at least
+ * one assertion, and these close that gap.
+ */
+describe("Property aliases (graduation coverage)", () => {
+  it("PropertyActions is InspectorActions", () => {
+    expect(PropertyActions).toBe(InspectorActions);
+  });
+
+  it("PropertyLabel is Metadata's MetadataLabel", () => {
+    expect(PropertyLabel).toBe(MetadataLabel);
+  });
+
+  it("PropertyValue is Metadata's MetadataValue", () => {
+    expect(PropertyValue).toBe(MetadataValue);
+  });
+
+  it("renders a label/value pair through the aliases", () => {
+    render(
+      <>
+        <PropertyLabel>Width</PropertyLabel>
+        <PropertyValue>1920</PropertyValue>
+      </>,
+    );
+    expect(screen.getByText("Width")).toBeInTheDocument();
+    expect(screen.getByText("1920")).toBeInTheDocument();
   });
 });

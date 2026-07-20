@@ -356,6 +356,13 @@ export interface WorkspaceInspectorProps {
    * viewport; hiding is the honest default rather than crushing the content
    * region. `hidden` also removes it from the focus order — a CSS-only
    * narrowing must not strand keyboard users in an invisible panel.
+   *
+   * **This defaults to `true`, so the inspector disappears below `lg` unless
+   * you opt out.** A consumer that needs the panel visible at every width must
+   * set `hideBelowLg={false}` explicitly. If instead the panel should remain
+   * reachable on small screens *without* sitting beside the content, render
+   * the same `InspectorPanel` inside a `Drawer` at that breakpoint rather than
+   * forcing this aside to stay put.
    * @default true
    */
   hideBelowLg?: boolean;

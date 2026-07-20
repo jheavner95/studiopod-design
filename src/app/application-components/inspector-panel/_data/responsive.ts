@@ -4,9 +4,9 @@ export interface BreakpointNote {
 }
 
 export const BREAKPOINT_NOTES: BreakpointNote[] = [
-  { breakpoint: "Desktop", note: "The Inspector sits as a permanent side panel alongside the primary workspace; every section can stay expanded at once without crowding." },
+  { breakpoint: "Desktop", note: "The Inspector sits as a permanent side panel alongside the primary workspace; every section can stay expanded at once without crowding. Use Foundation Layout's WorkspaceInspector as that docked aside — it supplies the complementary landmark, the accessible name and the width; InspectorPanel supplies the chrome inside it. There is deliberately no separate drawer-inspector or docked-inspector component: the same InspectorPanel composes into either container." },
   { breakpoint: "Tablet", note: "The same panel holds, but Sections default to collapsed sooner (the caller's own choice of defaultOpen) since there's less vertical room to show everything expanded at once." },
-  { breakpoint: "Mobile", note: "The Inspector becomes a full-screen Drawer (the Overlay System's own Drawer, edge=\"bottom\" or \"right\") rather than a permanent side panel — InspectorPanel itself doesn't know whether it's in a Drawer or docked; that choice belongs to the caller composing them together." },
+  { breakpoint: "Mobile", note: "The Inspector becomes a full-screen Drawer (the Overlay System's own Drawer, edge=\"bottom\" or \"right\") rather than a permanent side panel — InspectorPanel itself doesn't know whether it's in a Drawer or docked; that choice belongs to the caller composing them together. Note that WorkspaceInspector hides below lg by default (hideBelowLg), which is what makes the Drawer the small-screen presentation; a consumer that genuinely needs the aside visible at every width must set hideBelowLg={false} instead." },
 ];
 
 export interface ResponsiveTopic {

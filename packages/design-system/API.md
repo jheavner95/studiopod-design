@@ -37,13 +37,62 @@ No new entry points were added in RM-5.5. `/application`, `/platform`, `/workflo
 | `table` | `@/components/table` | A. Stable | Keep as-is | react | Likely | Yes |
 | `metadata` | `@/components/metadata` (minus `DescriptionList`, a duplicate) | A. Stable | Keep as-is | react, **next** (`RelationshipList` only) | Likely | Yes |
 | `motion` (composition components) | `@/components/motion` | A. Stable | Keep as-is | react, framer-motion | Yes | Yes |
-| `operational` | `@/components/operational` (minus 3 duplicates, `PropertyEditor`/`FilterBar`/`FilterChip` renamed) | **B. Experimental** | Keep exported, but do not treat as stability-guaranteed yet — largest (114-file), newest, most domain-specific family; clean and generic per RM-1's audit but unproven with a second real consumer | react, **next** (`AssetThumbnail`, `QueueWidget`) | No | Likely |
+| `operational` — Inspector/Property subset | `@/components/operational` (`Inspector*`, `Property*`; `PropertyEditor` exported as `InspectorPropertyEditor`) | **A. Stable** | Graduated in DS-6.9C3C. The canonical Inspector API for StudioPOD — see "Inspector/Property graduation" below | react | Likely | Yes |
+| `operational` — everything else | `@/components/operational` (minus 3 duplicates, `FilterBar`/`FilterChip` renamed) | **B. Experimental** | Keep exported, but do not treat as stability-guaranteed yet — still the largest, newest, most domain-specific family; clean and generic per RM-1's audit but unproven with a second real consumer | react, **next** (`AssetThumbnail`, `QueueWidget`) | No | Likely |
 | `workflow` | `@/components/workflow` | **B. Experimental** | Same reasoning as `operational` | react | No | Likely |
 | `hooks` | `@/hooks` | A. Stable | Keep as-is | react | Yes | Yes |
 | `providers` | `@/providers` | A. Stable | Keep as-is | react | Yes | Yes |
 | `cn` | `@/lib/utils` | A. Stable | Keep as-is | clsx, tailwind-merge | Yes | Yes |
 
-**Why `operational`/`workflow` are Experimental, not Stable**: both are large (114 and 93 files), StudioPOD-domain-flavored (Asset Browser, Queue, Bulk Actions, Data Grid, Pipeline, State Machine), and to date have exactly one consumer — this repo's own documentation galleries. RM-1's audit confirmed they're genuinely generic, props-only, no business-logic coupling — but "generic in principle" and "stable in practice" are different claims. Naming and shape here should be expected to move as Web/App actually build real screens against them; treat them as public, usable, but not yet under the same change-discipline as `ui`/`layout`/`form`/etc.
+**Why the rest of `operational`, and all of `workflow`, are Experimental, not Stable**: both are large (114 and 93 files), StudioPOD-domain-flavored (Asset Browser, Queue, Bulk Actions, Data Grid, Pipeline, State Machine), and to date have exactly one consumer — this repo's own documentation galleries. RM-1's audit confirmed they're genuinely generic, props-only, no business-logic coupling — but "generic in principle" and "stable in practice" are different claims. Naming and shape here should be expected to move as Web/App actually build real screens against them; treat them as public, usable, but not yet under the same change-discipline as `ui`/`layout`/`form`/etc.
+
+### Inspector/Property graduation (DS-6.9C3C)
+
+The `Inspector*` and `Property*` exports graduated from **B. Experimental** to
+**A. Stable** on 2026-07-20. They are now under the same change-discipline as
+`ui`/`layout`/`form` — breaking changes require a major version and a migration
+note.
+
+**Graduated (33 exports).** Components: `InspectorPanel`, `InspectorHeader`,
+`InspectorSection`, `InspectorProperty`, `InspectorGroup`, `InspectorTabs`,
+`InspectorTabPanel`, `InspectorActions`, `InspectorFooter`, `InspectorStatus`,
+`InspectorHistory`, `InspectorValidation`, `InspectorPropertyEditor`,
+`PropertyPanel`, `PropertyRow`, `PropertySection`, `PropertyGroup`,
+`PropertyToggle`, `PropertySelect`, `PropertyNumber`, `PropertyColor`,
+`PropertyReset`, `PropertyActions`, `PropertyLabel`, `PropertyValue`. Types:
+`InspectorPanelProps`, `InspectorHistoryEntry`, `InspectorStatusItem`,
+`InspectorTabDef`, `InspectorPropertyEditorField`, `PropertyEditorField`,
+`PropertyPanelProps`.
+
+`InspectorPropertyEditor` keeps its documented rename (category E, below) —
+graduation changes its stability, not its public name.
+
+**Not graduated.** The remaining ~90 files in `operational` (Asset Browser,
+Queue, Bulk Actions, Data Grid, Filter/Search, dashboard widgets) and all of
+`workflow`, including `WorkflowInspector`/`StateInspector`/`DependencyInspector`.
+Those three compose the graduated Inspector primitives but were not themselves
+audited or tested, so they stay Experimental. Stability was granted only to what
+was actually certified.
+
+**Basis.** Four packages, in sequence:
+
+| Package | What it established |
+|---|---|
+| DS-6.9C1 | Architecture inventory — 36 real consumer surfaces; the family is the right shape and nothing needed adding |
+| DS-6.9C2 | Readiness audit — 17 consumer requirements mapped to real files; **zero tests** identified as the sole blocker |
+| DS-6.9C3A | **145 tests**, 0 → full coverage; every exported prop behaviourally asserted; 9 axe checks; **no defect found** |
+| DS-6.9C3B | R1 — additive `isEmpty`; empty-state title ownership; **no breaking change** |
+
+The original Experimental rationale was "unproven with a second real consumer."
+That is now answered from the other direction: DS-6.9C1 found 36 application
+surfaces already implementing this pattern by hand, which is stronger evidence
+of fitness than a single adopted consumer would have been.
+
+**No breaking change was required to stabilise the family** — the single
+enhancement was additive and the public export surface is unchanged.
+
+`WorkspaceInspector` is unaffected: it lives in `layout`, has always been
+**A. Stable**, and remains there.
 
 ### Named exceptions within the root entry
 
