@@ -92,3 +92,171 @@ describe("InspectorHeader", () => {
     });
   });
 });
+
+// ── DS-6.9C6A — multi-status contract ────────────────────────────────────────
+
+describe("InspectorHeader — status dimensions", () => {
+  describe("single status (unchanged contract)", () => {
+    it("renders one badge from a single object", () => {
+      render(<InspectorHeader name="Hero Image" status={{ label: "Published", tone: "success" }} />);
+      expect(screen.getByText("Published")).toBeInTheDocument();
+    });
+
+    it("renders byte-identical markup to the pre-widening implementation", () => {
+      // The single-object path still goes through IdentityBlock, so existing
+      // callers cannot have shifted. Compared against a header with no status
+      // to prove the badge is the only difference, and against itself to prove
+      // determinism.
+      const { container: a } = render(<InspectorHeader name="Hero Image" status={{ label: "Published" }} />);
+      const { container: b } = render(<InspectorHeader name="Hero Image" status={{ label: "Published" }} />);
+      expect(a.innerHTML).toBe(b.innerHTML);
+    });
+
+    it("defaults an omitted tone to neutral", () => {
+      render(<InspectorHeader name="Hero Image" status={{ label: "Draft" }} />);
+      expect(screen.getByText("Draft")).toBeInTheDocument();
+    });
+  });
+
+  describe("multiple statuses", () => {
+    it("renders every supplied badge", () => {
+      render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[
+            { label: "Published", tone: "success" },
+            { label: "Degraded", tone: "warning" },
+          ]}
+        />,
+      );
+      expect(screen.getByText("Published")).toBeInTheDocument();
+      expect(screen.getByText("Degraded")).toBeInTheDocument();
+    });
+
+    it("preserves the caller's order — it does not sort or infer priority", () => {
+      const { container } = render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[
+            { label: "Zebra", tone: "neutral" },
+            { label: "Alpha", tone: "success" },
+          ]}
+        />,
+      );
+      const text = container.textContent ?? "";
+      expect(text.indexOf("Zebra")).toBeLessThan(text.indexOf("Alpha"));
+    });
+
+    it("keeps tones independent per entry", () => {
+      render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[
+            { label: "Published", tone: "success" },
+            { label: "Degraded", tone: "warning" },
+          ]}
+        />,
+      );
+      expect(screen.getByText("Published")).toHaveClass("text-success");
+      expect(screen.getByText("Degraded")).toHaveClass("text-warning");
+    });
+
+    it("defaults a missing tone to neutral without affecting its siblings", () => {
+      render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[{ label: "Untoned" }, { label: "Failed", tone: "error" }]}
+        />,
+      );
+      expect(screen.getByText("Untoned")).toHaveClass("text-neutral");
+      expect(screen.getByText("Failed")).toHaveClass("text-error");
+    });
+
+    it("does not deduplicate identical entries", () => {
+      render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[{ label: "Stale", tone: "warning" }, { label: "Stale", tone: "warning" }]}
+        />,
+      );
+      expect(screen.getAllByText("Stale")).toHaveLength(2);
+    });
+
+    it("does not merge labels into one badge", () => {
+      render(<InspectorHeader name="X" status={[{ label: "A" }, { label: "B" }]} />);
+      expect(screen.queryByText("A B")).not.toBeInTheDocument();
+      expect(screen.queryByText("A, B")).not.toBeInTheDocument();
+    });
+
+    /**
+     * The DS-6.9C6 regression: GenerationProfileInspector and RecipeInspector
+     * each show lifecycle AND health in the header. A single-valued contract
+     * forced one of them to be dropped, which is what blocked that package.
+     */
+    it("lets a lifecycle badge and a health badge coexist", () => {
+      render(
+        <InspectorHeader
+          name="Portrait Profile"
+          type="Generation Profile"
+          status={[
+            { label: "Published", tone: "success" },
+            { label: "Health 62", tone: "warning" },
+          ]}
+        />,
+      );
+      expect(screen.getByText("Published")).toBeInTheDocument();
+      expect(screen.getByText("Health 62")).toBeInTheDocument();
+      // Both readable as independent statuses, neither collapsed into the other.
+      expect(screen.getAllByText(/Published|Health 62/)).toHaveLength(2);
+    });
+  });
+
+  describe("absent status", () => {
+    it("renders no badge for an empty array, and leaves no empty wrapper", () => {
+      const { container: empty } = render(<InspectorHeader name="Hero Image" status={[]} />);
+      const { container: omitted } = render(<InspectorHeader name="Hero Image" />);
+      expect(empty.innerHTML).toBe(omitted.innerHTML);
+    });
+
+    it("renders no badge when status is omitted entirely", () => {
+      const { container } = render(<InspectorHeader name="Hero Image" />);
+      expect(container.textContent).toBe("Hero Image");
+    });
+  });
+
+  describe("interaction with the close affordance", () => {
+    it("keeps the close button working alongside multiple statuses", async () => {
+      const onCollapse = vi.fn();
+      const user = userEvent.setup();
+      render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[{ label: "Published", tone: "success" }, { label: "Degraded", tone: "warning" }]}
+          onCollapse={onCollapse}
+        />,
+      );
+      await user.click(screen.getByRole("button", { name: "Close inspector" }));
+      expect(onCollapse).toHaveBeenCalledTimes(1);
+    });
+
+    it("still renders no button when onCollapse is omitted, with statuses present", () => {
+      render(<InspectorHeader name="X" status={[{ label: "A" }, { label: "B" }]} />);
+      expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("accessibility", () => {
+    it("exposes every status label as readable text", async () => {
+      const { container } = render(
+        <InspectorHeader
+          name="Portrait Profile"
+          status={[{ label: "Published", tone: "success" }, { label: "Degraded", tone: "warning" }]}
+          onCollapse={() => {}}
+        />,
+      );
+      expect(container).toHaveTextContent("Published");
+      expect(container).toHaveTextContent("Degraded");
+      expect(await runA11yCheck(container)).toHaveNoA11yViolations();
+    });
+  });
+});

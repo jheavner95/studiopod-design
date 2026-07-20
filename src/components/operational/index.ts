@@ -18,7 +18,7 @@ export { DataGridLoadingState } from "./DataGridLoadingState";
 export { DataGridPagination } from "./DataGridPagination";
 
 export { InspectorPanel, type InspectorPanelProps } from "./InspectorPanel";
-export { InspectorHeader } from "./InspectorHeader";
+export { InspectorHeader, type InspectorHeaderStatus } from "./InspectorHeader";
 export { InspectorSection } from "./InspectorSection";
 export { InspectorGroup } from "./InspectorGroup";
 export { InspectorProperty } from "./InspectorProperty";

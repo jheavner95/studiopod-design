@@ -2,13 +2,39 @@ import type { ReactNode } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IdentityBlock } from "@/components/metadata";
+import { Badge } from "@/components/ui";
 import type { StatusTone } from "@/lib/tone";
+
+/**
+ * One status dimension — a label and the tone it reads in. Structured rather
+ * than a ReactNode on purpose: the design system owns how a status badge
+ * looks, so callers describe *what* the status is, never how to draw it.
+ */
+export interface InspectorHeaderStatus {
+  label: string;
+  tone?: StatusTone;
+}
 
 interface InspectorHeaderProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;
-  status?: { label: string; tone?: StatusTone };
+  /**
+   * The selected object's quick status.
+   *
+   * - **One object** — a single status dimension. Renders exactly as it always
+   *   has, inside `IdentityBlock`.
+   * - **An array** — several *independent* dimensions a reader needs at a
+   *   glance, such as lifecycle **and** health (DS-6.9C6A). Badges render in
+   *   the order given: order is caller-owned, and this component never merges,
+   *   reorders, deduplicates or drops entries.
+   * - **An empty array** — no status region at all, and no empty wrapper left
+   *   behind.
+   *
+   * Arbitrary JSX is intentionally unsupported. If a header needs something
+   * that is not a labelled status, it belongs in the panel body, not here.
+   */
+  status?: InspectorHeaderStatus | InspectorHeaderStatus[];
   /**
    * **This is the inspector's dismiss/close affordance.** Pass it and the
    * header renders a close button labelled "Close inspector"; omit it and no
@@ -31,12 +57,46 @@ interface InspectorHeaderProps {
  * stays sticky at the top of InspectorPanel's scroll area, matching the
  * sticky behavior already documented for the Inspector Workspace's own
  * Inspector Header region.
+ *
+ * @example One status dimension
+ * ```tsx
+ * <InspectorHeader name="Hero Image" type="Asset" status={{ label: "Published", tone: "success" }} />
+ * ```
+ *
+ * @example Independent dimensions — lifecycle AND health
+ * ```tsx
+ * <InspectorHeader
+ *   name="Portrait Profile"
+ *   type="Generation Profile"
+ *   status={[
+ *     { label: "Published", tone: "success" },
+ *     { label: "Degraded", tone: "warning" },
+ *   ]}
+ * />
+ * ```
  */
 export function InspectorHeader({ icon, name, type, status, onCollapse, className }: InspectorHeaderProps) {
+  // A single object keeps the original path untouched — IdentityBlock renders
+  // it, so existing callers get byte-identical markup. An array renders here
+  // instead, because IdentityBlock owns exactly one badge slot and widening a
+  // Foundation Metadata component for an Inspector-only need would be the
+  // wrong place to absorb this.
+  const statusList = Array.isArray(status) ? status : undefined;
+  const singleStatus = Array.isArray(status) ? undefined : status;
+
   return (
     <div className={cn("sticky top-0 z-10 border-b border-border-subtle bg-surface px-6 py-4", className)}>
       <div className="flex items-center gap-3">
-        <IdentityBlock icon={icon} name={name} type={type} status={status} className="min-w-0 flex-1" />
+        <IdentityBlock icon={icon} name={name} type={type} status={singleStatus} className="min-w-0 flex-1" />
+        {statusList && statusList.length > 0 ? (
+          <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
+            {statusList.map((entry, index) => (
+              <Badge key={index} tone={entry.tone ?? "neutral"} size="sm">
+                {entry.label}
+              </Badge>
+            ))}
+          </div>
+        ) : null}
         {onCollapse ? (
           <button
             type="button"

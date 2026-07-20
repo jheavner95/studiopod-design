@@ -295,6 +295,7 @@ export {
   InspectorPanel,
   type InspectorPanelProps,
   InspectorHeader,
+  type InspectorHeaderStatus,
   InspectorSection,
   InspectorGroup,
   InspectorProperty,

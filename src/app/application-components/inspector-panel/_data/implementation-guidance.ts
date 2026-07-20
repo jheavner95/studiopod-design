@@ -5,6 +5,10 @@ export interface ImplementationGuidanceTopic {
 
 export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   {
+    label: "Header status dimensions",
+    text: "Pass ONE status object when the header communicates a single dimension. Pass an ARRAY when it communicates independent dimensions a reader needs at a glance — lifecycle AND health, for instance. Badges render in the order given and that order is yours: InspectorHeader never merges labels, infers priority, deduplicates or drops entries, and an empty array renders no status region at all. Arbitrary JSX is deliberately unsupported — describe what the status IS, and let the design system decide how a status badge looks.",
+  },
+  {
     label: "Empty-state ownership",
     text: "Drive the empty state from isEmpty, set from your own selection state — not from whether emptyState happens to be present. Pass a full EmptyState element when the panel needs its own wording (\"No asset selected\", \"Select a layer to inspect\"); omit emptyState entirely for the default. Passing a bare string still works and still renders as the description under \"Nothing selected\", but new code should prefer an element so the title says something specific.",
   },

@@ -61,7 +61,7 @@ note.
 `PropertyToggle`, `PropertySelect`, `PropertyNumber`, `PropertyColor`,
 `PropertyReset`, `PropertyActions`, `PropertyLabel`, `PropertyValue`. Types:
 `InspectorPanelProps`, `InspectorHistoryEntry`, `InspectorStatusItem`,
-`InspectorTabDef`, `InspectorPropertyEditorField`, `PropertyEditorField`,
+`InspectorTabDef`, `InspectorHeaderStatus`, `InspectorPropertyEditorField`, `PropertyEditorField`,
 `PropertyPanelProps`.
 
 `InspectorPropertyEditor` keeps its documented rename (category E, below) —
@@ -73,6 +73,14 @@ Queue, Bulk Actions, Data Grid, Filter/Search, dashboard widgets) and all of
 Those three compose the graduated Inspector primitives but were not themselves
 audited or tested, so they stay Experimental. Stability was granted only to what
 was actually certified.
+
+**DS-6.9C6A (additive, post-graduation).** `InspectorHeader.status` was widened
+from a single `{ label, tone }` to `InspectorHeaderStatus | InspectorHeaderStatus[]`,
+and `InspectorHeaderStatus` is now exported by name. Evidence: two StudioPOD
+inspectors (`GenerationProfileInspector`, `RecipeInspector`) show lifecycle
+**and** health in the header, which a single-valued contract could not express
+without dropping information. Purely additive — every existing single-status
+caller is unchanged — so it did not disturb Stable status. Root exports 609 → **610**.
 
 **Basis.** Four packages, in sequence:
 
