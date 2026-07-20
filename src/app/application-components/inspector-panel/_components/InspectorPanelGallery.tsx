@@ -58,6 +58,45 @@ function SimpleInspectorDemo() {
   );
 }
 
+function HeaderMetadataDemo() {
+  // DS-6.9C6E-A — reproduces the OverlayPresetInspector case that truncated on
+  // the `type` line (iphone-premium-case-overlay · v5 · 2 BP), now split so
+  // status is status and metadata is its own wrapping line. Rendered at a
+  // deliberately narrow width to prove the metadata wraps instead of clipping.
+  return (
+    <GalleryCard title="Header metadata" description="Descriptive info (version, counts, ownership) on its own wrapping line — distinct from status, never truncated.">
+      <div className="max-w-[320px]">
+        <InspectorPanel
+          header={
+            <InspectorHeader
+              icon={<ImageIcon className="size-4" />}
+              name="iPhone Premium Case Overlay"
+              type="Overlay Preset"
+              status={[
+                { label: "Published", tone: "success" },
+                { label: "Excellent", tone: "success" },
+              ]}
+              metadata={
+                <>
+                  v5 <span aria-hidden>·</span> 2 blueprints <span aria-hidden>·</span> owned by Design
+                </>
+              }
+              onCollapse={() => {}}
+            />
+          }
+        >
+          <InspectorSection title="Identity" collapsible={false}>
+            <InspectorGroup>
+              <InspectorProperty label="Slug" value="iphone-premium-case-overlay" />
+              <InspectorProperty label="Updated" value="Jun 20, 2026" />
+            </InspectorGroup>
+          </InspectorSection>
+        </InspectorPanel>
+      </div>
+    </GalleryCard>
+  );
+}
+
 function AssetInspectorDemo() {
   const [name, setName] = useState("Poster proof #118");
   const [featured, setFeatured] = useState(true);
@@ -257,6 +296,7 @@ export function InspectorPanelGallery() {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <SimpleInspectorDemo />
+      <HeaderMetadataDemo />
       <AssetInspectorDemo />
       <PublishingInspectorDemo />
       <CommerceInspectorDemo />

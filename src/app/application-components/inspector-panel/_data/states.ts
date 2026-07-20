@@ -4,6 +4,7 @@ export interface InspectorStateNote {
 }
 
 export const INSPECTOR_STATES: InspectorStateNote[] = [
+  { state: "Header metadata", note: "InspectorHeader.metadata (DS-6.9C6E-A) renders descriptive header info — version, counts, ownership — on its own wrapping line, distinct from status. It wraps rather than truncates, so unlike stuffing the same text into `type` it never vanishes on a narrow panel. Omit it or pass an empty node and no metadata row renders." },
   { state: "Multi-status", note: "InspectorHeader's status prop takes one object or an array (DS-6.9C6A). Use the array when an object carries independent status dimensions — lifecycle and health — so neither has to be dropped to fit a single badge slot. Order is caller-owned; an empty array renders nothing." },
   { state: "Loading", note: "InspectorPanel's loading prop swaps the body for Foundation Feedback's LoadingState — the header and footer stay put so the panel's shape doesn't shift." },
   { state: "Empty", note: "InspectorPanel's isEmpty prop swaps the body for an empty state — nothing is selected yet, distinct from a selected object that failed to load. Pass an element to emptyState to own the title and description yourself; omit it for the default \"Nothing selected\". A string is still accepted and becomes the description under that fixed title (the pre-DS-6.9C3B contract). Omitting isEmpty falls back to the truthiness of emptyState, so callers written before isEmpty existed are unchanged." },

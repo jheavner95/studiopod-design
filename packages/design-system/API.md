@@ -74,6 +74,14 @@ Those three compose the graduated Inspector primitives but were not themselves
 audited or tested, so they stay Experimental. Stability was granted only to what
 was actually certified.
 
+**DS-6.9C6E-A (additive, post-graduation).** `InspectorHeader` gained an optional
+`metadata?: ReactNode` slot — descriptive header information (version, counts,
+ownership) that is not a status. It renders on a subordinate wrapping line, so
+it never truncates the way the same text did on the single `type` line. No new
+export or type; purely additive, `InspectorHeader` stays Stable, root export
+count unchanged. Evidence: two migrated app inspectors measured metadata
+truncating on `type`.
+
 **DS-6.9C6A (additive, post-graduation).** `InspectorHeader.status` was widened
 from a single `{ label, tone }` to `InspectorHeaderStatus | InspectorHeaderStatus[]`,
 and `InspectorHeaderStatus` is now exported by name. Evidence: two StudioPOD

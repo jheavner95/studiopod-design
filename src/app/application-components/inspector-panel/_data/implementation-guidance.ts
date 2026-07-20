@@ -5,6 +5,10 @@ export interface ImplementationGuidanceTopic {
 
 export const IMPLEMENTATION_GUIDANCE: ImplementationGuidanceTopic[] = [
   {
+    label: "Header status vs metadata",
+    text: "InspectorHeader.status is for STATE dimensions — lifecycle, health, sync — each a labelled badge, one object or an array for independent dimensions. InspectorHeader.metadata is for DESCRIPTIVE information that is not state: version, counts, ownership, timestamps. Metadata renders on its own subordinate line that WRAPS rather than truncates, so it never disappears on a narrow panel and never pushes status badges out. Do not encode metadata into type (it truncates) or into status (it is not a state). Metadata formatting is caller-owned — pass a string or your own inline runs with aria-hidden separators.",
+  },
+  {
     label: "Header status dimensions",
     text: "Pass ONE status object when the header communicates a single dimension. Pass an ARRAY when it communicates independent dimensions a reader needs at a glance — lifecycle AND health, for instance. Badges render in the order given and that order is yours: InspectorHeader never merges labels, infers priority, deduplicates or drops entries, and an empty array renders no status region at all. Arbitrary JSX is deliberately unsupported — describe what the status IS, and let the design system decide how a status badge looks.",
   },

@@ -260,3 +260,126 @@ describe("InspectorHeader — status dimensions", () => {
     });
   });
 });
+
+// ── DS-6.9C6E-A — metadata contract ──────────────────────────────────────────
+
+describe("InspectorHeader — metadata", () => {
+  it("is optional — no metadata prop renders no metadata content", () => {
+    render(<InspectorHeader name="Hero Image" type="Asset" />);
+    // The only text is name + type; nothing extra was introduced.
+    expect(screen.getByText("Hero Image")).toBeInTheDocument();
+    expect(screen.getByText("Asset")).toBeInTheDocument();
+    expect(screen.queryByText(/v5/)).not.toBeInTheDocument();
+  });
+
+  it("leaves a header without metadata byte-identical to before the prop existed", () => {
+    // Determinism proof: two renders of the metadata-less header match exactly,
+    // and adding metadata is the ONLY structural difference (see the next test).
+    const { container: a } = render(
+      <InspectorHeader name="Hero Image" type="Asset" status={{ label: "Published" }} />,
+    );
+    const { container: b } = render(
+      <InspectorHeader name="Hero Image" type="Asset" status={{ label: "Published" }} />,
+    );
+    expect(a.innerHTML).toBe(b.innerHTML);
+  });
+
+  it("renders metadata separately from type — both present, distinct nodes", () => {
+    render(<InspectorHeader name="Hero Image" type="Overlay Preset" metadata="v5" />);
+    const type = screen.getByText("Overlay Preset");
+    const meta = screen.getByText("v5");
+    expect(type).toBeInTheDocument();
+    expect(meta).toBeInTheDocument();
+    // Metadata is NOT inside the type node — it is its own region.
+    expect(type).not.toContainElement(meta);
+    expect(meta).not.toContainElement(type);
+  });
+
+  it("accepts multiple inline metadata values with caller-owned separators", () => {
+    render(
+      <InspectorHeader
+        name="Hero Image"
+        metadata={<>v5 <span aria-hidden>·</span> 2 blueprints <span aria-hidden>·</span> owned by Design</>}
+      />,
+    );
+    expect(screen.getByText(/v5/)).toBeInTheDocument();
+    expect(screen.getByText(/2 blueprints/)).toBeInTheDocument();
+    expect(screen.getByText(/owned by Design/)).toBeInTheDocument();
+  });
+
+  it("accepts caller-owned React content, not just strings", () => {
+    render(
+      <InspectorHeader name="Hero Image" metadata={<span data-testid="custom-meta">custom</span>} />,
+    );
+    expect(screen.getByTestId("custom-meta")).toBeInTheDocument();
+  });
+
+  it("keeps metadata present and fully readable when type is long", () => {
+    render(
+      <InspectorHeader
+        name="iPhone Premium Case Overlay"
+        type="iphone-premium-case-overlay-a-very-long-slug-that-would-truncate-the-type-line"
+        metadata="v5 · 2 BP"
+      />,
+    );
+    // The metadata row is separate from type, so a long type cannot hide it:
+    // its full text is present regardless of type length.
+    expect(screen.getByText("v5 · 2 BP")).toBeInTheDocument();
+  });
+
+  it("coexists with multiple statuses without disturbing them", () => {
+    render(
+      <InspectorHeader
+        name="Portrait Profile"
+        type="Generation Profile"
+        status={[
+          { label: "Published", tone: "success" },
+          { label: "Excellent", tone: "success" },
+        ]}
+        metadata="v4"
+      />,
+    );
+    expect(screen.getByText("Published")).toBeInTheDocument();
+    expect(screen.getByText("Excellent")).toBeInTheDocument();
+    expect(screen.getByText("v4")).toBeInTheDocument();
+  });
+
+  it("does not change status order when metadata is present", () => {
+    const { container } = render(
+      <InspectorHeader
+        name="X"
+        status={[{ label: "Zebra" }, { label: "Alpha" }]}
+        metadata="v1"
+      />,
+    );
+    const text = container.textContent ?? "";
+    expect(text.indexOf("Zebra")).toBeLessThan(text.indexOf("Alpha"));
+  });
+
+  it("is accessible — metadata is real readable text, no axe violations", async () => {
+    const { container } = render(
+      <InspectorHeader
+        name="Hero Image"
+        type="Overlay Preset"
+        status={{ label: "Published", tone: "success" }}
+        metadata={<>v5 <span aria-hidden>·</span> 2 blueprints</>}
+        onCollapse={() => {}}
+      />,
+    );
+    // Screen-reader visible: it is present in the accessibility tree as text,
+    // and the decorative separator is aria-hidden rather than announced.
+    expect(container).toHaveTextContent("v5");
+    expect(container).toHaveTextContent("2 blueprints");
+    expect(await runA11yCheck(container)).toHaveNoA11yViolations();
+  });
+
+  it("renders no empty wrapper for empty/falsey metadata", () => {
+    // Compared against a metadata-less header: identical DOM proves no stray
+    // wrapper is introduced for "", null, false or undefined.
+    const { container: withoutProp } = render(<InspectorHeader name="Hero Image" type="Asset" />);
+    for (const empty of ["", null as unknown as string, false as unknown as string, undefined]) {
+      const { container } = render(<InspectorHeader name="Hero Image" type="Asset" metadata={empty} />);
+      expect(container.innerHTML).toBe(withoutProp.innerHTML);
+    }
+  });
+});

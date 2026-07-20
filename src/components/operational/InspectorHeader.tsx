@@ -36,6 +36,25 @@ interface InspectorHeaderProps {
    */
   status?: InspectorHeaderStatus | InspectorHeaderStatus[];
   /**
+   * Descriptive header information that is **not** a status — version, counts,
+   * ownership, timestamps, and the like (DS-6.9C6E-A).
+   *
+   * Rendered on its own subordinate line beneath the name/status row, so it
+   * **wraps rather than truncates** and never pushes status badges out of the
+   * header. Caller-owned formatting: pass a string, or your own inline runs
+   * with separators.
+   *
+   * This exists because such information is not a state dimension — it does not
+   * belong in `status` (see the status/metadata guidance in the docs) and, on
+   * the single `type` line, it competed with `type` for width and disappeared
+   * through truncation on narrow panels. Two application inspectors
+   * (`OverlayPresetInspector`, `GenerationProfileInspector`) proved that
+   * length-dependent behaviour before this slot existed.
+   *
+   * Omit it, or pass an empty node, and no metadata row is rendered at all.
+   */
+  metadata?: ReactNode;
+  /**
    * **This is the inspector's dismiss/close affordance.** Pass it and the
    * header renders a close button labelled "Close inspector"; omit it and no
    * dismiss control appears at all.
@@ -74,8 +93,18 @@ interface InspectorHeaderProps {
  *   ]}
  * />
  * ```
+ *
+ * @example Descriptive metadata that is not status
+ * ```tsx
+ * <InspectorHeader
+ *   name="iPhone Premium Case Overlay"
+ *   type="Overlay Preset"
+ *   status={{ label: "Published", tone: "success" }}
+ *   metadata={<>v5 <span aria-hidden>·</span> 2 blueprints <span aria-hidden>·</span> owned by Design</>}
+ * />
+ * ```
  */
-export function InspectorHeader({ icon, name, type, status, onCollapse, className }: InspectorHeaderProps) {
+export function InspectorHeader({ icon, name, type, status, metadata, onCollapse, className }: InspectorHeaderProps) {
   // A single object keeps the original path untouched — IdentityBlock renders
   // it, so existing callers get byte-identical markup. An array renders here
   // instead, because IdentityBlock owns exactly one badge slot and widening a
@@ -83,6 +112,12 @@ export function InspectorHeader({ icon, name, type, status, onCollapse, classNam
   // wrong place to absorb this.
   const statusList = Array.isArray(status) ? status : undefined;
   const singleStatus = Array.isArray(status) ? undefined : status;
+
+  // Metadata is a subordinate SECOND row, not part of the identity/status flex
+  // row — that is what lets it wrap and preserve its full content on a narrow
+  // panel instead of truncating, and keeps it from stealing width from the
+  // status badges. `false`/`null`/`undefined`/`""` render no row and no wrapper.
+  const hasMetadata = metadata !== undefined && metadata !== null && metadata !== false && metadata !== "";
 
   return (
     <div className={cn("sticky top-0 z-10 border-b border-border-subtle bg-surface px-6 py-4", className)}>
@@ -108,6 +143,11 @@ export function InspectorHeader({ icon, name, type, status, onCollapse, classNam
           </button>
         ) : null}
       </div>
+      {hasMetadata ? (
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-caption text-ink-tertiary">
+          {metadata}
+        </div>
+      ) : null}
     </div>
   );
 }
