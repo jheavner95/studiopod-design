@@ -2,6 +2,24 @@
 
 All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.12.0
+
+### Added
+
+- **`useEditSession`** (DS-7.2) — the canonical **buffered edit session**: a headless hook holding a draft against a baseline, deriving dirtiness, and running the save lifecycle. Orchestration only — it renders nothing, persists nothing, and knows nothing about any domain.
+  - **Added to close a measured vocabulary gap, not to add a feature.** The DS-7.1 audit of three application orchestration owners found each had invented a *different* name for the same state machine — `saveStatus: idle|saved|warning|error`, `actionBusy`+`actionError`, and `saveStatus: idle|saving|success|error`. This hook replaces those three with one contract. Editing *presentation* was already owned (`InspectorProperty`'s edit slot, the Foundation Forms fields, `InspectorValidation`, `UnsavedChangesBanner`), so **no presentation primitive was added.**
+  - Canonical status: `loading | pristine | dirty | saving | saved | savedWithWarnings | error`. `editing` and `disabled` are deliberately **not** states — editing is inline and continuous (this system has no edit-mode toggle), and `disabled` is derived (`isSaving || isReadOnly || loading`). `readOnly` and "no selection" remain orthogonal modes.
+  - Five actions, no more: `update`, `save`, `discard`, `reset`, `dismissError`.
+  - Derived selectors `isDirty`, `isSaving`, `canSave`, `isReadOnly`, `hasError` — all computed from a single stored phase plus the draft/baseline comparison, so **no fact is stored twice** (notably there is no second in-flight boolean beside `status === "saving"`).
+  - **No-op guard**: saving a draft equal to its baseline clears any transient status and performs no commit at all.
+  - **Pessimistic baseline advancement**: the baseline advances only to what was actually committed, so edits made during a save stay dirty. A commit resolving after the session was re-seeded is discarded rather than applied to the new session.
+  - Success (`saved`/`savedWithWarnings`) auto-clears after `successResetMs` (default **3000**, resolving the reference owners' 3000-vs-4000 split); failure **never** auto-clears.
+  - Configurable equality via `isEqual`, defaulting to a structural deep comparison — replacing one owner's `JSON.stringify` equality without its key-ordering and `undefined` hazards. The chosen strategy drives `isDirty`, `canSave` and the no-op guard together, so they cannot disagree.
+  - `original` is optional; supplying it is what makes `reset` meaningful (`reset` is a documented no-op without it). Only one of the three reference owners kept a second baseline, so it is optional by evidence.
+  - Types: `EditSessionStatus`, `EditSessionCommitResult`, `EditSessionActions`, `EditSessionResult`, `UseEditSessionOptions`.
+  - **Explicitly not implemented**, with documented extension seams instead: persistence/networking, optimistic concurrency and conflict resolution, retry policy, keyboard/focus handling, autosave, undo/redo, any provider/context, any imperative controller, and any Inspector UI. See `docs/DS-7.2-Edit-Session-Hook.md` §7.
+  - Purely additive: root exports **610 → 616**. No existing export changed.
+
 ## 0.8.0
 
 ### Added

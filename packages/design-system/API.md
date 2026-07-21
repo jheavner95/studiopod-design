@@ -40,7 +40,7 @@ No new entry points were added in RM-5.5. `/application`, `/platform`, `/workflo
 | `operational` — Inspector/Property subset | `@/components/operational` (`Inspector*`, `Property*`; `PropertyEditor` exported as `InspectorPropertyEditor`) | **A. Stable** | Graduated in DS-6.9C3C. The canonical Inspector API for StudioPOD — see "Inspector/Property graduation" below | react | Likely | Yes |
 | `operational` — everything else | `@/components/operational` (minus 3 duplicates, `FilterBar`/`FilterChip` renamed) | **B. Experimental** | Keep exported, but do not treat as stability-guaranteed yet — still the largest, newest, most domain-specific family; clean and generic per RM-1's audit but unproven with a second real consumer | react, **next** (`AssetThumbnail`, `QueueWidget`) | No | Likely |
 | `workflow` | `@/components/workflow` | **B. Experimental** | Same reasoning as `operational` | react | No | Likely |
-| `hooks` | `@/hooks` | A. Stable | Keep as-is | react | Yes | Yes |
+| `hooks` | `@/hooks` | A. Stable | Keep as-is. Includes `useEditSession` (DS-7.2) — headless buffered edit-session orchestration, no presentation | react | Yes | Yes |
 | `providers` | `@/providers` | A. Stable | Keep as-is | react | Yes | Yes |
 | `cn` | `@/lib/utils` | A. Stable | Keep as-is | clsx, tailwind-merge | Yes | Yes |
 
@@ -73,6 +73,20 @@ Queue, Bulk Actions, Data Grid, Filter/Search, dashboard widgets) and all of
 Those three compose the graduated Inspector primitives but were not themselves
 audited or tested, so they stay Experimental. Stability was granted only to what
 was actually certified.
+
+**DS-7.2 (additive, orchestration — no Inspector component changed).** The
+editable-inspector programme added **`useEditSession`**, a headless buffered
+edit-session hook, plus five types (`EditSessionStatus`,
+`EditSessionCommitResult`, `EditSessionActions`, `EditSessionResult`,
+`UseEditSessionOptions`). It ships in the `hooks` family, **not** `operational` —
+no Inspector component was touched, and no presentation primitive was added,
+because DS-7.0 Phase 1 established that editing presentation was already owned
+(`InspectorProperty`'s edit slot, the Foundation Forms fields,
+`InspectorValidation`, `UnsavedChangesBanner`). The measured gap was the *state
+machine*: three application owners had each invented a different vocabulary for
+it. The hook holds interaction state only — persistence (`commit`) and domain
+rules (`gate`) are caller-supplied callbacks. Root exports 610 → **616**. See
+`docs/DS-7.2-Edit-Session-Hook.md`.
 
 **DS-6.9C6E-A (additive, post-graduation).** `InspectorHeader` gained an optional
 `metadata?: ReactNode` slot — descriptive header information (version, counts,
