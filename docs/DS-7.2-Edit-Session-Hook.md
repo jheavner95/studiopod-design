@@ -226,9 +226,17 @@ after a re-seed is discarded rather than applied to the new session.
    inspector before adding anything to it. DS-7.1 recommends `TemplateInspector` —
    the only surface exercising baseline, original, gate, discard, reset, read-only
    and warnings together.
-2. **Warnings content is intentionally not re-exposed.** The caller's `commit`
-   produced them, so it can hold them. If a pilot proves that awkward, adding a
-   `warnings` field is additive and non-breaking.
+2. **Warnings content is intentionally not re-exposed — decided, not pending
+   (DS-7.4).** The caller's `commit` produced them, so it holds them. The
+   DS-7.3 pilot was audited in DS-7.4 and the extension was found **not
+   justified**: only one buffered session in the consuming application produces
+   commit warnings at all, and the parallel field that prompted the question
+   turned out to hold a *success message* (present on the clean-success path
+   too), not warnings — so a `warnings` field would not have removed it. The
+   warning *detail* was already available caller-side and live. See
+   `DS-7.4-Warning-Payload-Evaluation.md`, including §6 guidance for consumers.
+   Reopen only if a third buffered session needs commit-time warning text that
+   is not derivable from live state.
 3. **The concurrency decision is still open** (DS-7.1 §8-Q4). No reference owner
    handles save conflicts; all are last-write-wins. That remains a deliberate,
    named gap, not an oversight.
