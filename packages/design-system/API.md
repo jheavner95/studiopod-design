@@ -1,4 +1,4 @@
-# @studiopod/design-system — Public API Contract
+# @studiopod/design — Public API Contract
 
 This document is the frozen public contract of the package, established in RM-5.5. It classifies every export family, documents the marketing/illustrations/tokens/CSS/dependency contracts, and records the portability caveats a consumer should know about before adopting the package (RM-6).
 
@@ -16,11 +16,11 @@ The literal, per-symbol ground truth lives in `api-baseline/*.json` (one sorted 
 
 | Entry | Purpose |
 |---|---|
-| `@studiopod/design-system` | Core UI/layout/form/feedback/navigation/overlay/table/metadata primitives, the motion composition components, the operational and workflow component families, shared hooks/providers, `cn`. |
-| `@studiopod/design-system/tokens` | Raw JS-side token constants (motion durations/easing, z-index, accent/success RGB triples). |
-| `@studiopod/design-system/marketing` | The 11 canonical marketing composition components. |
-| `@studiopod/design-system/illustrations` | The illustration engine plus the workflow/platform/production/capability diagram-engine libraries, merged. |
-| `@studiopod/design-system/styles.css` | Canonical token CSS. |
+| `@studiopod/design` | Core UI/layout/form/feedback/navigation/overlay/table/metadata primitives, the motion composition components, the operational and workflow component families, shared hooks/providers, `cn`. |
+| `@studiopod/design/tokens` | Raw JS-side token constants (motion durations/easing, z-index, accent/success RGB triples). |
+| `@studiopod/design/marketing` | The 11 canonical marketing composition components. |
+| `@studiopod/design/illustrations` | The illustration engine plus the workflow/platform/production/capability diagram-engine libraries, merged. |
+| `@studiopod/design/styles.css` | Canonical token CSS. |
 
 No new entry points were added in RM-5.5. `/application`, `/platform`, `/workflow`, `/production`, and wildcard exports remain explicitly out of scope, per the approved platform decision — `src/components/platform/**` is not exported from any entry point.
 
@@ -223,7 +223,7 @@ Source: `@/lib/tokens.ts` only — 5 exports, unchanged since RM-4.
 
 ## CSS contract (`/styles.css`)
 
-- **Required import**: consumers add `import "@studiopod/design-system/styles.css";` once, in the same place they'd put their own global CSS entry, alongside their own `@import "tailwindcss";`.
+- **Required import**: consumers add `import "@studiopod/design/styles.css";` once, in the same place they'd put their own global CSS entry, alongside their own `@import "tailwindcss";`.
 - **This package's `styles.css` does not itself import Tailwind.** Consumers must have their own `@import "tailwindcss";` — the package only supplies the `@theme` block and supporting CSS; Tailwind v4 discovers `@theme` transitively through whatever file tree contains `@import "tailwindcss"`, the same way this repo's own app already works.
 - **Deterministic ordering**, verified in the compiled output: palette → theme → tokens → typography → utilities (exactly the `@import` order declared in `packages/design-system/src/styles.css`, which esbuild's CSS bundler preserves depth-first).
 - **Duplicate import is safe.** CSS custom-property declarations and `@import` are idempotent; importing `styles.css` twice (e.g. from two different sub-packages of a consumer's own dependency tree) costs a few extra KB, not a functional conflict.

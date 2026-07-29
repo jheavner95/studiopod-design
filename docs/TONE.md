@@ -1,4 +1,4 @@
-# @studiopod/design-system — Tone
+# @studiopod/design — Tone
 
 The semantic tone system: what it is, how it differs from status/severity, supported values, accessibility expectations, and how to add or avoid adding to it. Written during DS-5B (tone consolidation); see `docs/engineering-notes/15-tone-consolidation.md` for the full audit this document is built from.
 
@@ -75,7 +75,7 @@ Adding a sixth value to `StatusTone` is a significant, rarely-justified decision
 
 ## 9. Migration guidance
 
-- **Importing `StatusTone`**: `import { Badge, type StatusTone } from "@studiopod/design-system"` (or `import type { StatusTone } from "@studiopod/design-system"` for type-only use) — this is a new export as of the version this shipped in; nothing to migrate away from, since nothing public changed shape.
+- **Importing `StatusTone`**: `import { Badge, type StatusTone } from "@studiopod/design"` (or `import type { StatusTone } from "@studiopod/design"` for type-only use) — this is a new export as of the version this shipped in; nothing to migrate away from, since nothing public changed shape.
 - **If you previously redeclared your own `"neutral" | "accent" | "success" | "warning" | "error"` union locally** (the exact pattern DS-5B found and fixed internally): replace it with an import of `StatusTone`. Purely a type-identity change — no runtime behavior differs.
 - **`FeedbackTone`, `SystemStatus`, `HealthState`, `ProgressTone`, `FieldMessageTone`**: all unchanged by this phase. None of these were merged into `StatusTone` — see §2 and §3 for why each stays separate.
 

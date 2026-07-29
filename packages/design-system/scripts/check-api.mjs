@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * API baseline check for @studiopod/design-system.
+ * API baseline check for @studiopod/design.
  *
  * Statically parses each built entry's trailing `export { ... }` statement
  * (present in both the .js and .d.ts tsup output — one per file, since

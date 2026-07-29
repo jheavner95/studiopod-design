@@ -1,6 +1,6 @@
 # StudioPOD Design System
 
-The shared design language of StudioPOD, the Production Operating System — one source of truth for tokens, components, patterns, and application composition, consumed by both the marketing site and the product. This repository is the documentation site itself and the source of `@studiopod/design-system`, the package both surfaces build from, so a button, a table, or a workflow diagram looks, behaves, and composes the same way wherever it appears.
+The shared design language of StudioPOD, the Production Operating System — one source of truth for tokens, components, patterns, and application composition, consumed by both the marketing site and the product. This repository is the documentation site itself and the source of `@studiopod/design`, the package both surfaces build from, so a button, a table, or a workflow diagram looks, behaves, and composes the same way wherever it appears.
 
 It exists because building each surface with its own one-off components produces exactly the drift a shared system is meant to prevent: two teams solving the same interaction problem twice, and a product that looks like several different products stitched together. Everything here is built so that doesn't happen — one layered set of primitives, engines, and patterns, documented and verified in the open.
 
@@ -40,7 +40,7 @@ src/capabilities/         Capability/provider diagram library
 src/compositions/         Reusable marketing page-section compositions
 src/lib/                  Canonical demo data, the navigation registry, page contracts,
                           and the showcase-registry pattern for example metadata
-packages/design-system/   The publishable @studiopod/design-system npm package —
+packages/design-system/   The publishable @studiopod/design npm package —
                           built from this repo's own src/ (see its own README)
 docs/                     Contributor guides (testing, verification, documentation,
                           distribution) and docs/engineering-notes/ (architecture history)
@@ -81,7 +81,31 @@ This repository's own documentation site (run `npm run dev` and visit `/document
 - [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md) — how pages, related-links, and example data register themselves, and what's validated automatically
 - [docs/TESTING.md](./docs/TESTING.md) — testing philosophy, conventions, and how to add a test
 - [docs/VERIFICATION.md](./docs/VERIFICATION.md) — the verification pipeline, its layers, and CI behavior
-- [docs/DISTRIBUTION.md](./docs/DISTRIBUTION.md) — how `@studiopod/design-system` is versioned and released
+## Package identity and the target dependency graph
+
+This repository publishes **`@studiopod/design`**. It was renamed from
+`@studiopod/design-system` in DS-7.3a (versions ≤ 0.12.0 were published under the
+old name; 0.13.0 onward use the new one). The repository name is unchanged.
+
+```text
+@studiopod/foundation      shared brand foundation — tokens, themes, brand data
+        ▲
+        │
+@studiopod/design          this package — components, patterns, compositions
+        ▲
+        │
+studiopod-app              the product
+```
+
+**The `@studiopod/design → @studiopod/foundation` edge does not exist yet.** This
+package still owns and ships its own tokens; adopting Foundation's is a separate,
+independently verified migration. The graph above is the target, not the current
+state. See [docs/DS-7.3a-Package-Rename.md](./docs/DS-7.3a-Package-Rename.md).
+
+Consumers (`studiopod-app`, `studiopod-web`) still depend on
+`@studiopod/design-system` and are unaffected until their cutover in DS-7.4.
+
+- [docs/DISTRIBUTION.md](./docs/DISTRIBUTION.md) — how `@studiopod/design` is versioned and released
 - [docs/TOKENS.md](./docs/TOKENS.md) — the token architecture: hierarchy, ownership, naming, adding/deprecating a token, consumer imports
 - [docs/TONE.md](./docs/TONE.md) — the semantic tone system: StatusTone, tone vs. status vs. severity, supported values, adding/avoiding a new tone
 - [docs/CERTIFICATION.md](./docs/CERTIFICATION.md) — the production-readiness checklist and how a component earns Certified status

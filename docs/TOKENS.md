@@ -1,4 +1,4 @@
-# @studiopod/design-system — Tokens
+# @studiopod/design — Tokens
 
 The design token architecture: what exists, who owns each category, naming conventions, how to add or deprecate a token, and how a consumer actually gets tokens into their own build. Written during DS-4 (token consolidation); see `docs/engineering-notes/13-token-consolidation.md` for the audit this document is built from and the specific consolidation decisions made — and *not* made — along the way.
 
@@ -71,7 +71,7 @@ Category 1 findings get fixed. Categories 2–4 get documented (a comment, or a 
 1. Decide primitive or semantic (§1) — almost always semantic; a new primitive color/scale is rare and should be questioned.
 2. Add it to the correct owner file from the table in §2, in the existing category's comment block, not a new one-off block.
 3. If it needs to be readable from JS (motion, anything framer-motion touches), mirror it by hand into the matching `tokens.ts` file, with a comment pointing back at the CSS source — there is no automated CSS→JS sync.
-4. If the token is meant to be part of the published package's public API (i.e., a JS export from `@studiopod/design-system/tokens`), it's a **MINOR** version bump per `packages/design-system/VERSIONING.md` — additive, non-breaking. CSS-only additions to `styles.css` (like `--container-shell`) don't touch the JS export surface and don't require an `api-check` baseline update, but are still worth a CHANGELOG line since they ship in the published `styles.css`.
+4. If the token is meant to be part of the published package's public API (i.e., a JS export from `@studiopod/design/tokens`), it's a **MINOR** version bump per `packages/design-system/VERSIONING.md` — additive, non-breaking. CSS-only additions to `styles.css` (like `--container-shell`) don't touch the JS export surface and don't require an `api-check` baseline update, but are still worth a CHANGELOG line since they ship in the published `styles.css`.
 5. Document it on the public `/tokens` page if it's something a consumer would reach for directly (not every internal implementation detail needs a public docs entry).
 
 ## 7. Deprecating a token
@@ -81,23 +81,23 @@ Same procedure as any other public export — see `VERSIONING.md`'s deprecation 
 ## 8. Consumer installation and imports
 
 ```bash
-npm install @studiopod/design-system@^0.1.0
+npm install @studiopod/design@^0.1.0
 ```
 
 ```css
 /* app/globals.css — order matters; later @theme wins */
 @import 'tailwindcss';
-@import '@studiopod/design-system/styles.css';   /* palette, semantic tokens, typography, utilities */
-@source '../node_modules/@studiopod/design-system/dist';  /* REQUIRED — see below */
+@import '@studiopod/design/styles.css';   /* palette, semantic tokens, typography, utilities */
+@source '../node_modules/@studiopod/design/dist';  /* REQUIRED — see below */
 ```
 
 ```ts
-import { motionDuration, motionEase, zIndex, accentRgb, successRgb } from '@studiopod/design-system/tokens';
+import { motionDuration, motionEase, zIndex, accentRgb, successRgb } from '@studiopod/design/tokens';
 ```
 
-**The `@source` line is not optional.** Tailwind ignores `node_modules` by default; without it, none of the package's components' Tailwind classes are generated, and every consumer of `@studiopod/design-system` renders unstyled with no error. This is the single most common integration mistake — see `DISTRIBUTION.md` §3.3 and §5 for the full installation/upgrade guide, including what to re-verify on every version bump (tokens can restyle thousands of call sites with no app-side diff — always diff `dist/styles.css` between versions before upgrading).
+**The `@source` line is not optional.** Tailwind ignores `node_modules` by default; without it, none of the package's components' Tailwind classes are generated, and every consumer of `@studiopod/design` renders unstyled with no error. This is the single most common integration mistake — see `DISTRIBUTION.md` §3.3 and §5 for the full installation/upgrade guide, including what to re-verify on every version bump (tokens can restyle thousands of call sites with no app-side diff — always diff `dist/styles.css` between versions before upgrading).
 
-No internal path is ever required. A consumer never imports `@studiopod/design-system/src/styles/theme.css` or reaches into `dist/` directly — `/tokens` and `/styles.css` are the only two token-bearing entry points, both declared in `package.json`'s `exports` map.
+No internal path is ever required. A consumer never imports `@studiopod/design/src/styles/theme.css` or reaches into `dist/` directly — `/tokens` and `/styles.css` are the only two token-bearing entry points, both declared in `package.json`'s `exports` map.
 
 ## 9. Migration guidance
 

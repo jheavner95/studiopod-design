@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * "use client" directive regression check for @studiopod/design-system.
+ * "use client" directive regression check for @studiopod/design.
  *
  * Added after an RM-6 integration discovered that tsup's `treeshake: true`
  * (see tsup.config.ts) makes esbuild drop any module-level directive

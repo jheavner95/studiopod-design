@@ -1,7 +1,8 @@
-name: Release @studiopod/design-system
+name: Release @studiopod/design
 
 # ─────────────────────────────────────────────────────────────────────────────
-# DS-0.6 — release pipeline for @studiopod/design-system.
+# DS-0.6 — release pipeline for @studiopod/design (renamed from
+# @studiopod/design-system in DS-7.3a; see docs/DS-7.3a-Package-Rename.md).
 #
 # REGISTRY: GitHub Packages (https://npm.pkg.github.com). PRIVATE.
 # The package must never reach npmjs. `private: true` was removed in Phase D, so
@@ -153,7 +154,7 @@ jobs:
       # fail the job.
       - uses: actions/upload-artifact@v4
         with:
-          name: design-system-tarball
+          name: design-tarball
           path: /tmp/ds-pack/*.tgz
           if-no-files-found: error
 
@@ -211,6 +212,7 @@ jobs:
         run: |
           echo "DS_REGISTRY    set: $([ -n "$DS_REGISTRY" ] && echo yes || echo "NOT SET")   value: ${DS_REGISTRY:-<unset>}"
           echo "publish auth      : PAT (DS_NPM_TOKEN), wired only into the publish step"
+          echo "package name      : $(node -p "require('./packages/design-system/package.json').name")"
           echo "publishConfig     : $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
           echo "private           : $(node -p "require('./packages/design-system/package.json').private ?? false")"
 
@@ -344,7 +346,13 @@ jobs:
           V="${{ steps.version.outputs.version }}"
           git add packages/design-system/package.json package-lock.json
           git commit -m "release(design-system): v${V}"
-          git tag -a "design-system-v${V}" -m "@studiopod/design-system v${V}"
+          # Tag PREFIX deliberately unchanged by DS-7.3a. Seventeen
+          # `design-system-v*` tags already exist; keeping the prefix keeps
+          # the release line contiguous and sortable. The prefix identifies
+          # this repository's release series, not the npm package — the tag
+          # MESSAGE and the GitHub release title both carry the new name.
+          # Changing it is a release-process decision, not a rename one.
+          git tag -a "design-system-v${V}" -m "@studiopod/design v${V}"
           git push origin HEAD --follow-tags
 
       # prepublishOnly re-runs the full verify here — the gate cannot be bypassed
@@ -373,6 +381,6 @@ jobs:
         run: |
           V="${{ steps.version.outputs.version }}"
           gh release create "design-system-v${V}" \
-            --title "@studiopod/design-system v${V}" \
+            --title "@studiopod/design v${V}" \
             --generate-notes \
             --notes-file <(sed -n "/^## ${V}/,/^## /p" packages/design-system/CHANGELOG.md || echo "See CHANGELOG.md")

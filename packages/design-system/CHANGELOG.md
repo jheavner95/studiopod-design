@@ -1,6 +1,25 @@
 # Changelog
 
-All notable changes to `@studiopod/design-system` are documented here. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
+All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
+
+## 0.13.0
+
+### Changed
+
+- **BREAKING (distribution only) — the package is renamed from `@studiopod/design-system` to `@studiopod/design`** (DS-7.3a).
+  - **Nothing inside the package changed.** Every one of the 15 emitted `dist/` files is byte-identical to 0.12.0, verified by SHA-256 comparison across the rename. The export map, `main`/`types`, `files` allowlist, `sideEffects`, `type`, dependencies, peer dependencies, and `publishConfig.registry` are unchanged. All four API baselines are unchanged: 616 root exports, 249 illustrations, 44 marketing, 5 tokens. `styles.css` is unchanged. No component API, prop type, behaviour, or visual output was touched.
+  - **Why it is still breaking**: `npm install @studiopod/design-system` no longer resolves a new version, and every import specifier in a consumer changes. Per `VERSIONING.md`'s adopted pre-1.0 policy — *every consumer-visible breaking change is treated with major-version discipline even before 1.0.0, bumping the minor digit and documented as a breaking change* — this is a breaking minor: `0.12.0` → `0.13.0`.
+  - **Consumer migration is NOT part of this release.** `studiopod-app` (`^0.12.0`) and `studiopod-web` (`^0.1.1`) still depend on the old name and are unchanged. Their cutover is DS-7.4. Nothing they do today breaks, because nothing has been published.
+  - **Rolling back to 0.12.0 or earlier** uses the old package name — those versions exist only under `@studiopod/design-system`. See `docs/DISTRIBUTION.md` § Rollback.
+  - Release tags keep the `design-system-v` prefix; the prefix identifies this repository's release series, not the npm package. The tag message and GitHub release title carry the new name.
+
+### Added
+
+- **`identity-check`** (`scripts/check-package-identity.mjs`) — a new gate in the package's `verify` chain. Asserts the declared name and registry, that no built file or live source still references the old name, and that every export subpath **actually resolves** under the new name from a real packed tarball via Node's own export-map resolution (using `import.meta.resolve`, which resolves without executing, so the `next`/`react` peers are never needed).
+
+### Not changed
+
+- Design tokens still live in this package. `@studiopod/foundation` is **not** a dependency yet — that migration is deferred and will be verified independently.
 
 ## 0.12.0
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * CSS content regression check for @studiopod/design-system.
+ * CSS content regression check for @studiopod/design.
  *
  * Added after an RM-6 integration discovered that `tsup` (via
  * `postcss-load-config`, which walks up from `cwd` looking for a config)

@@ -1,4 +1,19 @@
-# @studiopod/design-system — Distribution
+# @studiopod/design — Distribution
+
+> **Renamed in DS-7.3a.** This package was published as `@studiopod/design-system`
+> through **0.12.0**. From **0.13.0** it is `@studiopod/design`. The repository,
+> exports, component APIs, and CSS are unchanged — only the package name moved.
+>
+> Consequences for the procedures below:
+>
+> - **Installing or upgrading** → use `@studiopod/design`.
+> - **Rolling back to 0.12.0 or earlier** → those versions exist only under the
+>   old name, so the rollback commands in § Rollback deliberately still say
+>   `@studiopod/design-system`. That is correct, not stale.
+> - **Consumers have not migrated yet.** `studiopod-app` and `studiopod-web`
+>   still depend on `@studiopod/design-system@^0.12.0` / `@^0.1.1`. Their cutover
+>   is DS-7.4; the sections describing their current wiring are left as they are
+>   because they describe what is installed today.
 
 **Status: PUBLISHING IS LIVE.** The two owner decisions this document originally left open — which registry, and the credential — were made in DS-0.6: the registry is **GitHub Packages**, the publish interlock (`private: true`) is removed, `publishConfig.registry` is pinned, and `DS_REGISTRY`/`DS_NPM_TOKEN` are configured. The package has been versioned and released through the real automated pipeline (`design-system-v0.1.1`, tagged and pushed by `.github/workflows/release.yml`'s `publish` job). §7's checklist below reflects what's actually been done and what's still open — item 3 (backfilling a `## 0.1.1` `CHANGELOG.md` entry) and items 8–10 (whether `studiopod-app`/`studiopod-web` have actually cut over — outside this repo, not verifiable from here) are the two loose ends worth checking before treating distribution as fully closed out. Consumer cutover (§8) was still deliberately unapplied as of this document's last full pass — confirm current state before assuming it's done.
 
@@ -10,7 +25,7 @@ Read §7 first if you just want the checklist.
 
 | | As of DS-0.6 | Target |
 |---|---|---|
-| `studiopod-app` | `file:vendor/studiopod-design-system-0.1.0.tgz` — a **171 KB binary committed to the app repo** (DS-0), unless cut over since — verify in that repo, not here | `@studiopod/design-system@^X.Y.Z` from the registry |
+| `studiopod-app` | `file:vendor/studiopod-design-system-0.1.0.tgz` — a **171 KB binary committed to the app repo** (DS-0), unless cut over since — verify in that repo, not here | `@studiopod/design@^X.Y.Z` from the registry |
 | `studiopod-web` | `file:../studiopod-design/packages/design-system/studiopod-design-system-0.1.0.tgz` — a **relative path to a tarball outside its own repo**, unless cut over since — verify in that repo, not here | same |
 | Registry | **GitHub Packages** (`https://npm.pkg.github.com`) — chosen, live | done |
 | Published versions | **`0.1.1`**, released through the automated workflow | ongoing |
@@ -69,7 +84,7 @@ For npm-private, substitute `https://registry.npmjs.org` and `//registry.npmjs.o
 ### 3.2 Install
 
 ```bash
-npm install @studiopod/design-system@^0.1.0
+npm install @studiopod/design@^0.13.0
 ```
 
 ### 3.3 Wire it up
@@ -79,8 +94,8 @@ Already done in `studiopod-app` (DS-0) and `studiopod-web`; shown for any new co
 ```css
 /* app/globals.css — order matters; later @theme wins */
 @import 'tailwindcss';
-@import '@studiopod/design-system/styles.css';   /* canonical tokens */
-@source '../node_modules/@studiopod/design-system/dist';  /* REQUIRED */
+@import '@studiopod/design/styles.css';   /* canonical tokens */
+@source '../node_modules/@studiopod/design/dist';  /* REQUIRED */
 ```
 
 **The `@source` line is not optional.** Tailwind ignores `node_modules`, so without it none of the DS's classes are generated and **every DS component renders unstyled** — with no error.
@@ -108,7 +123,7 @@ The tarball is uploaded as a build artifact so you can inspect exactly what woul
 ### 4.2 Cutting a release
 
 1. Update `packages/design-system/CHANGELOG.md` under a new `## X.Y.Z` heading.
-2. Actions → **Release @studiopod/design-system** → *Run workflow*.
+2. Actions → **Release @studiopod/design** → *Run workflow*.
 3. Choose `release_type` (`patch` / `minor` / `major`) per VERSIONING.md.
 4. **Leave `dry_run` checked** for a rehearsal — everything runs, nothing publishes.
 5. Uncheck `dry_run` to release.
@@ -133,7 +148,7 @@ Those last two are not hypothetical: the DS's two most recent commits fixed exac
 ## 5. Upgrade guide
 
 ```bash
-npm install @studiopod/design-system@^0.2.0
+npm install @studiopod/design@^0.13.0
 npm run build          # in the consumer
 ```
 
@@ -212,7 +227,7 @@ cd studiopod-app
 # 1. (auth registries only) add .npmrc per §3.1
 # 2. swap the vendored tarball for the registry
 npm uninstall @studiopod/design-system
-npm install @studiopod/design-system@^0.1.0
+npm install @studiopod/design@^0.13.0
 # 3. delete the vendored binary — the whole point of DS-0.5
 git rm -r vendor/
 # 4. verify BEFORE committing
@@ -226,7 +241,7 @@ Expect `package.json` to change from `"file:vendor/studiopod-design-system-0.1.0
 cd studiopod-web
 # 1. (auth registries only) add .npmrc per §3.1
 npm uninstall @studiopod/design-system
-npm install @studiopod/design-system@^0.1.0
+npm install @studiopod/design@^0.13.0
 npx next build
 ```
 This one **fixes a currently-broken production install**, not just a tidiness issue: `file:../studiopod-design/...` cannot resolve on Vercel.
@@ -254,6 +269,6 @@ This one **fixes a currently-broken production install**, not just a tidiness is
 | no manual package replacement | ✅ CI is the only release path; `prepublishOnly` re-gates manual publishes |
 | deterministic installs | ✅ `npm ci` in CI; lockfile-pinned consumers |
 | reproducible builds | ✅ `npm run verify` reproduces `dist/` from source; API + export baselines enforce it |
-| one canonical package | ✅ `@studiopod/design-system`, one repo, one exports map |
+| one canonical package | ✅ `@studiopod/design`, one repo, one exports map |
 
 The first two were blocked on "no registry exists" at DS-0.5 certification time — that blocker is gone (§7). What remains open is confirming the two consumer repos have actually cut over now that there's a registry to cut over to; that confirmation can only happen in those repos, not this one.
