@@ -201,6 +201,26 @@ Items 1, 3–7 are done, verified by the real artifacts they were supposed to pr
 
 - [x] **1. Choose the registry** (§2). **Chosen: GitHub Packages.**
 - [ ] **2. Registry account / org setup — REGRESSED.** GitHub Packages requires the npm scope (`@studiopod`) to equal the repo owner (`.github/workflows/release.yml`'s own header comment: "If the repo ever moves back to a personal account, publishing breaks and the scope must change with it"). The repo now lives at `github.com/jheavner95/studiopod-design` — a personal account, not the `studiopod` org — so that requirement is currently **not** satisfied, and a publish attempt under the current `@studiopod/design-system` name/registry combination should be expected to fail. This is not a new problem introduced by DS-4; it was identified and flagged earlier (the repo moved organizations mid-project) but not resolved, since the fix is an owner decision (move the repo back to a `studiopod`-owned org, or change the package scope/registry to match wherever it actually lives) that this phase does not make on its own. Resolve before the next real publish attempt.
+
+  > **SUPERSEDED — DS-7.3a-R1 (see below). The dated text above is preserved as
+  > the DS-4 record; do not act on it.** Two of its claims are now known to be
+  > wrong, from evidence rather than argument:
+  >
+  > 1. *"GitHub Packages requires the npm scope to equal the repo owner."* It
+  >    does not. `@studiopod/design-system` has been published from
+  >    `jheavner95/studiopod-design` at least seventeen times — `0.1.1` through
+  >    `0.12.0` are all readable in the registry today. A cross-owner publish
+  >    works when the credential is a PAT owned by an authorized `studiopod`
+  >    member; `GITHUB_TOKEN` is what cannot cross that boundary.
+  > 2. *"a publish attempt … should be expected to fail."* Publishing a NEW
+  >    VERSION of an existing package demonstrably succeeds. What remains genuinely
+  >    unproven is a **first publish of a NEW package name** into the org
+  >    namespace — `@studiopod/design` has never existed — which requires
+  >    package-creation rights that no read-only probe can confirm. That is a
+  >    narrower and different risk than this item describes.
+  >
+  > Current status: see §10.
+
 - [x] **3. Remove the publish interlock**
   - `packages/design-system/package.json`: `"private": true"` removed (DS-0.6 Phase D).
   - Registry pin is live: `"publishConfig": { "registry": "https://npm.pkg.github.com" }`.
@@ -272,3 +292,118 @@ This one **fixes a currently-broken production install**, not just a tidiness is
 | one canonical package | ✅ `@studiopod/design`, one repo, one exports map |
 
 The first two were blocked on "no registry exists" at DS-0.5 certification time — that blocker is gone (§7). What remains open is confirming the two consumer repos have actually cut over now that there's a registry to cut over to; that confirmation can only happen in those repos, not this one.
+
+## 10. Release modes (DS-7.3a-R1)
+
+The release workflow has two explicitly named modes. They are disjoint: there is
+no combination of a pre-set version and an automatic bump, because that
+ambiguity is what blocked the `0.13.0` release in DS-7.3a-R.
+
+Both are driven from **Actions → Release @studiopod/design → Run workflow**, and
+`dry_run` defaults to **true**. A real release requires deliberately turning it
+off.
+
+### 10.1 `committed` mode — publish the version already in the manifest
+
+Reads `name` and `version` straight from the committed
+`packages/design-system/package.json`, mutates nothing, and publishes exactly
+that. It is the correct mode whenever the version was set and certified in an
+earlier work package.
+
+For the pending release it resolves:
+
+```text
+name    = @studiopod/design
+version = 0.13.0
+tag     = design-system-v0.13.0
+```
+
+**Why `0.13.0` must not be bumped automatically.** `0.13.0` is the version that
+DS-7.3a certified: its 15 built files were hash-compared against
+`@studiopod/design-system@0.12.0` and proven byte-identical, and its tarball was
+diffed entry by entry. Bumping would publish `0.13.1` — a coordinate nobody
+verified, whose changelog entry does not exist, and which contradicts every
+document describing this rename. The previous workflow could *only* bump, which
+is precisely why it could not perform this release.
+
+Committed mode additionally **fails on a dirty tree**, so stale generated output
+or an accidental manifest edit stops the release rather than shipping.
+
+### 10.2 `bump` mode — compute the next version
+
+Retains the original behaviour for ordinary releases: pick `patch`, `minor` or
+`major`, and the workflow applies it, publishes, then commits the version bump
+alongside the tag. Use this for every normal release where the version has not
+been pre-set.
+
+### 10.3 Dry run
+
+The default. Runs the entire path — clean install, lint, typecheck, tests, API,
+CSS, use-client, export and package-identity checks, build, full verify, pack,
+packed-manifest inspection, registry existence check, tag existence check — and
+publishes, tags and releases **nothing**. It reports the exact intended package,
+version, registry, tag and mode. The job holds `permissions: contents: read`, so
+it is incapable of tagging or publishing regardless of what its steps say.
+
+### 10.4 Transactional ordering
+
+```text
+1. validate (credential preflight, target resolution, clean-tree check)
+2. build    (full verify: api, css, use-client, exports, identity)
+3. pack
+4. confirm the target version is unused      <- last reversible moment
+5. PUBLISH                                    <- irreversible
+6. install from the registry in a clean external consumer
+7. verify exports, types, CSS, and dist hashes against the local tarball
+8. create and push the git tag
+9. create the GitHub release
+```
+
+**The tag is created last, and only after the published artifact has been
+installed and verified from outside this repository.** A publish failure or a
+remote-verification failure therefore leaves no tag and no release.
+
+This is a correction, not a restatement: the previous workflow committed, tagged
+and *pushed* before `npm publish` ran, so a failed publish left an orphan tag and
+a version-bump commit on `main` that had to be cleaned up by hand.
+
+**Publication itself cannot be rolled back.** A published `name@version` is
+permanent on GitHub Packages and npm alike — `unpublish` does not free the
+coordinate for reuse. Steps 1–4 exist because they are the only reversible part.
+
+### 10.5 Credential requirements
+
+Publishing uses `secrets.DS_NPM_TOKEN`, wired into the four steps that touch the
+registry and nowhere else. It must be:
+
+| Requirement | Why |
+| --- | --- |
+| A **classic** PAT | The workflow's publish path expects classic-PAT semantics; a fine-grained token's package permissions cannot be read from the API response header, so preflight can only report it as indeterminate |
+| Scope `write:packages` | Publishing. `read:packages` alone is not enough — this is exactly the state the local developer PAT was found in |
+| Scope `read:packages` | The registry existence check and the post-publish verification both read |
+| Owned by an authorized `studiopod` member | GitHub Packages ties publish rights to the scope's owning account |
+| SSO-authorized for `studiopod`, if SSO is enforced | Preflight detects this via the `x-github-sso` response header |
+| Permitted to **create a new package** in the org | `@studiopod/design` has never existed, so this is a first publish |
+
+`preflight-credential.mjs` distinguishes missing / invalid / read-only /
+write-capable / SSO-restricted / indeterminate credentials before anything
+irreversible runs, and never prints the token.
+
+**The honest limit:** GitHub exposes no endpoint that answers "may this token
+create a new package under this organization?". `write:packages` is necessary
+but not sufficient, and package-creation permission is proven only by the
+publish attempt itself. Preflight says so in its own output rather than implying
+a clearance it cannot give.
+
+### 10.6 Post-publish verification
+
+`verify-published.mjs` runs in a temp directory outside the workspace, installs
+the published version from the registry as a real consumer, and checks the
+installed manifest name and version, every export subpath (via
+`import.meta.resolve`, which resolves without executing, so the React/Next peers
+are never needed), the presence of type declarations, the CSS entry and its
+`@theme` block, that `@studiopod/design-system` was not pulled in transitively,
+that no unexpected runtime dependency appeared, and that every `dist/` file is
+byte-identical to the locally packed tarball.
+
+Only after this passes is the tag created.

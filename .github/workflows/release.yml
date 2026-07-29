@@ -45,18 +45,23 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      release_type:
-        description: "SemVer bump (see packages/design-system/VERSIONING.md)"
+      mode:
+        description: "committed = publish the version already in the manifest; bump = compute a new one"
         required: true
+        type: choice
+        options: [committed, bump]
+        default: committed
+      release_type:
+        description: "SemVer bump — used ONLY in bump mode, ignored in committed mode (see VERSIONING.md)"
+        required: false
         type: choice
         options: [patch, minor, major]
         default: patch
       dry_run:
-        description: "Run every step but do not publish or push tags"
+        description: "Run every step but do not publish, tag, or release"
         required: false
         type: boolean
         default: true
-
 concurrency:
   group: ds-release-${{ github.ref }}
   cancel-in-progress: false
@@ -162,6 +167,10 @@ jobs:
   # Phase C. Everything the real release does EXCEPT `npm publish`, the version
   # commit, and the tag push — so version calculation and the release commands
   # are proven before a credential is ever used.
+  # ── Dry run: exercise the whole release path, change nothing ──────────────
+  # DEFAULT MODE. Publishes nothing, tags nothing, releases nothing — enforced
+  # by `permissions: contents: read` and by the absence of any publish step,
+  # not merely by an `if:`.
   dry-run:
     name: Release dry run
     needs: [verify, fast]
@@ -169,6 +178,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read   # cannot tag, publish, or release — enforced, not promised
+
     steps:
       - uses: actions/checkout@v4
 
@@ -182,40 +192,31 @@ jobs:
       - name: Install (deterministic)
         run: npm ci
 
-      # Re-runs the same package verify the `verify` job above already ran
-      # successfully (this job `needs: [verify, fast]`, so correctness is
-      # already proven) — necessary anyway because GitHub Actions jobs don't
-      # share a filesystem: this job needs its OWN `dist/` on disk to pack a
-      # real tarball in the steps below, and there is no `dist/` without a
-      # rebuild. Sharing it via actions/upload-artifact +
-      # actions/download-artifact instead of rebuilding is the clear
-      # optimization opportunity DS-1D leaves for a future pass (see
-      # docs/VERIFICATION.md "Known limitations") — not done here to avoid
-      # adding artifact-passing complexity to an already carefully-tuned
-      # release pipeline in the same change that's meant to be simplifying it.
-      - name: Full verification pipeline
-        working-directory: packages/design-system
-        run: npm run verify
+      # ── What are we proposing to publish? ─────────────────────────────────
+      # `--release-type` is passed ONLY in bump mode. In committed mode the
+      # resolver REJECTS a release type rather than ignoring it, so the empty
+      # string here is load-bearing: it is what keeps "pre-set version plus
+      # automatic bump" from silently resolving to a bump.
+      - name: Resolve release target
+        id: target
+        run: |
+          node scripts/release/resolve-target.mjs \
+            --mode "${{ inputs.mode }}" \
+            --release-type "${{ inputs.mode == 'bump' && inputs.release_type || '' }}"
 
-      # Reports configuration AND enforces it. Reporting alone was a trap: the
-      # publish job skips (not fails) when unconfigured, so a green dry run with
-      # missing secrets would be followed by a "successful" release that
-      # published nothing. Failing here makes "dry run green" actually mean
-      # "ready to publish".
-      #
-      # This step checks only DS_REGISTRY. The publish PAT (DS_NPM_TOKEN) reaches
-      # ONLY the publish step, so a dry run never needs the credential; a
-      # missing/invalid PAT surfaces at the real publish step as an npm error.
+      - name: Credential preflight (diagnosis only — nothing is published)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: node scripts/release/preflight-credential.mjs
+
       - name: Report + enforce distribution configuration
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           echo "DS_REGISTRY    set: $([ -n "$DS_REGISTRY" ] && echo yes || echo "NOT SET")   value: ${DS_REGISTRY:-<unset>}"
-          echo "publish auth      : PAT (DS_NPM_TOKEN), wired only into the publish step"
           echo "package name      : $(node -p "require('./packages/design-system/package.json').name")"
           echo "publishConfig     : $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
           echo "private           : $(node -p "require('./packages/design-system/package.json').private ?? false")"
-
           if [ -z "$DS_REGISTRY" ]; then
             echo "::error title=DS_REGISTRY not set::Add repository VARIABLE DS_REGISTRY = https://npm.pkg.github.com (Settings -> Secrets and variables -> Actions -> Variables)."
             exit 1
@@ -223,45 +224,41 @@ jobs:
             echo "::error title=DS_REGISTRY unexpected::Expected https://npm.pkg.github.com, got '$DS_REGISTRY'."
             exit 1
           fi
-          echo "OK — registry configured; a real release would publish (PAT auth at publish step)."
 
-      # Restores via a byte-exact backup, NOT `git checkout -- package.json`.
-      # `git checkout` restores the last COMMITTED state, which silently destroys
-      # any uncommitted change to the file. That is harmless on a clean CI
-      # checkout but catastrophic if this step is ever run locally — which is
-      # exactly how it wiped the Phase A edits during DS-0.6 authoring. A backup
-      # round-trip is correct in both environments.
-      - name: Version calculation (computed, then reverted)
+      # Full gate: build + typecheck + api + css + use-client + exports + identity.
+      - name: Full verification pipeline
         working-directory: packages/design-system
-        run: |
-          CUR=$(node -p "require('./package.json').version")
-          cp package.json /tmp/pkg.backup.json
-          npm version "${{ inputs.release_type }}" --no-git-tag-version --allow-same-version >/dev/null
-          NEXT=$(node -p "require('./package.json').version")
-          cp /tmp/pkg.backup.json package.json
-          REVERTED=$(node -p "require('./package.json').version")
-          echo "current  : $CUR"
-          echo "bump     : ${{ inputs.release_type }}"
-          echo "would be : $NEXT"
-          echo "tag      : design-system-v$NEXT"
-          echo "reverted : $REVERTED"
-          test "$CUR" = "$REVERTED" || { echo "::error::dry run mutated package.json"; exit 1; }
-          cmp -s /tmp/pkg.backup.json package.json || { echo "::error::package.json not byte-identical after dry run"; exit 1; }
-          rm -f /tmp/pkg.backup.json
+        run: npm run verify
 
-      # `npm pack --pack-destination` does NOT create the directory; it exits
-      # 254 (ENOENT) if it is missing. This is what failed run #2.
+      # Committed mode must not have touched a tracked file. This is the
+      # machine check behind "makes no manifest or lockfile mutation" — the
+      # resolver only reads, and this proves nothing else wrote either.
+      - name: Reject a dirty tree (committed mode)
+        if: inputs.mode == 'committed'
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error title=Dirty tree::committed mode requires a clean tree; generated output is stale or a step mutated the manifest."
+            git status --porcelain
+            exit 1
+          fi
+          echo "OK — tree clean; no manifest or lockfile mutation."
+
       - name: Pack the real tarball
         working-directory: packages/design-system
         run: |
           mkdir -p /tmp/ds-pack
           npm pack --pack-destination /tmp/ds-pack
 
-      - name: Verify PACKED tarball contents (not just the working tree)
+      - name: Inspect the packed manifest
         run: |
           cd /tmp/ds-pack && tar -xzf ./*.tgz
           echo "--- files that would ship ---"; find package -type f | sort
-          echo
+          NAME=$(node -p "require('/tmp/ds-pack/package/package.json').name")
+          VER=$(node -p "require('/tmp/ds-pack/package/package.json').version")
+          echo "packed name    : $NAME"
+          echo "packed version : $VER"
+          test "$NAME" = "${{ steps.target.outputs.name }}"    || { echo "::error::packed name != resolved target"; exit 1; }
+          test "$VER"  = "${{ steps.target.outputs.version }}" || { echo "::error::packed version != resolved target"; exit 1; }
           head -c 13 package/dist/index.js | grep -q '"use client"' \
             && echo "OK   index.js retains \"use client\"" \
             || { echo "::error::published index.js is MISSING \"use client\""; exit 1; }
@@ -272,45 +269,69 @@ jobs:
             test -s "package/dist/$f.js"   || { echo "::error::missing dist/$f.js";   exit 1; }
             test -s "package/dist/$f.d.ts" || { echo "::error::missing dist/$f.d.ts"; exit 1; }
           done
-          echo "OK   all 9 export targets present in the tarball"
+          echo "OK   all export targets present in the tarball"
+
+      # Would the real publish be rejected? Ask now, while it is free.
+      - name: Registry existence check
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          DS_REGISTRY: ${{ vars.DS_REGISTRY }}
+        run: |
+          node scripts/release/check-registry.mjs \
+            --name "${{ steps.target.outputs.name }}" \
+            --version "${{ steps.target.outputs.version }}"
+
+      - name: Tag existence check
+        run: |
+          TAG="${{ steps.target.outputs.tag }}"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error title=Tag already exists::$TAG is already on origin."
+            exit 1
+          fi
+          echo "OK — tag $TAG is unused."
 
       - uses: actions/upload-artifact@v4
         with:
-          name: design-system-dryrun-tarball
+          name: design-dryrun-tarball
           path: /tmp/ds-pack/*.tgz
+          if-no-files-found: error
 
-      - name: Release commands that WOULD run
+      - name: Summary — exactly what a real run would do
         run: |
-          echo "npm version ${{ inputs.release_type }} --no-git-tag-version"
-          echo "git commit -m 'release(design-system): vX.Y.Z'"
-          echo "git tag -a design-system-vX.Y.Z"
-          echo "git push origin HEAD --follow-tags"
-          echo "npm publish            # -> https://npm.pkg.github.com (private)"
-          echo "gh release create design-system-vX.Y.Z --generate-notes"
-          echo "DRY RUN — none of the above were executed."
+          echo "── DRY RUN — nothing was published, tagged, or released ──"
+          echo "  package      : ${{ steps.target.outputs.name }}"
+          echo "  version      : ${{ steps.target.outputs.version }}"
+          echo "  registry     : ${{ vars.DS_REGISTRY }}"
+          echo "  tag          : ${{ steps.target.outputs.tag }}"
+          echo "  release mode : ${{ inputs.mode }}"
+          echo "  mutates manifest: ${{ steps.target.outputs.will-mutate-manifest }}"
 
-  # ── Release (inert until configured) ──────────────────────────────────────
+  # ── Publish: transactional ordering ───────────────────────────────────────
+  # validate -> build -> pack -> confirm unused -> PUBLISH -> verify from a
+  # clean external consumer -> tag -> release.
+  #
+  # The tag is created LAST, and only after the published artifact has been
+  # installed and verified from outside this repository. The previous revision
+  # committed, tagged and PUSHED before `npm publish` ran, so a publish failure
+  # left an orphan tag and a version-bump commit on main — a state that had to
+  # be cleaned up by hand. Registry publication itself cannot be rolled back or
+  # reused: a published name@version is permanent even after `npm unpublish`.
   publish:
     name: Publish
     needs: [verify, fast]
     if: github.event_name == 'workflow_dispatch' && inputs.dry_run == false
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # version commit, tag, GitHub release
+      contents: write   # version commit (bump mode), tag, GitHub release
       packages: write   # publish to GitHub Packages
+
     steps:
-      # FAILS rather than skips. A skip here was the dangerous design: the
-      # operator explicitly asked to publish, so quietly doing nothing and
-      # reporting green is the worst outcome. If you asked for a release and it
-      # cannot happen, that is an error.
-      # This gate checks only the DS_REGISTRY variable. The publish PAT
-      # (DS_NPM_TOKEN) is wired ONLY into the publish step, never here.
       - name: Gate — is distribution configured?
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           [ -n "$DS_REGISTRY" ] || { echo "::error title=DS_REGISTRY not set::Set the DS_REGISTRY variable to https://npm.pkg.github.com. See docs/DISTRIBUTION.md §7."; exit 1; }
-          echo "Distribution registry configured — proceeding to publish (PAT auth at the publish step)."
+          echo "Distribution registry configured."
 
       - uses: actions/checkout@v4
         with:
@@ -326,61 +347,123 @@ jobs:
       - name: Install (deterministic)
         run: npm ci
 
+      # ── 1. VALIDATE ───────────────────────────────────────────────────────
+      - name: Credential preflight
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: node scripts/release/preflight-credential.mjs
+
+      - name: Resolve release target
+        id: target
+        run: |
+          node scripts/release/resolve-target.mjs \
+            --mode "${{ inputs.mode }}" \
+            --release-type "${{ inputs.mode == 'bump' && inputs.release_type || '' }}"
+
       - name: Configure git identity
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Version the PACKAGE, tag as design-system-vX.Y.Z so the tag namespace
-      # stays distinct from any future package in this repo.
-      - name: Create version
-        id: version
+      # bump mode only: write the new version now so it is what gets built,
+      # packed and published. NOT committed yet — the commit and tag happen
+      # after a verified publish.
+      - name: Apply version bump (bump mode only)
+        if: steps.target.outputs.will-mutate-manifest == 'true'
         working-directory: packages/design-system
         run: |
-          NEW=$(npm version "${{ inputs.release_type }}" --no-git-tag-version)
-          echo "version=${NEW#v}" >> "$GITHUB_OUTPUT"
-          echo "Bumped to ${NEW}"
+          npm version "${{ inputs.release_type }}" --no-git-tag-version --allow-same-version >/dev/null
+          APPLIED=$(node -p "require('./package.json').version")
+          test "$APPLIED" = "${{ steps.target.outputs.version }}" \
+            || { echo "::error::npm version produced $APPLIED, expected ${{ steps.target.outputs.version }}"; exit 1; }
+          echo "manifest set to $APPLIED"
 
-      - name: Commit + tag
+      - name: Reject a dirty tree (committed mode)
+        if: inputs.mode == 'committed'
         run: |
-          V="${{ steps.version.outputs.version }}"
-          git add packages/design-system/package.json package-lock.json
-          git commit -m "release(design-system): v${V}"
-          # Tag PREFIX deliberately unchanged by DS-7.3a. Seventeen
-          # `design-system-v*` tags already exist; keeping the prefix keeps
-          # the release line contiguous and sortable. The prefix identifies
-          # this repository's release series, not the npm package — the tag
-          # MESSAGE and the GitHub release title both carry the new name.
-          # Changing it is a release-process decision, not a rename one.
-          git tag -a "design-system-v${V}" -m "@studiopod/design v${V}"
-          git push origin HEAD --follow-tags
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error title=Dirty tree::committed mode must not mutate the manifest or lockfile."
+            git status --porcelain
+            exit 1
+          fi
+          echo "OK — tree clean."
 
-      # prepublishOnly re-runs the full verify here — the gate cannot be bypassed
-      # by publishing directly.
-      #
-      # Auth: a PAT (secrets.DS_NPM_TOKEN), and it MUST be a PAT here — not
-      # GITHUB_TOKEN. This is a deliberate cross-owner architecture: the repo is
-      # jheavner95/studiopod-design (a User — public, so it deploys on Vercel's
-      # free plan) while the package namespace is @studiopod (the studiopod org).
-      # GITHUB_TOKEN's packages:write is scoped to the REPO owner (jheavner95),
-      # so it cannot publish to the @studiopod org namespace — it would be denied.
-      # A classic PAT belonging to a user who is a studiopod-org member with
-      # write:packages CAN publish across that boundary (this is exactly how 0.1.1
-      # was published). The v0.2.0 E401 was that PAT being invalid/expired, not
-      # the mechanism being wrong. The token reaches ONLY this step (see the gate,
-      # which no longer receives it). See docs/DS-5G-Release-Recovery-Revised.md.
+      # ── 2. BUILD (+ every gate) ───────────────────────────────────────────
+      - name: Full verification pipeline
+        working-directory: packages/design-system
+        run: npm run verify
+
+      # ── 3. PACK ───────────────────────────────────────────────────────────
+      - name: Pack
+        working-directory: packages/design-system
+        run: |
+          mkdir -p /tmp/ds-pack
+          npm pack --pack-destination /tmp/ds-pack
+          NAME=$(node -p "require('./package.json').name")
+          test "$NAME" = "${{ steps.target.outputs.name }}" || { echo "::error::packed name != target"; exit 1; }
+
+      # ── 4. CONFIRM THE COORDINATE IS UNUSED ───────────────────────────────
+      # Last free moment. Everything after this is irreversible.
+      - name: Confirm target version is unused
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          DS_REGISTRY: ${{ vars.DS_REGISTRY }}
+        run: |
+          node scripts/release/check-registry.mjs \
+            --name "${{ steps.target.outputs.name }}" \
+            --version "${{ steps.target.outputs.version }}"
+
+      # ── 5. PUBLISH — IRREVERSIBLE ─────────────────────────────────────────
+      # Auth is a PAT (secrets.DS_NPM_TOKEN), NOT GITHUB_TOKEN: the repo owner
+      # (jheavner95, a User) differs from the package scope (@studiopod, an
+      # org), and GITHUB_TOKEN's packages:write is scoped to the repo owner.
+      # The token reaches ONLY this step.
       - name: Publish
+        id: publish
         working-directory: packages/design-system
         env:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm publish
 
+      # ── 6/7. VERIFY FROM A CLEAN EXTERNAL CONSUMER ────────────────────────
+      # Installs the PUBLISHED artifact outside the workspace and checks
+      # exports, types, CSS, and dist hashes against the local tarball. A
+      # failure here stops the run before any tag exists.
+      - name: Verify the published package from a clean consumer
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          DS_REGISTRY: ${{ vars.DS_REGISTRY }}
+        run: |
+          TARBALL=$(ls /tmp/ds-pack/*.tgz | head -1)
+          node scripts/release/verify-published.mjs \
+            --name "${{ steps.target.outputs.name }}" \
+            --version "${{ steps.target.outputs.version }}" \
+            --tarball "$TARBALL"
+
+      # ── 8. TAG (only now) ─────────────────────────────────────────────────
+      # Tag prefix stays `design-system-v`: it names this repository's release
+      # series, not the npm package. 17 such tags already exist.
+      - name: Commit version bump and tag
+        run: |
+          V="${{ steps.target.outputs.version }}"
+          TAG="${{ steps.target.outputs.tag }}"
+          if [ "${{ steps.target.outputs.will-mutate-manifest }}" = "true" ]; then
+            git add packages/design-system/package.json package-lock.json
+            git commit -m "release(design-system): v${V}"
+          else
+            echo "committed mode — version ${V} is already committed; tagging HEAD."
+          fi
+          git tag -a "$TAG" -m "@studiopod/design v${V}"
+          git push origin HEAD --follow-tags
+
+      # ── 9. GITHUB RELEASE ─────────────────────────────────────────────────
       - name: Generate release notes
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          V="${{ steps.version.outputs.version }}"
-          gh release create "design-system-v${V}" \
+          V="${{ steps.target.outputs.version }}"
+          TAG="${{ steps.target.outputs.tag }}"
+          gh release create "$TAG" \
             --title "@studiopod/design v${V}" \
             --generate-notes \
             --notes-file <(sed -n "/^## ${V}/,/^## /p" packages/design-system/CHANGELOG.md || echo "See CHANGELOG.md")
