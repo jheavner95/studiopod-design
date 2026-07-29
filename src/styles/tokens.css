@@ -1,11 +1,16 @@
 /**
- * Tokens that are consumed as raw CSS custom properties rather than
- * Tailwind theme namespaces — z-index scale and motion timing.
- * Mirrored in lib/tokens.ts for use inside framer-motion variants.
+ * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
+ *
+ * Source of values : @studiopod/foundation@0.2.0 (tokens.json)
+ * Source of names  : this file's generator, scripts/generate-tokens-from-foundation.mjs
+ * Regenerate       : npm run token:bridge
+ * Verified in CI by: npm run token:bridge-check
+ *
+ * Comments here never reach consumers — esbuild strips them when bundling
+ * src/styles.css into dist/styles.css. Only declarations and order ship.
  */
 
 :root {
-  /* Z-index scale — always reach for the semantic var, never a raw number. */
   --z-base: 0;
   --z-raised: 10;
   --z-sticky: 20;
@@ -15,17 +20,12 @@
   --z-toast: 60;
   --z-tooltip: 70;
 
-  /* Motion durations (ms), mirrored as seconds in lib/tokens.ts.
-     Used by the MS-1 UI primitives (Button, Card hover, etc). */
   --duration-instant: 80ms;
   --duration-fast: 160ms;
   --duration-base: 240ms;
   --duration-slow: 400ms;
   --duration-slower: 600ms;
 
-  /* Motion engine tokens (MS-2), mirrored as seconds in src/motion/tokens.ts.
-     Used by the motion engine primitives in src/motion — kept distinct from
-     the --duration-* scale above so the two systems can evolve independently. */
   --motion-duration-instant: 100ms;
   --motion-duration-fast: 180ms;
   --motion-duration-normal: 300ms;
@@ -49,10 +49,6 @@
   --motion-ease-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Respect the user's OS-level motion preference everywhere, including
-   any animation not managed through framer-motion (e.g. CSS transitions,
-   the pulse keyframe below). Framer-motion components additionally check
-   `useReducedMotion()` in JS to skip transform/opacity animation entirely. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

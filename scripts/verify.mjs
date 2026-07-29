@@ -26,6 +26,11 @@
 import { spawnSync } from "node:child_process";
 
 const FAST_STEPS = [
+  // First, deliberately: it is the cheapest step and it catches the one class
+  // of drift the other steps cannot see — a hand-edited generated token file
+  // silently diverging from @studiopod/foundation. Everything downstream builds
+  // on those tokens, so failing here fails fast and points at the real cause.
+  { name: "Foundation token bridge", script: "token:bridge-check" },
   { name: "TypeScript — app", script: "typecheck" },
   { name: "TypeScript — tests", script: "test:typecheck" },
   { name: "ESLint", script: "lint" },

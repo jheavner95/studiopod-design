@@ -94,8 +94,18 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: "@studiopod"
 
+      # Reads @studiopod/foundation from GitHub Packages (DS-7.5D). GitHub
+      # Packages requires a token for EVERY install, including reads, so an
+      # unauthenticated `npm ci` now fails with E401. DS_NPM_TOKEN is the
+      # existing publish PAT; classic-PAT `write:packages` implies
+      # `read:packages`, so one secret covers both directions. The repo's own
+      # .npmrc carries scope routing only — no credential is committed.
       - name: Install (deterministic)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm ci
 
       - name: verify:fast — typecheck, lint, unit tests
@@ -127,10 +137,16 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: "@studiopod"
 
       # Deterministic installs: `npm ci` fails if package-lock.json is out of
       # sync with package.json, which is the property we want in CI.
+      #
+      # Authenticated since DS-7.5D — see the note in the `fast` job.
       - name: Install (deterministic)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm ci
         working-directory: .
 
@@ -189,7 +205,10 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@studiopod"
 
+      # Authenticated read of @studiopod/foundation — see the `fast` job note.
       - name: Install (deterministic)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm ci
 
       # ── What are we proposing to publish? ─────────────────────────────────
@@ -344,7 +363,10 @@ jobs:
           registry-url: ${{ vars.DS_REGISTRY }}
           scope: "@studiopod"
 
+      # Authenticated read of @studiopod/foundation — see the `fast` job note.
       - name: Install (deterministic)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm ci
 
       # ── 1. VALIDATE ───────────────────────────────────────────────────────

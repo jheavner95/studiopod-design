@@ -1,11 +1,13 @@
 /**
- * Fluid typography scale. Plain CSS classes (not Tailwind @theme font-size
- * tokens) so font-size, line-height and letter-spacing travel together as
- * one class and clamp() gets full control over responsive scaling.
+ * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
  *
- * Usage: prefer the Typography components (src/components/ui/Typography.tsx)
- * in application code — these classes are their implementation detail, but
- * are also valid to reach for directly in one-off markup.
+ * Source of values : @studiopod/foundation@0.2.0 (tokens.json)
+ * Source of names  : this file's generator, scripts/generate-tokens-from-foundation.mjs
+ * Regenerate       : npm run token:bridge
+ * Verified in CI by: npm run token:bridge-check
+ *
+ * Comments here never reach consumers — esbuild strips them when bundling
+ * src/styles.css into dist/styles.css. Only declarations and order ship.
  */
 
 .text-display-1 {

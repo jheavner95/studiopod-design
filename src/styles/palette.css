@@ -1,22 +1,17 @@
 /**
- * Foundation color palette — the raw ramps StudioPOD's semantic tokens
- * (src/styles/theme.css) are built from. Documented in full at
- * /design-system under Foundation → Color Palette.
+ * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
  *
- * Deliberately kept OUTSIDE the @theme block in theme.css: values there
- * automatically become bg-, text-, and border- Tailwind utilities, which
- * would invite components to bypass the semantic layer and reach for a
- * raw ramp step directly. These --palette- variables generate no
- * utilities; they're read via inline style in the Foundation Palette
- * showcase only. Components should keep consuming the semantic tokens
- * (--color-canvas, --color-accent-500, --color-error, etc.).
+ * Source of values : @studiopod/foundation@0.2.0 (tokens.json)
+ * Source of names  : this file's generator, scripts/generate-tokens-from-foundation.mjs
+ * Regenerate       : npm run token:bridge
+ * Verified in CI by: npm run token:bridge-check
+ *
+ * Comments here never reach consumers — esbuild strips them when bundling
+ * src/styles.css into dist/styles.css. Only declarations and order ship.
  */
 
+
 :root {
-  /* Slate — the cool, blue-tinted neutral StudioPOD's canvas, surface,
-     border, and ink scale is built from. Several steps below are the
-     exact values already live as semantic tokens; see the cross-reference
-     table in the Foundation Palette section for the full mapping. */
   --palette-slate-50: #f8fafc;
   --palette-slate-100: #f1f5f9;
   --palette-slate-200: #e2e8f0;
@@ -29,8 +24,6 @@
   --palette-slate-900: #111827;
   --palette-slate-950: #0a0e17;
 
-  /* Blue — StudioPOD's accent scale (--color-accent-300..700) is this
-     ramp's 300–700 steps verbatim. */
   --palette-blue-50: #eff6ff;
   --palette-blue-100: #dbeafe;
   --palette-blue-200: #bfdbfe;
@@ -43,7 +36,6 @@
   --palette-blue-900: #1e3a8a;
   --palette-blue-950: #172554;
 
-  /* Green — --color-success is this ramp's 500 step verbatim. */
   --palette-green-50: #f0fdf4;
   --palette-green-100: #dcfce7;
   --palette-green-200: #bbf7d0;
@@ -56,7 +48,6 @@
   --palette-green-900: #14532d;
   --palette-green-950: #052e16;
 
-  /* Amber — --color-warning is this ramp's 500 step verbatim. */
   --palette-amber-50: #fffbeb;
   --palette-amber-100: #fef3c7;
   --palette-amber-200: #fde68a;
@@ -69,9 +60,6 @@
   --palette-amber-900: #78350f;
   --palette-amber-950: #451a03;
 
-  /* Red — --color-error is a lightened, contrast-adjusted derivative of
-     this ramp's 500 step (#f56565 vs. raw Red 500 #ef4444), not an alias
-     of it — see MS-2A's contrast pass for why. */
   --palette-red-50: #fef2f2;
   --palette-red-100: #fee2e2;
   --palette-red-200: #fecaca;
@@ -84,7 +72,6 @@
   --palette-red-900: #7f1d1d;
   --palette-red-950: #450a0a;
 
-  /* Neutral / White / Black */
   --palette-neutral: #94a3b8;
   --palette-white: #ffffff;
   --palette-black: #000000;

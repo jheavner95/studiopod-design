@@ -190,8 +190,15 @@ describe("publish is transactional", () => {
   it("wires the publish token only into steps that need the registry", () => {
     const text = jobText("publish");
     const tokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.DS_NPM_TOKEN \}\}/g) ?? [];
-    // preflight, confirm-unused, publish, remote verification — and nothing else.
-    expect(tokenUses).toHaveLength(4);
+    // Five steps genuinely touch the registry: install, preflight,
+    // confirm-unused, publish, remote verification — and nothing else.
+    //
+    // `npm ci` joined this list in DS-7.5D: the package now depends on
+    // @studiopod/foundation, and GitHub Packages requires a token for every
+    // install including reads, so an unauthenticated install fails with E401.
+    // The count is asserted rather than loosened so that a token appearing in
+    // some *other* step still fails this test.
+    expect(tokenUses).toHaveLength(5);
     expect(text).not.toMatch(/echo.*DS_NPM_TOKEN/);
   });
 });
