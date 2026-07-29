@@ -39,6 +39,85 @@ All notable changes to `@studiopod/design` are documented here. Releases up to a
   - **Explicitly not implemented**, with documented extension seams instead: persistence/networking, optimistic concurrency and conflict resolution, retry policy, keyboard/focus handling, autosave, undo/redo, any provider/context, any imperative controller, and any Inspector UI. See `docs/DS-7.2-Edit-Session-Hook.md` §7.
   - Purely additive: root exports **610 → 616**. No existing export changed.
 
+## 0.11.0
+
+> **Reconstructed in DS-7.4c.** Evidence: tag `design-system-v0.11.0` (2026-07-20), release commit `7405892`, work commit `eb7058c`, `docs/DS-6.9C6E-A-InspectorHeader-Metadata-Contract.md`, and the published tarball. Written after the fact, not at release time.
+
+### Added
+
+- **`InspectorHeader` gains `metadata?: ReactNode`** (DS-6.9C6E-A) — a slot for supporting identity detail (ids, timestamps, counts) that belongs to the header but not to the name/type/status line.
+  - **Rendered as a subordinate second row**, deliberately outside the identity/status flex row. That is what lets it wrap and keep its full content on a narrow inspector instead of truncating, and stops it competing for width with the status badges.
+  - `false`, `null`, `undefined` and `""` render **no row and no wrapper** — an absent metadata value costs nothing in the DOM.
+  - Purely additive: `metadata` is optional, and a header without it renders exactly as it did in 0.10.0. Root exports unchanged at **610**.
+
+## 0.10.0
+
+> **Reconstructed in DS-7.4c.** Evidence: tag `design-system-v0.10.0` (2026-07-20), release commit `e508547`, work commit `fd0ff03`, `docs/DS-6.9C6A-InspectorHeader-Multi-Status-Contract.md`, and the published tarball.
+
+### Added
+
+- **`InspectorHeaderStatus`** (DS-6.9C6A) — the status entry shape (`label`, optional `tone`), exported for the first time so callers can type a status list. This is the **only** new export between 0.8.0 and 0.12.0: root exports **609 → 610**.
+- **`InspectorHeader`'s `status` prop accepts an array** — the type widens from `{ label; tone? }` to `InspectorHeaderStatus | InspectorHeaderStatus[]`, for inspectors that must show more than one concurrent status.
+  - **A single object still takes the original path**: it is handed to `IdentityBlock` exactly as before, so existing callers get byte-identical markup.
+  - An array renders a badge row in the header instead, because `IdentityBlock` owns exactly one badge slot and widening a Foundation Metadata component for an Inspector-only need would have been the wrong place to absorb it.
+  - Widening an accepted input union is additive, so every existing `status` usage is unchanged.
+
+## 0.9.0
+
+> **Reconstructed in DS-7.4c.** Evidence: tag `design-system-v0.9.0` (2026-07-20), release commit `e2cff44`, work commits `6e51d72`, `4a50cdc`, `07e2f8e`, `fbdf216`, the DS-6.9C2/C3A/C3B/C3C reports, and the published tarball.
+
+### Added
+
+- **`InspectorPanel` gains `isEmpty?: boolean`** (DS-6.9C3B) — the explicit switch for the empty state, set from the caller's own selection state.
+  - Omitting it falls back to `Boolean(emptyState)`, which is precisely how the component behaved before `isEmpty` existed, so no existing caller changes behaviour.
+- **`emptyState` accepts an element, not only a string** — pass a full `EmptyState` and you own the title, description and action. A string still works and still becomes the description under the fixed "Nothing selected" title.
+- Body precedence is now documented explicitly: `loading` → empty → `children`.
+
+### Changed
+
+- **The Inspector and Property families graduated to Stable** (DS-6.9C3C), following the readiness and stability audit in DS-6.9C2.
+- **Inspector-family test coverage went from 0 to 145 tests** (DS-6.9C3A) across `InspectorPanel`, `InspectorSection`, `InspectorTabs`, the Property family, and `WorkspaceInspector`'s props.
+- `InspectorHeader`'s `onCollapse` documentation was corrected: it is **the dismiss affordance**, not a collapse-to-rail control. The prop name is historical; there is no separate `onClose`, and no other component in the family owns dismissal. Documentation only — no behavioural change.
+
+### Notes
+
+- No export was added or removed: root exports stayed at **609**. The minor bump reflects the new `isEmpty`/`emptyState` capability and the Stable graduation, not a change to the export surface.
+
+## 0.8.3
+
+> **Reconstructed in DS-7.4c.** Evidence: tag `design-system-v0.8.3` (2026-07-19), release commit `bcea95a`, work commit `e689d07`, `docs/DS-6.9B4B-DS-Hover-Aware-TableRow.md`, `docs/DS-6.9B4B-R-Release-0.8.3.md`, `docs/engineering-notes/23-row-identity-and-pointer-coordination.md`, and the published tarball.
+
+### Added
+
+- **`TableRow` gains `id?: string`** (DS-6.9B4B-DS) — a stable DOM identifier, so another control can point at the row (an expand toggle's `aria-controls` naming the detail row it discloses). The design system neither generates nor namespaces the value; uniqueness is the caller's.
+- **`TableRow` gains `onMouseEnter?` / `onMouseLeave?`** — row-level pointer handlers forwarded to the `tr` unchanged, for coordination *outside* the row: highlighting a matching shape in a canvas, prefetching a detail panel, driving a companion visualisation.
+  - **Row-level, not cell-level, is the point.** Because they sit on the `tr`, moving the pointer between cells does not fire `onMouseLeave`, so the hovered row stays stable while the pointer travels across it.
+  - The design system does not own or store hover state — it only delivers the events. `interactive`'s own hover styling is independent of these handlers.
+- All three props are optional and additive; root exports unchanged at **609**.
+
+## 0.8.2
+
+> **Reconstructed in DS-7.4c.** Evidence: tag `design-system-v0.8.2` (2026-07-19), release commit `dc0102a`, and a byte-for-byte comparison of the published 0.8.1 and 0.8.2 tarballs.
+
+### Notes
+
+- **No functional change. This release is byte-identical to 0.8.1.** Every file under `dist/` — JavaScript, type declarations and `styles.css` — matches 0.8.1 exactly, verified by comparing the two published tarballs.
+- The only commit between the two tags is `d5ee3b8`, the DS-6.9B4A-R release report for 0.8.1 — documentation, with no `src/` change.
+- **Why a version was spent on it:** the release workflow of this period could only bump-and-publish. It had no mode that ran the pipeline over an already-committed version, so running it after a documentation-only commit necessarily produced a new version number carrying identical content. That limitation was removed in DS-7.3a-R1, which added an explicit `committed` mode.
+- Consumers on 0.8.1 gained nothing by upgrading to 0.8.2, and lost nothing either.
+
+## 0.8.1
+
+> **Reconstructed in DS-7.4c.** Evidence: tag `design-system-v0.8.1` (2026-07-19), release commit `79d618e`, work commit `16cb78f`, `docs/DS-6.9B4A-Modifier-Aware-Table-Selection.md`, `docs/DS-6.9B4A-R-Release-0.8.1.md`, `docs/engineering-notes/22-modifier-aware-table-selection.md`, and the published tarball.
+
+### Added
+
+- **`TableSelectionCell`'s `onChange` receives the native change event** (DS-6.9B4A) — the signature widens from `(checked: boolean)` to `(checked: boolean, event: ChangeEvent<HTMLInputElement>)`.
+  - The second argument exists so a caller can read modifier keys off the event — `event.nativeEvent` carries `shiftKey`, `metaKey` and friends — and drive a modifier-aware selection model, the same way `TableRow` already passes its click event.
+  - **The design system takes no position on which model that is.** Plain-vs-shift additive selection, range selection and select-through-to-anchor are all left to the caller.
+  - **Additive, not breaking.** A callback that only needs the checked state keeps its one-argument signature and remains assignable; the extra argument is simply ignored.
+- Root exports unchanged at **609** — this is a prop contract change, not a new export.
+
 ## 0.8.0
 
 ### Added
@@ -153,6 +232,15 @@ All notable changes to `@studiopod/design` are documented here. Releases up to a
 ### Removed
 
 - **`--color-ink-inverse`** token — confirmed unused anywhere in this package or the documentation site, and never documented on the public tokens page or `API.md`. Removed directly rather than through `VERSIONING.md`'s standard one-release deprecation window: that window exists to protect a real, documented consumer-facing contract, and this value was never surfaced as one — it shipped in `styles.css` (technically installable via `var(--color-ink-inverse)` in a consumer's own CSS) but was never named on the public tokens page or in any prior CHANGELOG entry as something to depend on. If a real consumer *is* relying on it despite that, this is the breaking change to react to — flagged here explicitly rather than buried in a routine "Removed" line.
+
+## 0.2.0 — tagged, never published
+
+> **Documented in DS-7.4c.** Evidence: tag `design-system-v0.2.0` → `d949e1c`, the registry (which returns 404 for this version), and `docs/DS-5G-Release-Recovery-Revised.md`. This heading exists so the jump from `0.1.1` to `0.2.1` is not read as a missing entry.
+
+- **The release was tagged but the publish failed**, on an invalid/expired `DS_NPM_TOKEN` (`E401`). The tag was pushed before `npm publish` ran, which is why a tag exists for a version the registry never received.
+- **The version was deliberately abandoned** rather than re-cut: the tag already pointed at content without the DS-5G `destructive` variant, and touching tags required owner approval. The tag was left in place.
+- `0.2.1` shipped everything `0.2.0` carried (Workspace, SplitView, DS-5A–F) **plus** DS-5G, so the registry steps cleanly from `0.1.1` to `0.2.1` and the `0.2.0` number is simply spent. No consumer ever saw it.
+- The tag-before-publish ordering that stranded this tag was corrected in DS-7.3a-R1, which moved tagging after a verified publish.
 
 ## 0.1.1 — first published release
 
