@@ -268,6 +268,13 @@ jobs:
           mkdir -p /tmp/ds-pack
           npm pack --pack-destination /tmp/ds-pack
 
+      # The version assertion is delegated to check-dry-run-artifact.mjs rather
+      # than compared inline (DS-7.5D.1). This job never applies the version
+      # bump, so the tarball always carries the COMMITTED version; the old
+      # inline `test "$VER" = <target>` compared it against the BUMPED target
+      # and so could not pass in bump mode, for any release type. The script
+      # asserts the artifact against what was actually packed and the target
+      # against the mode's arithmetic — two separate claims, both still checked.
       - name: Inspect the packed manifest
         run: |
           cd /tmp/ds-pack && tar -xzf ./*.tgz
@@ -277,7 +284,14 @@ jobs:
           echo "packed name    : $NAME"
           echo "packed version : $VER"
           test "$NAME" = "${{ steps.target.outputs.name }}"    || { echo "::error::packed name != resolved target"; exit 1; }
-          test "$VER"  = "${{ steps.target.outputs.version }}" || { echo "::error::packed version != resolved target"; exit 1; }
+          cd "$GITHUB_WORKSPACE"
+          node scripts/release/check-dry-run-artifact.mjs \
+            --mode "${{ inputs.mode }}" \
+            --release-type "${{ inputs.mode == 'bump' && inputs.release_type || '' }}" \
+            --packed "$VER" \
+            --current "${{ steps.target.outputs.current-version }}" \
+            --target "${{ steps.target.outputs.version }}"
+          cd /tmp/ds-pack
           head -c 13 package/dist/index.js | grep -q '"use client"' \
             && echo "OK   index.js retains \"use client\"" \
             || { echo "::error::published index.js is MISSING \"use client\""; exit 1; }
@@ -324,6 +338,14 @@ jobs:
           echo "  tag          : ${{ steps.target.outputs.tag }}"
           echo "  release mode : ${{ inputs.mode }}"
           echo "  mutates manifest: ${{ steps.target.outputs.will-mutate-manifest }}"
+          echo ""
+          echo "  committed version : ${{ steps.target.outputs.current-version }}"
+          echo "  uploaded tarball  : carries the COMMITTED version, not the target."
+          echo "                      This job never applies the bump, so in bump"
+          echo "                      mode the artifact is a build of ${{ steps.target.outputs.current-version }};"
+          echo "                      a real release differs only in the manifest"
+          echo "                      version field. Do not treat it as a"
+          echo "                      ${{ steps.target.outputs.version }} tarball."
 
   # ── Publish: transactional ordering ───────────────────────────────────────
   # validate -> build -> pack -> confirm unused -> PUBLISH -> verify from a

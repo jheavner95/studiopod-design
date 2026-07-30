@@ -71,10 +71,21 @@ describe("workflow inputs", () => {
 
   it("passes a release type only in bump mode", () => {
     // The guard that stops a pre-set version silently becoming a bump.
-    const matches = workflow.match(
+    //
+    // Three call sites, all gated identically: the resolver in the dry-run job,
+    // the resolver in the publish job, and — added in DS-7.5D.1 — the dry-run
+    // artifact reconciler, which needs the release type to check the bump
+    // arithmetic. Counting rather than merely matching is what stops a fourth
+    // site being added with the gate omitted.
+    const gated = workflow.match(
       /--release-type "\$\{\{ inputs\.mode == 'bump' && inputs\.release_type \|\| '' \}\}"/g,
     );
-    expect(matches?.length, "both jobs must gate the release type").toBe(2);
+    expect(gated?.length, "every release-type call site must gate on bump mode").toBe(3);
+
+    // And no UNGATED site exists: every `--release-type` in the file is one of
+    // the three above.
+    const all = workflow.match(/--release-type /g);
+    expect(all?.length, "an ungated --release-type would publish a silent bump").toBe(3);
   });
 });
 
@@ -122,6 +133,42 @@ describe("dry run cannot publish or tag", () => {
     for (const field of ["package", "version", "registry", "tag", "release mode"]) {
       expect(summary).toContain(field);
     }
+  });
+
+  // ── DS-7.5D.1 ───────────────────────────────────────────────────────────
+  it("never compares the packed version against the BUMPED target", () => {
+    // The regression: this job runs no `npm version` (asserted above), so the
+    // tarball always carries the committed version. The old inline
+    // `test "$VER" = "<steps.target.outputs.version>"` therefore could not pass
+    // in bump mode, for any release type, and no future release candidate could
+    // be validated. The version comparison must go through the reconciler.
+    const inspect = text.slice(text.indexOf("Inspect the packed manifest"));
+    const step = inspect.slice(0, inspect.indexOf("Registry existence check"));
+    expect(step).not.toMatch(/test "\$VER"\s+=\s+"\$\{\{ steps\.target\.outputs\.version \}\}"/);
+    expect(step).toMatch(/check-dry-run-artifact\.mjs/);
+  });
+
+  it("passes the reconciler all three versions plus the mode", () => {
+    // Each flag matters: omit --current and the packed version has nothing
+    // legitimate to compare against; omit --mode and bump arithmetic cannot be
+    // checked. An unset value expands to "" — which the reconciler rejects
+    // rather than comparing two empty strings as equal.
+    const inspect = text.slice(text.indexOf("Inspect the packed manifest"));
+    const step = inspect.slice(0, inspect.indexOf("Registry existence check"));
+    expect(step).toMatch(/--packed "\$VER"/);
+    expect(step).toMatch(/--current "\$\{\{ steps\.target\.outputs\.current-version \}\}"/);
+    expect(step).toMatch(/--target "\$\{\{ steps\.target\.outputs\.version \}\}"/);
+    expect(step).toMatch(/--mode "\$\{\{ inputs\.mode \}\}"/);
+    // Same gating as the resolver: a release type only ever reaches bump mode.
+    expect(step).toMatch(
+      /--release-type "\$\{\{ inputs\.mode == 'bump' && inputs\.release_type \|\| '' \}\}"/,
+    );
+  });
+
+  it("still asserts the packed NAME against the target", () => {
+    // The name cannot change with a bump, so this comparison stays exact.
+    const inspect = text.slice(text.indexOf("Inspect the packed manifest"));
+    expect(inspect).toMatch(/test "\$NAME" = "\$\{\{ steps\.target\.outputs\.name \}\}"/);
   });
 });
 

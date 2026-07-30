@@ -99,7 +99,11 @@ npm run verify:full   # before cutting a release locally, or when in doubt
 ## 9. CI behavior
 
 - **Every push and PR to `main`**: `fast` and `verify` run in parallel. Both must pass.
-- **`workflow_dispatch` with `dry_run: true`**: additionally runs `dry-run` (needs `fast`+`verify`) — computes and inspects a real tarball, enforces that publish credentials are actually configured, executes and reverts a version bump, but never runs `npm publish`, never commits, never tags.
+- **`workflow_dispatch` with `dry_run: true`**: additionally runs `dry-run` (needs `fast`+`verify`) — computes and inspects a real tarball, enforces that publish credentials are actually configured, and checks that the target version and tag are still free, but never runs `npm publish`, never commits, never tags.
+
+  It does **not** execute a version bump, not even a reverted one: the job runs under `permissions: contents: read` and contains no bump command at all (asserted by `src/lib/release-workflow.test.ts`). So in `bump` mode the tarball it packs carries the **committed** version, while the registry and tag checks run against the **resolved target**. `scripts/release/check-dry-run-artifact.mjs` reconciles the two — the artifact against what was actually packed, the target against the mode's arithmetic. Bumping changes only the manifest's `version` field, so packing the committed version costs no artifact-level coverage; that the bump writes the expected string is checked in the `publish` job, where it matters.
+
+  Practical consequence: a `committed`-mode dry run **correctly fails** once that version is published (`0.13.0` today) — that is the guard working, not a defect. Use `bump` mode to validate a future release candidate.
 - **`workflow_dispatch` with `dry_run: false`**: runs `publish` instead — versions, tags, pushes, and publishes for real. Gated on the same `[verify, fast]`.
 - Caching: every job's `actions/setup-node@v4` step already sets `cache: npm`, so `npm ci` is fast on a warm cache. No job currently shares build output with another (see §5's `dry-run` comment on why, and the future recommendation in the engineering note).
 

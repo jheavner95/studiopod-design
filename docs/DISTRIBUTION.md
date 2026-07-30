@@ -345,6 +345,25 @@ publishes, tags and releases **nothing**. It reports the exact intended package,
 version, registry, tag and mode. The job holds `permissions: contents: read`, so
 it is incapable of tagging or publishing regardless of what its steps say.
 
+**What the tarball actually contains (DS-7.5D.1).** The dry run applies no
+version bump — it has no bump command at all, which is what makes "changes
+nothing" a structural property rather than a promise. So in `bump` mode the
+tarball carries the **committed** version while the registry and tag checks run
+against the **resolved target**. `scripts/release/check-dry-run-artifact.mjs`
+reconciles them: the artifact against what was actually packed, the target
+against the mode's arithmetic. Do not treat a bump-mode dry-run artifact as a
+tarball of the target version — a real release differs from it only in the
+manifest's `version` field.
+
+Before this fix the job compared the packed version directly against the bumped
+target, which could never hold in `bump` mode; every bump-mode dry run failed,
+so no future release candidate could be validated.
+
+**A `committed`-mode dry run fails once that version is published.** That is the
+registry guard working as designed, not a regression — `0.13.0` is published, so
+committed mode reports `already-published`. To rehearse the next release, use
+`bump` mode.
+
 ### 10.4 Transactional ordering
 
 ```text

@@ -36,6 +36,7 @@ import {
   classifyCoordinate,
   classifyCredential,
 } from "../../scripts/release/lib/registry.mjs";
+import { verifyDryRunArtifact } from "../../scripts/release/lib/dry-run-artifact.mjs";
 
 /** The manifest as committed at DS-7.3a. */
 const committedManifest = { name: "@studiopod/design", version: "0.13.0" };
@@ -262,5 +263,154 @@ describe("credential classification", () => {
     });
     expect(result.code).toBe(CREDENTIAL_CODES.UNKNOWN);
     expect(result.publishable).toBe(false);
+  });
+});
+
+/**
+ * DS-7.5D.1 — dry-run artifact reconciliation.
+ *
+ * The regression these cover: the dry run never applies the version bump, so
+ * the tarball carries the committed version. Comparing it against the resolved
+ * target made every bump-mode dry run fail, for every release type, which meant
+ * no future release candidate could be validated before publishing it.
+ */
+describe("dry-run artifact reconciliation", () => {
+  const packed = "0.13.0";
+
+  describe("committed mode", () => {
+    it("accepts the tarball as the release candidate itself", () => {
+      const result = verifyDryRunArtifact({
+        mode: "committed",
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.0",
+      });
+      expect(result.ok).toBe(true);
+      expect(result.problems).toEqual([]);
+      expect(result.notes.join(" ")).toContain("the tarball IS the release candidate");
+    });
+
+    it("still rejects a target that drifts from the committed version", () => {
+      const result = verifyDryRunArtifact({
+        mode: "committed",
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.1",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain("committed mode must publish the committed version");
+    });
+
+    it("rejects a release type, matching the resolver's own rule", () => {
+      const result = verifyDryRunArtifact({
+        mode: "committed",
+        releaseType: "patch",
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.0",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain("does not take a release type");
+    });
+  });
+
+  describe("bump mode", () => {
+    // The exact matrix DS-7.5D.1 requires. Each of these FAILED before the fix.
+    it.each([
+      ["patch", "0.13.1"],
+      ["minor", "0.14.0"],
+      ["major", "1.0.0"],
+    ])("accepts a %s candidate packed as the committed version", (releaseType, target) => {
+      const result = verifyDryRunArtifact({
+        mode: "bump",
+        releaseType,
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: target,
+      });
+      expect(result.ok).toBe(true);
+      expect(result.problems).toEqual([]);
+      expect(result.notes.join(" ")).toContain(`publish ${target}`);
+    });
+
+    it("rejects a target that is not the arithmetic result of the bump", () => {
+      const result = verifyDryRunArtifact({
+        mode: "bump",
+        releaseType: "patch",
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.14.0",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain('bump("0.13.0", "patch") is 0.13.1');
+    });
+
+    it("rejects a bump that does not advance the version", () => {
+      const result = verifyDryRunArtifact({
+        mode: "bump",
+        releaseType: "patch",
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.0",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain("must advance the version");
+    });
+
+    it("requires a release type", () => {
+      const result = verifyDryRunArtifact({
+        mode: "bump",
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.1",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain("requires a release type");
+    });
+  });
+
+  describe("the artifact claim survives", () => {
+    it("catches a tarball that does not match the committed manifest", () => {
+      // The check the fix must NOT throw away: if a step mutated the manifest
+      // or the wrong package was packed, the dry run has to stop.
+      const result = verifyDryRunArtifact({
+        mode: "bump",
+        releaseType: "patch",
+        packedVersion: "0.12.0",
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.1",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain("packed version 0.12.0 != committed version 0.13.0");
+    });
+
+    it("fails loudly when a version is unwired rather than comparing empties", () => {
+      // Two unset workflow outputs would both expand to "" and compare EQUAL.
+      const result = verifyDryRunArtifact({
+        mode: "committed",
+        packedVersion: "",
+        currentVersion: "",
+        targetVersion: "0.13.0",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain("packed version");
+      expect(result.problems.join(" ")).toContain("not x.y.z");
+    });
+
+    it("rejects an unknown mode", () => {
+      // Cast for the same reason as the resolver's own unknown-mode test: the
+      // JSDoc union rejects this at compile time, and the cast is what lets the
+      // RUNTIME guard be exercised — the one protecting a workflow input that
+      // arrives as an arbitrary string.
+      const badMode = "publish" as unknown as "committed";
+      const result = verifyDryRunArtifact({
+        mode: badMode,
+        packedVersion: packed,
+        currentVersion: "0.13.0",
+        targetVersion: "0.13.0",
+      });
+      expect(result.ok).toBe(false);
+      expect(result.problems.join(" ")).toContain('invalid mode "publish"');
+    });
   });
 });
