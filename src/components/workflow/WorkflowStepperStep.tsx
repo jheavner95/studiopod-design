@@ -26,12 +26,12 @@ const MARKER_ICON: Partial<Record<WorkflowStepperStateValue, typeof Check>> = {
 
 const MARKER_TONE: Record<WorkflowStepperStateValue, string> = {
   "not-started": "border border-border-strong text-ink-tertiary",
-  current: "bg-accent-500 text-white",
-  completed: "bg-success text-white",
-  blocked: "bg-warning text-white",
+  current: "bg-accent-600 text-white",
+  completed: "bg-success text-canvas",
+  blocked: "bg-warning text-canvas",
   waiting: "border border-dashed border-border-strong text-ink-tertiary",
   skipped: "bg-surface-hover text-ink-tertiary",
-  failed: "bg-error text-white",
+  failed: "bg-error text-canvas",
   cancelled: "border border-border-subtle text-ink-tertiary",
 };
 

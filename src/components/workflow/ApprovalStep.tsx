@@ -23,13 +23,13 @@ const MARKER_ICON: Partial<Record<ApprovalStateValue, typeof Check>> = {
 
 const MARKER_TONE: Record<ApprovalStateValue, string> = {
   pending: "border border-border-strong text-ink-tertiary",
-  "in-review": "bg-accent-500 text-white",
-  approved: "bg-success text-white",
-  rejected: "bg-error text-white",
-  "changes-requested": "bg-warning text-white",
+  "in-review": "bg-accent-600 text-white",
+  approved: "bg-success text-canvas",
+  rejected: "bg-error text-canvas",
+  "changes-requested": "bg-warning text-canvas",
   cancelled: "border border-border-subtle text-ink-tertiary",
   expired: "border border-dashed border-border-strong text-ink-tertiary",
-  completed: "bg-success text-white",
+  completed: "bg-success text-canvas",
 };
 
 const LABEL_TONE: Record<ApprovalStateValue, string> = {

@@ -37,16 +37,27 @@ describe("ConfirmDialog", () => {
     expect(screen.getByRole("button", { name: "Keep" })).toBeInTheDocument();
   });
 
+  /**
+   * Button's primary fill, restated. UX-2 moved it from accent-500 to accent-600
+   * for contrast (CR-3), which is why this is a named constant rather than an
+   * inline literal in two places. Restating it — instead of importing Button's
+   * cva output — is deliberate: these tests exist to fail if ConfirmDialog ever
+   * stops delegating to Button's primary variant, and importing the value would
+   * make them pass no matter what ConfirmDialog rendered. Button's own contrast
+   * is guarded separately in src/styles/contrast.test.ts.
+   */
+  const PRIMARY_FILL = "bg-accent-600";
+
   it("default tone → Confirm is the primary Button", () => {
     open({ confirmLabel: "Go" });
-    expect(screen.getByRole("button", { name: "Go" })).toHaveClass("bg-accent-500");
+    expect(screen.getByRole("button", { name: "Go" })).toHaveClass(PRIMARY_FILL);
   });
 
   it("destructive tone → Confirm is the destructive Button", () => {
     open({ tone: "destructive", confirmLabel: "Delete" });
     const confirm = screen.getByRole("button", { name: "Delete" });
     expect(confirm).toHaveClass("bg-error");
-    expect(confirm).not.toHaveClass("bg-accent-500");
+    expect(confirm).not.toHaveClass(PRIMARY_FILL);
   });
 
   it("Confirm fires onConfirm; Cancel fires onOpenChange(false)", () => {

@@ -103,7 +103,9 @@ describe("SegmentedControl", () => {
     it("the active fill is the segment's own background, so it scales with size automatically", () => {
       render(<Group size="sm" value="list" />);
       const active = screen.getByRole("radio", { name: "List" });
-      expect(active).toHaveClass("bg-accent-500");
+      // accent-600, not accent-500: UX-2/CR-3 moved every accent fill that
+      // carries white text one step darker so the label clears WCAG AA.
+      expect(active).toHaveClass("bg-accent-600");
       for (const cls of CONTROL_SEGMENT_CLASSES.sm.split(" ")) {
         expect(active).toHaveClass(cls);
       }

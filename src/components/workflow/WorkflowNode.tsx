@@ -28,11 +28,11 @@ const MARKER_ICON: Record<WorkflowNodeStatus, typeof Check> = {
 
 const MARKER_TONE: Record<WorkflowNodeStatus, string> = {
   idle: "border border-border-strong text-ink-tertiary",
-  running: "bg-accent-500 text-white",
-  paused: "bg-warning text-white",
+  running: "bg-accent-600 text-white",
+  paused: "bg-warning text-canvas",
   blocked: "border border-dashed border-warning text-warning",
-  completed: "bg-success text-white",
-  failed: "bg-error text-white",
+  completed: "bg-success text-canvas",
+  failed: "bg-error text-canvas",
 };
 
 const LABEL_TONE: Record<WorkflowNodeStatus, string> = {

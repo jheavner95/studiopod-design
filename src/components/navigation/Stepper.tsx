@@ -41,10 +41,10 @@ export function Stepper({ steps, currentIndex, errorIndex, orientation = "horizo
             aria-current={status === "current" ? "step" : undefined}
             className={cn(
               "flex size-8 shrink-0 items-center justify-center rounded-full text-body-sm font-medium",
-              status === "complete" && "bg-success text-white",
-              status === "current" && "bg-accent-500 text-white",
+              status === "complete" && "bg-success text-canvas",
+              status === "current" && "bg-accent-600 text-white",
               status === "upcoming" && "border border-border-strong text-ink-tertiary",
-              status === "error" && "bg-error text-white",
+              status === "error" && "bg-error text-canvas",
             )}
           >
             {status === "complete" ? (

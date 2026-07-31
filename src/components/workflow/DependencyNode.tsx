@@ -25,12 +25,12 @@ const MARKER_ICON: Record<DependencyStatusValue, typeof Check> = {
 };
 
 const MARKER_TONE: Record<DependencyStatusValue, string> = {
-  connected: "bg-success text-white",
+  connected: "bg-success text-canvas",
   disconnected: "border border-border-strong text-ink-tertiary",
-  blocked: "bg-warning text-white",
-  healthy: "bg-success text-white",
-  warning: "bg-warning text-white",
-  critical: "bg-error text-white",
+  blocked: "bg-warning text-canvas",
+  healthy: "bg-success text-canvas",
+  warning: "bg-warning text-canvas",
+  critical: "bg-error text-canvas",
   circular: "border border-dashed border-warning text-warning",
   hidden: "border border-border-subtle text-ink-tertiary",
 };

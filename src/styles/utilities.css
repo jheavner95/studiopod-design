@@ -15,14 +15,28 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
 }
 
-/* Consistent keyboard focus ring across all interactive primitives. */
+/* Consistent keyboard focus ring across all interactive primitives.
+ *
+ * UX-2 / CR-2 — `border-radius: inherit` was REMOVED from the :focus-visible
+ * rule. It did not do what it reads as.
+ *
+ * The intent was evidently "let the outline follow the element's corners".
+ * But `border-radius` on this rule sets the ELEMENT's radius, and `inherit`
+ * resolves against the PARENT — so any focus-ring element whose parent had no
+ * radius was flattened to square corners for exactly as long as it held
+ * keyboard focus. Measured in a running browser on a 32x32 IconButton:
+ * `border-radius` computed 12px unfocused and 0px focused. Invisible to a
+ * mouse user; unmissable to a keyboard one, which is how it survived.
+ *
+ * Nothing replaces it: browsers already follow the element's own border-radius
+ * when drawing an outline, so the correct behaviour is what you get by not
+ * declaring anything here. Guarded by src/styles/contrast.test.ts. */
 .focus-ring {
   outline: none;
 }
 .focus-ring:focus-visible {
   outline: 2px solid var(--color-accent-400);
   outline-offset: 2px;
-  border-radius: inherit;
 }
 
 /* Subtle dot-grid texture for system/backdrop surfaces (SystemGrid). */

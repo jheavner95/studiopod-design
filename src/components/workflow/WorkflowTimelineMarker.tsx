@@ -27,11 +27,11 @@ const MARKER_ICON: Partial<Record<WorkflowTimelineEventStatus, typeof Check>> = 
 
 const MARKER_TONE: Record<WorkflowTimelineEventStatus, string> = {
   pending: "border border-border-strong text-ink-tertiary",
-  running: "bg-accent-500 text-white",
-  completed: "bg-success text-white",
-  failed: "bg-error text-white",
+  running: "bg-accent-600 text-white",
+  completed: "bg-success text-canvas",
+  failed: "bg-error text-canvas",
   cancelled: "border border-border-subtle text-ink-tertiary",
-  blocked: "bg-warning text-white",
+  blocked: "bg-warning text-canvas",
   waiting: "border border-dashed border-border-strong text-ink-tertiary",
   skipped: "bg-surface-hover text-ink-tertiary",
 };

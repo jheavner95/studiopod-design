@@ -28,11 +28,11 @@ export const MARKER_ICON: Partial<Record<WorkflowStateValue, typeof Check>> = {
 export const MARKER_TONE: Record<WorkflowStateValue, string> = {
   "not-started": "border border-border-strong text-ink-tertiary",
   ready: "border border-border-strong text-ink-tertiary",
-  running: "bg-accent-500 text-white",
+  running: "bg-accent-600 text-white",
   waiting: "border border-border-strong text-ink-tertiary",
-  blocked: "bg-warning text-white",
-  completed: "bg-success text-white",
-  failed: "bg-error text-white",
+  blocked: "bg-warning text-canvas",
+  completed: "bg-success text-canvas",
+  failed: "bg-error text-canvas",
   cancelled: "border border-border-subtle text-ink-tertiary",
 };
 

@@ -1,7 +1,7 @@
 /**
  * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
  *
- * Source of values : @studiopod/foundation@0.2.0 (tokens.json)
+ * Source of values : @studiopod/foundation@0.3.0 (tokens.json)
  * Source of names  : this file's generator, scripts/generate-tokens-from-foundation.mjs
  * Regenerate       : npm run token:bridge
  * Verified in CI by: npm run token:bridge-check
@@ -25,8 +25,8 @@
   --color-border-accent: rgba(59, 130, 246, 0.4);
   --color-ink-primary: #f1f5f9;
   --color-ink-secondary: #94a3b8;
-  --color-ink-tertiary: #64748b;
-  --color-ink-disabled: #475569;
+  --color-ink-tertiary: #8593a8;
+  --color-ink-disabled: #64748b;
   --color-accent-300: #93c5fd;
   --color-accent-400: #60a5fa;
   --color-accent-500: #3b82f6;

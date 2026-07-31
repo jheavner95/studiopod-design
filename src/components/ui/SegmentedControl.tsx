@@ -112,7 +112,7 @@ export function SegmentedControl<T extends string>({
               "focus-ring inline-flex items-center justify-center gap-1.5 rounded-full font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
               CONTROL_SEGMENT_CLASSES[size],
               CONTROL_ICON_SLOT_CLASSES[size],
-              isActive ? "bg-accent-500 text-white" : "text-ink-tertiary hover:text-ink-primary",
+              isActive ? "bg-accent-600 text-white" : "text-ink-tertiary hover:text-ink-primary",
               isDisabled && "cursor-not-allowed opacity-40",
             )}
           >

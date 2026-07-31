@@ -21,7 +21,10 @@ describe("PipelineStep", () => {
   describe("state coverage", () => {
     it("renders the same marker tone classes WorkflowStep does for a shared status — proof the imported maps, not a divergent copy, are in effect", () => {
       const { container } = render(<PipelineStep label="Build" status="completed" />);
-      expect(container.querySelector(".bg-success.text-white")).toBeInTheDocument();
+      // The ink is `canvas`, not `white`: white on success is 2.28:1 (UX-2/CR-3).
+      // What this test actually proves is that the tone map is SHARED, so it
+      // asserts the pairing WorkflowStep produces, whatever that pairing is.
+      expect(container.querySelector(".bg-success.text-canvas")).toBeInTheDocument();
     });
 
     it("renders every one of the eight WorkflowStateValue statuses without throwing", () => {

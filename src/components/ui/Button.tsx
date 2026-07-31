@@ -9,7 +9,21 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-accent-500 text-white hover:bg-accent-400 active:bg-accent-600",
+        // UX-2 / CR-3 — the whole primary ramp moved one step darker.
+        //
+        // It was accent-500 rest / accent-400 hover / accent-600 active, which
+        // put white-on-fill at 3.68:1 at rest and 2.54:1 on hover: the most
+        // clicked surface in both products failed WCAG AA, and HOVERING IT MADE
+        // IT WORSE. Only `active` passed — the state a user sees for a few
+        // hundred milliseconds.
+        //
+        // Now 5.17:1 rest and 6.70:1 hover/active — AA throughout, with contrast
+        // rising on interaction instead of collapsing. The cost is that hover and
+        // active share accent-700 (the DS defines no accent-800), so press
+        // feedback rides the existing colour transition rather than a third fill.
+        // That is the right trade: a distinct pressed tint is a nicety, a legible
+        // label is not.
+        primary: "bg-accent-600 text-white hover:bg-accent-700 active:bg-accent-700",
         secondary:
           "border border-border bg-surface text-ink-primary hover:border-border-strong hover:bg-surface-hover",
         outline: "border border-border-strong text-ink-primary hover:bg-surface-hover",
@@ -24,7 +38,18 @@ const buttonStyles = cva(
         // mechanism (DS-5G). Success is deliberately NOT added — see DS-5G decision:
         // it has no action precedent in the DS (a status/feedback tone only) and confirm
         // actions are `primary`.
-        destructive: "bg-error text-white hover:bg-error/90 active:bg-error/95",
+        //
+        // UX-2 / CR-3 — the LABEL changed from white to `canvas`; the fill did not
+        // move. White-on-error measured 3.03:1 rest, 3.60:1 hover, 3.29:1 active:
+        // all three below AA. The obvious fix — darkening `--color-error` — is
+        // explicitly forbidden by Foundation ("Deliberately NOT red-500 —
+        // contrast-adjusted derivative. Do not 'fix'."), and it would repaint every
+        // error tint in both products to repair one button. Inverting the label
+        // instead touches only this variant and yields 6.37 / 5.36 / 5.87:1.
+        //
+        // Dark-on-warm is the conventional accessible treatment for coral and amber
+        // fills, so this reads as intentional rather than as a defect.
+        destructive: "bg-error text-canvas hover:bg-error/90 active:bg-error/95",
       },
       size: {
         sm: "h-8 px-3 text-body-sm",

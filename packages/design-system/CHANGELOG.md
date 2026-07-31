@@ -2,6 +2,44 @@
 
 All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.14.0 — UX-2 accessibility corrections (CR-1, CR-2, CR-3)
+
+Three defects, all found by **rendering the consuming application and reading computed CSS out of the DOM** — none was visible to source inspection, and none was caught by the 1,001 tests that existed before this release. No API changed: no export added, removed or renamed; all four API baselines unchanged (616 root, 249 illustrations, 44 marketing, 5 tokens).
+
+### Fixed
+
+- **CR-1 — the ink ramp sat below WCAG AA.** `--color-ink-tertiary` `#64748b` → **`#8593a8`**; `--color-ink-disabled` `#475569` → **`#64748b`**. Measured against `panel`, tertiary was 3.73:1 and disabled 2.34:1; against `surface-active` — the most-used surface in StudioPOD — 3.04:1 and 1.91:1. Tertiary now clears **AA (4.5:1) on all six semantic surfaces**; disabled clears **3:1** everywhere (WCAG exempts disabled text, but exempt is not the same as invisible). Values are owned by `@studiopod/foundation`, corrected in **0.3.0**, and reach this package through the existing token bridge — `theme.css` was regenerated, not hand-edited.
+
+- **CR-2 — `.focus-ring` flattened its element's corners on keyboard focus.** The `:focus-visible` rule declared `border-radius: inherit`, which sets the *element's* radius and resolves against its *parent* — so any rounded control whose parent had no radius went square for exactly as long as it held focus. Reproduced on a 32×32 `IconButton`: `border-radius` computed **12px unfocused, 0px focused**. The declaration is removed and nothing replaces it; browsers already follow the element's own radius when drawing an outline. Affected every component using `.focus-ring`, which is the package's whole interactive surface.
+
+- **CR-3 — `Button` failed AA against its own label, in two variants.**
+  - `primary` was `accent-500` rest / `accent-400` hover / `accent-600` active: **3.68:1 at rest and 2.54:1 on hover** — the most-clicked surface in both products failed AA, and hovering it made it worse. Now `accent-600` / `accent-700` / `accent-700`: **5.17:1 rest, 6.70:1 hover and active**. Contrast now rises on interaction instead of collapsing. Hover and active share `accent-700` because the scale defines no `accent-800`; press feedback rides the existing colour transition.
+  - `destructive` was `text-white` on `bg-error`: **3.03:1 rest, 3.60:1 hover, 3.29:1 active**. The label is now `text-canvas`: **6.37 / 5.36 / 5.87:1**. The fill did not move — `--color-error` is a contrast-adjusted derivative Foundation explicitly forbids "fixing", and changing it would repaint every error tint in both products to repair one button. Dark-on-warm is the conventional accessible treatment for coral fills.
+
+- **CR-3 was not only a Button defect.** Fixing Button alone would have been the wrong shape of fix: the same light-ink-on-fill pairing existed in **10 other components**, and one of them — `SegmentedControl` — was measured at **3.68:1 in the live application** during UX-2 verification. `Pagination`, `Stepper` and eight `workflow` components carried it too. All 35 occurrences are corrected under one rule:
+
+  | fill | ink | ratio |
+  |---|---|---|
+  | `bg-accent-600` | `text-white` | 5.17:1 |
+  | `bg-accent-500` | **never** with white (3.68:1) — use accent-600 | — |
+  | `bg-success` | `text-canvas` | 8.47:1 *(white was 2.28:1)* |
+  | `bg-warning` | `text-canvas` | 8.99:1 *(white was 2.15:1)* |
+  | `bg-error` | `text-canvas` | 6.37:1 *(white was 3.03:1)* |
+
+### Added
+
+- **`src/styles/contrast.test.ts`** — 12 assertions pinning all three fixes against their actual source of truth (the stylesheet text and the cva variant strings), including full-ramp AA checks against every semantic surface, ink-step distinctness, and per-variant Button contrast. These are the tests whose absence let all three defects ship.
+
+  The last of them is package-wide rather than per-component: it walks every `.tsx` under `src/components`, finds any single class string pairing a `bg-<fill>` with a `text-<ink>`, and fails if that pairing is below AA. Verified to actually catch the defect by reverting `SegmentedControl` to `bg-accent-500 text-white` and confirming the test reports `3.68:1`. A per-component assertion would have missed the 10 components CR-3 was never written about.
+
+### Why this is a breaking minor, not a patch
+
+`VERSIONING.md` classifies accessibility corrections and "visual corrections within an existing semantic contract" as **PATCH**, and read narrowly all three qualify — no token was semantically reassigned and no API moved. It is being released as a **breaking minor** anyway, for two reasons. First, `@studiopod/foundation` classified the same value change as breaking under its own policy ("a brand-level value change with visual consequences everywhere"), and the two packages should not disagree about what the same change is. Second, `studiopod-web` is a live consumer that will get repainted body text, field labels and primary buttons without having asked for it; a patch release implies it can upgrade without looking, and it cannot. Consumers should expect visible change and re-verify their own screens.
+
+### Consumer impact
+
+Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` element, and every `Button` in `primary` or `destructive` will render differently. This is intended — it is the correction. `ink-primary` and `ink-secondary` are unchanged; the `secondary`, `outline` and `ghost` Button variants are unchanged.
+
 ## 0.13.0
 
 ### Changed

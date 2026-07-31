@@ -23,11 +23,11 @@ const MARKER_ICON: Partial<Record<StateValue, typeof Check>> = {
 
 const MARKER_TONE: Record<StateValue, string> = {
   initial: "border border-border-strong text-ink-tertiary",
-  active: "bg-accent-500 text-white",
+  active: "bg-accent-600 text-white",
   waiting: "border border-dashed border-border-strong text-ink-tertiary",
-  blocked: "bg-warning text-white",
-  completed: "bg-success text-white",
-  failed: "bg-error text-white",
+  blocked: "bg-warning text-canvas",
+  completed: "bg-success text-canvas",
+  failed: "bg-error text-canvas",
   cancelled: "border border-border-subtle text-ink-tertiary",
   terminal: "bg-ink-primary text-white",
 };
