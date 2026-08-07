@@ -19,6 +19,7 @@ documentation application. See
 | Document                                          | Read it when                                        |
 | ------------------------------------------------- | ---------------------------------------------------- |
 | [Constitution](../CONSTITUTION.md)                | Before your first commit. It is binding.            |
+| [Infrastructure handoff](architecture/infrastructure-handoff.md) | You are picking the repository up after DH-5 |
 | [MILESTONE-001](../MILESTONE-001.md)              | You want the current architectural baseline in one page |
 | [Architecture overview](architecture/overview.md) | You want to know how the repository is shaped, and why |
 | [Boundaries](architecture/boundaries.md)          | You are asking "does this belong in Design?"        |
@@ -34,6 +35,7 @@ documentation application. See
 | [Repository structure](architecture/repository-structure.md) | The tree — where everything lives                           |
 | [Public API](architecture/public-api.md)                     | Stability tiers, SemVer, deprecation, the API contract      |
 | [Documentation product](architecture/documentation.md)       | The documentation site's information architecture           |
+| [Infrastructure handoff](architecture/infrastructure-handoff.md) | The state of the repository after DH-5, and what the next phase is for |
 
 ## Engineering
 
