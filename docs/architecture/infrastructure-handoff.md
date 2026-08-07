@@ -116,6 +116,7 @@ alone.
 ## References
 
 - [../certification/DH-5.md](../certification/DH-5.md) § API Governance Established
-- [../certification/DH-4.md](../certification/DH-4.md) § Ecosystem Milestone
+- Cloud DH-4 § Ecosystem Milestone — the first consumer integration, recorded
+  in `studiopod-cloud/docs/certification/DH-4.md`
 - [../../MILESTONE-001.md](../../MILESTONE-001.md)
 - [public-api.md](public-api.md) · [packages.md](packages.md)
