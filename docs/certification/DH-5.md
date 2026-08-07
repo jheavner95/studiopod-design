@@ -4,7 +4,10 @@
 - **Date:** 2026-08-07
 - **Verdict:** **CERTIFIED WITH OBSERVATIONS.** The API is now declared,
   tiered and enforced. Three observations in § 7.
-- **Version:** `0.16.0` — additive; no export removed or renamed.
+- **Released:** `@studiopod/design@0.16.0`, published 2026-08-07T17:37:51Z to
+  `https://npm.pkg.github.com` and consumed by Cloud from the registry.
+- **Package under test:** shasum `3b29d4d1…`, integrity
+  `sha512-nw/w1wJt6qFYWoE7…` — **identical to the locally validated artefact.**
 
 ---
 
@@ -142,9 +145,12 @@ names is canonical. Both are component work, which the brief assigns elsewhere.
 | ✓ Documentation builds | 76 static routes, 0 errors |
 | ✓ Browser verification succeeds | Cloud driven in a browser against the DH-5 build: sign-in, founder session, admin console, navigation — no application errors |
 
-**Compatibility was verified against the real consumer**, not asserted: the
-0.16.0 tarball was installed into Cloud, typechecked, built and browser-tested,
-then Cloud was restored to its declared `0.15.0` and re-verified clean.
+**Compatibility was verified against the real consumer, from the registry.**
+After publication Cloud's `node_modules`, lockfile and npm cache were deleted
+entirely, `@studiopod/design@0.16.0` was declared and installed fresh, and the
+whole chain re-run: `npm ci`, 7 checks, 298 unit tests, 21 browser tests, build,
+and a browser pass. The lockfile's integrity hash matches the published one.
+See § 6.5.
 
 ---
 
@@ -233,6 +239,84 @@ rename is measurable rather than guessed.
 
 ---
 
+## 6.5 Release assessment
+
+The release was validated, published through the repository's documented
+workflow, and consumed by Cloud from the registry with a cold cache.
+
+### Release record
+
+| | |
+| --- | --- |
+| Version | `0.16.0` |
+| Registry | `https://npm.pkg.github.com` |
+| Tarball | `…/download/@studiopod/design/0.16.0/3b29d4d18d8f9e9d0203558a02f081d1cb26e8b2` |
+| shasum | `3b29d4d18d8f9e9d0203558a02f081d1cb26e8b2` |
+| Integrity | `sha512-nw/w1wJt6qFYWoE7GrUNLSjcJ8Ku5v/uiDQR0h5zPizAuNnWAAxvv+uyJSyese4U607BGhGsCK6lEWLA+O40ng==` |
+| Published | 2026-08-07T17:37:51Z |
+| Workflow run | [31202859461](https://github.com/jheavner95/studiopod-design/actions/runs/31202859461) |
+| Peers | `react`, `react-dom` |
+| `dist-tag latest` | `0.16.0` |
+
+### 1. Did DH-5 materially improve the consumer experience?
+
+**Yes, measurably.** Of the ten components Cloud uses:
+
+| | Before | After |
+| --- | --- | --- |
+| Export a props type | 2 (`Button`, `Card`) | **10** |
+| Declare a stability tier | 0 | **10** (6 Stable) |
+
+Cloud can now type a wrapper around every component it consumes. Before DH-5 it
+could do so for two of ten — which is exactly the defect DH-4 recorded as D2,
+and exactly what made ADR 0013's recommended wrapper pattern unusable for most
+of the library. The stability manifest ships inside `node_modules`, so the
+answer travels with the code.
+
+### 2. Did publishing expose any release process weaknesses?
+
+**No new ones, and one previously-found weakness is confirmed fixed.**
+
+The `0.15.0` release failed on its first attempt because the workflow carried
+its own copy of the inverted `"use client"` assertion (DH-4 § 6). `0.16.0`
+published **clean on the first attempt**, which is the evidence that the fix was
+correct rather than merely quieting.
+
+One standing constraint, unchanged and not a defect: the local npm token carries
+`read:packages` only, so publishing must go through CI. That is the documented
+process anyway, and it is the right place for a write credential to live.
+
+### 3. Did any verification gate fail unexpectedly?
+
+**No.** `verify:full` passed 15/15 before release; CI's own `Verify (fast)` and
+`Verify package` jobs passed before the publish job ran; Cloud's full chain
+passed against the registry package.
+
+One gate failed *during implementation*, and it was informative rather than
+unexpected: changing the manifest format from an array to a map broke the
+documentation site's certification tests, because that site reads
+`api-baseline/*.json`. Recorded as § 5 E. The manifest is a consumed artefact,
+and its reader now accepts both shapes.
+
+### 4. Did the registry package behave identically to the validated package?
+
+**Byte-identically.** The tarball packed and validated locally has shasum
+`3b29d4d18d8f9e9d0203558a02f081d1cb26e8b2`; the registry serves that same
+shasum, and Cloud's lockfile records the matching `sha512` integrity hash. There
+is no version of this package that was tested but not shipped.
+
+### 5. Did Cloud require any undocumented integration knowledge?
+
+**No.** The upgrade was two lines — the declared version in two manifests — plus
+a regenerated lockfile. **Zero source changes.** No new setup step, no new
+configuration, no workaround.
+
+The one piece of setup knowledge Cloud needed at all was the `.npmrc` scope
+routing, and that was learned and documented in DH-4; nothing new was required
+here.
+
+---
+
 ## 7. Certification recommendation
 
 # CERTIFIED WITH OBSERVATIONS
@@ -266,9 +350,62 @@ compositions and diagram engines have none. The temptation at the next release
 will be to re-grade rather than to write tests. It should be resisted: the
 number is the finding.
 
+### Confirmed at release
+
+- **API governance is intentional** — every export is in a manifest somebody
+  wrote; `export *` no longer grows the surface
+- **Stability metadata ships with the package** — 4 manifests, 1,175 tiers,
+  readable from `node_modules`
+- **Public exports are explicitly owned** — 0 aggregated exports on the root
+  entry, one justified exception on `./tokens`
+- **Component props are broadly available** — 310 of 372 root components; 10 of
+  10 that Cloud uses
+- **Cloud remains compatible** — 0 typecheck errors, 0 source changes, 21/21
+  browser tests
+- **Registry consumption succeeds** — cold-cache `npm install` then `npm ci`,
+  registry-resolved, integrity matching the validated artefact
+
 ### Conditions
 
 None.
+
+---
+
+## API Governance Established
+
+DH-5 completes the infrastructure phase of StudioPOD Design 2.0. Five things are
+now **governed** — decided deliberately, documented, and enforced by a check
+that fails the build rather than by anyone remembering:
+
+| | Governed by | Enforced by |
+| --- | --- | --- |
+| **Repository architecture** | DH-1 · the constitution and ten ADRs | review, `check:docs`, `check:adrs` |
+| **Package boundaries** | DH-2 · ADR 0003, the library owns its source | `boundary-check` — four assertions, each proven falsifiable |
+| **Framework independence** | DH-3 · ADR 0007, 0013, 0014 | `check-framework-imports`, `check-client-boundaries` |
+| **Consumer integration** | DH-4 · Cloud ADR 0034, proven by registry consumption | Cloud's `check:dependencies`, `check:boundaries` |
+| **Public API evolution** | DH-5 · ADR 0015, 0016 | `check-api` — surface *and* stability, falsifiable |
+
+Each of those was, at the start of this programme, a convention held in place by
+attention. None of them is any more.
+
+The chain that DH-4 proved end-to-end — Foundation → Design → Cloud, through
+published packages rather than shared implementation — now has a governed API at
+its centre. A consumer can install the package, read what each of 1,175 exports
+promises without leaving `node_modules`, wrap any of 310 components with a
+typed props interface, and know that nothing joined that surface without someone
+deciding it should.
+
+**What this means for what comes next.** The remaining work in this repository is
+no longer infrastructural. The open gaps are about the components themselves —
+whether all 876 root exports deserve to be public, whether 28 tone vocabularies
+should be four, whether the brand compositions and diagram engines should have
+tests. Those are questions about the quality of a component platform, not about
+the machinery that publishes it.
+
+**Future work should focus on improving the component platform itself rather
+than continuing to build repository infrastructure.** The infrastructure is
+done. It should be maintained, extended where a gap is named, and otherwise left
+alone.
 
 ---
 
