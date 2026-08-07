@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Surface, Inline } from "@/components/layout";
 
-interface TableToolbarProps {
+export interface TableToolbarProps {
   children: ReactNode;
   className?: string;
   /** Switches to an accent-tinted bulk-action bar — pass this when one or more rows are selected. */

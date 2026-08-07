@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface EyebrowProps {
+export interface EyebrowProps {
   children: ReactNode;
   className?: string;
   tone?: "default" | "accent";

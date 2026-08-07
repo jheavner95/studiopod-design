@@ -1,7 +1,7 @@
 import { Info } from "lucide-react";
 import { EmptyState, type EmptyStateProps } from "./EmptyState";
 
-type InfoStateProps = Omit<EmptyStateProps, "tone">;
+export type InfoStateProps = Omit<EmptyStateProps, "tone">;
 
 /** EmptyState preset for a neutral, non-urgent heads-up that isn't an absence, a success, a warning, or an error. */
 export function InfoState({ icon, ...props }: InfoStateProps) {

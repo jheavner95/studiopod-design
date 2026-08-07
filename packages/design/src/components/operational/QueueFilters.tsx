@@ -3,7 +3,7 @@ import type { QueueStatusValue } from "./QueueStatus";
 
 export type QueueFilterValue = QueueStatusValue | "all";
 
-interface QueueFiltersProps {
+export interface QueueFiltersProps {
   value: QueueFilterValue;
   onChange: (value: QueueFilterValue) => void;
   options?: QueueFilterValue[];

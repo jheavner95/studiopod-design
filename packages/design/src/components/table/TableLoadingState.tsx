@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui";
 
-interface TableLoadingStateProps {
+export interface TableLoadingStateProps {
   rows?: number;
   columns: number;
 }

@@ -13,7 +13,7 @@ const TONE_STROKE: Record<ProgressTone, string> = {
   error: PROGRESS_TONE_CLASSES.error.stroke,
 };
 
-interface ProgressRingProps {
+export interface ProgressRingProps {
   /** 0–1. Ignored when indeterminate. */
   value?: number;
   indeterminate?: boolean;

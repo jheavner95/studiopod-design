@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 export type SkeletonVariant = "block" | "text" | "circle";
 
-interface SkeletonProps {
+export interface SkeletonProps {
   /** block (default, unchanged): whatever shape className gives it. text: a single line, rounded like text. circle: a perfect circle for avatar-shaped placeholders. */
   variant?: SkeletonVariant;
   className?: string;

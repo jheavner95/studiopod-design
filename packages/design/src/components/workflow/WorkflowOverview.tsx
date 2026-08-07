@@ -4,7 +4,7 @@ import { type StatGroupItem } from "@/components/metadata";
 import { WorkflowSummary } from "./WorkflowSummary";
 import { cn } from "@/lib/utils";
 
-interface WorkflowOverviewProps {
+export interface WorkflowOverviewProps {
   title?: ReactNode;
   description?: ReactNode;
   items: StatGroupItem[];

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Body } from "@/components/ui";
 
-interface EmptyMetadataProps {
+export interface EmptyMetadataProps {
   title: string;
   description?: ReactNode;
   className?: string;

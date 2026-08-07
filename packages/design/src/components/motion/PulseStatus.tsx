@@ -19,7 +19,7 @@ const toneMap: Record<PulseTone, string> = {
 
 const sizeMap = { sm: "size-1.5", md: "size-2.5" };
 
-interface PulseStatusProps {
+export interface PulseStatusProps {
   tone?: PulseTone;
   size?: "sm" | "md";
   className?: string;

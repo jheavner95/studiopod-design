@@ -6,7 +6,7 @@ import { RadioGroup, type RadioGroupProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface RadioGroupFieldProps extends Omit<RadioGroupProps, "label" | "helperText"> {
+export interface RadioGroupFieldProps extends Omit<RadioGroupProps, "label" | "helperText"> {
   label?: ReactNode;
   helperText?: ReactNode;
   error?: ReactNode;

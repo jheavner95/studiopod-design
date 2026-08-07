@@ -1,7 +1,7 @@
 import { WorkflowTransition, type WorkflowTransitionStatus } from "./WorkflowTransition";
 import { cn } from "@/lib/utils";
 
-interface WorkflowStepperConnectorProps {
+export interface WorkflowStepperConnectorProps {
   status?: WorkflowTransitionStatus;
   orientation?: "horizontal" | "vertical";
   className?: string;

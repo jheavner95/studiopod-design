@@ -5,7 +5,7 @@ import { ImageOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageComponent } from "@/framework";
 
-interface AssetThumbnailProps {
+export interface AssetThumbnailProps {
   src?: string;
   alt: string;
   /** Shown when src is omitted or fails to load — a type-appropriate icon (a document icon for a PDF, a music icon for audio, ...). */

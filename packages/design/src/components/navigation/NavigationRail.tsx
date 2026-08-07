@@ -13,7 +13,7 @@ export interface NavigationRailItemDef {
   href?: string;
 }
 
-interface NavigationRailProps {
+export interface NavigationRailProps {
   items: NavigationRailItemDef[];
   orientation?: "vertical" | "horizontal";
   /** Icon-only mode — cascades to every NavigationItem inside via context. */

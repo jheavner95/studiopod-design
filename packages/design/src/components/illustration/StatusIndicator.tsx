@@ -12,7 +12,7 @@ const statusConfig: Record<SystemStatus, { tone: PulseTone; label: string; pulse
   error: { tone: "error", label: "Failed", pulse: false },
 };
 
-interface StatusIndicatorProps {
+export interface StatusIndicatorProps {
   status: SystemStatus;
   label?: ReactNode;
   className?: string;

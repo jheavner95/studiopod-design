@@ -31,7 +31,7 @@ export interface StateInspectorProperty {
   value: ReactNode;
 }
 
-interface StateInspectorProps {
+export interface StateInspectorProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

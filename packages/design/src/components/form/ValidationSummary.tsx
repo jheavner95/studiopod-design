@@ -17,7 +17,7 @@ export interface ValidationSummaryItem {
   href?: string;
 }
 
-interface ValidationSummaryProps {
+export interface ValidationSummaryProps {
   items: ValidationSummaryItem[];
   title?: ReactNode;
   className?: string;

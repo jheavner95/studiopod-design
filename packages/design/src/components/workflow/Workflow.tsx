@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { InspectorPanel } from "@/components/operational";
 import { cn } from "@/lib/utils";
 
-interface WorkflowProps {
+export interface WorkflowProps {
   /** A WorkflowHeader element — sticky, rendered above the scrollable body. */
   header: ReactNode;
   /** A WorkflowSidebar element — rendered alongside the main content, hidden below lg. */

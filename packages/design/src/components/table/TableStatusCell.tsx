@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useTableDensity, densityPaddingMap } from "./Table";
 import type { StatusTone } from "@/lib/tone";
 
-interface TableStatusCellProps {
+export interface TableStatusCellProps {
   label: string;
   tone?: StatusTone;
   className?: string;

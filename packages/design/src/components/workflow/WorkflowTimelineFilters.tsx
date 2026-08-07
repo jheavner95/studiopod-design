@@ -3,7 +3,7 @@ import type { WorkflowTimelineEventStatus } from "./WorkflowTimelineMarker";
 
 export type WorkflowTimelineFilterValue = WorkflowTimelineEventStatus | "all";
 
-interface WorkflowTimelineFiltersProps {
+export interface WorkflowTimelineFiltersProps {
   value: WorkflowTimelineFilterValue;
   onChange: (value: WorkflowTimelineFilterValue) => void;
   options?: WorkflowTimelineFilterValue[];

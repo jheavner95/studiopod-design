@@ -21,7 +21,7 @@ export interface AssetBrowserPagination {
   onPageChange: (page: number) => void;
 }
 
-interface AssetBrowserProps<T> {
+export interface AssetBrowserProps<T> {
   rows: T[];
   render: AssetGridRenderer<T>;
   /** Announced to screen readers when viewMode is "list" — Data Grid's own required caption, passed through. */

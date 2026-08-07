@@ -9,7 +9,7 @@ export interface SearchHistoryEntry {
   query: string;
 }
 
-interface SearchHistoryProps {
+export interface SearchHistoryProps {
   entries: SearchHistoryEntry[];
   onSelect: (entry: SearchHistoryEntry) => void;
   onRemove?: (entry: SearchHistoryEntry) => void;

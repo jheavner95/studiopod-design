@@ -71,6 +71,8 @@ Copy [TEMPLATE.md](TEMPLATE.md) to `NNNN-kebab-case-title.md`.
 | [0012](0012-workspace-layout.md)                                          | `apps/` and `tooling/` as the workspace layout               | Accepted |
 | [0013](0013-framework-capabilities-are-props.md)                          | Framework capabilities are injected as props, not context    | Accepted |
 | [0014](0014-preserve-modules-build.md)                                    | The package emits one module per source file                 | Accepted |
+| [0015](0015-stability-tiers.md)                                           | Stability is declared in the API manifest, earned by evidence | Accepted |
+| [0016](0016-intentional-exports.md)                                       | The public API is constructed, not aggregated                | Accepted |
 
 ---
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface CTAGroupProps {
+export interface CTAGroupProps {
   children: ReactNode;
   className?: string;
   align?: "left" | "center";

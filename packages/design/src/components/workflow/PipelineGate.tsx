@@ -4,7 +4,7 @@ import { ApprovalStatus } from "./ApprovalStatus";
 import { ApprovalDecision } from "./ApprovalDecision";
 import type { ApprovalStateValue } from "./ApprovalStatus";
 
-interface PipelineGateProps {
+export interface PipelineGateProps {
   title: ReactNode;
   status: ApprovalStateValue;
   reason?: ReactNode;

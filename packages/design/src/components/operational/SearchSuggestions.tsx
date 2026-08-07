@@ -9,7 +9,7 @@ export interface SearchSuggestion {
   description?: ReactNode;
 }
 
-interface SearchSuggestionsProps {
+export interface SearchSuggestionsProps {
   open: boolean;
   suggestions: SearchSuggestion[];
   activeId?: string | null;

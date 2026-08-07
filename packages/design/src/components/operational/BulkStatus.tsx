@@ -14,7 +14,7 @@ const STATUS_MAP: Record<BulkStatusValue, { status: SystemStatus; label: string 
   cancelled: { status: "idle", label: "Cancelled" },
 };
 
-interface BulkStatusProps {
+export interface BulkStatusProps {
   value: BulkStatusValue;
   className?: string;
 }

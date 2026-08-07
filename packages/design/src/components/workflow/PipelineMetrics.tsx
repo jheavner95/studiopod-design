@@ -1,6 +1,6 @@
 import { StatGroup, type StatGroupItem } from "@/components/metadata";
 
-interface PipelineMetricsProps {
+export interface PipelineMetricsProps {
   items: StatGroupItem[];
   columns?: 2 | 3 | 4;
   className?: string;

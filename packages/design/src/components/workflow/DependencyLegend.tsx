@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import { DependencyNodeMarker, type DependencyStatusValue } from "./DependencyNode";
 
-interface DependencyLegendProps {
+export interface DependencyLegendProps {
   /** Defaults to all 8 states — narrow this to only the states a given graph actually uses. */
   statuses?: DependencyStatusValue[];
   className?: string;

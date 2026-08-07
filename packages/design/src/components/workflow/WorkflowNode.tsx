@@ -5,7 +5,7 @@ import { Caption } from "@/components/ui";
 
 export type WorkflowNodeStatus = "idle" | "running" | "paused" | "blocked" | "completed" | "failed";
 
-interface WorkflowNodeProps {
+export interface WorkflowNodeProps {
   label: ReactNode;
   description?: ReactNode;
   status: WorkflowNodeStatus;

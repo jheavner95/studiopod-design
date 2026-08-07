@@ -6,7 +6,7 @@ import { fadeInVariants } from "./variants";
 import { motionDuration, motionEase } from "@/lib/tokens";
 import { useMotionPreference } from "./MotionPreference";
 
-interface FadeInProps {
+export interface FadeInProps {
   children: ReactNode;
   className?: string;
   delay?: number;

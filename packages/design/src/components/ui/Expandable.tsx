@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { motionDuration, motionEase } from "@/lib/tokens";
 import { useMotionPreference } from "@/components/motion/MotionPreference";
 
-interface ExpandableProps {
+export interface ExpandableProps {
   /** Full header content — consumer controls layout (icon, label, chevron all live here). */
   trigger: ReactNode;
   children: ReactNode;

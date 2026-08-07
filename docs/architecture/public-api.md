@@ -38,9 +38,16 @@ broken every consumer that measured it.
 
 ## 2. Stability tiers
 
-Every export carries exactly one tier, declared in `API.md`. The tier is
-**declared, never inferred** — an undeclared export is a defect that fails the
-API check.
+Every export carries exactly one tier, declared in
+`packages/design/api-baseline/<entry>.json` — a map of export name to tier that
+ships in the package. The tier is **declared, never inferred**, and an
+undeclared export fails the API check.
+
+DH-5 assigned the first 1,175 of them. See
+[ADR 0015](../decisions/0015-stability-tiers.md) for the criteria and for why
+"at least one real consumer" was replaced by "pinned by tests" — with one
+consumer, the original criterion admitted ten exports and made the tier
+meaningless.
 
 ### Stable
 
@@ -155,7 +162,8 @@ to think about it.
 
 - The public entry points, and that the set is frozen. `./internal` is
   deliberately absent: it has no contract to freeze.
-- Every export, with its tier and its family
+- The stability model, and every export's tier — the machine-readable form is
+  `api-baseline/<entry>.json`, which ships in the package
 - Named exceptions, with reasons
 - The dependency contract
 - Portability caveats

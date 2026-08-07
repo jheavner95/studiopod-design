@@ -73,7 +73,7 @@ export function DialogFooter({ children, className }: PartProps) {
   return <footer className={cn("flex items-center justify-end gap-2", className)}>{children}</footer>;
 }
 
-interface DialogCloseProps {
+export interface DialogCloseProps {
   className?: string;
   /** Accessible name for the control. Defaults to "Close". */
   "aria-label"?: string;

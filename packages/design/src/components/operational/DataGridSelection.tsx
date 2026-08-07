@@ -58,7 +58,7 @@ export function useDataGridSelection(): UseDataGridSelectionResult {
   return { selectedIds, setSelectedIds, clear };
 }
 
-interface DataGridSelectionSummaryProps {
+export interface DataGridSelectionSummaryProps {
   count: number;
   onClear?: () => void;
   className?: string;

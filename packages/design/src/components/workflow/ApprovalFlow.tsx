@@ -5,4 +5,6 @@
  * directly, the same choice Workflow Stepper's WorkflowStepper and Workflow
  * Timeline's WorkflowTimeline already made.
  */
-export { Workflow as ApprovalFlow } from "./Workflow";
+export { Workflow as ApprovalFlow,
+  type WorkflowProps as ApprovalFlowProps,
+} from "./Workflow";

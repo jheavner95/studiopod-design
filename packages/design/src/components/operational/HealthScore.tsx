@@ -1,6 +1,6 @@
 import { ProgressRing, type ProgressTone } from "@/components/feedback";
 
-interface HealthScoreProps {
+export interface HealthScoreProps {
   /** 0–100. */
   score: number;
   size?: number;

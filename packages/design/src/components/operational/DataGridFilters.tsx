@@ -10,7 +10,7 @@ export interface DataGridFilterDef {
   options: SelectOption[];
 }
 
-interface DataGridFiltersProps {
+export interface DataGridFiltersProps {
   filters: DataGridFilterDef[];
   activeFilters: Record<string, string | null>;
   onChange: (key: string, value: string | null) => void;

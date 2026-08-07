@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { InputField } from "@/components/form";
 
-interface PropertyNumberProps {
+export interface PropertyNumberProps {
   label: ReactNode;
   value: number;
   onChange: (value: number) => void;

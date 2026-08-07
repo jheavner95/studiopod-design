@@ -9,7 +9,7 @@ export interface StatGroupItem {
   trend?: ReactNode;
 }
 
-interface StatGroupProps {
+export interface StatGroupProps {
   items: StatGroupItem[];
   columns?: 2 | 3 | 4;
   className?: string;

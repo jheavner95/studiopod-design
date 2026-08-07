@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui";
 import { WorkflowTimelineMarker, type WorkflowTimelineEventStatus } from "./WorkflowTimelineMarker";
 
-interface WorkflowTimelineEventProps {
+export interface WorkflowTimelineEventProps {
   title: ReactNode;
   description?: ReactNode;
   actor?: ReactNode;

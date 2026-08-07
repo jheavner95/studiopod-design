@@ -5,4 +5,6 @@
  * directly, the same choice Pipeline, ApprovalFlow, and WorkflowTimeline
  * already made.
  */
-export { Workflow as StateMachine } from "./Workflow";
+export { Workflow as StateMachine,
+  type WorkflowProps as StateMachineProps,
+} from "./Workflow";

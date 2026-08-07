@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Alert } from "@/components/feedback";
 
-interface JobResultsProps {
+export interface JobResultsProps {
   success: boolean;
   title: ReactNode;
   children?: ReactNode;

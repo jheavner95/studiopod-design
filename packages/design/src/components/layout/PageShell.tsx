@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface PageShellProps {
+export interface PageShellProps {
   children: ReactNode;
   className?: string;
   /**

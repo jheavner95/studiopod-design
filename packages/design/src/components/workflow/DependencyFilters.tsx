@@ -3,7 +3,7 @@ import type { DependencyStatusValue } from "./DependencyNode";
 
 export type DependencyFilterValue = DependencyStatusValue | "all";
 
-interface DependencyFiltersProps {
+export interface DependencyFiltersProps {
   value: DependencyFilterValue;
   onChange: (value: DependencyFilterValue) => void;
   options?: DependencyFilterValue[];

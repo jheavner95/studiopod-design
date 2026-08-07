@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import type { ApprovalStateValue } from "./ApprovalStatus";
 
-interface ApprovalStepProps {
+export interface ApprovalStepProps {
   label: ReactNode;
   description?: ReactNode;
   status: ApprovalStateValue;

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export type MetricTrendDirection = "up" | "down" | "flat";
 
-interface MetricCardProps {
+export interface MetricCardProps {
   value: ReactNode;
   label: ReactNode;
   description?: ReactNode;

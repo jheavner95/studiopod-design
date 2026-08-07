@@ -11,7 +11,7 @@ export type WorkflowTimelineEventStatus =
   | "waiting"
   | "skipped";
 
-interface WorkflowTimelineMarkerProps {
+export interface WorkflowTimelineMarkerProps {
   status: WorkflowTimelineEventStatus;
   className?: string;
 }

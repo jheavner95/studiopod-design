@@ -6,7 +6,7 @@ import { Textarea, type TextareaProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface TextareaFieldProps extends Omit<TextareaProps, "label" | "helperText" | "status"> {
+export interface TextareaFieldProps extends Omit<TextareaProps, "label" | "helperText" | "status"> {
   label?: ReactNode;
   description?: ReactNode;
   helperText?: ReactNode;

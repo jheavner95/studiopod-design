@@ -10,7 +10,7 @@ export interface RecommendationEntry {
   action?: ReactNode;
 }
 
-interface RecommendationWidgetProps {
+export interface RecommendationWidgetProps {
   title: ReactNode;
   recommendations: RecommendationEntry[];
   emptyMessage?: string;

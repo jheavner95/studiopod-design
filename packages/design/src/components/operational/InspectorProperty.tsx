@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { MetadataField } from "@/components/metadata";
 
-interface InspectorPropertyProps {
+export interface InspectorPropertyProps {
   /** Read mode: rendered via Foundation Metadata's own MetadataField (label stacked above value). Omit both when passing an edit control as children instead. */
   label?: ReactNode;
   value?: ReactNode;

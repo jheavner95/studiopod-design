@@ -12,7 +12,7 @@ export interface OperationalAlertEntry {
   onDismiss?: () => void;
 }
 
-interface OperationalAlertPanelProps {
+export interface OperationalAlertPanelProps {
   alerts: OperationalAlertEntry[];
   emptyMessage?: string;
   className?: string;

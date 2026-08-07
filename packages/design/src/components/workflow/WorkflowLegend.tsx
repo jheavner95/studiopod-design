@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import { WorkflowNodeMarker, type WorkflowNodeStatus } from "./WorkflowNode";
 
-interface WorkflowLegendProps {
+export interface WorkflowLegendProps {
   /** Defaults to all 6 states — narrow this to only the states a given canvas actually uses. */
   statuses?: WorkflowNodeStatus[];
   className?: string;

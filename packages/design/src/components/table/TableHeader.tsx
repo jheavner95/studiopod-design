@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface TableHeaderProps {
+export interface TableHeaderProps {
   children: ReactNode;
   className?: string;
   /** Keeps the header pinned to the top of its ScrollArea while rows scroll beneath it — on by default, matching every hand-rolled table in this design system today. */

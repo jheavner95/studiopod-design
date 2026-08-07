@@ -12,7 +12,7 @@ const STATUS_MAP: Record<WorkflowStateValue, { status: SystemStatus; label: stri
   cancelled: { status: "idle", label: "Cancelled" },
 };
 
-interface PipelineStatusProps {
+export interface PipelineStatusProps {
   value: WorkflowStateValue;
   className?: string;
 }

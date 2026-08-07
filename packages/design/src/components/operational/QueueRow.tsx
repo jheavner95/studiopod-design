@@ -15,7 +15,7 @@ export interface QueueRowJob {
   progress?: { processed: number; total: number };
 }
 
-interface QueueRowProps {
+export interface QueueRowProps {
   job: QueueRowJob;
   selectable?: boolean;
   selected?: boolean;

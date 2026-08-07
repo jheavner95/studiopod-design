@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { NavigationCollapsedContext } from "./NavigationItem";
 
-interface SideNavigationProps {
+export interface SideNavigationProps {
   /** NavigationSection/NavigationGroup/NavigationItem elements. */
   children: ReactNode;
   /** Icon-only mode — cascades to every NavigationItem/NavigationGroup inside via context. */

@@ -14,7 +14,7 @@ export interface ReviewHistoryEntry {
   status: ApprovalStateValue;
 }
 
-interface ReviewHistoryProps {
+export interface ReviewHistoryProps {
   title?: ReactNode;
   /** Caller supplies entries already in order (typically newest-first) — not re-sorted, the same contract Inspector Panel's own InspectorHistory and Workflow Timeline's own events already follow. */
   entries: ReviewHistoryEntry[];

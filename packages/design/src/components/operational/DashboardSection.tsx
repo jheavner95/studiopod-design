@@ -6,7 +6,7 @@ import { Body } from "@/components/ui";
 import { LoadingState, useAnnounce } from "@/components/feedback";
 import { cn } from "@/lib/utils";
 
-interface DashboardSectionProps {
+export interface DashboardSectionProps {
   title: ReactNode;
   description?: ReactNode;
   actions?: ReactNode;

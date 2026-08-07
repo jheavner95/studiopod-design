@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface WorkflowStepperNavigationProps {
+export interface WorkflowStepperNavigationProps {
   /** 1-indexed. */
   currentStep: number;
   totalSteps: number;

@@ -116,8 +116,17 @@ export function checkExportStatus(componentName: string): ExportStatusResult {
   if (!existsSync(baselineDir)) return { exported: false, entryPoint: null };
   for (const file of readdirSync(baselineDir)) {
     if (!file.endsWith(".json")) continue;
-    const contents = JSON.parse(readFileSync(join(baselineDir, file), "utf8"));
-    const exportNames: string[] = Array.isArray(contents) ? contents : (contents.exports ?? []);
+    const contents: unknown = JSON.parse(readFileSync(join(baselineDir, file), "utf8"));
+    // DH-5 changed the manifest from a flat array of names to a map of
+    // name -> stability tier, so the surface and what it promises live in one
+    // place. Both shapes are read: the array form is what every baseline
+    // looked like before 0.16.0, and a docs site pinned to an older package
+    // should not break on the format change.
+    const exportNames: string[] = Array.isArray(contents)
+      ? (contents as string[])
+      : typeof contents === "object" && contents !== null
+        ? Object.keys(contents as Record<string, unknown>)
+        : [];
     if (exportNames.includes(componentName)) {
       return { exported: true, entryPoint: file.replace(/\.json$/, "") };
     }

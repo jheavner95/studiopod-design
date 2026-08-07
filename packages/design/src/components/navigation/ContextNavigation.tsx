@@ -8,7 +8,7 @@ export interface ContextNavigationLink {
   href: string;
 }
 
-interface ContextNavigationProps {
+export interface ContextNavigationProps {
   /** What object or scope this strip is currently about — an asset name, a platform, a record. */
   label: ReactNode;
   icon?: ReactNode;

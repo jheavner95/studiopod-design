@@ -9,7 +9,7 @@ const VARIANT_DEFAULTS: Record<AssetEmptyVariant, { title: string; description: 
   error: { title: "Failed to load", description: "Check your connection and try again.", tone: "error" },
 };
 
-interface AssetEmptyStateProps {
+export interface AssetEmptyStateProps {
   variant?: AssetEmptyVariant;
   title?: ReactNode;
   description?: ReactNode;

@@ -1,6 +1,6 @@
 import { Separator } from "@/components/layout";
 
-interface FormDividerProps {
+export interface FormDividerProps {
   className?: string;
 }
 

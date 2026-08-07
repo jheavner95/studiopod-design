@@ -10,7 +10,7 @@ export interface RelationshipItem {
   meta?: ReactNode;
 }
 
-interface RelationshipListProps {
+export interface RelationshipListProps {
   items: RelationshipItem[];
   className?: string;
   emptyLabel?: ReactNode;

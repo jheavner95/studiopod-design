@@ -3,4 +3,6 @@
  * (icon/name/type + a children slot for status/progress) already covers
  * exactly what a wizard's header needs — nothing stepper-specific to add.
  */
-export { WorkflowHeader as WorkflowStepperHeader } from "./WorkflowHeader";
+export { WorkflowHeader as WorkflowStepperHeader,
+  type WorkflowHeaderProps as WorkflowStepperHeaderProps,
+} from "./WorkflowHeader";

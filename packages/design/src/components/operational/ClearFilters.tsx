@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface ClearFiltersProps {
+export interface ClearFiltersProps {
   onClick: () => void;
   label?: string;
   className?: string;

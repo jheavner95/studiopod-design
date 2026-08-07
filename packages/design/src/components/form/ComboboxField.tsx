@@ -8,7 +8,7 @@ import { FieldError } from "./FieldError";
 
 export type { ComboboxOption };
 
-interface ComboboxFieldProps {
+export interface ComboboxFieldProps {
   label?: ReactNode;
   description?: ReactNode;
   helperText?: ReactNode;

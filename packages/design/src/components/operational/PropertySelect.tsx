@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { SelectField } from "@/components/form";
 import type { SelectOption } from "@/components/ui";
 
-interface PropertySelectProps {
+export interface PropertySelectProps {
   label: ReactNode;
   value: string;
   onChange: (value: string) => void;

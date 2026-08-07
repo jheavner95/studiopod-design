@@ -14,7 +14,7 @@ export interface PipelineHistoryEntry {
   status: WorkflowStateValue;
 }
 
-interface PipelineHistoryProps {
+export interface PipelineHistoryProps {
   title?: ReactNode;
   /** Caller supplies entries already in order (typically newest-first) — not re-sorted, the same contract Approval & Review's own ReviewHistory and Workflow Timeline's own events already follow. */
   entries: PipelineHistoryEntry[];

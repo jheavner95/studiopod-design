@@ -1,7 +1,7 @@
 import { SearchInput } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface DataGridSearchProps {
+export interface DataGridSearchProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;

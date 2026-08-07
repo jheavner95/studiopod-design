@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Notification } from "@/components/feedback";
 import { Button } from "@/components/ui";
 
-interface BulkUndoProps {
+export interface BulkUndoProps {
   message: ReactNode;
   onUndo: () => void;
   onDismiss?: () => void;

@@ -8,7 +8,7 @@ export interface StatusWidgetItem {
   status: HealthStatusValue;
 }
 
-interface StatusWidgetProps {
+export interface StatusWidgetProps {
   title: ReactNode;
   items: StatusWidgetItem[];
   className?: string;

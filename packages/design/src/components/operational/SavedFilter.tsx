@@ -10,7 +10,7 @@ export interface SavedFilterEntry {
   name: string;
 }
 
-interface SavedFilterProps {
+export interface SavedFilterProps {
   entries: SavedFilterEntry[];
   activeId?: string | null;
   onApply: (entry: SavedFilterEntry) => void;

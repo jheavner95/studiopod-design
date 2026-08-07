@@ -1,7 +1,7 @@
 import { LayoutDashboard } from "lucide-react";
 import { EmptyState, type EmptyStateProps } from "@/components/feedback";
 
-type DashboardEmptyStateProps = Omit<EmptyStateProps, "tone" | "title" | "description"> & {
+export type DashboardEmptyStateProps = Omit<EmptyStateProps, "tone" | "title" | "description"> & {
   title?: EmptyStateProps["title"];
   description?: EmptyStateProps["description"];
 };

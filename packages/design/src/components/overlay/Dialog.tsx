@@ -10,7 +10,7 @@ import { DialogContext } from "./dialog-context";
 
 export type DialogSize = "sm" | "md" | "full";
 
-interface DialogProps {
+export interface DialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;

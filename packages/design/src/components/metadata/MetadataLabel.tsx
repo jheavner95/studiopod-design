@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface MetadataLabelProps {
+export interface MetadataLabelProps {
   children: ReactNode;
   className?: string;
 }

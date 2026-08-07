@@ -6,7 +6,7 @@ import { ToggleSwitch, type ToggleSwitchProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface SwitchFieldProps extends Omit<ToggleSwitchProps, "label" | "helperText"> {
+export interface SwitchFieldProps extends Omit<ToggleSwitchProps, "label" | "helperText"> {
   label: ReactNode;
   helperText?: ReactNode;
   error?: ReactNode;

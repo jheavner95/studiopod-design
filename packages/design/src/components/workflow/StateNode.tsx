@@ -5,7 +5,7 @@ import { Caption } from "@/components/ui";
 
 export type StateValue = "initial" | "active" | "waiting" | "blocked" | "completed" | "failed" | "cancelled" | "terminal";
 
-interface StateNodeProps {
+export interface StateNodeProps {
   label: ReactNode;
   description?: ReactNode;
   status: StateValue;

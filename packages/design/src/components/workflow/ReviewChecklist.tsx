@@ -12,7 +12,7 @@ export interface ReviewChecklistItem {
   helperText?: ReactNode;
 }
 
-interface ReviewChecklistProps {
+export interface ReviewChecklistProps {
   items: ReviewChecklistItem[];
   onToggle: (id: string, checked: boolean) => void;
   className?: string;

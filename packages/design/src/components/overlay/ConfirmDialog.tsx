@@ -7,7 +7,7 @@ import { DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "./Di
 
 export type ConfirmTone = "default" | "destructive";
 
-interface ConfirmDialogProps {
+export interface ConfirmDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;

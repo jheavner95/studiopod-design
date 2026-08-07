@@ -27,7 +27,7 @@ export interface WorkflowInspectorProperty {
   value: ReactNode;
 }
 
-interface WorkflowInspectorProps {
+export interface WorkflowInspectorProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

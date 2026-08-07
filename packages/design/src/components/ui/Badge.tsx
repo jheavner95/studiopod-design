@@ -17,7 +17,7 @@ const badgeStyles = cva("inline-flex w-fit items-center gap-1.5 rounded-full fon
   defaultVariants: { tone: "neutral", size: "md" },
 });
 
-interface BadgeProps extends VariantProps<typeof badgeStyles> {
+export interface BadgeProps extends VariantProps<typeof badgeStyles> {
   children: ReactNode;
   /**
    * DS-5I: render a static leading indicator dot inside the pill, inheriting

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 
-interface AssetMetadataProps {
+export interface AssetMetadataProps {
   name: ReactNode;
   /** Rendered as a single "·"-joined caption line — type, size, modified date, or whatever the caller wants secondary. */
   secondary?: ReactNode[];

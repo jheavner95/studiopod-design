@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/feedback";
 import { Grid } from "@/components/layout";
 
-interface AssetLoadingStateProps {
+export interface AssetLoadingStateProps {
   count?: number;
   className?: string;
 }

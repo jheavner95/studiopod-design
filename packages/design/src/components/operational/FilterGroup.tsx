@@ -9,7 +9,7 @@ export interface FilterGroupOption {
   label: ReactNode;
 }
 
-interface FilterGroupProps {
+export interface FilterGroupProps {
   label: string;
   options: FilterGroupOption[];
   selected: Set<string>;

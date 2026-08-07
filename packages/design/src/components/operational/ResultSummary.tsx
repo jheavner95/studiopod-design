@@ -1,7 +1,7 @@
 import { Caption } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface ResultSummaryProps {
+export interface ResultSummaryProps {
   totalCount: number;
   /** Omit when the full set renders at once (no pagination) — renders "{totalCount} results" instead of a range. */
   range?: { start: number; end: number };

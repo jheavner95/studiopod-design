@@ -4,4 +4,6 @@
  * Foundation Forms' SearchInput, with nothing table-specific in its
  * implementation at all.
  */
-export { DataGridSearch as AssetSearch } from "./DataGridSearch";
+export { DataGridSearch as AssetSearch,
+  type DataGridSearchProps as AssetSearchProps,
+} from "./DataGridSearch";

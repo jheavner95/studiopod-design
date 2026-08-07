@@ -1,6 +1,6 @@
 import { Alert, ValidationSummary, type ValidationSummaryItem } from "@/components/feedback";
 
-interface InspectorValidationProps {
+export interface InspectorValidationProps {
   items: ValidationSummaryItem[];
   /** Shown in place of the summary when items is empty — omit to render nothing (matching ValidationSummary's own behavior). */
   emptyMessage?: string;

@@ -4,7 +4,41 @@ This document is the frozen public contract of the package, established in RM-5.
 
 The literal, per-symbol ground truth lives in `api-baseline/*.json` (one sorted JSON array of export names per entry point) and is enforced by `npm run package:api-check`. This document is the human-readable classification layer on top of that machine-readable baseline — it explains *why* each family is classified the way it is, not just *what* is exported.
 
-## Classification legend
+## Stability model (DH-5)
+
+Every export declares a tier in `api-baseline/<entry>.json`, which maps export name to tier and **ships in the package** — install it and you can read what each name promises. `check-api.mjs` fails the build if the surface and the manifest disagree, if a tier is outside the vocabulary, or if an export reaches consumers without being accepted.
+
+| Tier | Promise | How it is earned |
+|---|---|---|
+| **stable** | Changes follow the full deprecation procedure. Breaking one is a breaking change. | Pinned by tests · documented · exports its props type |
+| **preview** | May change in any release, including a patch. Pin exactly if you depend on it. | The default. Every new export enters here. |
+| **deprecated** | Still works; scheduled for removal with a migration path. | Declared when a removal is planned. |
+
+Current assignment:
+
+| Entry | stable | preview |
+|---|---|---|
+| `@studiopod/design` | 211 | 665 |
+| `@studiopod/design/tokens` | 5 | 0 |
+| `@studiopod/design/marketing` | 0 | 44 |
+| `@studiopod/design/illustrations` | 2 | 248 |
+
+`/marketing` and `/illustrations` are entirely Preview because they have **no test files** — nothing pins their behaviour. Every `/tokens` export is Stable without tests, because `token:bridge-check` fails the build if a value drifts from Foundation, which is a stronger guarantee. Reasoning: `docs/decisions/0015-stability-tiers.md`.
+
+### Props types
+
+**310 of 372 root components export their props type** (was 54). Wrapping a component is a first-class pattern:
+
+```tsx
+import { Button, type ButtonProps } from "@studiopod/design";
+export const AppButton = (props: ButtonProps) => <Button linkComponent={Link} {...props} />;
+```
+
+The 62 that do not are components with no named props type — propless, inline-annotated, or aliases of aliases. They are listed in `docs/certification/DH-5.md` § 3.
+
+### The older classification
+
+The A–E family classification below predates DH-5 and is kept as the human-readable *reasoning* behind each family's shape. The per-symbol tier in the manifest is now the contract; where the two disagree, the manifest wins.
 
 - **A. STABLE PUBLIC** — appropriate for long-term Web/App consumption.
 - **B. PUBLIC BUT EXPERIMENTAL** — useful now, exported, but not yet mature enough for a stability guarantee. Expect more naming/shape churn here than in A.

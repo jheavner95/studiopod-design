@@ -3,7 +3,7 @@ import { Inline, Stack } from "@/components/layout";
 import { Badge } from "@/components/ui";
 import type { StatusTone } from "@/lib/tone";
 
-interface IdentityBlockProps {
+export interface IdentityBlockProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui";
 
-interface BulkSelectionCounterProps {
+export interface BulkSelectionCounterProps {
   count: number;
   className?: string;
 }

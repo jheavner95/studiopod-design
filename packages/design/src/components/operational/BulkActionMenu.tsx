@@ -14,7 +14,7 @@ export interface BulkActionMenuItem {
   onSelect: () => void;
 }
 
-interface BulkActionMenuProps {
+export interface BulkActionMenuProps {
   items: BulkActionMenuItem[];
   label?: string;
   className?: string;

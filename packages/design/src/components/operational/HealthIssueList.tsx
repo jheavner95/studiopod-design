@@ -11,7 +11,7 @@ export interface HealthIssueEntry {
   severity: HealthIssueSeverity;
 }
 
-interface HealthIssueListProps {
+export interface HealthIssueListProps {
   issues: HealthIssueEntry[];
   emptyMessage?: string;
   className?: string;

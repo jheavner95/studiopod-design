@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Grid } from "@/components/layout";
 
-interface PropertyGroupProps {
+export interface PropertyGroupProps {
   children: ReactNode;
   title?: ReactNode;
   columns?: 1 | 2 | 3;

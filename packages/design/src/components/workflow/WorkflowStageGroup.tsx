@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Grid, type GridStrategy } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface WorkflowStageGroupProps {
+export interface WorkflowStageGroupProps {
   title?: ReactNode;
   /** WorkflowStage elements. */
   children: ReactNode;

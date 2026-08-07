@@ -8,7 +8,7 @@ import { Button, Caption } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface FileUploadFieldProps {
+export interface FileUploadFieldProps {
   label?: ReactNode;
   description?: ReactNode;
   helperText?: ReactNode;

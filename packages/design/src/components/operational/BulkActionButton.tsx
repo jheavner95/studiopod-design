@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface BulkActionButtonProps {
+export interface BulkActionButtonProps {
   children: ReactNode;
   icon?: ReactNode;
   onClick?: () => void;

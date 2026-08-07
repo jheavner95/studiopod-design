@@ -1,7 +1,7 @@
 import { Caption } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface FilterSummaryProps {
+export interface FilterSummaryProps {
   count: number;
   className?: string;
 }

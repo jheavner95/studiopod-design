@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Surface, ScrollArea } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface WorkflowSidebarProps {
+export interface WorkflowSidebarProps {
   header?: ReactNode;
   children: ReactNode;
   /** Shrinks to an icon-only rail — the caller owns the toggle (a WorkflowActions button), this component only renders the collapsed width, not the open/close state itself. */

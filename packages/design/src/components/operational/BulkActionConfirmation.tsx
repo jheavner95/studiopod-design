@@ -5,7 +5,7 @@ import { AlertTriangle } from "lucide-react";
 import { Dialog } from "@/components/overlay";
 import { Button, Body } from "@/components/ui";
 
-interface BulkActionConfirmationProps {
+export interface BulkActionConfirmationProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** e.g. "Delete 12 assets?" */

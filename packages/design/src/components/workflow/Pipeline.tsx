@@ -4,4 +4,6 @@
  * loading/empty-state chrome — so this reuses Workflow directly, the same
  * choice ApprovalFlow, WorkflowTimeline, and WorkflowStepper already made.
  */
-export { Workflow as Pipeline } from "./Workflow";
+export { Workflow as Pipeline,
+  type WorkflowProps as PipelineProps,
+} from "./Workflow";

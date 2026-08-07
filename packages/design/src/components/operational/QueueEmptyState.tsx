@@ -4,4 +4,8 @@
  * results/Error variant presets) already covers this exactly — Queue's own
  * table body needs the identical shape — so this system reuses it directly.
  */
-export { DataGridEmptyState as QueueEmptyState, type DataGridEmptyVariant as QueueEmptyVariant } from "./DataGridEmptyState";
+export {
+  DataGridEmptyState as QueueEmptyState,
+  type DataGridEmptyVariant as QueueEmptyVariant,
+  type DataGridEmptyStateProps as QueueEmptyStateProps,
+} from "./DataGridEmptyState";

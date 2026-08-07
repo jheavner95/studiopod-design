@@ -6,7 +6,7 @@ import { Select, type SelectProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface SelectFieldProps extends Omit<SelectProps, "label" | "helperText" | "status"> {
+export interface SelectFieldProps extends Omit<SelectProps, "label" | "helperText" | "status"> {
   label?: ReactNode;
   description?: ReactNode;
   helperText?: ReactNode;

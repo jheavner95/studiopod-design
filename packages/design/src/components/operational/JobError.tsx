@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Alert } from "@/components/feedback";
 
-interface JobErrorProps {
+export interface JobErrorProps {
   title?: ReactNode;
   children: ReactNode;
   action?: ReactNode;

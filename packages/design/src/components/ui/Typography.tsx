@@ -19,7 +19,7 @@ export function Display({ children, className, as = "h1" }: TypographyProps) {
   );
 }
 
-interface HeadingProps extends TypographyProps {
+export interface HeadingProps extends TypographyProps {
   level?: 1 | 2 | 3 | 4;
   /** When set, also marks the element `data-toc-heading` so DocsTableOfContents can index it. */
   id?: string;
@@ -51,7 +51,7 @@ export function Heading({ children, className, as, level = 2, id }: HeadingProps
   );
 }
 
-interface BodyProps extends TypographyProps {
+export interface BodyProps extends TypographyProps {
   size?: "lg" | "md" | "sm";
   muted?: boolean;
 }
@@ -70,7 +70,7 @@ export function Body({ children, className, as = "p", size = "md", muted = false
   );
 }
 
-interface CaptionProps extends TypographyProps {
+export interface CaptionProps extends TypographyProps {
   /** For pairing this text with another element via aria-labelledby (e.g. ProgressBar's label naming its progressbar) — mirrors Heading's own id prop. */
   id?: string;
 }

@@ -1,5 +1,5 @@
 export { Container, type ContainerSize, type ContainerProps } from "./Container";
-export { PageShell } from "./PageShell";
+export { PageShell, type PageShellProps } from "./PageShell";
 export {
   SectionShell,
   type SectionShellProps,

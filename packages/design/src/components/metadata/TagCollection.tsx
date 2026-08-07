@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui";
 import { Cluster } from "@/components/layout";
 
-interface TagCollectionProps {
+export interface TagCollectionProps {
   tags: string[];
   className?: string;
 }

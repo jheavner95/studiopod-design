@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Grid, type GridGap } from "@/components/layout";
 
-interface FormRowProps {
+export interface FormRowProps {
   children: ReactNode;
   /** 1 stacks fields in a single column (an Inspector-width form); 2–3 sit side by side on wide screens, one per row on narrow ones. */
   columns?: 1 | 2 | 3;

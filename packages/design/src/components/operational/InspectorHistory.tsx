@@ -10,7 +10,7 @@ export interface InspectorHistoryEntry {
   icon?: ReactNode;
 }
 
-interface InspectorHistoryProps {
+export interface InspectorHistoryProps {
   entries: InspectorHistoryEntry[];
   /** Entries shown before "Show N more" appears — matches the Inspector Workspace's own Activity region guidance ("collapsed to recent entries by default"). */
   collapsedCount?: number;

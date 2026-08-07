@@ -6,7 +6,7 @@ import { useTableDensity, densityPaddingMap } from "./Table";
 
 type CellAlign = "left" | "center" | "right";
 
-interface TableCellProps {
+export interface TableCellProps {
   children?: ReactNode;
   className?: string;
   align?: CellAlign;

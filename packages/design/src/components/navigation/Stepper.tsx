@@ -9,7 +9,7 @@ export interface Step {
   description?: string;
 }
 
-interface StepperProps {
+export interface StepperProps {
   steps: Step[];
   /** 0-indexed — every step before this is complete, this one is current, everything after is upcoming. */
   currentIndex: number;

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 export type NavigationDividerOrientation = "horizontal" | "vertical";
 
-interface NavigationDividerProps {
+export interface NavigationDividerProps {
   orientation?: NavigationDividerOrientation;
   className?: string;
 }

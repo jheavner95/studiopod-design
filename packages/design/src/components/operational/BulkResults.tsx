@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Alert, type FeedbackTone } from "@/components/feedback";
 
-interface BulkResultsProps {
+export interface BulkResultsProps {
   succeeded: number;
   failed: number;
   itemLabel?: string;

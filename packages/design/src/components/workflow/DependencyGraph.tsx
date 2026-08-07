@@ -5,4 +5,6 @@
  * directly, the same choice Pipeline, StateMachine, ApprovalFlow, and
  * WorkflowTimeline already made.
  */
-export { Workflow as DependencyGraph } from "./Workflow";
+export { Workflow as DependencyGraph,
+  type WorkflowProps as DependencyGraphProps,
+} from "./Workflow";

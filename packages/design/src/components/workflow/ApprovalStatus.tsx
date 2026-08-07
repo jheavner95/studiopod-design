@@ -21,7 +21,7 @@ const STATUS_MAP: Record<ApprovalStateValue, { status: SystemStatus; label: stri
   completed: { status: "success", label: "Completed" },
 };
 
-interface ApprovalStatusProps {
+export interface ApprovalStatusProps {
   value: ApprovalStateValue;
   className?: string;
 }

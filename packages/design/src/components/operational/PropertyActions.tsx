@@ -3,4 +3,6 @@
  * DS-2.5.2) already covers this — a right-aligned row of object-level
  * actions, built on Foundation Layout's Inline directly.
  */
-export { InspectorActions as PropertyActions } from "./InspectorActions";
+export { InspectorActions as PropertyActions,
+  type InspectorActionsProps as PropertyActionsProps,
+} from "./InspectorActions";

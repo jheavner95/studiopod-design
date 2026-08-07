@@ -5,4 +5,6 @@
  * bulk-action-specific in its implementation — so this system reuses it
  * directly under a family-appropriate name.
  */
-export { BulkProgress as JobProgress } from "./BulkProgress";
+export { BulkProgress as JobProgress,
+  type BulkProgressProps as JobProgressProps,
+} from "./BulkProgress";

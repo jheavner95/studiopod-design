@@ -1,6 +1,6 @@
 import { WorkflowTransition, type WorkflowTransitionStatus } from "./WorkflowTransition";
 
-interface WorkflowTimelineConnectorProps {
+export interface WorkflowTimelineConnectorProps {
   status?: WorkflowTransitionStatus;
   orientation?: "horizontal" | "vertical";
   className?: string;

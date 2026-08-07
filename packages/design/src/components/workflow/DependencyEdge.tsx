@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export type DependencyDirection = "forward" | "backward" | "bidirectional";
 
-interface DependencyEdgeProps {
+export interface DependencyEdgeProps {
   status?: WorkflowTransitionStatus;
   direction?: DependencyDirection;
   orientation?: "horizontal" | "vertical";

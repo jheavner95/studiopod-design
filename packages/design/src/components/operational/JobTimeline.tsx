@@ -6,4 +6,8 @@
  * system reuses it directly rather than a third timestamped-list
  * implementation.
  */
-export { StatusTimeline as JobTimeline, type StatusTimelineEntry as JobTimelineEntry } from "./StatusTimeline";
+export {
+  StatusTimeline as JobTimeline,
+  type StatusTimelineEntry as JobTimelineEntry,
+  type StatusTimelineProps as JobTimelineProps,
+} from "./StatusTimeline";

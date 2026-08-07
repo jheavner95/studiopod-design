@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Grid, type GridStrategy } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface DependencyGroupProps {
+export interface DependencyGroupProps {
   title?: ReactNode;
   /** DependencyNode or RelationshipNode elements sharing this cluster boundary. */
   children: ReactNode;

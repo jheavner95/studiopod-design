@@ -10,4 +10,6 @@
  * illustration-canvas layer's own IllustrationGroup, so this reuse carries
  * that reasoning forward rather than re-stating it in a third file.
  */
-export { DependencyGroup as WorkflowGroup } from "./DependencyGroup";
+export { DependencyGroup as WorkflowGroup,
+  type DependencyGroupProps as WorkflowGroupProps,
+} from "./DependencyGroup";

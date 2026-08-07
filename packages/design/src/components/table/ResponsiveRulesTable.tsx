@@ -16,7 +16,7 @@ export type ResponsiveRulesTableRow = {
   dimension: string;
 } & Record<string, ReactNode>;
 
-interface ResponsiveRulesTableProps {
+export interface ResponsiveRulesTableProps {
   /** Announced to screen readers; visually hidden — state what the table documents and across which columns. */
   caption: string;
   rows: ResponsiveRulesTableRow[];

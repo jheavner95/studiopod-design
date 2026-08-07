@@ -14,7 +14,7 @@ export interface StateHistoryEntry {
   status: StateValue;
 }
 
-interface StateHistoryProps {
+export interface StateHistoryProps {
   title?: ReactNode;
   /** Caller supplies entries already in order (typically newest-first) — not re-sorted, the same contract Pipeline & Approval and Review's own history components already follow. */
   entries: StateHistoryEntry[];

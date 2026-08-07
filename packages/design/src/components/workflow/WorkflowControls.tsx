@@ -3,7 +3,7 @@ import { Inline } from "@/components/layout";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface WorkflowControlsProps {
+export interface WorkflowControlsProps {
   onZoomIn?: () => void;
   onZoomOut?: () => void;
   onFitToView?: () => void;

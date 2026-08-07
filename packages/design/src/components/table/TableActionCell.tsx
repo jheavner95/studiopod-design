@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Inline } from "@/components/layout";
 import { useTableDensity, densityPaddingMap } from "./Table";
 
-interface TableActionCellProps {
+export interface TableActionCellProps {
   children: ReactNode;
   className?: string;
 }

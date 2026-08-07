@@ -5,7 +5,7 @@ export interface SearchScopeOption<T extends string> {
   label: string;
 }
 
-interface SearchScopeProps<T extends string> {
+export interface SearchScopeProps<T extends string> {
   value: T;
   onChange: (value: T) => void;
   options: SearchScopeOption<T>[];

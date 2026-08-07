@@ -5,7 +5,7 @@ import { Spinner } from "./Spinner";
 
 const SIZE_MAP = { sm: "size-4", md: "size-6", lg: "size-8" };
 
-interface LoadingStateProps {
+export interface LoadingStateProps {
   label?: ReactNode;
   size?: keyof typeof SIZE_MAP;
   className?: string;

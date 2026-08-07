@@ -5,7 +5,7 @@ import { MetadataValue } from "./MetadataValue";
 
 export type MetadataRowLayout = "responsive" | "stacked" | "inline";
 
-interface MetadataRowProps {
+export interface MetadataRowProps {
   label: ReactNode;
   value: ReactNode;
   className?: string;

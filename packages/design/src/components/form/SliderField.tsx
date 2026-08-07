@@ -5,7 +5,7 @@ import { Stack } from "@/components/layout";
 import { Slider, type SliderProps } from "@/components/ui";
 import { FieldError } from "./FieldError";
 
-interface SliderFieldProps extends Omit<SliderProps, "label" | "helperText"> {
+export interface SliderFieldProps extends Omit<SliderProps, "label" | "helperText"> {
   label?: ReactNode;
   helperText?: ReactNode;
   error?: ReactNode;

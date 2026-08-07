@@ -2,7 +2,7 @@ import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { STRUCTURAL_PADDING_MAP, type SurfacePadding } from "@/lib/spacing";
 
-interface CardProps {
+export interface CardProps {
   children: ReactNode;
   className?: string;
   /** DS-5A: widened from sm/md/lg to include "none", matching Surface/Panel's own padding vocabulary — Card shares their exact padding scale (it always has), so it shares their type too. Purely additive; every existing sm/md/lg usage is unaffected. */

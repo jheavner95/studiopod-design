@@ -2,7 +2,7 @@ import { Pagination, type PaginationVariant } from "@/components/navigation";
 import { cn } from "@/lib/utils";
 import { ResultSummary } from "./ResultSummary";
 
-interface AssetPaginationProps {
+export interface AssetPaginationProps {
   page: number;
   pageCount: number;
   pageSize: number;

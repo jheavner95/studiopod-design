@@ -1,7 +1,7 @@
 import type { KeyboardEvent, MouseEvent, MouseEventHandler, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface TableRowProps {
+export interface TableRowProps {
   children: ReactNode;
   className?: string;
   /**

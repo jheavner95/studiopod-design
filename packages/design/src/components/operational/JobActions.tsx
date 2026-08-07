@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Inline } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface JobActionsProps {
+export interface JobActionsProps {
   children: ReactNode;
   className?: string;
 }

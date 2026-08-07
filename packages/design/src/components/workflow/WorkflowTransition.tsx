@@ -4,7 +4,7 @@ import { Caption } from "@/components/ui";
 
 export type WorkflowTransitionStatus = "pending" | "active" | "complete";
 
-interface WorkflowTransitionProps {
+export interface WorkflowTransitionProps {
   label?: ReactNode;
   orientation?: "horizontal" | "vertical";
   status?: WorkflowTransitionStatus;

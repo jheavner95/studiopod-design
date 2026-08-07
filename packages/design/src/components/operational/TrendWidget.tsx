@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Panel } from "@/components/layout";
 import { renderMetricTrend, type MetricTrendDirection } from "./MetricCard";
 
-interface TrendWidgetProps {
+export interface TrendWidgetProps {
   title: ReactNode;
   value: ReactNode;
   /** Oldest-first; rendered as a lightweight sparkline. */

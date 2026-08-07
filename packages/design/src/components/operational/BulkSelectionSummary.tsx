@@ -5,4 +5,6 @@
  * unchanged under a family-appropriate name, the same precedent AssetSearch/
  * SearchField already established for DataGridSearch.
  */
-export { DataGridSelectionSummary as BulkSelectionSummary } from "./DataGridSelection";
+export { DataGridSelectionSummary as BulkSelectionSummary,
+  type DataGridSelectionSummaryProps as BulkSelectionSummaryProps,
+} from "./DataGridSelection";

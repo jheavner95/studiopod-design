@@ -3,7 +3,7 @@
 import type { ChangeEvent } from "react";
 import { TextareaField } from "@/components/form";
 
-interface ReviewCommentProps {
+export interface ReviewCommentProps {
   value: string;
   onChange: (value: string) => void;
   label?: string;

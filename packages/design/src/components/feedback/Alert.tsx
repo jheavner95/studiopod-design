@@ -33,7 +33,7 @@ export function feedbackRole(tone: FeedbackTone): "alert" | "status" {
   return tone === "error" ? "alert" : "status";
 }
 
-interface AlertProps {
+export interface AlertProps {
   tone?: FeedbackTone;
   title?: ReactNode;
   children: ReactNode;

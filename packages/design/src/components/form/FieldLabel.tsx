@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { RequiredIndicator } from "./RequiredIndicator";
 
-interface FieldLabelProps {
+export interface FieldLabelProps {
   children: ReactNode;
   htmlFor?: string;
   required?: boolean;

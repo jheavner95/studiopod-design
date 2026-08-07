@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import { WorkflowTimelineMarker, type WorkflowTimelineEventStatus } from "./WorkflowTimelineMarker";
 
-interface WorkflowTimelineLegendProps {
+export interface WorkflowTimelineLegendProps {
   /** Defaults to all 8 states — narrow this to only the states a given timeline actually uses. */
   statuses?: WorkflowTimelineEventStatus[];
   className?: string;

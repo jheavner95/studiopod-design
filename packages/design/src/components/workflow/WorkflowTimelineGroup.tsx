@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface WorkflowTimelineGroupProps {
+export interface WorkflowTimelineGroupProps {
   /** A date or category heading — "Today," "March 2026," "Approvals." */
   title: ReactNode;
   /** WorkflowTimelineEvent and WorkflowTimelineConnector elements. */

@@ -10,7 +10,7 @@ export interface DataGridColumnPickerOption {
   label: string;
 }
 
-interface DataGridColumnPickerProps {
+export interface DataGridColumnPickerProps {
   columns: DataGridColumnPickerOption[];
   visibleIds: Set<string>;
   onChange: (ids: Set<string>) => void;

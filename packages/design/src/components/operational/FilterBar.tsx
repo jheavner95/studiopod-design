@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { SearchField } from "./SearchField";
 import { ClearFilters } from "./ClearFilters";
 
-interface FilterBarProps {
+export interface FilterBarProps {
   search?: {
     value: string;
     onChange: (value: string) => void;

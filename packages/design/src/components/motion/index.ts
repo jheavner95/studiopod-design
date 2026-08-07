@@ -1,10 +1,10 @@
-export { FadeIn } from "./FadeIn";
-export { SlideUp } from "./SlideUp";
-export { ScaleIn } from "./ScaleIn";
-export { StaggerGroup, StaggerItem } from "./Stagger";
-export { PulseStatus, type PulseTone } from "./PulseStatus";
-export { AnimatedCounter } from "./AnimatedCounter";
-export { MotionPreferenceProvider, useMotionPreference } from "./MotionPreference";
+export { FadeIn, type FadeInProps } from "./FadeIn";
+export { SlideUp, type SlideUpProps } from "./SlideUp";
+export { ScaleIn, type ScaleInProps } from "./ScaleIn";
+export { StaggerGroup, StaggerItem, type StaggerGroupProps, type StaggerItemProps } from "./Stagger";
+export { PulseStatus, type PulseTone, type PulseStatusProps } from "./PulseStatus";
+export { AnimatedCounter, type AnimatedCounterProps } from "./AnimatedCounter";
+export { MotionPreferenceProvider, useMotionPreference, type MotionPreferenceProviderProps } from "./MotionPreference";
 export {
   fadeInVariants,
   slideUpVariants,

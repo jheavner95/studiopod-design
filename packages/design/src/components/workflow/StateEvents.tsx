@@ -12,7 +12,7 @@ export interface StateEventEntry {
   to: StateValue;
 }
 
-interface StateEventsProps {
+export interface StateEventsProps {
   events: StateEventEntry[];
   className?: string;
 }

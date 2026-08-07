@@ -16,7 +16,7 @@ const STATUS_MAP: Record<HealthStatusValue, { status: SystemStatus; label: strin
   unknown: { status: "idle", label: "Unknown" },
 };
 
-interface HealthIndicatorProps {
+export interface HealthIndicatorProps {
   value: HealthStatusValue;
   className?: string;
 }

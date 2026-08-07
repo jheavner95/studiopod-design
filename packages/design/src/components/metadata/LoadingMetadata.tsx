@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui";
 import { Stack } from "@/components/layout";
 
-interface LoadingMetadataProps {
+export interface LoadingMetadataProps {
   rows?: number;
   className?: string;
 }

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { TableToolbar } from "@/components/table";
 import { BulkSelectionSummary } from "./BulkSelectionSummary";
 
-interface BulkActionBarProps {
+export interface BulkActionBarProps {
   count: number;
   onClear?: () => void;
   children: ReactNode;

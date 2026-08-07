@@ -6,7 +6,7 @@ import { Popover } from "@/components/overlay";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-interface FilterPopoverProps {
+export interface FilterPopoverProps {
   label: ReactNode;
   /** e.g. a count Badge once a value is selected. */
   badge?: ReactNode;

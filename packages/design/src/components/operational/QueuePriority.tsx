@@ -16,7 +16,7 @@ const PRIORITY_LABEL: Record<QueuePriorityValue, string> = {
   urgent: "Urgent",
 };
 
-interface QueuePriorityProps {
+export interface QueuePriorityProps {
   value: QueuePriorityValue;
   className?: string;
 }

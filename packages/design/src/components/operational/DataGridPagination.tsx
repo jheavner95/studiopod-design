@@ -3,7 +3,7 @@ import { Pagination, type PaginationVariant } from "@/components/navigation";
 import { cn } from "@/lib/utils";
 import { ResultSummary } from "./ResultSummary";
 
-interface DataGridPaginationProps {
+export interface DataGridPaginationProps {
   page: number;
   pageCount: number;
   pageSize: number;

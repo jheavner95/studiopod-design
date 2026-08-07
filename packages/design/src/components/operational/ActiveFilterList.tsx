@@ -8,7 +8,7 @@ export interface ActiveFilterEntry {
   onRemove: () => void;
 }
 
-interface ActiveFilterListProps {
+export interface ActiveFilterListProps {
   entries: ActiveFilterEntry[];
   className?: string;
 }

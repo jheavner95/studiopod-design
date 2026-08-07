@@ -9,7 +9,7 @@ import { QueueEmptyState, type QueueEmptyVariant } from "./QueueEmptyState";
 import { BulkActionBar } from "./BulkActionBar";
 import { isAllSelected, isPartiallySelected, selectAll, toggleSelection } from "./DataGridSelection";
 
-interface QueueProps<T extends QueueRowJob> {
+export interface QueueProps<T extends QueueRowJob> {
   title: ReactNode;
   caption: ReactNode;
   jobs: T[];

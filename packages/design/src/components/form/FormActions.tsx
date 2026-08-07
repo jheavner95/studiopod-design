@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Inline, Separator } from "@/components/layout";
 
-interface FormActionsProps {
+export interface FormActionsProps {
   /** The primary submit/save action — one, per Implementation Guidance's own "one primary action" rule. */
   primary: ReactNode;
   /** Cancel is always available — pass it explicitly rather than omitting it. */

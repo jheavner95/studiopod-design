@@ -6,7 +6,7 @@ import { scaleInVariants } from "./variants";
 import { motionDuration, motionEase } from "@/lib/tokens";
 import { useMotionPreference } from "./MotionPreference";
 
-interface ScaleInProps {
+export interface ScaleInProps {
   children: ReactNode;
   className?: string;
   delay?: number;

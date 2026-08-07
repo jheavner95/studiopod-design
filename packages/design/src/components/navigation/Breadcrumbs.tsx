@@ -11,7 +11,7 @@ export interface BreadcrumbItem {
   href?: string;
 }
 
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   /** Collapse middle items behind an overflow menu once there are more than this many — keeps deep hierarchies from wrapping instead of truncating gracefully. */
   maxVisible?: number;

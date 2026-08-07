@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Surface, Inline } from "@/components/layout";
 import { Body } from "@/components/ui";
 
-interface UnsavedChangesBannerProps {
+export interface UnsavedChangesBannerProps {
   message?: ReactNode;
   primary: ReactNode;
   discard: ReactNode;

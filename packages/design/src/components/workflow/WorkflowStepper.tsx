@@ -7,4 +7,6 @@
  * children/footer slots, not something the root shell itself needs new
  * props for.
  */
-export { Workflow as WorkflowStepper } from "./Workflow";
+export { Workflow as WorkflowStepper,
+  type WorkflowProps as WorkflowStepperProps,
+} from "./Workflow";

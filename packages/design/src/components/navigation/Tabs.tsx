@@ -25,7 +25,7 @@ function useTabsContext(component: string): TabsContextValue {
   return ctx;
 }
 
-interface TabsProps {
+export interface TabsProps {
   value: string;
   onValueChange: (value: string) => void;
   children: ReactNode;
@@ -54,7 +54,7 @@ export function Tabs({ value, onValueChange, children, size = "md", className }:
   );
 }
 
-interface TabsListProps {
+export interface TabsListProps {
   children: ReactNode;
   "aria-label": string;
   className?: string;
@@ -92,7 +92,7 @@ export function TabsList({ children, "aria-label": ariaLabel, className }: TabsL
   );
 }
 
-interface TabProps {
+export interface TabProps {
   value: string;
   children: ReactNode;
   disabled?: boolean;
@@ -136,7 +136,7 @@ export function Tab({ value, children, disabled = false, count, className }: Tab
   );
 }
 
-interface TabPanelProps {
+export interface TabPanelProps {
   value: string;
   children: ReactNode;
   className?: string;

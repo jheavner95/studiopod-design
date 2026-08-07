@@ -1,6 +1,6 @@
 import { TableLoadingState } from "@/components/table";
 
-interface DataGridLoadingStateProps {
+export interface DataGridLoadingStateProps {
   /** Pass the grid's real column count (including the selection column, if any). */
   columns: number;
   rows?: number;

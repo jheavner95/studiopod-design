@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface FieldHelpProps {
+export interface FieldHelpProps {
   children: ReactNode;
   id?: string;
   className?: string;

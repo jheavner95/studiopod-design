@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Panel } from "@/components/layout";
 import { JobTimeline, type JobTimelineEntry } from "./JobTimeline";
 
-interface ActivityWidgetProps {
+export interface ActivityWidgetProps {
   title: ReactNode;
   entries: JobTimelineEntry[];
   collapsedCount?: number;

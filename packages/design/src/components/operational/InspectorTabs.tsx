@@ -8,7 +8,7 @@ export interface InspectorTabDef {
   disabled?: boolean;
 }
 
-interface InspectorTabsProps {
+export interface InspectorTabsProps {
   tabs: InspectorTabDef[];
   value: string;
   onValueChange: (value: string) => void;

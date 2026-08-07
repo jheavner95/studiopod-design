@@ -7,7 +7,7 @@ export interface InspectorStatusItem {
   status: SystemStatus;
 }
 
-interface InspectorStatusProps {
+export interface InspectorStatusProps {
   items: InspectorStatusItem[];
   className?: string;
 }

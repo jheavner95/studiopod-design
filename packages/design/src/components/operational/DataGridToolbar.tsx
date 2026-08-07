@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { TableToolbar } from "@/components/table";
 import { DataGridBulkActions } from "./DataGridBulkActions";
 
-interface DataGridToolbarProps {
+export interface DataGridToolbarProps {
   /** Search/Filters/ColumnPicker — rendered when nothing is selected. */
   children: ReactNode;
   selectedCount?: number;

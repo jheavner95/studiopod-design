@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Body } from "@/components/ui";
 import { FEEDBACK_TONE_ICON, FEEDBACK_TONE_TEXT, FEEDBACK_TONE_BG, feedbackRole, type FeedbackTone } from "./Alert";
 
-interface BannerProps {
+export interface BannerProps {
   tone?: FeedbackTone;
   children: ReactNode;
   action?: ReactNode;

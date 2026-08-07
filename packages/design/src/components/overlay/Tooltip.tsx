@@ -8,7 +8,7 @@ import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 import { useAnchoredPosition, type AnchorPlacement } from "./useAnchoredPosition";
 
-interface TooltipProps {
+export interface TooltipProps {
   /** The label revealed on hover or focus — text only, per this system's scope. */
   label: string;
   children: ReactNode;

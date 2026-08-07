@@ -11,4 +11,6 @@
  * WorkflowProgress.tsx already documents and accepts — checked directly,
  * not missed.
  */
-export { Workflow as WorkflowTimeline } from "./Workflow";
+export { Workflow as WorkflowTimeline,
+  type WorkflowProps as WorkflowTimelineProps,
+} from "./Workflow";

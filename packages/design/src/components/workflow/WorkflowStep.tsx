@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import type { WorkflowStateValue } from "./WorkflowStatus";
 
-interface WorkflowStepProps {
+export interface WorkflowStepProps {
   label: ReactNode;
   description?: ReactNode;
   status: WorkflowStateValue;

@@ -6,7 +6,7 @@ import { Checkbox, type CheckboxProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface CheckboxFieldProps extends Omit<CheckboxProps, "label" | "helperText"> {
+export interface CheckboxFieldProps extends Omit<CheckboxProps, "label" | "helperText"> {
   label: ReactNode;
   helperText?: ReactNode;
   error?: ReactNode;

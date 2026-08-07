@@ -1,6 +1,6 @@
 {
   "name": "@studiopod/design",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "StudioPOD's shared design system: tokens, UI/layout/form/feedback/navigation/overlay/table/metadata primitives, motion and illustration engines, and marketing compositions, for the Web and App products.",
   "license": "UNLICENSED",
   "publishConfig": {
@@ -21,6 +21,7 @@
   ],
   "files": [
     "dist",
+    "api-baseline",
     "API.md",
     "VERSIONING.md",
     "CHANGELOG.md"

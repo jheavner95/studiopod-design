@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface MetadataValueProps {
+export interface MetadataValueProps {
   children?: ReactNode;
   className?: string;
   /** Rendered when there's genuinely no value — an explicit "—" reads as "known to be empty," not as a loading bug. */

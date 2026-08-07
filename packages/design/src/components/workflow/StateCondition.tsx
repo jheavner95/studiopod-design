@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { StatusIndicator } from "@/components/feedback";
 import { Caption } from "@/components/ui";
 
-interface StateConditionProps {
+export interface StateConditionProps {
   label: ReactNode;
   description?: ReactNode;
   /** Whether this guard condition currently holds — gates whether the transition it's attached to may fire. */

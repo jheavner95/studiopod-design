@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Inline } from "@/components/layout";
 
-interface InspectorActionsProps {
+export interface InspectorActionsProps {
   /** Button elements — object-level actions only (Duplicate, Archive, Publish, ...), never bulk/workspace-wide ones. */
   children: ReactNode;
   className?: string;

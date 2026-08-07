@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { WorkflowTransition, type WorkflowTransitionStatus } from "./WorkflowTransition";
 import { cn } from "@/lib/utils";
 
-interface StateTransitionProps {
+export interface StateTransitionProps {
   status?: WorkflowTransitionStatus;
   orientation?: "horizontal" | "vertical";
   label?: ReactNode;

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { FEEDBACK_TONE_ICON, FEEDBACK_TONE_TEXT, feedbackRole, type FeedbackTone } from "./Alert";
 
-interface InlineMessageProps {
+export interface InlineMessageProps {
   tone?: FeedbackTone;
   children: ReactNode;
   className?: string;

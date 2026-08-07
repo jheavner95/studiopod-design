@@ -5,7 +5,7 @@ import { useReducedMotion } from "framer-motion";
 
 const MotionPreferenceContext = createContext<boolean | null>(null);
 
-interface MotionPreferenceProviderProps {
+export interface MotionPreferenceProviderProps {
   children: ReactNode;
   /**
    * Force motion on (`false`) or off (`true`) for everything inside,

@@ -5,4 +5,6 @@
  * with nothing table-specific in its own implementation (it delegates to
  * Foundation Table's TableToolbar underneath either way).
  */
-export { DataGridToolbar as AssetBrowserToolbar } from "./DataGridToolbar";
+export { DataGridToolbar as AssetBrowserToolbar,
+  type DataGridToolbarProps as AssetBrowserToolbarProps,
+} from "./DataGridToolbar";

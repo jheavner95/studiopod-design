@@ -5,7 +5,7 @@ import { Caption } from "@/components/ui";
 
 export type StateActionTrigger = "on-enter" | "on-exit" | "on-transition";
 
-interface StateActionProps {
+export interface StateActionProps {
   label: ReactNode;
   description?: ReactNode;
   trigger: StateActionTrigger;

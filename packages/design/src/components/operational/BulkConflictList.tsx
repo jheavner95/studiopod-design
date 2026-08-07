@@ -8,7 +8,7 @@ export interface BulkConflictEntry {
   reason: string;
 }
 
-interface BulkConflictListProps {
+export interface BulkConflictListProps {
   entries: BulkConflictEntry[];
   className?: string;
 }

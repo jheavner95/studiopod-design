@@ -4,7 +4,7 @@ import { Caption } from "@/components/ui";
 import type { WorkflowStateValue } from "./WorkflowStatus";
 import { MARKER_ICON, MARKER_TONE, LABEL_TONE, STATUS_LABEL } from "./WorkflowStep";
 
-interface PipelineStepProps {
+export interface PipelineStepProps {
   label: ReactNode;
   description?: ReactNode;
   status: WorkflowStateValue;

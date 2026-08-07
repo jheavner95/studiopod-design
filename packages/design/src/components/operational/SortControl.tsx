@@ -10,7 +10,7 @@ export interface SortOption {
   label: string;
 }
 
-interface SortControlProps {
+export interface SortControlProps {
   options: SortOption[];
   value: string | null;
   direction: SortDirection;

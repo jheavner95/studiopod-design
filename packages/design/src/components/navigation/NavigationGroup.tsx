@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useNavigationCollapsed } from "./NavigationItem";
 
-interface NavigationGroupProps {
+export interface NavigationGroupProps {
   /** A small caption heading above the group's items — omitted entirely (not just hidden) when collapsed, since there's no room for it. */
   label?: string;
   /** Defaults to the nearest SideNavigation/NavigationRail's own collapsed state. */

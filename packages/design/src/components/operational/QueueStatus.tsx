@@ -16,7 +16,7 @@ const STATUS_MAP: Record<QueueStatusValue, { status: SystemStatus; label: string
   blocked: { status: "warning", label: "Blocked" },
 };
 
-interface QueueStatusProps {
+export interface QueueStatusProps {
   value: QueueStatusValue;
   className?: string;
 }

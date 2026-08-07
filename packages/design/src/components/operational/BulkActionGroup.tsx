@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Inline } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface BulkActionGroupProps {
+export interface BulkActionGroupProps {
   children: ReactNode;
   /** Rendered after a divider, visually separated from the primary actions — for destructive or less-common actions. */
   secondary?: ReactNode;

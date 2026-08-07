@@ -1,6 +1,6 @@
 import { ProgressBar } from "@/components/feedback";
 
-interface BulkProgressProps {
+export interface BulkProgressProps {
   processed: number;
   total: number;
   className?: string;

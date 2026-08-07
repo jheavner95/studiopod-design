@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Body } from "@/components/ui";
 import { type ControlSize } from "@/lib/control-size";
 
-interface TableEmptyStateProps {
+export interface TableEmptyStateProps {
   title: string;
   description?: ReactNode;
   action?: ReactNode;

@@ -5,7 +5,7 @@ import { Search, Command } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CommandPalette, type CommandPaletteItem } from "@/components/overlay";
 
-interface CommandNavigationProps {
+export interface CommandNavigationProps {
   items: CommandPaletteItem[];
   placeholder?: string;
   shortcutKey?: string;

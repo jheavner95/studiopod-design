@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Inline } from "@/components/layout";
 import { DataGridSelectionSummary } from "./DataGridSelection";
 
-interface DataGridBulkActionsProps {
+export interface DataGridBulkActionsProps {
   count: number;
   onClear: () => void;
   children: ReactNode;

@@ -16,7 +16,7 @@ const STATUS_MAP: Record<WorkflowStateValue, { status: SystemStatus; label: stri
   cancelled: { status: "idle", label: "Cancelled" },
 };
 
-interface WorkflowStatusProps {
+export interface WorkflowStatusProps {
   value: WorkflowStateValue;
   className?: string;
 }

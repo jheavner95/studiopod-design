@@ -7,7 +7,7 @@ export interface StatusSummaryItem {
   tone?: StatusTone;
 }
 
-interface StatusSummaryProps {
+export interface StatusSummaryProps {
   items: StatusSummaryItem[];
   className?: string;
 }

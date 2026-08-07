@@ -17,4 +17,6 @@
  * different-layer distinction Pipeline Components' own audit already
  * established for Production's ValidationStage/QualityGate model.
  */
-export { Workflow as RelationshipView } from "./Workflow";
+export { Workflow as RelationshipView,
+  type WorkflowProps as RelationshipViewProps,
+} from "./Workflow";

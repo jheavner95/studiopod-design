@@ -1,7 +1,7 @@
 import { RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface PropertyResetProps {
+export interface PropertyResetProps {
   onReset: () => void;
   label?: string;
   className?: string;

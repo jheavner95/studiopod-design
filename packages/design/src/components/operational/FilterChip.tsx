@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { STATUS_TONE_PILL_CLASSES, type StatusTone } from "@/lib/tone";
 
-interface FilterChipProps {
+export interface FilterChipProps {
   label: ReactNode;
   /** DS-5B: reads the same shared pill treatment Badge does — was an independent, byte-identical copy before this consolidation. */
   tone?: StatusTone;

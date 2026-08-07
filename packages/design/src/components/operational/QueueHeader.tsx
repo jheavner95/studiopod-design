@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { TableToolbar } from "@/components/table";
 import { Body, Caption } from "@/components/ui";
 
-interface QueueHeaderProps {
+export interface QueueHeaderProps {
   title: ReactNode;
   count: number;
   itemLabel?: string;

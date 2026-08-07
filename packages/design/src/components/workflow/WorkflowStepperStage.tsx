@@ -5,4 +5,6 @@
  * step's own granular status and fits WorkflowStateValue cleanly, with no
  * vocabulary conflict the way WorkflowStepperStep has.
  */
-export { WorkflowStage as WorkflowStepperStage } from "./WorkflowStage";
+export { WorkflowStage as WorkflowStepperStage,
+  type WorkflowStageProps as WorkflowStepperStageProps,
+} from "./WorkflowStage";

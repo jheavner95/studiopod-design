@@ -5,7 +5,7 @@ import type { LinkComponent } from "@/framework";
 import { Queue } from "./Queue";
 import type { QueueRowJob } from "./QueueRow";
 
-interface QueueWidgetProps<T extends QueueRowJob> {
+export interface QueueWidgetProps<T extends QueueRowJob> {
   title: ReactNode;
   caption: ReactNode;
   jobs: T[];

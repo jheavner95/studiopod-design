@@ -18,6 +18,12 @@ whole ecosystem reads.
 - **Components are public APIs.** Props, DOM contract, accessibility semantics,
   and behaviour are published contract. Changing them is a breaking change even
   when the types do not move.
+- **An export exists because someone accepted it.** Public entries name their
+  exports explicitly; `export *` is not how the API grows. A new export enters
+  at `preview` and fails `package:api-check` until it is in the manifest
+  ([ADR 0016](docs/decisions/0016-intentional-exports.md)).
+- **A component exports its props type.** Consumers wrap components; a component
+  they cannot type is a component they cannot wrap.
 - **The library owns its source.** Library code lives under `packages/design`.
   The documentation site consumes the published package like any other consumer.
   `packages/design/tsconfig.json`'s `baseUrl` is the package — do not point it
@@ -96,10 +102,15 @@ dependency, no library module imports a framework, and 392 of 538 emitted
 modules (73%) are server-safe where previously every export was a client
 reference. Both blockers Cloud named are gone.
 
-Eight of DH-1's nineteen gaps plus N1 are closed. The rest are enumerated in
-[docs/certification/DH-3.md](docs/certification/DH-3.md) § Remaining gaps —
-most notably stability tiers on exports (gap 5), the root-entry audit (gap 13),
-and the library's tier layout (gap 8).
+**DH-5 made the API a designed contract.** Every export declares a stability
+tier in `api-baseline/<entry>.json`, which ships in the package; 310 of 372 root
+components export their props type; and the root entry names its exports
+explicitly instead of aggregating them with `export *`.
+
+Ten of DH-1's nineteen gaps plus N1 are closed. The rest are enumerated in
+[docs/certification/DH-5.md](docs/certification/DH-5.md) § Remaining gaps —
+most notably the component audit (whether all 876 root exports deserve to be
+public) and the library's tier layout (gap 8).
 
 Do not treat the current tree as precedent where it contradicts this
 architecture.

@@ -9,7 +9,7 @@ const VARIANT_DEFAULTS: Record<DataGridEmptyVariant, { title: string; descriptio
   error: { title: "Failed to load", description: "Check your connection and try again." },
 };
 
-interface DataGridEmptyStateProps {
+export interface DataGridEmptyStateProps {
   variant?: DataGridEmptyVariant;
   title?: string;
   description?: ReactNode;

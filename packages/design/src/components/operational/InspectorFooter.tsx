@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface InspectorFooterProps {
+export interface InspectorFooterProps {
   /** Typically an InspectorActions row. */
   children: ReactNode;
   className?: string;

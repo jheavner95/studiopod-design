@@ -6,7 +6,7 @@ import { slideUpVariants } from "./variants";
 import { motionDuration, motionEase } from "@/lib/tokens";
 import { useMotionPreference } from "./MotionPreference";
 
-interface SlideUpProps {
+export interface SlideUpProps {
   children: ReactNode;
   className?: string;
   delay?: number;

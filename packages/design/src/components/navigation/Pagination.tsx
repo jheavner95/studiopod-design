@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export type PaginationVariant = "numbered" | "compact" | "load-more";
 
-interface PaginationProps {
+export interface PaginationProps {
   /** 1-indexed current page. */
   page: number;
   pageCount: number;

@@ -29,7 +29,7 @@ const HEADER_LABEL: Record<QueueStatusValue, string> = {
   blocked: "Blocked",
 };
 
-interface JobCardProps {
+export interface JobCardProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

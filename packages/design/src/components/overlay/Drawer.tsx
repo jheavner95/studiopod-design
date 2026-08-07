@@ -19,7 +19,7 @@ import { DialogContext } from "./dialog-context";
  */
 export type DrawerEdge = "left" | "right" | "bottom";
 
-interface DrawerProps {
+export interface DrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;

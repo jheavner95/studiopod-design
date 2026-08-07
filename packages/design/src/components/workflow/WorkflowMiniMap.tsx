@@ -8,7 +8,7 @@ export interface WorkflowMiniMapNode {
   status: WorkflowNodeStatus;
 }
 
-interface WorkflowMiniMapProps {
+export interface WorkflowMiniMapProps {
   nodes: WorkflowMiniMapNode[];
   className?: string;
 }

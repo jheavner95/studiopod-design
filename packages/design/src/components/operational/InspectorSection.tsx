@@ -5,7 +5,7 @@ import { Surface } from "@/components/layout";
 import { Expandable } from "@/components/ui";
 import { PropertySection } from "@/components/metadata";
 
-interface InspectorSectionProps {
+export interface InspectorSectionProps {
   title: ReactNode;
   children: ReactNode;
   /** Progressive disclosure — on by default, matching the Inspector Workspace's own Properties region guidance ("common fields first, advanced behind an expand"). */

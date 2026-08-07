@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Caption } from "@/components/ui";
 import { StateNodeMarker, type StateValue } from "./StateNode";
 
-interface StateLegendProps {
+export interface StateLegendProps {
   /** Defaults to all 8 states — narrow this to only the states a given machine actually uses. */
   states?: StateValue[];
   className?: string;

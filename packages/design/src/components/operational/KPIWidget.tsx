@@ -11,7 +11,7 @@ export interface KPIWidgetItem {
   trendDirection?: MetricTrendDirection;
 }
 
-interface KPIWidgetProps {
+export interface KPIWidgetProps {
   title: ReactNode;
   items: KPIWidgetItem[];
   columns?: 2 | 3 | 4;

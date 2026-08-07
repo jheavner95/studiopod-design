@@ -1,6 +1,6 @@
 import { ProgressBar } from "@/components/feedback";
 
-interface WorkflowProgressProps {
+export interface WorkflowProgressProps {
   /** 0–1. */
   value: number;
   label?: string;

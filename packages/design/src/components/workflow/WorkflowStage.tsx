@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { WorkflowStatus, type WorkflowStateValue } from "./WorkflowStatus";
 
-interface WorkflowStageProps {
+export interface WorkflowStageProps {
   title: ReactNode;
   status?: WorkflowStateValue;
   /** WorkflowStep elements, optionally separated by WorkflowTransition. */

@@ -4,7 +4,7 @@ import { StatGroup, type StatGroupItem } from "@/components/metadata";
 import { HealthScore } from "./HealthScore";
 import { HealthIssueList, type HealthIssueEntry } from "./HealthIssueList";
 
-interface HealthWidgetProps {
+export interface HealthWidgetProps {
   title: ReactNode;
   score: number;
   metrics?: StatGroupItem[];

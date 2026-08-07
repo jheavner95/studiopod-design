@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Grid } from "@/components/layout";
 
-interface DashboardGridProps {
+export interface DashboardGridProps {
   children: ReactNode;
   minWidgetWidth?: string;
   className?: string;

@@ -11,7 +11,7 @@ export interface TreeNode {
   children?: TreeNode[];
 }
 
-interface TreeNavigationProps {
+export interface TreeNavigationProps {
   nodes: TreeNode[];
   activeId?: string;
   onSelect?: (id: string) => void;

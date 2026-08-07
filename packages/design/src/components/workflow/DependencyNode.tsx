@@ -5,7 +5,7 @@ import { Caption } from "@/components/ui";
 
 export type DependencyStatusValue = "connected" | "disconnected" | "blocked" | "healthy" | "warning" | "critical" | "circular" | "hidden";
 
-interface DependencyNodeProps {
+export interface DependencyNodeProps {
   label: ReactNode;
   description?: ReactNode;
   status: DependencyStatusValue;

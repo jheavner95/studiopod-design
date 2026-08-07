@@ -6,7 +6,7 @@ import { TextInput, type TextInputProps } from "@/components/ui";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface InputFieldProps extends Omit<TextInputProps, "label" | "helperText" | "status"> {
+export interface InputFieldProps extends Omit<TextInputProps, "label" | "helperText" | "status"> {
   label?: ReactNode;
   description?: ReactNode;
   helperText?: ReactNode;

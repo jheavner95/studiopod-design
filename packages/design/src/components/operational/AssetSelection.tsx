@@ -12,4 +12,5 @@ export {
   selectAll,
   isAllSelected,
   isPartiallySelected,
+  type DataGridSelectionSummaryProps as AssetSelectionSummaryProps,
 } from "./DataGridSelection";

@@ -6,7 +6,7 @@ import { staggerContainerVariants, slideUpVariants } from "./variants";
 import { motionDuration, motionEase } from "@/lib/tokens";
 import { useMotionPreference } from "./MotionPreference";
 
-interface StaggerGroupProps {
+export interface StaggerGroupProps {
   children: ReactNode;
   className?: string;
   repeat?: boolean;
@@ -33,7 +33,7 @@ export function StaggerGroup({ children, className, repeat = false }: StaggerGro
   );
 }
 
-interface StaggerItemProps {
+export interface StaggerItemProps {
   children: ReactNode;
   className?: string;
 }

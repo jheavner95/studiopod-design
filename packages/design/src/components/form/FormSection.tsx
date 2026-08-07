@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Panel, Stack } from "@/components/layout";
 import { Body } from "@/components/ui";
 
-interface FormSectionProps {
+export interface FormSectionProps {
   children: ReactNode;
   title?: ReactNode;
   description?: ReactNode;

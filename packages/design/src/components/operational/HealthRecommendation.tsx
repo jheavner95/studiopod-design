@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Alert } from "@/components/feedback";
 
-interface HealthRecommendationProps {
+export interface HealthRecommendationProps {
   title: ReactNode;
   children: ReactNode;
   action?: ReactNode;

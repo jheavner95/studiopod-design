@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { ScrollArea, type ScrollDirection } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface WorkflowViewportProps {
+export interface WorkflowViewportProps {
   /** WorkflowNode/WorkflowEdge/WorkflowGroup content. */
   children: ReactNode;
   /** Defaults to "both" — a flow diagram, unlike Inspector Panel's own vertical-only body, typically needs horizontal scroll too. */

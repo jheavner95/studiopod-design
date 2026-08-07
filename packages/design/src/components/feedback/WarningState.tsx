@@ -1,7 +1,7 @@
 import { AlertTriangle } from "lucide-react";
 import { EmptyState, type EmptyStateProps } from "./EmptyState";
 
-type WarningStateProps = Omit<EmptyStateProps, "tone">;
+export type WarningStateProps = Omit<EmptyStateProps, "tone">;
 
 /** EmptyState preset for a non-blocking concern worth surfacing — "3 assets are missing metadata" — the reader can still proceed. */
 export function WarningState({ icon, ...props }: WarningStateProps) {

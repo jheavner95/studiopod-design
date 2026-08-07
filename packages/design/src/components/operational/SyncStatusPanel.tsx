@@ -13,7 +13,7 @@ export interface SyncSource {
   progress?: number;
 }
 
-interface SyncStatusPanelProps {
+export interface SyncStatusPanelProps {
   sources: SyncSource[];
   className?: string;
 }

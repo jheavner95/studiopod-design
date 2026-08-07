@@ -11,7 +11,7 @@ export interface ProviderHealthRow {
   uptime?: string;
 }
 
-interface ProviderHealthPanelProps {
+export interface ProviderHealthPanelProps {
   providers: ProviderHealthRow[];
   caption: ReactNode;
   className?: string;

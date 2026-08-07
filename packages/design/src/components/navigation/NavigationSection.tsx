@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface NavigationSectionProps {
+export interface NavigationSectionProps {
   title?: string;
   /** Falls back to `title` — every NavigationSection is its own nav landmark, so it needs an accessible name one way or the other. */
   "aria-label"?: string;

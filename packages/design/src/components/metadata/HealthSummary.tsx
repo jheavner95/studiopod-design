@@ -9,7 +9,7 @@ export interface HealthMetric {
   detail?: string;
 }
 
-interface HealthSummaryProps {
+export interface HealthSummaryProps {
   metrics: HealthMetric[];
   className?: string;
 }

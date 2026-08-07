@@ -10,7 +10,7 @@ export interface TopNavigationItemDef {
   badge?: ReactNode;
 }
 
-interface TopNavigationProps {
+export interface TopNavigationProps {
   /** Logo + product name slot. */
   brand: ReactNode;
   items: TopNavigationItemDef[];

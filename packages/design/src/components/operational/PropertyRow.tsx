@@ -4,7 +4,7 @@ import { PropertyLabel } from "./PropertyLabel";
 import { PropertyValue } from "./PropertyValue";
 import { PropertyReset } from "./PropertyReset";
 
-interface PropertyRowProps {
+export interface PropertyRowProps {
   label?: ReactNode;
   /** Read mode value — ignored when editor is provided. */
   value?: ReactNode;

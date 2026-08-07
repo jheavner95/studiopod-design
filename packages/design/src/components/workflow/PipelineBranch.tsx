@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Grid, type GridStrategy } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface PipelineBranchProps {
+export interface PipelineBranchProps {
   title?: ReactNode;
   /** PipelineStage or PipelineStep elements — one per parallel/alternative path. */
   children: ReactNode;

@@ -26,7 +26,7 @@ const REQUEST_LABEL: Record<ApprovalStateValue, string> = {
   completed: "Completed",
 };
 
-interface ApprovalRequestProps {
+export interface ApprovalRequestProps {
   icon?: ReactNode;
   /** What's being approved — "Spring lookbook launch," "Discount request." */
   title: ReactNode;

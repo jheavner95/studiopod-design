@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { MetadataLabel } from "./MetadataLabel";
 import { MetadataValue } from "./MetadataValue";
 
-interface MetadataFieldProps {
+export interface MetadataFieldProps {
   label: ReactNode;
   value: ReactNode;
   className?: string;

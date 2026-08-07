@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Stack } from "@/components/layout";
 
-interface MetadataGroupProps {
+export interface MetadataGroupProps {
   children: ReactNode;
   title?: ReactNode;
   className?: string;

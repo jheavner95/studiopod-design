@@ -8,7 +8,7 @@ import { transition } from "@/motion/utils";
 import { Portal } from "./Portal";
 import { useAnchoredPosition, type AnchorPlacement, type AnchorAlign } from "./useAnchoredPosition";
 
-interface PopoverProps {
+export interface PopoverProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   triggerRef: RefObject<HTMLElement | null>;

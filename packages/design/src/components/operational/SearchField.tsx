@@ -5,4 +5,6 @@
  * System reuses it directly under a family-appropriate name rather than a
  * second identical wrapper.
  */
-export { DataGridSearch as SearchField } from "./DataGridSearch";
+export { DataGridSearch as SearchField,
+  type DataGridSearchProps as SearchFieldProps,
+} from "./DataGridSearch";

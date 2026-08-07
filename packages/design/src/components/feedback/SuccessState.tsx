@@ -1,7 +1,7 @@
 import { CheckCircle2 } from "lucide-react";
 import { EmptyState, type EmptyStateProps } from "./EmptyState";
 
-type SuccessStateProps = Omit<EmptyStateProps, "tone">;
+export type SuccessStateProps = Omit<EmptyStateProps, "tone">;
 
 /** EmptyState preset for a completed outcome — "Publish succeeded", "All checks passed" — not an absence of data. */
 export function SuccessState({ icon, ...props }: SuccessStateProps) {

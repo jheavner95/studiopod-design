@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "./Card";
 
-interface FeatureCardProps {
+export interface FeatureCardProps {
   icon?: ReactNode;
   title: ReactNode;
   description: ReactNode;

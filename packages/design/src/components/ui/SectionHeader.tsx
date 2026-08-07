@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Heading } from "./Typography";
 
-interface SectionHeaderProps {
+export interface SectionHeaderProps {
   /** Typically an <Eyebrow> or <SectionBadge>. */
   eyebrow?: ReactNode;
   title: ReactNode;

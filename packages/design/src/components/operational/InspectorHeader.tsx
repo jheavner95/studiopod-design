@@ -15,7 +15,7 @@ export interface InspectorHeaderStatus {
   tone?: StatusTone;
 }
 
-interface InspectorHeaderProps {
+export interface InspectorHeaderProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

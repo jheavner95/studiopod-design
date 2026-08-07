@@ -13,7 +13,7 @@ export function useTableDensity(): TableDensity {
   return useContext(TableDensityContext);
 }
 
-interface TableProps {
+export interface TableProps {
   children: ReactNode;
   className?: string;
   minWidth?: string;

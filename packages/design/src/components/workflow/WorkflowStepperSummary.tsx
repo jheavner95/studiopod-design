@@ -4,4 +4,6 @@
  * summary stats (steps completed, blockers) are just StatGroupItem[] data,
  * with no stepper-specific layout to add.
  */
-export { WorkflowSummary as WorkflowStepperSummary } from "./WorkflowSummary";
+export { WorkflowSummary as WorkflowStepperSummary,
+  type WorkflowSummaryProps as WorkflowStepperSummaryProps,
+} from "./WorkflowSummary";

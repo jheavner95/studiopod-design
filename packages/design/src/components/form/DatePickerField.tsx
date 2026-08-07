@@ -6,7 +6,7 @@ import { Stack } from "@/components/layout";
 import { RequiredIndicator } from "./RequiredIndicator";
 import { FieldError } from "./FieldError";
 
-interface DatePickerFieldProps {
+export interface DatePickerFieldProps {
   label?: ReactNode;
   description?: ReactNode;
   helperText?: ReactNode;

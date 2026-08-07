@@ -17,4 +17,6 @@
  * own Future Extensions). WorkflowViewport, composed inside this canvas's
  * children, provides the scrollable sub-region for node/edge content.
  */
-export { Workflow as WorkflowCanvas } from "./Workflow";
+export { Workflow as WorkflowCanvas,
+  type WorkflowProps as WorkflowCanvasProps,
+} from "./Workflow";

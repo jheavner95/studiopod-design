@@ -19,7 +19,7 @@ export const FIELD_MESSAGE_TEXT: Record<FieldMessageTone, string> = {
   warning: "text-warning",
 };
 
-interface FieldErrorProps {
+export interface FieldErrorProps {
   children: ReactNode;
   id?: string;
   className?: string;

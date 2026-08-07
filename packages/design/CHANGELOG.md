@@ -2,6 +2,29 @@
 
 All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.16.0 — DH-5: the API becomes a designed contract
+
+**Additive.** No export was removed or renamed; every existing import keeps working. Verified against Cloud, the first consumer: zero typecheck errors, build unchanged, all 21 browser tests passing.
+
+### Added
+
+- **310 of 372 root components now export their props type**, up from 54. Wrapping a component is a first-class pattern:
+  ```tsx
+  import { Button, type ButtonProps } from "@studiopod/design";
+  export const AppButton = (props: ButtonProps) => <Button linkComponent={Link} {...props} />;
+  ```
+  Root entry 620 → 876 exports; the 256 new names are all props types. `/marketing` is at 100% coverage, `/illustrations` at 80%.
+- **Stability tiers on every export.** `api-baseline/<entry>.json` now maps export name to `stable` / `preview` / `deprecated` and **ships in the package**, so you can read what each of 1,175 names promises. 218 exports are Stable; everything else is Preview. See `API.md` § Stability model.
+
+### Changed
+
+- **The public API is now constructed rather than aggregated.** Seven `export *` statements on the root entry and one on `/marketing` were replaced with explicit lists. The surface is byte-identical — 876 exports before and after — but a component added to a family barrel no longer joins the public API without a decision. `/tokens` deliberately keeps its star export: it is generated from `@studiopod/foundation` and naming its exports by hand would create a second source of truth.
+- **`check-api.mjs` now enforces stability as well as surface.** An export that reaches consumers without being accepted into the manifest fails the build.
+
+### Consumer action
+
+None. If you read `api-baseline/*.json`, note the format changed from a flat array of names to a name → tier map.
+
 ## 0.15.0 — DH-3: framework independence
 
 **The package no longer requires Next.js, and no longer makes every export a client reference.** Both were consumer-facing defects; the second was recorded as N1 in DH-2's certification.

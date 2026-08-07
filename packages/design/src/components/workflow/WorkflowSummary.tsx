@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { StatGroup, type StatGroupItem } from "@/components/metadata";
 import { cn } from "@/lib/utils";
 
-interface WorkflowSummaryProps {
+export interface WorkflowSummaryProps {
   title?: ReactNode;
   items: StatGroupItem[];
   columns?: 2 | 3 | 4;

@@ -8,7 +8,7 @@ import { useTableDensity, headerDensityPaddingMap } from "./Table";
 type CellAlign = "left" | "center" | "right";
 export type SortDirection = "asc" | "desc" | null;
 
-interface TableHeadProps {
+export interface TableHeadProps {
   children: ReactNode;
   className?: string;
   align?: CellAlign;

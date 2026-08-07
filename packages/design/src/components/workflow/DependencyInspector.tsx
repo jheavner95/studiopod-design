@@ -31,7 +31,7 @@ export interface DependencyInspectorProperty {
   value: ReactNode;
 }
 
-interface DependencyInspectorProps {
+export interface DependencyInspectorProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

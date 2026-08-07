@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { SwitchField } from "@/components/form";
 
-interface PropertyToggleProps {
+export interface PropertyToggleProps {
   label: ReactNode;
   checked: boolean;
   onChange: (checked: boolean) => void;

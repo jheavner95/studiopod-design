@@ -5,7 +5,7 @@ import { Caption } from "@/components/ui";
 
 export type WorkflowStepperStateValue = "not-started" | "current" | "completed" | "blocked" | "waiting" | "skipped" | "failed" | "cancelled";
 
-interface WorkflowStepperStepProps {
+export interface WorkflowStepperStepProps {
   /** 1-indexed position — shown inside the marker for any status with no icon of its own. */
   index: number;
   label: ReactNode;

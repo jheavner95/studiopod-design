@@ -12,7 +12,7 @@ export type PropertyEditorField =
   | { id: string; type: "select"; label: string; value: string; onChange: (value: string) => void; options: SelectOption[]; required?: boolean; error?: string }
   | { id: string; type: "switch"; label: string; value: boolean; onChange: (value: boolean) => void };
 
-interface PropertyEditorProps {
+export interface PropertyEditorProps {
   fields: PropertyEditorField[];
   columns?: 1 | 2 | 3;
   className?: string;

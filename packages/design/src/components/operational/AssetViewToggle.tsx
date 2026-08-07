@@ -3,7 +3,7 @@ import { SegmentedControl } from "@/components/navigation";
 
 export type AssetViewMode = "grid" | "list";
 
-interface AssetViewToggleProps {
+export interface AssetViewToggleProps {
   value: AssetViewMode;
   onChange: (value: AssetViewMode) => void;
   className?: string;

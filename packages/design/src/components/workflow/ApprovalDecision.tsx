@@ -25,7 +25,7 @@ const DECISION_TITLE: Record<ApprovalStateValue, string> = {
   completed: "Completed",
 };
 
-interface ApprovalDecisionProps {
+export interface ApprovalDecisionProps {
   status: ApprovalStateValue;
   reason?: ReactNode;
   actor?: ReactNode;

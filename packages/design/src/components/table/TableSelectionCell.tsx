@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { useTableDensity, densityPaddingMap, headerDensityPaddingMap } from "./Table";
 
-interface TableSelectionCellProps {
+export interface TableSelectionCellProps {
   checked: boolean;
   /**
    * Called with the next checked state, and the native change event.

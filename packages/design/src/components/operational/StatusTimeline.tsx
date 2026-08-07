@@ -5,4 +5,6 @@
  * status-change timeline — so this system reuses it directly rather than a
  * second timestamped-list implementation.
  */
-export { InspectorHistory as StatusTimeline, type InspectorHistoryEntry as StatusTimelineEntry } from "./InspectorHistory";
+export { InspectorHistory as StatusTimeline, type InspectorHistoryEntry as StatusTimelineEntry,
+  type InspectorHistoryProps as StatusTimelineProps,
+} from "./InspectorHistory";

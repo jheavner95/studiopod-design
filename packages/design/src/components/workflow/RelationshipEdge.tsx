@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { DependencyEdge, type DependencyDirection } from "./DependencyEdge";
 import type { WorkflowTransitionStatus } from "./WorkflowTransition";
 
-interface RelationshipEdgeProps {
+export interface RelationshipEdgeProps {
   status?: WorkflowTransitionStatus;
   direction?: DependencyDirection;
   orientation?: "horizontal" | "vertical";

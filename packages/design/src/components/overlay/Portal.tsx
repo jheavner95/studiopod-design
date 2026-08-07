@@ -16,7 +16,7 @@ function useMounted(): boolean {
   );
 }
 
-interface PortalProps {
+export interface PortalProps {
   children: ReactNode;
 }
 

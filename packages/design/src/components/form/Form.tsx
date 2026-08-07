@@ -1,7 +1,7 @@
 import type { FormHTMLAttributes, ReactNode } from "react";
 import { Stack } from "@/components/layout";
 
-interface FormProps extends Omit<FormHTMLAttributes<HTMLFormElement>, "className"> {
+export interface FormProps extends Omit<FormHTMLAttributes<HTMLFormElement>, "className"> {
   children: ReactNode;
   className?: string;
 }

@@ -29,7 +29,7 @@ const HEADER_LABEL: Record<HealthStatusValue, string> = {
   unknown: "Unknown",
 };
 
-interface HealthPanelProps {
+export interface HealthPanelProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

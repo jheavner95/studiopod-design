@@ -7,4 +7,6 @@
  * orientation/label) and found to have no gap. Reused unchanged rather
  * than a second, near-identical direction-arrow composition.
  */
-export { DependencyEdge as WorkflowEdge, type DependencyDirection as WorkflowEdgeDirection } from "./DependencyEdge";
+export { DependencyEdge as WorkflowEdge, type DependencyDirection as WorkflowEdgeDirection,
+  type DependencyEdgeProps as WorkflowEdgeProps,
+} from "./DependencyEdge";

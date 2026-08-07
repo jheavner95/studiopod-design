@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface SectionBadgeProps {
+export interface SectionBadgeProps {
   children: ReactNode;
   icon?: ReactNode;
   className?: string;

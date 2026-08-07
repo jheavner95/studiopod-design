@@ -34,7 +34,7 @@ const TONE_FILL: Record<ProgressTone, string> = {
   error: PROGRESS_TONE_CLASSES.error.fill,
 };
 
-interface ProgressBarProps {
+export interface ProgressBarProps {
   /** 0–1. Ignored when indeterminate. */
   value?: number;
   /** For a task with no knowable duration — a sliding fill instead of a fixed one. */

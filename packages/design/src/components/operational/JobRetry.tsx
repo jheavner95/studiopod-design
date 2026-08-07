@@ -6,7 +6,7 @@ import { Caption } from "@/components/ui";
 import { BulkActionButton } from "./BulkActionButton";
 import { BulkActionConfirmation } from "./BulkActionConfirmation";
 
-interface JobRetryProps {
+export interface JobRetryProps {
   attempts: number;
   maxAttempts?: number;
   onRetry: () => void;

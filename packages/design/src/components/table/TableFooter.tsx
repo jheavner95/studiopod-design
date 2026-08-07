@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface TableFooterProps {
+export interface TableFooterProps {
   children: ReactNode;
   className?: string;
 }

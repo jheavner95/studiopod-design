@@ -40,7 +40,7 @@ export function useToast(): ToastContextValue {
 
 let nextToastId = 0;
 
-interface ToastProviderProps {
+export interface ToastProviderProps {
   children: ReactNode;
 }
 

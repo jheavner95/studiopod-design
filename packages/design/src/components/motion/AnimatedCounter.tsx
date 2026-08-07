@@ -5,7 +5,7 @@ import { animate, useInView } from "framer-motion";
 import { motionEase } from "@/lib/tokens";
 import { useMotionPreference } from "./MotionPreference";
 
-interface AnimatedCounterProps {
+export interface AnimatedCounterProps {
   /** The target number to count up to. */
   value: number;
   /** Seconds the count-up takes. */

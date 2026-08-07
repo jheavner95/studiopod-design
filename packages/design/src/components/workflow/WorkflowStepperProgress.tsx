@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useAnnounce } from "@/components/feedback";
 import { WorkflowProgress } from "./WorkflowProgress";
 
-interface WorkflowStepperProgressProps {
+export interface WorkflowStepperProgressProps {
   /** 1-indexed. */
   currentStep: number;
   totalSteps: number;

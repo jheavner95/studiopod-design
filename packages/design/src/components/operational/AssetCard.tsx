@@ -6,7 +6,7 @@ import { Checkbox, INTERACTIVE_CARD_CLASSES } from "@/components/ui";
 import { AssetThumbnail } from "./AssetThumbnail";
 import { AssetMetadata } from "./AssetMetadata";
 
-interface AssetCardProps {
+export interface AssetCardProps {
   name: ReactNode;
   secondary?: ReactNode[];
   thumbnailSrc?: string;

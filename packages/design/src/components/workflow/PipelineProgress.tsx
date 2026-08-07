@@ -1,6 +1,6 @@
 import { WorkflowProgress } from "./WorkflowProgress";
 
-interface PipelineProgressProps {
+export interface PipelineProgressProps {
   completedStages: number;
   totalStages: number;
   className?: string;

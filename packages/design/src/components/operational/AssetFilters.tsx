@@ -4,4 +4,6 @@
  * plus a reset action, built on Foundation Forms' Select and Foundation
  * UI's Button directly, with nothing table-specific in its implementation.
  */
-export { DataGridFilters as AssetFilters, type DataGridFilterDef as AssetFilterDef } from "./DataGridFilters";
+export { DataGridFilters as AssetFilters, type DataGridFilterDef as AssetFilterDef,
+  type DataGridFiltersProps as AssetFiltersProps,
+} from "./DataGridFilters";

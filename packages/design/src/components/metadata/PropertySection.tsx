@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Panel } from "@/components/layout";
 
-interface PropertySectionProps {
+export interface PropertySectionProps {
   children: ReactNode;
   title?: ReactNode;
   className?: string;

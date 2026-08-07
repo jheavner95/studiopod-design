@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { IdentityBlock } from "@/components/metadata";
 
-interface WorkflowHeaderProps {
+export interface WorkflowHeaderProps {
   icon?: ReactNode;
   name: ReactNode;
   type?: ReactNode;

@@ -7,7 +7,7 @@ export interface ChartWidgetDatum {
   value: number;
 }
 
-interface ChartWidgetProps {
+export interface ChartWidgetProps {
   title: ReactNode;
   description?: ReactNode;
   data: ChartWidgetDatum[];

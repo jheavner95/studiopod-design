@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Inline } from "@/components/layout";
 import { cn } from "@/lib/utils";
 
-interface WorkflowToolbarProps {
+export interface WorkflowToolbarProps {
   /** Button elements — canvas-level actions (Refresh, Export, Filter), never a single node's own actions. */
   children: ReactNode;
   className?: string;
