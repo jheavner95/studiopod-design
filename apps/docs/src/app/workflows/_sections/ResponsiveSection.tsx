@@ -1,0 +1,33 @@
+import { WorkflowDiagram } from "@studiopod/design/illustrations";
+import { commerce } from "@/workflows/examples";
+import { DemoLabel } from "../_components/preview-primitives";
+
+const FRAMES = [
+  { label: "Desktop (1100px container)", width: 1100 },
+  { label: "Tablet (700px container)", width: 700 },
+  { label: "Mobile (340px container)", width: 340 },
+];
+
+/**
+ * Each frame constrains the diagram's *container*, not the browser
+ * viewport, since IllustrationCanvas measures its own rendered width via
+ * ResizeObserver. This is a genuine test of the layout engine's
+ * responsive behavior, not a simulation.
+ */
+export function ResponsiveSection() {
+  return (
+    <div className="flex flex-col gap-10">
+      {FRAMES.map((frame) => (
+        <div key={frame.label} className="flex flex-col gap-3">
+          <DemoLabel>{frame.label}</DemoLabel>
+          <div
+            className="scrollbar-none overflow-x-auto rounded-lg border border-dashed border-border-strong p-4"
+            style={{ maxWidth: frame.width }}
+          >
+            <WorkflowDiagram workflow={commerce} nodeSize="sm" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

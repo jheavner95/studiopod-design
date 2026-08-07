@@ -1,0 +1,57 @@
+"use client";
+
+import { useState } from "react";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@studiopod/design";
+import { METADATA_ANATOMY_REGIONS, type MetadataAnatomyRegion } from "../_data/anatomy";
+
+interface RegionCardProps {
+  region: MetadataAnatomyRegion;
+  selected: boolean;
+  onSelect: () => void;
+}
+
+function RegionCard({ region, selected, onSelect }: RegionCardProps) {
+  return (
+    <SelectableCard
+      title={region.name}
+      description={region.purpose}
+      selected={selected}
+      onSelect={onSelect}
+      padding="sm"
+      descriptionClamp={1}
+      className="min-h-16"
+    />
+  );
+}
+
+/** The eight metadata anatomy regions, stacked top to bottom — select one to see the component that owns it. */
+export function MetadataAnatomyExplorer() {
+  const [selectedId, setSelectedId] = useState(METADATA_ANATOMY_REGIONS[0].id);
+  const selected = METADATA_ANATOMY_REGIONS.find((region) => region.id === selectedId) ?? METADATA_ANATOMY_REGIONS[0];
+
+  return (
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-3 rounded-xl border border-border-subtle bg-surface/40 p-6 sm:p-10">
+        {METADATA_ANATOMY_REGIONS.map((region) => (
+          <RegionCard key={region.id} region={region} selected={region.id === selectedId} onSelect={() => setSelectedId(region.id)} />
+        ))}
+      </div>
+
+      <Card padding="lg" className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <Heading level={3}>{selected.name}</Heading>
+          <Badge tone="accent" size="sm">
+            {selected.component}
+          </Badge>
+        </div>
+        <Body muted>{selected.purpose}</Body>
+        <div className="flex flex-col gap-1.5 border-t border-border-subtle pt-4">
+          <Caption className="text-ink-tertiary">Notes</Caption>
+          <Body size="sm" muted>
+            {selected.notes}
+          </Body>
+        </div>
+      </Card>
+    </div>
+  );
+}

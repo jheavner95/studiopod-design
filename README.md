@@ -27,26 +27,46 @@ It exists because building each surface with its own one-off components produces
 
 ## Repository structure
 
+The repository is an npm workspace with two members: one published package and
+one deployed application. **DH-2 separated them** — before it, the package
+compiled the documentation site's source tree.
+
 ```
-src/app/                 The documentation site itself — one route per section (see docs/DOCUMENTATION.md)
-src/components/          Component families: ui, layout, navigation, table, form, overlay,
-                          feedback, metadata, docs, operational, workflow, platform
-src/motion/               The motion engine — semantic timing/easing tokens and primitives
-src/illustrations/        The data-driven diagram engine (nodes, connections, layout)
-src/workflows/            Workflow diagram library, built on the illustration engine
-src/platforms/            Platform architecture diagram library
-src/production/           Production & validation diagram library
-src/capabilities/         Capability/provider diagram library
-src/compositions/         Reusable marketing page-section compositions
-src/lib/                  Canonical demo data, the navigation registry, page contracts,
-                          and the showcase-registry pattern for example metadata
-packages/design-system/   The publishable @studiopod/design npm package —
-                          built from this repo's own src/ (see its own README)
-docs/                     Contributor guides (testing, verification, documentation,
-                          distribution) and docs/engineering-notes/ (architecture history)
-test/                     Shared Vitest utilities (render, accessibility, fixtures)
-e2e/                      Playwright visual-regression specs
-scripts/                  Verification runner and documentation-coverage reporting
+packages/design/          @studiopod/design — the published library. Owns its
+  src/index.ts              own source and compiles nothing outside itself.
+  src/marketing.ts          Five code entry points; four are public.
+  src/illustrations.ts
+  src/tokens.ts             Generated from @studiopod/foundation — never hand-edited
+  src/internal.ts           NOT public API — see docs/decisions/0011-internal-entry-point.md
+  src/components/           ui, layout, navigation, table, form, overlay, feedback,
+                            metadata, motion, operational, workflow, illustration
+  src/motion/               The motion engine — semantic timing/easing tokens and primitives
+  src/illustrations/        The data-driven diagram engine (nodes, connections, layout)
+  src/workflows/  platforms/  production/  capabilities/
+                            Diagram libraries built on the illustration engine
+  src/compositions/         Reusable marketing page-section compositions
+  src/styles/               Generated token stylesheets
+  test/                     Shared Vitest utilities (render, accessibility)
+  scripts/                  The package's own contract checks — API baseline, CSS,
+                            exports, use-client, identity
+
+apps/docs/                @studiopod/docs — the documentation product. A consumer
+  src/app/                  of @studiopod/design like Cloud and Web, not a privileged
+                            view of its source. One route per section.
+  src/components/docs/      The site's own documentation chrome
+  src/components/layout/    GlobalNav, Footer — site chrome
+  src/components/platform/  Platform demo compositions
+  src/lib/                  Canonical demo data, the navigation registry, page
+                            contracts, and the showcase-registry pattern
+  e2e/                      Playwright visual-regression specs
+
+docs/                     Repository documentation: the constitution's supporting
+                          architecture, the ADR log, certification reports, and the
+                          pre-DH-1 contributor guides (testing, verification,
+                          distribution) plus engineering-notes/ (architecture history)
+
+tooling/                  Verification runner, boundary check, the Foundation token
+                          bridge, release tooling, and reporting
 ```
 
 ## Quick start

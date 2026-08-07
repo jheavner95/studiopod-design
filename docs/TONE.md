@@ -65,7 +65,7 @@ Adding a sixth value to `StatusTone` is a significant, rarely-justified decision
 1. Confirm the new value is genuinely a *color family*, not a domain status — a domain status belongs in its own vocabulary that maps into the existing five (§2).
 2. Confirm no existing value already serves the need — `accent` frequently covers "in-progress/active/info" without needing a sixth name.
 3. If justified, add it to `STATUS_TONE_PILL_CLASSES` and the `StatusTone` union in `src/lib/tone.ts` together — an incomplete map is a type error by construction (`Record<StatusTone, string>` requires every key).
-4. This is a **MINOR** version bump (additive, non-breaking) per `packages/design-system/VERSIONING.md` — update the CHANGELOG.
+4. This is a **MINOR** version bump (additive, non-breaking) per `packages/design/VERSIONING.md` — update the CHANGELOG.
 
 ## 8. When *not* to add a new tone
 

@@ -1,0 +1,164 @@
+import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
+import { Card, Body, Caption, SectionHeader, Eyebrow } from "@studiopod/design";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
+import { InspectorPanelGallery } from "./_components/InspectorPanelGallery";
+import { INSPECTOR_ANATOMY } from "./_data/anatomy";
+import { INSPECTOR_STATES } from "./_data/states";
+import { RESPONSIVE_TOPICS, BREAKPOINT_NOTES } from "./_data/responsive";
+import { INSPECTOR_ACCESSIBILITY_TOPICS } from "./_data/accessibility";
+import { IMPLEMENTATION_GUIDANCE } from "./_data/implementation-guidance";
+import { INSPECTOR_FUTURE_EXTENSIONS } from "./_data/future-extensions";
+
+const entry = getEntry("inspector-panel")!;
+const relatedComponents = [getEntry("data-grid")!, getEntry("property-panel")!, getEntry("inspector-workspace")!];
+
+const WHEN_TO_USE_LABELS = new Set(["Property grouping", "Progressive disclosure"]);
+const whenToUseGuidance = IMPLEMENTATION_GUIDANCE.filter((topic) => WHEN_TO_USE_LABELS.has(topic.label));
+const compositionGuidance = IMPLEMENTATION_GUIDANCE.filter((topic) => !WHEN_TO_USE_LABELS.has(topic.label));
+
+export default function InspectorPanelPage() {
+  return (
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="InspectorPanel is where a workspace explains one selected thing in full — its identity, its editable properties, its validation state, its history, and what can be done to it next. Reach for it whenever a screen needs a dedicated, scannable detail view alongside a list or canvas rather than a separate page. It's built from ten focused regions, each mapping to one component below, most delegating to an existing Foundation piece underneath."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={2}>
+            {INSPECTOR_ANATOMY.map((region) => (
+              <Card key={region.name} className="flex flex-col gap-2">
+                <span className="text-body-md font-medium text-ink-primary">{region.name}</span>
+                <Body size="sm" muted>
+                  {region.description}
+                </Body>
+                <Caption className="border-t border-border-subtle pt-3 text-ink-tertiary">{region.component}</Caption>
+              </Card>
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="Two decisions every Inspector composition makes explicitly, rather than defaulting to whatever's fastest to wire up."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList items={whenToUseGuidance.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Inspector variants, live"
+            description="Each demo below is a real, working inspector with local state — not a static screenshot. Try Asset/Commerce Inspector's editable fields, History Inspector's show-more, and Multi-section Inspector's tabs."
+            descriptionMaxWidth={false}
+          />
+          <InspectorPanelGallery />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-14">
+          <SectionHeader
+            id="behavior"
+            eyebrow={<Eyebrow tone="accent">Behavior</Eyebrow>}
+            title="Behavior"
+            description="The states a panel moves through — from loading and validation errors to editing and success — plus how the same panel reflows across breakpoints."
+            descriptionMaxWidth={false}
+          />
+
+          <div className="flex flex-col gap-6">
+            <SectionHeader id="states" title="States" descriptionMaxWidth={false} />
+            <DescriptionList items={INSPECTOR_STATES.map((item) => ({ label: item.state, value: item.note }))} />
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <SectionHeader id="responsive-behavior" title="Responsive behavior" descriptionMaxWidth={false} />
+            <CardGrid columns={3}>
+              {BREAKPOINT_NOTES.map((item) => (
+                <Card key={item.breakpoint} className="flex flex-col gap-2">
+                  <span className="text-body-sm font-medium text-ink-primary">{item.breakpoint}</span>
+                  <Body size="sm" muted>
+                    {item.note}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+            <DescriptionList items={RESPONSIVE_TOPICS.map((topic) => ({ label: topic.label, value: topic.note }))} />
+          </div>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader id="accessibility" eyebrow={<Eyebrow tone="accent">Accessibility</Eyebrow>} title="Accessibility" descriptionMaxWidth={false} />
+          <DescriptionList items={INSPECTOR_ACCESSIBILITY_TOPICS.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="How the pieces nest, and where panel-wide validation and object-level actions physically live once you've made the decisions above."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList items={compositionGuidance.map((topic) => ({ label: topic.label, value: topic.text }))} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-6">
+          <SectionHeader
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
+            descriptionMaxWidth={false}
+          />
+          <DocsRelatedGrid entries={relatedComponents} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="future-enhancements"
+              title="Future enhancements"
+              description="Capabilities this system does not currently include:"
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={3}>
+              {INSPECTOR_FUTURE_EXTENSIONS.map((extension) => (
+                <Card key={extension.title} className="flex flex-col gap-2 border-dashed">
+                  <span className="text-body-sm font-medium text-ink-primary">{extension.title}</span>
+                  <Body size="sm" muted>
+                    {extension.description}
+                  </Body>
+                </Card>
+              ))}
+            </CardGrid>
+          </div>
+        </div>
+      </SectionShell>
+    </DocsShell>
+  );
+}

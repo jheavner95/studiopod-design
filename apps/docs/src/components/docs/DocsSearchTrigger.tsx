@@ -1,0 +1,35 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { CommandNavigation } from "@studiopod/design";
+import type { CommandPaletteItem } from "@studiopod/design";
+import { NAV_REGISTRY, getGroup, getSection } from "@/lib/design-system-navigation";
+
+interface DocsSearchTriggerProps {
+  className?: string;
+  compact?: boolean;
+}
+
+/**
+ * Every routable destination, searchable — built directly from NAV_REGISTRY, never a
+ * hand-maintained list. Mounted once, globally, inside GlobalNav (not per-page inside
+ * DocsShell) so there's a single search entry point regardless of which route is current.
+ */
+export function DocsSearchTrigger({ className, compact }: DocsSearchTriggerProps) {
+  const router = useRouter();
+
+  const items: CommandPaletteItem[] = NAV_REGISTRY.map((entry) => ({
+    id: entry.id,
+    label: entry.title,
+    group: getGroup(entry.group)?.title ?? entry.group,
+    area: getSection(entry.section)?.title,
+    pageType: entry.pageType,
+    // Matches the description and any aliases too, not just the title —
+    // `aliases` previously had zero consumers despite its own doc-comment
+    // (design-system-navigation.ts) describing it as search/wayfinding data.
+    keywords: [entry.description, ...(entry.aliases ?? [])],
+    onSelect: () => router.push(entry.href),
+  }));
+
+  return <CommandNavigation items={items} placeholder="Search the Design System…" className={className} compact={compact} />;
+}

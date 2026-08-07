@@ -1,0 +1,145 @@
+import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
+import { Card, Body, SectionHeader, Eyebrow } from "@studiopod/design";
+import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
+import { getEntry } from "@/lib/design-system-navigation";
+import { TemplateCard } from "../_components/TemplateCard";
+import { FamilyCard } from "../_components/FamilyCard";
+import { PLATFORM_TEMPLATES } from "../_data/templates";
+import { COMPONENT_FAMILIES } from "../_data/families";
+
+const entry = getEntry("templates")!;
+const relatedEntries = [getEntry("architecture-doc")!, getEntry("business-feature-templates")!, getEntry("platform-architecture-doc")!];
+
+const platformTemplatesFamily = COMPONENT_FAMILIES.find((family) => family.id === "platform-templates")!;
+const analyticsFamily = COMPONENT_FAMILIES.find((family) => family.id === "analytics")!;
+const intelligenceTemplate = PLATFORM_TEMPLATES.find((template) => template.id === "intelligence")!;
+
+export default function TemplatesPage() {
+  return (
+    <DocsShell entry={entry} toc={<DocsTableOfContents />}>
+      <DocsPageHeader entry={entry} />
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="overview"
+            eyebrow={<Eyebrow tone="accent">Overview</Eyebrow>}
+            title="Overview"
+            description="Seven platform-screen templates, each a specification for the component families a given workspace composes — not a rendered screen itself."
+            descriptionMaxWidth={false}
+          />
+          <DescriptionList
+            items={[
+              { label: "Templates", value: `${PLATFORM_TEMPLATES.length} platform workspaces, one per StudioPOD domain.` },
+              { label: "Nature", value: "Specification, composed live from each required family's own data." },
+            ]}
+          />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="when-to-use"
+            eyebrow={<Eyebrow tone="accent">When to use</Eyebrow>}
+            title="When to use"
+            description="This page answers one question: what does a given platform screen depend on? For the pieces themselves, use the other Overview & Meta pages."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Scoping a new workspace</span>
+              <Body size="sm" muted>
+                Start here to see which component families a platform screen needs.
+              </Body>
+            </Card>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Looking up a family&apos;s definition</span>
+              <Body size="sm" muted>
+                Go to Architecture — {relatedEntries[0].description}
+              </Body>
+            </Card>
+            <Card className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium text-ink-primary">Building a business feature on a template</span>
+              <Body size="sm" muted>
+                Go to Business Feature Templates — {relatedEntries[1].description.toLowerCase()}
+              </Body>
+            </Card>
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="examples"
+            eyebrow={<Eyebrow tone="accent">Examples</Eyebrow>}
+            title="Seven workspaces"
+            description="Every template links its required families back to the Architecture page, so the family that's blocking a template is always one click away."
+            descriptionMaxWidth={false}
+          />
+          <CardGrid columns={3}>
+            {PLATFORM_TEMPLATES.map((template) => (
+              <TemplateCard key={template.id} template={template} />
+            ))}
+          </CardGrid>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-10">
+          <SectionHeader
+            id="composition"
+            eyebrow={<Eyebrow tone="accent">Composition</Eyebrow>}
+            title="Composition"
+            description="Platform Templates is itself one of the nine component families — the composition layer that assembles the other eight into a complete workspace."
+            descriptionMaxWidth={false}
+          />
+          <div className="max-w-xl">
+            <FamilyCard family={platformTemplatesFamily} />
+          </div>
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg" divider>
+        <div className="flex flex-col gap-6">
+          <SectionHeader
+            id="related-components"
+            eyebrow={<Eyebrow tone="accent">Related components</Eyebrow>}
+            title="Related components"
+            descriptionMaxWidth={false}
+          />
+          <DocsRelatedGrid entries={relatedEntries} columns={3} />
+        </div>
+      </SectionShell>
+
+      <SectionShell spacing="lg">
+        <div className="flex flex-col gap-14">
+          <SectionHeader id="reference" eyebrow={<Eyebrow tone="accent">Reference</Eyebrow>} title="Reference" descriptionMaxWidth={false} />
+
+          <div className="flex flex-col gap-10">
+            <SectionHeader
+              id="extension-points"
+              title="Extension points"
+              description="Room the templates leave for platform-specific extension."
+              descriptionMaxWidth={false}
+            />
+            <CardGrid columns={2}>
+              <Card className="flex flex-col gap-2 border-dashed">
+                <span className="text-body-sm font-medium text-ink-primary">{intelligenceTemplate.title} drill-down</span>
+                <Body size="sm" muted>{intelligenceTemplate.layoutPattern}</Body>
+              </Card>
+              <Card className="flex flex-col gap-2 border-dashed">
+                <span className="text-body-sm font-medium text-ink-primary">Analytics family</span>
+                <Body size="sm" muted>
+                  {analyticsFamily.roadmapNotes} It backs both the Intelligence and Operations workspaces above, though it doesn&apos;t yet
+                  have any components of its own listed on this page.
+                </Body>
+              </Card>
+            </CardGrid>
+          </div>
+        </div>
+      </SectionShell>
+    </DocsShell>
+  );
+}

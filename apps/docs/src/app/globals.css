@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* The design system's canonical token CSS, consumed exactly the way Cloud and
+   Web consume it (docs/DISTRIBUTION.md § 3). Before DH-2 this file reached
+   straight into the library's own stylesheets through a shared source tree. */
+@import "@studiopod/design/styles.css";
+
+/* REQUIRED. Tailwind ignores node_modules, so without this none of the design
+   system's utility classes are generated and every component renders unstyled
+   — silently, with no error. Same line every consumer must write. */
+@source "../../../../node_modules/@studiopod/design/dist";
+
+@theme inline {
+  --color-background: var(--color-canvas);
+  --color-foreground: var(--color-ink-primary);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink-primary);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink-primary);
+  }
+}

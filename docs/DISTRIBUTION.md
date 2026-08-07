@@ -26,7 +26,7 @@ Read §7 first if you just want the checklist.
 | | As of DS-0.6 | Target |
 |---|---|---|
 | `studiopod-app` | `file:vendor/studiopod-design-system-0.1.0.tgz` — a **171 KB binary committed to the app repo** (DS-0), unless cut over since — verify in that repo, not here | `@studiopod/design@^X.Y.Z` from the registry |
-| `studiopod-web` | `file:../studiopod-design/packages/design-system/studiopod-design-system-0.1.0.tgz` — a **relative path to a tarball outside its own repo**, unless cut over since — verify in that repo, not here | same |
+| `studiopod-web` | `file:../studiopod-design/packages/design/studiopod-design-system-0.1.0.tgz` — a **relative path to a tarball outside its own repo**, unless cut over since — verify in that repo, not here | same |
 | Registry | **GitHub Packages** (`https://npm.pkg.github.com`) — chosen, live | done |
 | Published versions | **`0.1.1`**, released through the automated workflow | ongoing |
 
@@ -34,7 +34,7 @@ Read §7 first if you just want the checklist.
 
 Two interlocks currently make publishing **impossible**, both deliberate:
 
-1. **`private: true`** in `packages/design-system/package.json` — npm refuses to publish a private package.
+1. **`private: true`** in `packages/design/package.json` — npm refuses to publish a private package.
 2. **`vars.DS_REGISTRY` + `secrets.DS_NPM_TOKEN` are unset** — the CI publish job skips itself.
 
 The first exists because without a chosen `publishConfig.registry`, `npm publish` **defaults to the public npmjs registry**. Removing `private: true` before choosing a registry risks publishing proprietary, `UNLICENSED` code to the public internet. It stays until §7 step 1.
@@ -106,7 +106,7 @@ Peer deps: `react ^18 || ^19`, `react-dom`, `next >= 14`.
 
 ## 4. Release guide
 
-Versioning policy: **`packages/design-system/VERSIONING.md`** (pre-1.0 rules, PATCH/MINOR/MAJOR, deprecation procedure). This section covers *mechanics* only.
+Versioning policy: **`packages/design/VERSIONING.md`** (pre-1.0 rules, PATCH/MINOR/MAJOR, deprecation procedure). This section covers *mechanics* only.
 
 ### 4.1 Every push and PR
 
@@ -122,7 +122,7 @@ The tarball is uploaded as a build artifact so you can inspect exactly what woul
 
 ### 4.2 Cutting a release
 
-1. Update `packages/design-system/CHANGELOG.md` under a new `## X.Y.Z` heading.
+1. Update `packages/design/CHANGELOG.md` under a new `## X.Y.Z` heading.
 2. Actions → **Release @studiopod/design** → *Run workflow*.
 3. Choose `release_type` (`patch` / `minor` / `major`) per VERSIONING.md.
 4. **Leave `dry_run` checked** for a rehearsal — everything runs, nothing publishes.
@@ -138,7 +138,7 @@ If `DS_REGISTRY` or `DS_NPM_TOKEN` is missing, the publish job **skips with a wa
 
 ### 4.4 What the gate catches
 
-- **`api-check`** — any change to the public exports (569 index / 5 tokens / 44 marketing / 249 illustrations as of DS-4; this count grows as the design system does — see `packages/design-system/api-baseline/*.json` for the live figures, not this line). Drift fails the build; an intentional API change requires `node scripts/check-api.mjs --write` and a deliberate commit.
+- **`api-check`** — any change to the public exports (569 index / 5 tokens / 44 marketing / 249 illustrations as of DS-4; this count grows as the design system does — see `packages/design/api-baseline/*.json` for the live figures, not this line). Drift fails the build; an intentional API change requires `node scripts/check-api.mjs --write` and a deliberate commit.
 - **`exports-check`** — every `exports` target exists, is real ESM, ships inside `files`, keeps `"use client"` on client entries, and keeps the `@theme` block in `styles.css`.
 
 Those last two are not hypothetical: the DS's two most recent commits fixed exactly those regressions (tsup silently stripping `"use client"`, and silently stripping `@theme`). The checker is mutation-tested against both.
@@ -222,9 +222,9 @@ Items 1, 3–7 are done, verified by the real artifacts they were supposed to pr
   > Current status: see §10.
 
 - [x] **3. Remove the publish interlock**
-  - `packages/design-system/package.json`: `"private": true"` removed (DS-0.6 Phase D).
+  - `packages/design/package.json`: `"private": true"` removed (DS-0.6 Phase D).
   - Registry pin is live: `"publishConfig": { "registry": "https://npm.pkg.github.com" }`.
-  - `packages/design-system/package.json` still declares `"license": "UNLICENSED"` — the *repository* now has a root `LICENSE` (MIT, see the root README), but whether the *published package's* own license/distribution model should also change is a separate, deliberate decision this document doesn't make for you. Leaving it `UNLICENSED` on GitHub Packages (private-by-registry-default, auth required to install) is a valid choice independent of the source repo being public.
+  - `packages/design/package.json` still declares `"license": "UNLICENSED"` — the *repository* now has a root `LICENSE` (MIT, see the root README), but whether the *published package's* own license/distribution model should also change is a separate, deliberate decision this document doesn't make for you. Leaving it `UNLICENSED` on GitHub Packages (private-by-registry-default, auth required to install) is a valid choice independent of the source repo being public.
   - `CHANGELOG.md` still has no `## 0.1.1` heading (still reads "0.1.0 — unreleased (not published)" at the top) — worth backfilling so the release notes GitHub generated for `design-system-v0.1.1` (which fall back to "See CHANGELOG.md" when no matching heading exists) have real content to point to.
 - [x] **4. Create the token** — done; the publish job has run successfully.
 - [x] **5. Configure the DS repo** (Settings → Secrets and variables → Actions) — `DS_REGISTRY`/`DS_NPM_TOKEN` are set; the publish job no longer skips.
@@ -306,7 +306,7 @@ off.
 ### 10.1 `committed` mode — publish the version already in the manifest
 
 Reads `name` and `version` straight from the committed
-`packages/design-system/package.json`, mutates nothing, and publishes exactly
+`packages/design/package.json`, mutates nothing, and publishes exactly
 that. It is the correct mode whenever the version was set and certified in an
 earlier work package.
 
@@ -349,7 +349,7 @@ it is incapable of tagging or publishing regardless of what its steps say.
 version bump — it has no bump command at all, which is what makes "changes
 nothing" a structural property rather than a promise. So in `bump` mode the
 tarball carries the **committed** version while the registry and tag checks run
-against the **resolved target**. `scripts/release/check-dry-run-artifact.mjs`
+against the **resolved target**. `tooling/release/check-dry-run-artifact.mjs`
 reconciles them: the artifact against what was actually packed, the target
 against the mode's arithmetic. Do not treat a bump-mode dry-run artifact as a
 tarball of the target version — a real release differs from it only in the

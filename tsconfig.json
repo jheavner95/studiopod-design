@@ -1,35 +1,30 @@
 {
+  // Workspace-root configuration. It deliberately compiles nothing: each
+  // workspace owns its own tsconfig, and there is no repository-wide "@"
+  // alias any more — "@" means packages/design/src inside the library and
+  // apps/docs/src inside the documentation application. A root path mapping
+  // spanning both is what let the published package compile the
+  // documentation site before DH-2.
+  //
+  //   packages/design/tsconfig.json   the published library
+  //   apps/docs/tsconfig.json         the documentation application
+  //
+  // This file exists so editors and ESLint have a root to resolve compiler
+  // defaults from, and to typecheck repository tooling.
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@test/*": ["./test/*"]
-    }
+    "skipLibCheck": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules", "test/**", "e2e/**", "**/*.test.ts", "**/*.test.tsx"]
+  "include": ["tooling/**/*.ts"],
+  "exclude": ["node_modules", "**/dist/**", "**/.next/**"]
 }

@@ -4,7 +4,7 @@ The design token architecture: what exists, who owns each category, naming conve
 
 ## 1. Philosophy
 
-Two layers, and only two: **primitive** (raw values — a color ramp, nothing else) and **semantic** (named by purpose — `surface`, `border`, `accent`). Components consume semantic tokens exclusively; nothing in `src/components/` or `packages/design-system/src/` references a primitive token directly. A third layer, **component tokens**, exists only where a real, recurring need justifies it (see §2.3) — it is not a default every component gets.
+Two layers, and only two: **primitive** (raw values — a color ramp, nothing else) and **semantic** (named by purpose — `surface`, `border`, `accent`). Components consume semantic tokens exclusively; nothing in `src/components/` or `packages/design/src/` references a primitive token directly. A third layer, **component tokens**, exists only where a real, recurring need justifies it (see §2.3) — it is not a default every component gets.
 
 The system avoids two failure modes on purpose:
 - **Under-abstraction** — hardcoded hex/px values scattered through components, so a rebrand or contrast fix means finding every call site.
@@ -71,7 +71,7 @@ Category 1 findings get fixed. Categories 2–4 get documented (a comment, or a 
 1. Decide primitive or semantic (§1) — almost always semantic; a new primitive color/scale is rare and should be questioned.
 2. Add it to the correct owner file from the table in §2, in the existing category's comment block, not a new one-off block.
 3. If it needs to be readable from JS (motion, anything framer-motion touches), mirror it by hand into the matching `tokens.ts` file, with a comment pointing back at the CSS source — there is no automated CSS→JS sync.
-4. If the token is meant to be part of the published package's public API (i.e., a JS export from `@studiopod/design/tokens`), it's a **MINOR** version bump per `packages/design-system/VERSIONING.md` — additive, non-breaking. CSS-only additions to `styles.css` (like `--container-shell`) don't touch the JS export surface and don't require an `api-check` baseline update, but are still worth a CHANGELOG line since they ship in the published `styles.css`.
+4. If the token is meant to be part of the published package's public API (i.e., a JS export from `@studiopod/design/tokens`), it's a **MINOR** version bump per `packages/design/VERSIONING.md` — additive, non-breaking. CSS-only additions to `styles.css` (like `--container-shell`) don't touch the JS export surface and don't require an `api-check` baseline update, but are still worth a CHANGELOG line since they ship in the published `styles.css`.
 5. Document it on the public `/tokens` page if it's something a consumer would reach for directly (not every internal implementation detail needs a public docs entry).
 
 ## 7. Deprecating a token

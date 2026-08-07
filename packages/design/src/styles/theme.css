@@ -1,0 +1,76 @@
+/**
+ * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
+ *
+ * Source of values : @studiopod/foundation@0.3.0 (tokens.json)
+ * Source of names  : this file's generator, tooling/generators/generate-tokens-from-foundation.mjs
+ * Regenerate       : npm run token:bridge
+ * Verified in CI by: npm run token:bridge-check
+ *
+ * Comments here never reach consumers — esbuild strips them when bundling
+ * src/styles.css into dist/styles.css. Only declarations and order ship.
+ */
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --color-canvas: #0a0e17;
+  --color-canvas-raised: #0d1420;
+  --color-surface: #131a2b;
+  --color-surface-hover: #182136;
+  --color-surface-active: #1e2942;
+  --color-panel: #111827;
+  --color-border-subtle: rgba(148, 163, 184, 0.08);
+  --color-border: rgba(148, 163, 184, 0.14);
+  --color-border-strong: rgba(148, 163, 184, 0.22);
+  --color-border-accent: rgba(59, 130, 246, 0.4);
+  --color-ink-primary: #f1f5f9;
+  --color-ink-secondary: #94a3b8;
+  --color-ink-tertiary: #8593a8;
+  --color-ink-disabled: #64748b;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-soft: rgba(59, 130, 246, 0.12);
+  --color-success: #22c55e;
+  --color-success-soft: rgba(34, 197, 94, 0.12);
+  --color-warning: #f59e0b;
+  --color-warning-soft: rgba(245, 158, 11, 0.12);
+  --color-error: #f56565;
+  --color-error-soft: rgba(245, 101, 101, 0.12);
+  --color-neutral: #94a3b8;
+  --color-neutral-soft: rgba(148, 163, 184, 0.12);
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 0 1px rgba(59, 130, 246, 0.4), 0 0 32px rgba(59, 130, 246, 0.25);
+  --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-glass-glow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(59, 130, 246, 0.4), 0 0 32px rgba(59, 130, 246, 0.25);
+  --shadow-subtle: var(--shadow-xs);
+  --shadow-card: var(--shadow-sm);
+  --shadow-panel: var(--shadow-md);
+  --shadow-floating: var(--shadow-lg);
+  --shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 163, 184, 0.08);
+  --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --spacing-section-xs: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+  --spacing-section-sm: clamp(3.5rem, 2.75rem + 3.5vw, 5rem);
+  --spacing-section-md: clamp(5rem, 3.75rem + 5.5vw, 7rem);
+  --spacing-section-lg: clamp(5rem, 3.75rem + 6vw, 7.5rem);
+  --spacing-section-xl: clamp(6.5rem, 4.75rem + 8vw, 9.5rem);
+  --container-narrow: 720px;
+  --container-content: 1200px;
+  --container-wide: 1440px;
+  --container-shell: 2160px;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+}
