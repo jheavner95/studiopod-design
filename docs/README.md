@@ -7,7 +7,7 @@ Documentation in this repository is production code:
 [Constitution, Article VII](../CONSTITUTION.md#article-vii--documentation).
 
 **This directory documents the repository, for the people who build it.** The
-documentation *product* — the site that explains the design language to the
+documentation _product_ — the site that explains the design language to the
 ecosystem — is a different thing with a different audience, and lives in the
 documentation application. See
 [architecture/documentation.md](architecture/documentation.md).
@@ -16,56 +16,56 @@ documentation application. See
 
 ## Start here
 
-| Document                                          | Read it when                                        |
-| ------------------------------------------------- | ---------------------------------------------------- |
-| [Constitution](../CONSTITUTION.md)                | Before your first commit. It is binding.            |
-| [Infrastructure handoff](architecture/infrastructure-handoff.md) | You are picking the repository up after DH-5 |
-| [MILESTONE-001](../MILESTONE-001.md)              | You want the current architectural baseline in one page |
-| [Architecture overview](architecture/overview.md) | You want to know how the repository is shaped, and why |
-| [Boundaries](architecture/boundaries.md)          | You are asking "does this belong in Design?"        |
-| [Public API strategy](architecture/public-api.md) | You are about to change anything consumers can see  |
+| Document                                                         | Read it when                                            |
+| ---------------------------------------------------------------- | ------------------------------------------------------- |
+| [Constitution](../CONSTITUTION.md)                               | Before your first commit. It is binding.                |
+| [Infrastructure handoff](architecture/infrastructure-handoff.md) | You are picking the repository up after DH-5            |
+| [MILESTONE-001](../MILESTONE-001.md)                             | You want the current architectural baseline in one page |
+| [Architecture overview](architecture/overview.md)                | You want to know how the repository is shaped, and why  |
+| [Boundaries](architecture/boundaries.md)                         | You are asking "does this belong in Design?"            |
+| [Public API strategy](architecture/public-api.md)                | You are about to change anything consumers can see      |
 
 ## Architecture
 
-| Document                                                     | Owns                                                       |
-| ------------------------------------------------------------ | ----------------------------------------------------------- |
-| [Overview](architecture/overview.md)                         | The shape of the repository and the reasoning behind it     |
-| [Boundaries](architecture/boundaries.md)                     | Foundation vs Design vs application ownership, and the hard cases |
-| [Packages](architecture/packages.md)                         | What is published, entry-point scopes, the second-package test |
-| [Repository structure](architecture/repository-structure.md) | The tree — where everything lives                           |
-| [Public API](architecture/public-api.md)                     | Stability tiers, SemVer, deprecation, the API contract      |
-| [Documentation product](architecture/documentation.md)       | The documentation site's information architecture           |
+| Document                                                         | Owns                                                                   |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Overview](architecture/overview.md)                             | The shape of the repository and the reasoning behind it                |
+| [Boundaries](architecture/boundaries.md)                         | Foundation vs Design vs application ownership, and the hard cases      |
+| [Packages](architecture/packages.md)                             | What is published, entry-point scopes, the second-package test         |
+| [Repository structure](architecture/repository-structure.md)     | The tree — where everything lives                                      |
+| [Public API](architecture/public-api.md)                         | Stability tiers, SemVer, deprecation, the API contract                 |
+| [Documentation product](architecture/documentation.md)           | The documentation site's information architecture                      |
 | [Infrastructure handoff](architecture/infrastructure-handoff.md) | The state of the repository after DH-5, and what the next phase is for |
 
 ## Engineering
 
-| Document                                          | Owns                                                    |
-| ------------------------------------------------- | -------------------------------------------------------- |
-| [Publishing](engineering/publishing.md)           | Registry, cadence, the release process, compatibility    |
-| [Quality gates](engineering/quality-gates.md)     | The verification chain and what each gate proves         |
-| [Verification](VERIFICATION.md)                   | The runner, the tiers, and what to do when a step fails  |
-| [Testing](TESTING.md)                             | The test suite — what to test, how to run and debug it   |
+| Document                                      | Owns                                                    |
+| --------------------------------------------- | ------------------------------------------------------- |
+| [Publishing](engineering/publishing.md)       | Registry, cadence, the release process, compatibility   |
+| [Quality gates](engineering/quality-gates.md) | The verification chain and what each gate proves        |
+| [Verification](VERIFICATION.md)               | The runner, the tiers, and what to do when a step fails |
+| [Testing](TESTING.md)                         | The test suite — what to test, how to run and debug it  |
 
 ## Consuming
 
-| Document                                | Owns                                                        |
-| --------------------------------------- | ------------------------------------------------------------ |
-| [Consuming Design](consuming/README.md) | How applications install, use, and upgrade the package       |
-| [Distribution](DISTRIBUTION.md)         | Registry access and the package rename history               |
+| Document                                | Owns                                                   |
+| --------------------------------------- | ------------------------------------------------------ |
+| [Consuming Design](consuming/README.md) | How applications install, use, and upgrade the package |
+| [Distribution](DISTRIBUTION.md)         | Registry access and the package rename history         |
 
 ## Contributing
 
-| Document                                    | Owns                                                       |
-| ------------------------------------------- | ----------------------------------------------------------- |
-| [Governance](contributing/governance.md)    | Who decides, who reviews, release approval, promotion       |
-| [Component certification](CERTIFICATION.md) | How a component earns Certified status                      |
-| [Documentation infrastructure](DOCUMENTATION.md) | Page contracts, registries, and what is validated      |
+| Document                                         | Owns                                                  |
+| ------------------------------------------------ | ----------------------------------------------------- |
+| [Governance](contributing/governance.md)         | Who decides, who reviews, release approval, promotion |
+| [Component certification](CERTIFICATION.md)      | How a component earns Certified status                |
+| [Documentation infrastructure](DOCUMENTATION.md) | Page contracts, registries, and what is validated     |
 
 ## Product
 
-| Document                                      | Owns                                    |
-| --------------------------------------------- | ---------------------------------------- |
-| [Success metrics](product/success-metrics.md) | How Design's success is measured        |
+| Document                                      | Owns                             |
+| --------------------------------------------- | -------------------------------- |
+| [Success metrics](product/success-metrics.md) | How Design's success is measured |
 
 ## Decisions
 
@@ -78,18 +78,19 @@ The decision log itself is [decisions/](decisions/README.md#4-the-log).
 
 ## Milestones
 
-| Milestone                                | Marks                                                    |
-| ---------------------------------------- | --------------------------------------------------------- |
-| [MILESTONE-001](../MILESTONE-001.md)     | Design becomes a platform — the DH-2 architectural baseline |
+| Milestone                            | Marks                                                       |
+| ------------------------------------ | ----------------------------------------------------------- |
+| [MILESTONE-001](../MILESTONE-001.md) | Design becomes a platform — the DH-2 architectural baseline |
 
 ## Certification reports
 
-| Report                          | Package                                        |
-| ------------------------------- | ---------------------------------------------- |
-| [DH-1](certification/DH-1.md)   | Design Architecture Foundation                 |
-| [DH-2](certification/DH-2.md)   | Foundation Integration & Repository Separation |
-| [DH-3](certification/DH-3.md)   | Framework Independence                         |
-| [DH-5](certification/DH-5.md)   | Design API Surface                             |
+| Report                            | Package                                        |
+| --------------------------------- | ---------------------------------------------- |
+| [DH-1](certification/DH-1.md)     | Design Architecture Foundation                 |
+| [DH-2](certification/DH-2.md)     | Foundation Integration & Repository Separation |
+| [DH-3](certification/DH-3.md)     | Framework Independence                         |
+| [DH-5](certification/DH-5.md)     | Design API Surface                             |
+| [DH-5.5](certification/DH-5.5.md) | Typography Foundation                          |
 
 ---
 
@@ -99,10 +100,10 @@ These predate DH-1 and remain authoritative for their subject. Where one
 conflicts with an ADR or an architecture document, the ADR wins and the conflict
 is a defect to fix.
 
-| Document              | Owns                                                              |
-| --------------------- | ------------------------------------------------------------------ |
-| [Tokens](TOKENS.md)   | Token architecture, naming, ownership, and how consumers get them  |
-| [Tone](TONE.md)       | The semantic tone system and its accessibility expectations        |
+| Document            | Owns                                                              |
+| ------------------- | ----------------------------------------------------------------- |
+| [Tokens](TOKENS.md) | Token architecture, naming, ownership, and how consumers get them |
+| [Tone](TONE.md)     | The semantic tone system and its accessibility expectations       |
 
 ## Historical records
 
