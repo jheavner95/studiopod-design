@@ -292,9 +292,23 @@ jobs:
             --current "${{ steps.target.outputs.current-version }}" \
             --target "${{ steps.target.outputs.version }}"
           cd /tmp/ds-pack
+          # DH-3 inverted this assertion. It used to require index.js to BEGIN
+          # with "use client", because the bundled build stripped per-module
+          # directives and re-injected one per entry — which is defect N1: a
+          # directive on index.js makes every export in the package a client
+          # reference, pure functions included. The package now emits one module
+          # per source file, each carrying its own directive, so an entry point
+          # is a re-export graph and must stay server-safe.
+          #
+          # The package's own scripts/check-client-boundaries.mjs is the
+          # authority and checks all 538 modules; this asserts the one property
+          # that matters about what actually shipped.
           head -c 13 package/dist/index.js | grep -q '"use client"' \
-            && echo "OK   index.js retains \"use client\"" \
-            || { echo "::error::published index.js is MISSING \"use client\""; exit 1; }
+            && { echo "::error::published index.js carries \"use client\" — that is defect N1; entry points must be server-safe"; exit 1; } \
+            || echo "OK   index.js is server-safe (no directive)"
+          grep -rlq '^"use client"' package/dist/components/overlay/Dialog.js \
+            && echo "OK   client modules retain their own directives" \
+            || { echo "::error::client modules lost their \"use client\" directives"; exit 1; }
           grep -q "@theme" package/dist/styles.css \
             && echo "OK   styles.css retains @theme" \
             || { echo "::error::published styles.css is MISSING its @theme block"; exit 1; }
