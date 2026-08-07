@@ -1,0 +1,27 @@
+{
+  "name": "@studiopod/docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The StudioPOD Design documentation product \u2014 the canonical reference for how StudioPOD applications look and behave. Consumes @studiopod/design like any other application.",
+  "license": "MIT",
+  "author": "StudioPOD",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
+    "test:e2e": "playwright test",
+    "test:e2e:update": "playwright test --update-snapshots"
+  },
+  "dependencies": {
+    "@studiopod/design": "*",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.42.2",
+    "lucide-react": "^1.23.0",
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0"
+  }
+}

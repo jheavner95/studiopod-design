@@ -9,7 +9,7 @@ Every verification activity belongs to exactly one layer. A layer is defined by 
 | Layer | When | Speed | What |
 |---|---|---|---|
 | **1 — Fast** | Constantly, while writing code | Seconds | TypeScript (app + test tree), ESLint, unit/component tests (Vitest — includes accessibility assertions, see `docs/TESTING.md`) |
-| **2 — Repository** | Before merge | Under a minute | Everything in Layer 1, plus: Next.js build, and the package's own build/typecheck/API-baseline/CSS/use-client/exports checks |
+| **2 — Repository** | Before merge | Under a minute | Everything in Layer 1, plus: the package's own API-baseline/CSS/use-client/exports/identity checks, and the documentation build |
 | **3 — Release** | Before publish | A few minutes | Everything in Layer 2, plus: package pack integrity. (Visual regression belongs here in principle — see §7 "Not yet automated.") |
 
 Layers are strictly additive: Layer 2 is Layer 1 plus more, Layer 3 is Layer 2 plus more. Nothing appears in a later layer that isn't also implied by having passed the earlier ones.
@@ -26,9 +26,9 @@ Layers are strictly additive: Layer 2 is Layer 1 plus more, Layer 3 is Layer 2 p
 | `npm run test:watch` | 1 | Vitest in watch mode — the command you leave running while writing a component. |
 | `npm run test:e2e` | 3 (not yet in CI) | Playwright visual regression, standalone. See §7. |
 | `npm run build` | 2 | The Next.js app build, standalone. |
-| `npm run package:verify` | 2 | The unambiguous bridge to `packages/design-system`'s own `verify` script (see §6) — the one name to reach for from the repo root instead of `cd packages/design-system && npm run verify`. |
+| `npm run package:verify` | 2 | The unambiguous bridge to `packages/design`'s own `verify` script (see §6) — the one name to reach for from the repo root instead of `cd packages/design && npm run verify`. |
 
-Every `verify*` tier runs through one shared runner, `scripts/verify.mjs` (§4) — not `&&`-chained package.json one-liners. `package:build`, `package:typecheck`, `package:api-check`, `package:css-check`, `package:use-client-check`, `package:exports-check`, `package:pack`, and `package:inspect` remain individually callable (documented in `packages/design-system/README.md`, and referenced by name in that package's own check-script error messages) — for when you want to debug one specific check in isolation rather than running a whole tier.
+Every `verify*` tier runs through one shared runner, `tooling/verify.mjs` (§4) — not `&&`-chained package.json one-liners. `package:build`, `package:typecheck`, `package:api-check`, `package:css-check`, `package:use-client-check`, `package:exports-check`, `package:pack`, and `package:inspect` remain individually callable (documented in `packages/design/README.md`, and referenced by name in that package's own check-script error messages) — for when you want to debug one specific check in isolation rather than running a whole tier.
 
 ## 3. What belongs where — and why
 
@@ -36,13 +36,13 @@ The audit behind this document (full detail in the engineering note) found these
 
 - **No root-level `typecheck` existed.** `test:typecheck` (test tree) and `package:typecheck` (the package) both existed; the app's own `src/` had no equivalent standalone command — you had to know to run bare `npx tsc --noEmit`. Added.
 - **`exports-check` had no root-level alias.** Every other package check (`api-check`, `css-check`, `use-client-check`) did. Added `package:exports-check` for consistency.
-- **`exports-check` ran twice in CI.** `packages/design-system`'s own `verify` script already ends with `exports-check`; the `verify` job's YAML additionally ran `node ./scripts/check-exports.mjs` again as a separate step immediately after. Removed the redundant step.
+- **`exports-check` ran twice in CI.** `packages/design`'s own `verify` script already ends with `exports-check`; the `verify` job's YAML additionally ran `node ./scripts/check-exports.mjs` again as a separate step immediately after. Removed the redundant step.
 - **ESLint never ran in CI at all.** Neither the old `test` job nor the old `verify` job invoked it. `npm run verify:fast` (now what the renamed `fast` job runs) includes it.
 - **No unified `verify` existed anywhere.** CI's actual quality gate was two independently-assembled jobs (`test`: test:typecheck + test; `verify`: cd into the package and run its own `verify`) that happened to add up to something reasonable, but no single local command reproduced what CI as a whole checked. `npm run verify` now does.
 
-## 4. The shared runner (`scripts/verify.mjs`)
+## 4. The shared runner (`tooling/verify.mjs`)
 
-Every tier (`fast`/`default`/`full`) is a plain array of `{ name, script }` steps in `scripts/verify.mjs`, run in order as child processes. It exists so a multi-step check reports better than bare `package.json` `&&`-chaining can:
+Every tier (`fast`/`default`/`full`) is a plain array of `{ name, script }` steps in `tooling/verify.mjs`, run in order as child processes. It exists so a multi-step check reports better than bare `package.json` `&&`-chaining can:
 
 - `a && b && c` tells you *that* something failed. It doesn't tell you which step, how long the steps that did pass took, or which later steps never got a chance to run.
 - The runner prints a `✔`/`✖` line per step as it finishes (with duration), stops at the first failure, prints the remaining steps as `⋯ skipped`, and ends with a summary table plus one unambiguous sentence naming the failed step.
@@ -54,7 +54,7 @@ It does not wrap, replace, or reimplement any test framework — every step is a
 | Job | Depends on | Runs |
 |---|---|---|
 | `fast` | — | `npm run verify:fast` |
-| `verify` | — | `packages/design-system`'s own `npm run verify` (Layer 2, package-scoped) |
+| `verify` | — | `packages/design`'s own `npm run verify` (Layer 2, package-scoped) |
 | `dry-run` | `[verify, fast]` | Re-verifies the package (necessary rebuild — see the job's own comment for why it isn't wasted duplicate work), then computes and inspects a real tarball without publishing |
 | `publish` | `[verify, fast]` | Versions, tags, and publishes — gated on both quality jobs having already passed |
 
@@ -62,12 +62,14 @@ It does not wrap, replace, or reimplement any test framework — every step is a
 
 ## 6. Two things named `verify`
 
-`npm run verify` means something different depending on whether you're standing in the repo root or in `packages/design-system` — this is deliberate, not an oversight:
+`npm run verify` means something different depending on whether you're standing in the repo root or in `packages/design` — this is deliberate, not an oversight:
 
-- **Root `npm run verify`** (`scripts/verify.mjs default`) — the whole repo's Layer 1 + 2: app typecheck, test-tree typecheck, lint, tests, Next.js build, and (via `package:verify`) the package's own check.
-- **`packages/design-system`'s `npm run verify`** — that package's own build + typecheck + API-baseline + CSS + use-client + exports check. Predates this phase; renaming it would have required touching its own `README.md`, `docs/DISTRIBUTION.md`, `VERSIONING.md`, `CHANGELOG.md`, and every check script's own `console.error` hint text (`"run npm run package:X first"`) — real, working, cross-referenced documentation, for a rename with no behavioral benefit.
+- **Root `npm run verify`** (`tooling/verify.mjs default`) — the whole repo's Layer 1 + 2, in dependency order: token bridge, **package build**, **boundary check**, library + documentation typecheck, test-tree typecheck, lint, tests, the package's five contract checks, and the documentation build.
 
-The resolution is naming, not renaming: **`npm run package:verify`** is the one name that unambiguously means "the package's verify script," callable from the repo root, so nothing outside `packages/design-system` itself ever needs to type the ambiguous bare form. Root's own `verify` calls it internally via that same bridge.
+  Two steps are new in DH-2 and their position matters. The package build runs **second** because everything after it needs `dist/` — the documentation application resolves `@studiopod/design` through the workspace link, not a source alias. The boundary check runs **third**, once `dist/` exists, and replaces the two esbuild resolver plugins DH-2 deleted: it asserts the package's tsconfig cannot resolve outside the package, that no library source escapes it, that documentation imports only declared entry points, and that no documentation identifier appears in the bundle.
+- **`packages/design`'s `npm run verify`** — that package's own build + typecheck + API-baseline + CSS + use-client + exports check. Predates this phase; renaming it would have required touching its own `README.md`, `docs/DISTRIBUTION.md`, `VERSIONING.md`, `CHANGELOG.md`, and every check script's own `console.error` hint text (`"run npm run package:X first"`) — real, working, cross-referenced documentation, for a rename with no behavioral benefit.
+
+The resolution is naming, not renaming: **`npm run package:verify`** is the one name that unambiguously means "the package's verify script," callable from the repo root, so nothing outside `packages/design` itself ever needs to type the ambiguous bare form. Root's own `verify` calls it internally via that same bridge.
 
 ## 7. Verification coverage — what exists, what doesn't yet
 
@@ -101,7 +103,7 @@ npm run verify:full   # before cutting a release locally, or when in doubt
 - **Every push and PR to `main`**: `fast` and `verify` run in parallel. Both must pass.
 - **`workflow_dispatch` with `dry_run: true`**: additionally runs `dry-run` (needs `fast`+`verify`) — computes and inspects a real tarball, enforces that publish credentials are actually configured, and checks that the target version and tag are still free, but never runs `npm publish`, never commits, never tags.
 
-  It does **not** execute a version bump, not even a reverted one: the job runs under `permissions: contents: read` and contains no bump command at all (asserted by `src/lib/release-workflow.test.ts`). So in `bump` mode the tarball it packs carries the **committed** version, while the registry and tag checks run against the **resolved target**. `scripts/release/check-dry-run-artifact.mjs` reconciles the two — the artifact against what was actually packed, the target against the mode's arithmetic. Bumping changes only the manifest's `version` field, so packing the committed version costs no artifact-level coverage; that the bump writes the expected string is checked in the `publish` job, where it matters.
+  It does **not** execute a version bump, not even a reverted one: the job runs under `permissions: contents: read` and contains no bump command at all (asserted by `src/lib/release-workflow.test.ts`). So in `bump` mode the tarball it packs carries the **committed** version, while the registry and tag checks run against the **resolved target**. `tooling/release/check-dry-run-artifact.mjs` reconciles the two — the artifact against what was actually packed, the target against the mode's arithmetic. Bumping changes only the manifest's `version` field, so packing the committed version costs no artifact-level coverage; that the bump writes the expected string is checked in the `publish` job, where it matters.
 
   Practical consequence: a `committed`-mode dry run **correctly fails** once that version is published (`0.13.0` today) — that is the guard working, not a defect. Use `bump` mode to validate a future release candidate.
 - **`workflow_dispatch` with `dry_run: false`**: runs `publish` instead — versions, tags, pushes, and publishes for real. Gated on the same `[verify, fast]`.
@@ -109,8 +111,8 @@ npm run verify:full   # before cutting a release locally, or when in doubt
 
 ## 10. Failure recovery
 
-1. Read the failed step's name from `scripts/verify.mjs`'s summary (or the CI job/step name — they're named identically on purpose).
+1. Read the failed step's name from `tooling/verify.mjs`'s summary (or the CI job/step name — they're named identically on purpose).
 2. Reproduce it locally with the single underlying command (e.g. `npm run lint`, `npm test`, `npm run package:css-check`) rather than the whole tier — faster, and the failure output is unchanged either way.
 3. `docs/TESTING.md` §7 covers debugging Vitest/axe/Playwright failures specifically.
-4. A failed `package:*` check almost always names the fix in its own error message (see `packages/design-system/scripts/*.mjs` — every one was written to explain what regressed and why, not just that something did).
+4. A failed `package:*` check almost always names the fix in its own error message (see `packages/design/scripts/*.mjs` — every one was written to explain what regressed and why, not just that something did).
 5. If a CI-only failure won't reproduce locally, suspect an environment difference first (Node version — CI pins 20; OS — CI is Linux, screenshots are the one thing that differs) before assuming a flaky test.

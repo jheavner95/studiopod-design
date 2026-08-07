@@ -1,0 +1,38 @@
+import { StatusBadge, HealthIndicator, type NodeStatus, type NodeHealth } from "@studiopod/design/illustrations";
+import { Caption } from "@studiopod/design";
+import { PreviewSection } from "../_components/preview-primitives";
+
+const STATUSES: NodeStatus[] = ["idle", "active", "processing", "complete", "warning", "error"];
+const HEALTHS: NodeHealth[] = ["healthy", "degraded", "critical"];
+
+export function StatusGallerySection() {
+  return (
+    <PreviewSection
+      id="status-gallery"
+      title="Status & health"
+      description="The third atomic primitive, in two parts: StatusBadge maps a node's workflow status to the existing Badge primitive, and HealthIndicator maps a health signal to a pulsing dot, entirely independent of status."
+    >
+      <div className="flex flex-col gap-8">
+        <div>
+          <Caption className="mb-4">Node status</Caption>
+          <div className="flex flex-wrap gap-3">
+            {STATUSES.map((status) => (
+              <StatusBadge key={status} status={status} />
+            ))}
+          </div>
+        </div>
+        <div>
+          <Caption className="mb-4">Health (independent of status)</Caption>
+          <div className="flex flex-wrap gap-6">
+            {HEALTHS.map((health) => (
+              <div key={health} className="flex items-center gap-2">
+                <HealthIndicator health={health} />
+                <span className="text-body-sm text-ink-secondary">{health}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </PreviewSection>
+  );
+}

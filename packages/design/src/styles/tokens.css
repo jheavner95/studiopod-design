@@ -1,0 +1,61 @@
+/**
+ * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
+ *
+ * Source of values : @studiopod/foundation@0.3.0 (tokens.json)
+ * Source of names  : this file's generator, tooling/generators/generate-tokens-from-foundation.mjs
+ * Regenerate       : npm run token:bridge
+ * Verified in CI by: npm run token:bridge-check
+ *
+ * Comments here never reach consumers — esbuild strips them when bundling
+ * src/styles.css into dist/styles.css. Only declarations and order ship.
+ */
+
+:root {
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-dropdown: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  --duration-instant: 80ms;
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 180ms;
+  --motion-duration-normal: 300ms;
+  --motion-duration-slow: 500ms;
+  --motion-duration-hero: 800ms;
+
+  --motion-delay-none: 0ms;
+  --motion-delay-short: 80ms;
+  --motion-delay-medium: 160ms;
+  --motion-delay-long: 320ms;
+
+  --motion-distance-micro: 4px;
+  --motion-distance-small: 12px;
+  --motion-distance-medium: 24px;
+  --motion-distance-large: 48px;
+
+  --motion-ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-flow: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

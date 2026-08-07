@@ -2,7 +2,9 @@
 
 The contributor guide to this repo's test suite: what to test, what not to, how to run it, how to debug it, and how to add to it. For the audit and architecture reasoning behind these choices, see [docs/engineering-notes/09-test-infrastructure.md](./engineering-notes/09-test-infrastructure.md). For how this test suite is orchestrated together with typecheck/lint/build/package checks into one verification pipeline, see [docs/VERIFICATION.md](./VERIFICATION.md).
 
-There is one component source tree, `src/`. `packages/design-system` builds *from* it (see its `tsup.config.ts`) rather than duplicating it, so tests live in `src/` too — there's nothing to test twice.
+There are two source trees, and they are separate packages: `packages/design` (the published library) and `apps/docs` (the documentation product, which consumes it). Tests live beside the source they cover, so component tests are in `packages/design/src/` and the documentation site's own registry/contract tests are in `apps/docs/src/lib/`. Vitest runs them as three named projects — `design`, `docs`, `tooling` — because "@" means a different directory in each (see `vitest.config.ts`).
+
+Before DH-2 there was one tree: the package built *from* the documentation site's `src/` rather than owning source of its own. That is the defect `docs/decisions/0003-library-owns-its-source.md` removed.
 
 ---
 

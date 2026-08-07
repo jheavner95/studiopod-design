@@ -73,7 +73,7 @@ permissions:
 
 jobs:
   # ── Always-on quality gate: Layer 1, fast (DS-1D) ──────────────────────────
-  # Runs `npm run verify:fast` (scripts/verify.mjs) — app typecheck, test-tree
+  # Runs `npm run verify:fast` (tooling/verify.mjs) — app typecheck, test-tree
   # typecheck, ESLint, and the Vitest/jsdom component suite (DS-1C). All four
   # are fast, deterministic, and OS-independent, which is exactly why they're
   # grouped as one tier developers are expected to run constantly locally —
@@ -112,12 +112,12 @@ jobs:
         run: npm run verify:fast
 
   # ── Always-on quality gate: Layer 2, package (DS-1D) ───────────────────────
-  # `npm run verify` HERE resolves against packages/design-system's OWN
+  # `npm run verify` HERE resolves against packages/design's OWN
   # package.json (see working-directory below) — a package-scoped build +
   # typecheck + API-baseline + CSS + use-client + exports check, identical to
   # its own `prepublishOnly` hook, so CI runs exactly the gate a publish
   # runs. This is a DIFFERENT script from the repo-root `npm run verify`
-  # (scripts/verify.mjs) this same DS-1D phase introduces — root's `verify`
+  # (tooling/verify.mjs) this same DS-1D phase introduces — root's `verify`
   # runs this job's fast tier PLUS the app build PLUS this package's verify
   # (via `npm run package:verify`, the unambiguous root-level bridge to this
   # exact script). Two scripts, same name, deliberately kept — see
@@ -129,7 +129,7 @@ jobs:
       contents: read        # checkout only — cannot tag, publish, or release
     defaults:
       run:
-        working-directory: packages/design-system
+        working-directory: packages/design
     steps:
       - uses: actions/checkout@v4
 
@@ -219,23 +219,23 @@ jobs:
       - name: Resolve release target
         id: target
         run: |
-          node scripts/release/resolve-target.mjs \
+          node tooling/release/resolve-target.mjs \
             --mode "${{ inputs.mode }}" \
             --release-type "${{ inputs.mode == 'bump' && inputs.release_type || '' }}"
 
       - name: Credential preflight (diagnosis only — nothing is published)
         env:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
-        run: node scripts/release/preflight-credential.mjs
+        run: node tooling/release/preflight-credential.mjs
 
       - name: Report + enforce distribution configuration
         env:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           echo "DS_REGISTRY    set: $([ -n "$DS_REGISTRY" ] && echo yes || echo "NOT SET")   value: ${DS_REGISTRY:-<unset>}"
-          echo "package name      : $(node -p "require('./packages/design-system/package.json').name")"
-          echo "publishConfig     : $(node -p "require('./packages/design-system/package.json').publishConfig.registry")"
-          echo "private           : $(node -p "require('./packages/design-system/package.json').private ?? false")"
+          echo "package name      : $(node -p "require('./packages/design/package.json').name")"
+          echo "publishConfig     : $(node -p "require('./packages/design/package.json').publishConfig.registry")"
+          echo "private           : $(node -p "require('./packages/design/package.json').private ?? false")"
           if [ -z "$DS_REGISTRY" ]; then
             echo "::error title=DS_REGISTRY not set::Add repository VARIABLE DS_REGISTRY = https://npm.pkg.github.com (Settings -> Secrets and variables -> Actions -> Variables)."
             exit 1
@@ -246,7 +246,7 @@ jobs:
 
       # Full gate: build + typecheck + api + css + use-client + exports + identity.
       - name: Full verification pipeline
-        working-directory: packages/design-system
+        working-directory: packages/design
         run: npm run verify
 
       # Committed mode must not have touched a tracked file. This is the
@@ -263,7 +263,7 @@ jobs:
           echo "OK — tree clean; no manifest or lockfile mutation."
 
       - name: Pack the real tarball
-        working-directory: packages/design-system
+        working-directory: packages/design
         run: |
           mkdir -p /tmp/ds-pack
           npm pack --pack-destination /tmp/ds-pack
@@ -285,7 +285,7 @@ jobs:
           echo "packed version : $VER"
           test "$NAME" = "${{ steps.target.outputs.name }}"    || { echo "::error::packed name != resolved target"; exit 1; }
           cd "$GITHUB_WORKSPACE"
-          node scripts/release/check-dry-run-artifact.mjs \
+          node tooling/release/check-dry-run-artifact.mjs \
             --mode "${{ inputs.mode }}" \
             --release-type "${{ inputs.mode == 'bump' && inputs.release_type || '' }}" \
             --packed "$VER" \
@@ -310,7 +310,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
-          node scripts/release/check-registry.mjs \
+          node tooling/release/check-registry.mjs \
             --name "${{ steps.target.outputs.name }}" \
             --version "${{ steps.target.outputs.version }}"
 
@@ -395,12 +395,12 @@ jobs:
       - name: Credential preflight
         env:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
-        run: node scripts/release/preflight-credential.mjs
+        run: node tooling/release/preflight-credential.mjs
 
       - name: Resolve release target
         id: target
         run: |
-          node scripts/release/resolve-target.mjs \
+          node tooling/release/resolve-target.mjs \
             --mode "${{ inputs.mode }}" \
             --release-type "${{ inputs.mode == 'bump' && inputs.release_type || '' }}"
 
@@ -414,7 +414,7 @@ jobs:
       # after a verified publish.
       - name: Apply version bump (bump mode only)
         if: steps.target.outputs.will-mutate-manifest == 'true'
-        working-directory: packages/design-system
+        working-directory: packages/design
         run: |
           npm version "${{ inputs.release_type }}" --no-git-tag-version --allow-same-version >/dev/null
           APPLIED=$(node -p "require('./package.json').version")
@@ -434,12 +434,12 @@ jobs:
 
       # ── 2. BUILD (+ every gate) ───────────────────────────────────────────
       - name: Full verification pipeline
-        working-directory: packages/design-system
+        working-directory: packages/design
         run: npm run verify
 
       # ── 3. PACK ───────────────────────────────────────────────────────────
       - name: Pack
-        working-directory: packages/design-system
+        working-directory: packages/design
         run: |
           mkdir -p /tmp/ds-pack
           npm pack --pack-destination /tmp/ds-pack
@@ -453,7 +453,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
-          node scripts/release/check-registry.mjs \
+          node tooling/release/check-registry.mjs \
             --name "${{ steps.target.outputs.name }}" \
             --version "${{ steps.target.outputs.version }}"
 
@@ -464,7 +464,7 @@ jobs:
       # The token reaches ONLY this step.
       - name: Publish
         id: publish
-        working-directory: packages/design-system
+        working-directory: packages/design
         env:
           NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
         run: npm publish
@@ -479,7 +479,7 @@ jobs:
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           TARBALL=$(ls /tmp/ds-pack/*.tgz | head -1)
-          node scripts/release/verify-published.mjs \
+          node tooling/release/verify-published.mjs \
             --name "${{ steps.target.outputs.name }}" \
             --version "${{ steps.target.outputs.version }}" \
             --tarball "$TARBALL"
@@ -492,7 +492,7 @@ jobs:
           V="${{ steps.target.outputs.version }}"
           TAG="${{ steps.target.outputs.tag }}"
           if [ "${{ steps.target.outputs.will-mutate-manifest }}" = "true" ]; then
-            git add packages/design-system/package.json package-lock.json
+            git add packages/design/package.json package-lock.json
             git commit -m "release(design-system): v${V}"
           else
             echo "committed mode — version ${V} is already committed; tagging HEAD."
@@ -510,4 +510,4 @@ jobs:
           gh release create "$TAG" \
             --title "@studiopod/design v${V}" \
             --generate-notes \
-            --notes-file <(sed -n "/^## ${V}/,/^## /p" packages/design-system/CHANGELOG.md || echo "See CHANGELOG.md")
+            --notes-file <(sed -n "/^## ${V}/,/^## /p" packages/design/CHANGELOG.md || echo "See CHANGELOG.md")

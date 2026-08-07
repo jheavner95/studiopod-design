@@ -1,0 +1,17 @@
+/**
+ * @studiopod/design/styles.css
+ *
+ * The canonical shared token CSS (palette, semantic theme tokens, raw
+ * z-index/motion-duration tokens, fluid typography classes, and small
+ * composable utility classes). This is a plain concatenation of the
+ * design system's own token files — it does not run Tailwind's compiler.
+ *
+ * Consumers import this alongside their own `@import "tailwindcss";` —
+ * Tailwind v4 discovers the `@theme` block below via the consumer's own
+ * build, the same way it already does inside this repo's own app.
+ */
+@import "./styles/palette.css";
+@import "./styles/theme.css";
+@import "./styles/tokens.css";
+@import "./styles/typography.css";
+@import "./styles/utilities.css";

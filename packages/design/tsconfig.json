@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "noEmit": false,
+
+    // Self-contained. `baseUrl` is this package, not the repository root, so
+    // "@/..." can only ever resolve inside packages/design/src. Before DH-2
+    // this was "../..", which meant the published package compiled the
+    // documentation site's source tree — the defect ADR 0003 removes. Do not
+    // point this outside the package: the boundary is this line.
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}
