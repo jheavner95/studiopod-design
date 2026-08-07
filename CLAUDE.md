@@ -14,7 +14,14 @@ whole ecosystem reads.
 
 - **Design never owns a design value.** Colour, spacing, type, motion, radius,
   and icon geometry come from `@studiopod/foundation` through the token bridge.
-  A hand-edited generated token file fails `token:bridge-check`.
+  A hand-edited generated token file fails `token:bridge-check`. **The webfonts
+  travel the same bridge** — `src/assets/fonts` is a byte-for-byte copy of
+  Foundation's, and editing one here fails the same check
+  ([ADR 0017](docs/decisions/0017-typography-is-loaded-by-design.md)).
+- **Design loads the typeface; it does not choose it.** `styles.css` carries the
+  `@font-face` rules and the base typography layer, because Design is the only
+  package consumers install. Never add a font family a Foundation token does not
+  name, and never reach for `next/font` — `package:framework-check` fails on it.
 - **Components are public APIs.** Props, DOM contract, accessibility semantics,
   and behaviour are published contract. Changing them is a breaking change even
   when the types do not move.
@@ -62,21 +69,21 @@ also required — [docs/engineering/quality-gates.md](docs/engineering/quality-g
 
 ## Where things are
 
-| You need                          | Read                                                                                 |
-| --------------------------------- | ------------------------------------------------------------------------------------ |
-| The rules                         | [CONSTITUTION.md](CONSTITUTION.md)                                                   |
-| How the repository is shaped      | [docs/architecture/overview.md](docs/architecture/overview.md)                       |
-| What belongs here vs elsewhere    | [docs/architecture/boundaries.md](docs/architecture/boundaries.md)                   |
-| What we publish and why           | [docs/architecture/packages.md](docs/architecture/packages.md)                       |
+| You need                          | Read                                                                                   |
+| --------------------------------- | -------------------------------------------------------------------------------------- |
+| The rules                         | [CONSTITUTION.md](CONSTITUTION.md)                                                     |
+| How the repository is shaped      | [docs/architecture/overview.md](docs/architecture/overview.md)                         |
+| What belongs here vs elsewhere    | [docs/architecture/boundaries.md](docs/architecture/boundaries.md)                     |
+| What we publish and why           | [docs/architecture/packages.md](docs/architecture/packages.md)                         |
 | The tree                          | [docs/architecture/repository-structure.md](docs/architecture/repository-structure.md) |
-| API tiers, SemVer, deprecation    | [docs/architecture/public-api.md](docs/architecture/public-api.md)                   |
-| The documentation product         | [docs/architecture/documentation.md](docs/architecture/documentation.md)             |
-| How releases happen               | [docs/engineering/publishing.md](docs/engineering/publishing.md)                     |
-| What each gate proves             | [docs/engineering/quality-gates.md](docs/engineering/quality-gates.md)               |
-| How consumers install and upgrade | [docs/consuming/README.md](docs/consuming/README.md)                                 |
-| Who approves what                 | [docs/contributing/governance.md](docs/contributing/governance.md)                   |
-| How success is measured           | [docs/product/success-metrics.md](docs/product/success-metrics.md)                   |
-| Why something is the way it is    | [docs/decisions/](docs/decisions/README.md)                                           |
+| API tiers, SemVer, deprecation    | [docs/architecture/public-api.md](docs/architecture/public-api.md)                     |
+| The documentation product         | [docs/architecture/documentation.md](docs/architecture/documentation.md)               |
+| How releases happen               | [docs/engineering/publishing.md](docs/engineering/publishing.md)                       |
+| What each gate proves             | [docs/engineering/quality-gates.md](docs/engineering/quality-gates.md)                 |
+| How consumers install and upgrade | [docs/consuming/README.md](docs/consuming/README.md)                                   |
+| Who approves what                 | [docs/contributing/governance.md](docs/contributing/governance.md)                     |
+| How success is measured           | [docs/product/success-metrics.md](docs/product/success-metrics.md)                     |
+| Why something is the way it is    | [docs/decisions/](docs/decisions/README.md)                                            |
 
 ## Current state
 
@@ -106,6 +113,14 @@ reference. Both blockers Cloud named are gone.
 tier in `api-baseline/<entry>.json`, which ships in the package; 310 of 372 root
 components export their props type; and the root entry names its exports
 explicitly instead of aggregating them with `export *`.
+
+**DH-5.5 made the typography real.** Geist and Geist Mono had been the canonical
+typefaces since DS-7.2 and had never once rendered in a consumer: no package
+shipped a font file, and the `var(--font-geist-sans)` reference — declared with
+no fallback — was invalid at computed-value time, so `font-family` collapsed all
+the way to the browser's default serif. The fonts now ship in `dist/fonts` and
+`styles.css` applies them. The documentation site no longer loads them privately
+through `next/font`, so it can no longer disguise a regression.
 
 Ten of DH-1's nineteen gaps plus N1 are closed. The rest are enumerated in
 [docs/certification/DH-5.md](docs/certification/DH-5.md) § Remaining gaps —

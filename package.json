@@ -2,7 +2,7 @@
   "name": "studiopod-design",
   "version": "0.1.0",
   "private": true,
-  "description": "StudioPOD Design \u2014 the workspace root. Publishes @studiopod/design (packages/design) and hosts the documentation product (apps/docs).",
+  "description": "StudioPOD Design — the workspace root. Publishes @studiopod/design (packages/design) and hosts the documentation product (apps/docs).",
   "license": "MIT",
   "author": "StudioPOD",
   "homepage": "https://github.com/jheavner95/studiopod-design#readme",
@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@studiopod/foundation": "0.3.0",
+    "@studiopod/foundation": "0.4.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

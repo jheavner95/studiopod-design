@@ -36,7 +36,7 @@
  *   node tooling/generators/generate-tokens-from-foundation.mjs --check   # verify, exit 1 on drift
  */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
@@ -73,12 +73,27 @@ const banner = (file) =>
 
 // ── palette.css ─────────────────────────────────────────────────────────────
 const RAMPS = ["slate", "blue", "green", "amber", "red"];
-const STEPS = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"];
+const STEPS = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+];
 
 function paletteCss() {
   const lines = [banner("palette.css"), "", ":root {"];
   for (const ramp of RAMPS) {
-    for (const step of STEPS) lines.push(`  --palette-${ramp}-${step}: ${v(`--sp-color-${ramp}-${step}`)};`);
+    for (const step of STEPS)
+      lines.push(
+        `  --palette-${ramp}-${step}: ${v(`--sp-color-${ramp}-${step}`)};`,
+      );
     lines.push("");
   }
   for (const single of ["neutral", "white", "black"]) {
@@ -94,19 +109,56 @@ const THEME = [
   ["--font-sans", "--sp-typography-family-sans"],
   ["--font-mono", "--sp-typography-family-mono"],
   ...[
-    "canvas", "canvas-raised", "surface", "surface-hover", "surface-active", "panel",
-    "border-subtle", "border", "border-strong", "border-accent",
-    "ink-primary", "ink-secondary", "ink-tertiary", "ink-disabled",
-    "accent-300", "accent-400", "accent-500", "accent-600", "accent-700", "accent-soft",
-    "success", "success-soft", "warning", "warning-soft", "error", "error-soft",
-    "neutral", "neutral-soft",
+    "canvas",
+    "canvas-raised",
+    "surface",
+    "surface-hover",
+    "surface-active",
+    "panel",
+    "border-subtle",
+    "border",
+    "border-strong",
+    "border-accent",
+    "ink-primary",
+    "ink-secondary",
+    "ink-tertiary",
+    "ink-disabled",
+    "accent-300",
+    "accent-400",
+    "accent-500",
+    "accent-600",
+    "accent-700",
+    "accent-soft",
+    "success",
+    "success-soft",
+    "warning",
+    "warning-soft",
+    "error",
+    "error-soft",
+    "neutral",
+    "neutral-soft",
   ].map((r) => [`--color-${r}`, `--sp-color-semantic-${r}`]),
-  ...["xs", "sm", "md", "lg", "xl", "2xl", "full"].map((r) => [`--radius-${r}`, `--sp-radius-${r}`]),
-  ...["xs", "sm", "md", "lg", "glow", "glass", "glass-glow"].map((s) => [`--shadow-${s}`, `--sp-elevation-${s}`]),
-  ...["subtle", "card", "panel", "floating", "modal"].map((s) => [`--shadow-${s}`, `--sp-elevation-semantic-${s}`]),
+  ...["xs", "sm", "md", "lg", "xl", "2xl", "full"].map((r) => [
+    `--radius-${r}`,
+    `--sp-radius-${r}`,
+  ]),
+  ...["xs", "sm", "md", "lg", "glow", "glass", "glass-glow"].map((s) => [
+    `--shadow-${s}`,
+    `--sp-elevation-${s}`,
+  ]),
+  ...["subtle", "card", "panel", "floating", "modal"].map((s) => [
+    `--shadow-${s}`,
+    `--sp-elevation-semantic-${s}`,
+  ]),
   ["--spacing-gutter", "--sp-spacing-gutter"],
-  ...["xs", "sm", "md", "lg", "xl"].map((s) => [`--spacing-section-${s}`, `--sp-spacing-section-${s}`]),
-  ...["narrow", "content", "wide", "shell"].map((c) => [`--container-${c}`, `--sp-sizing-container-${c}`]),
+  ...["xs", "sm", "md", "lg", "xl"].map((s) => [
+    `--spacing-section-${s}`,
+    `--sp-spacing-section-${s}`,
+  ]),
+  ...["narrow", "content", "wide", "shell"].map((c) => [
+    `--container-${c}`,
+    `--sp-sizing-container-${c}`,
+  ]),
   ["--ease-standard", "--sp-motion-ui-easing-standard"],
   ["--ease-in-out-soft", "--sp-motion-ui-easing-in-out-soft"],
   ["--ease-linear", "--sp-motion-ui-easing-linear"],
@@ -130,21 +182,47 @@ function themeCss() {
 
 // ── tokens.css — z-index, both motion systems, reduced-motion reset ─────────
 const RAW = [
-  ...["base", "raised", "sticky", "dropdown", "overlay", "modal", "toast", "tooltip"].map((z) => [`--z-${z}`, `--sp-z-index-${z}`]),
+  ...[
+    "base",
+    "raised",
+    "sticky",
+    "dropdown",
+    "overlay",
+    "modal",
+    "toast",
+    "tooltip",
+  ].map((z) => [`--z-${z}`, `--sp-z-index-${z}`]),
   null,
-  ...["instant", "fast", "base", "slow", "slower"].map((d) => [`--duration-${d}`, `--sp-motion-ui-duration-${d}`]),
+  ...["instant", "fast", "base", "slow", "slower"].map((d) => [
+    `--duration-${d}`,
+    `--sp-motion-ui-duration-${d}`,
+  ]),
   null,
-  ...["instant", "fast", "normal", "slow", "hero"].map((d) => [`--motion-duration-${d}`, `--sp-motion-engine-duration-${d}`]),
+  ...["instant", "fast", "normal", "slow", "hero"].map((d) => [
+    `--motion-duration-${d}`,
+    `--sp-motion-engine-duration-${d}`,
+  ]),
   null,
-  ...["none", "short", "medium", "long"].map((d) => [`--motion-delay-${d}`, `--sp-motion-engine-delay-${d}`]),
+  ...["none", "short", "medium", "long"].map((d) => [
+    `--motion-delay-${d}`,
+    `--sp-motion-engine-delay-${d}`,
+  ]),
   null,
-  ...["micro", "small", "medium", "large"].map((d) => [`--motion-distance-${d}`, `--sp-motion-engine-distance-${d}`]),
+  ...["micro", "small", "medium", "large"].map((d) => [
+    `--motion-distance-${d}`,
+    `--sp-motion-engine-distance-${d}`,
+  ]),
   null,
-  ...["standard", "enter", "exit", "flow", "emphasis"].map((e) => [`--motion-ease-${e}`, `--sp-motion-engine-easing-${e}`]),
+  ...["standard", "enter", "exit", "flow", "emphasis"].map((e) => [
+    `--motion-ease-${e}`,
+    `--sp-motion-engine-easing-${e}`,
+  ]),
 ];
 
 function tokensCss() {
-  const body = RAW.map((entry) => (entry === null ? "" : `  ${entry[0]}: ${v(entry[1])};`)).join("\n");
+  const body = RAW.map((entry) =>
+    entry === null ? "" : `  ${entry[0]}: ${v(entry[1])};`,
+  ).join("\n");
   // The reduced-motion reset is BEHAVIOUR, not a token. Foundation deliberately
   // does not ship it (a shared package emitting a global `*` rule would override
   // consumers unbidden — see Foundation's motionAccessibility). It stays owned
@@ -164,20 +242,31 @@ function tokensCss() {
 
 // ── typography.css — the fluid scale, as classes ────────────────────────────
 const TYPE_ORDER = [
-  "display-1", "display-2", "heading-1", "heading-2", "heading-3", "heading-4",
-  "body-lg", "body-md", "body-sm", "caption", "metadata",
+  "display-1",
+  "display-2",
+  "heading-1",
+  "heading-2",
+  "heading-3",
+  "heading-4",
+  "body-lg",
+  "body-md",
+  "body-sm",
+  "caption",
+  "metadata",
 ];
 
 function typographyCss() {
   const blocks = TYPE_ORDER.map((role) => {
     const s = scale[role];
-    if (!s) throw new Error(`Foundation has no typography scale entry "${role}"`);
+    if (!s)
+      throw new Error(`Foundation has no typography scale entry "${role}"`);
     const lines = [
       `  font-size: ${s["font-size"]};`,
       `  line-height: ${s["line-height"]};`,
       `  letter-spacing: ${s["letter-spacing"]};`,
     ];
-    if (s["text-transform"]) lines.push(`  text-transform: ${s["text-transform"]};`);
+    if (s["text-transform"])
+      lines.push(`  text-transform: ${s["text-transform"]};`);
     return `.text-${role} {\n${lines.join("\n")}\n}`;
   });
   return `${banner("typography.css")}\n${blocks.join("\n\n")}\n`;
@@ -204,7 +293,9 @@ function libTokensTs() {
   const z = foundation.tokens["z-index"];
   const rgb = foundation.tokens.color.rgb;
   const obj = (o, indent = "  ") =>
-    Object.entries(o).map(([k, val]) => `${indent}${k}: ${JSON.stringify(val)},`).join("\n");
+    Object.entries(o)
+      .map(([k, val]) => `${indent}${k}: ${JSON.stringify(val)},`)
+      .join("\n");
 
   return `/**
  * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
@@ -254,6 +345,31 @@ export const successRgb = ${JSON.stringify(rgb.success)};
 `;
 }
 
+// ── Font files ──────────────────────────────────────────────────────────────
+/**
+ * The webfonts are copied, not referenced (DH-5.5).
+ *
+ * Foundation owns the files and Design owns the loading, but Design cannot
+ * simply `@import` Foundation's copy: Foundation is a **build-time** dependency
+ * here, never a runtime one, and consumers install `@studiopod/design` alone.
+ * A `url()` pointing into `@studiopod/foundation` would resolve on this machine
+ * and 404 in every consumer that has not also installed Foundation.
+ *
+ * So the fonts travel the same road the token *values* already travel: copied
+ * across at build time, byte-compared by `--check`, canonical upstream. Editing
+ * or replacing a font file here fails the same gate that editing a token here
+ * fails, and for the same reason.
+ */
+const fontsFrom = dirname(
+  require.resolve("@studiopod/foundation/assets/fonts/OFL.txt"),
+);
+const FONT_FILES = [
+  "Geist-Variable.woff2",
+  "GeistMono-Variable.woff2",
+  "OFL.txt",
+];
+const fontsTo = join(pkgRoot, "src/assets/fonts");
+
 // ── Emit / verify ───────────────────────────────────────────────────────────
 const artifacts = [
   ["src/styles/palette.css", paletteCss()],
@@ -265,6 +381,25 @@ const artifacts = [
 
 const checkOnly = process.argv.includes("--check");
 const drifted = [];
+
+if (!checkOnly) mkdirSync(fontsTo, { recursive: true });
+
+for (const name of FONT_FILES) {
+  const rel = `src/assets/fonts/${name}`;
+  const source = readFileSync(join(fontsFrom, name));
+  const abs = join(fontsTo, name);
+  const current = existsSync(abs) ? readFileSync(abs) : null;
+  if (current !== null && current.equals(source)) {
+    if (!checkOnly) console.log(`unchanged  ${rel}`);
+    continue;
+  }
+  if (checkOnly) {
+    drifted.push(current === null ? `${rel} (missing)` : rel);
+    continue;
+  }
+  writeFileSync(abs, source);
+  console.log(`written    ${rel}`);
+}
 
 for (const [rel, content] of artifacts) {
   const abs = join(pkgRoot, rel);
@@ -283,10 +418,14 @@ for (const [rel, content] of artifacts) {
 
 if (checkOnly) {
   if (drifted.length > 0) {
-    console.error("✖ Token stylesheets have drifted from @studiopod/foundation:");
+    console.error(
+      "✖ Token stylesheets have drifted from @studiopod/foundation:",
+    );
     for (const d of drifted) console.error(`  - ${d}`);
     console.error("\nRun `npm run token:bridge` and commit the result.");
-    console.error("If a value genuinely needs to change, change it in @studiopod/foundation — not here.");
+    console.error(
+      "If a value genuinely needs to change, change it in @studiopod/foundation — not here.",
+    );
     process.exit(1);
   }
   console.log("✔ Token stylesheets match @studiopod/foundation.");

@@ -55,24 +55,25 @@ Copy [TEMPLATE.md](TEMPLATE.md) to `NNNN-kebab-case-title.md`.
 
 ## 4. The log
 
-| ADR                                                                       | Decision                                                     | Status   |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------ | -------- |
-| [0001](0001-design-is-a-product.md)                                       | Design is a product, not an implementation detail            | Accepted |
-| [0002](0002-ecosystem-architecture.md)                                    | The ecosystem architecture, adopted and located              | Accepted |
-| [0003](0003-library-owns-its-source.md)                                   | The library owns its source; documentation consumes it       | Accepted |
-| [0004](0004-one-published-package.md)                                     | One published package; entry points are the unit of scope    | Accepted |
-| [0005](0005-public-api-tiers.md)                                          | Stable, Preview, Internal — declared, never inferred         | Accepted |
-| [0006](0006-versioning-and-compatibility.md)                              | SemVer with pre-1.0 major discipline; the road to 1.0        | Accepted |
-| [0007](0007-framework-neutrality.md)                                      | No framework coupling in the package                         | Accepted |
-| [0008](0008-foundation-is-a-build-time-input.md)                          | Foundation is a build-time input via the token bridge        | Accepted |
-| [0009](0009-documentation-is-a-product-deliverable.md)                    | The documentation site is a product, not a demo              | Accepted |
-| [0010](0010-certification-and-release-approval.md)                        | Certification is the definition of done                      | Accepted |
-| [0011](0011-internal-entry-point.md)                                      | An internal entry point for the documentation application    | Accepted |
-| [0012](0012-workspace-layout.md)                                          | `apps/` and `tooling/` as the workspace layout               | Accepted |
-| [0013](0013-framework-capabilities-are-props.md)                          | Framework capabilities are injected as props, not context    | Accepted |
-| [0014](0014-preserve-modules-build.md)                                    | The package emits one module per source file                 | Accepted |
-| [0015](0015-stability-tiers.md)                                           | Stability is declared in the API manifest, earned by evidence | Accepted |
-| [0016](0016-intentional-exports.md)                                       | The public API is constructed, not aggregated                | Accepted |
+| ADR                                                    | Decision                                                      | Status   |
+| ------------------------------------------------------ | ------------------------------------------------------------- | -------- |
+| [0001](0001-design-is-a-product.md)                    | Design is a product, not an implementation detail             | Accepted |
+| [0002](0002-ecosystem-architecture.md)                 | The ecosystem architecture, adopted and located               | Accepted |
+| [0003](0003-library-owns-its-source.md)                | The library owns its source; documentation consumes it        | Accepted |
+| [0004](0004-one-published-package.md)                  | One published package; entry points are the unit of scope     | Accepted |
+| [0005](0005-public-api-tiers.md)                       | Stable, Preview, Internal — declared, never inferred          | Accepted |
+| [0006](0006-versioning-and-compatibility.md)           | SemVer with pre-1.0 major discipline; the road to 1.0         | Accepted |
+| [0007](0007-framework-neutrality.md)                   | No framework coupling in the package                          | Accepted |
+| [0008](0008-foundation-is-a-build-time-input.md)       | Foundation is a build-time input via the token bridge         | Accepted |
+| [0009](0009-documentation-is-a-product-deliverable.md) | The documentation site is a product, not a demo               | Accepted |
+| [0010](0010-certification-and-release-approval.md)     | Certification is the definition of done                       | Accepted |
+| [0011](0011-internal-entry-point.md)                   | An internal entry point for the documentation application     | Accepted |
+| [0012](0012-workspace-layout.md)                       | `apps/` and `tooling/` as the workspace layout                | Accepted |
+| [0013](0013-framework-capabilities-are-props.md)       | Framework capabilities are injected as props, not context     | Accepted |
+| [0014](0014-preserve-modules-build.md)                 | The package emits one module per source file                  | Accepted |
+| [0015](0015-stability-tiers.md)                        | Stability is declared in the API manifest, earned by evidence | Accepted |
+| [0016](0016-intentional-exports.md)                    | The public API is constructed, not aggregated                 | Accepted |
+| [0017](0017-typography-is-loaded-by-design.md)         | Foundation owns the typeface, Design loads it                 | Accepted |
 
 ---
 

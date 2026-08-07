@@ -58,6 +58,28 @@ none of the design system's classes are generated and **every component renders
 unstyled**, with no error. Full setup: [../DISTRIBUTION.md](../DISTRIBUTION.md)
 § 3.
 
+### Typography — there is no step for it
+
+Step 1 is the whole of it. `styles.css` carries the `@font-face` rules for Geist
+and Geist Mono, ships the font files beside itself, and applies the canonical
+family in `@layer base`. Importing it is how StudioPOD typography becomes
+active.
+
+**Do not add a `body { font-family: … }` rule.** An application that names a
+typeface has taken ownership of a decision Foundation owns, and it will not
+follow the ecosystem when that decision changes. If your application has one
+from before `0.17.0`, delete it — it is redundant, though harmless.
+
+Nothing else is required: no font import, no `<link>`, no `next/font`, no CDN,
+and no `--font-geist-sans` declaration. Those two variables still work as
+**overrides** if an application genuinely must supply Geist another way, and
+that is the only reason to touch them.
+
+Before `0.17.0` none of this was true, and the failure was silent and total:
+consumers rendered in the browser's default serif. If you are upgrading across
+that boundary, expect your application's appearance to change — see
+[ADR 0017](../decisions/0017-typography-is-loaded-by-design.md).
+
 ### Step 4 — links, images, and navigation
 
 Design renders a plain `<a>` by default, so **everything works with no wiring at
@@ -83,14 +105,16 @@ make every one of these components client-only
 import Link from "next/link";
 import { Button as DesignButton, type ButtonProps } from "@studiopod/design";
 
-export const Button = (props: ButtonProps) => <DesignButton linkComponent={Link} {...props} />;
+export const Button = (props: ButtonProps) => (
+  <DesignButton linkComponent={Link} {...props} />
+);
 ```
 
-| Capability              | Prop               | Default                  | Components                                                        |
-| ----------------------- | ------------------ | ------------------------ | ------------------------------------------------------------------ |
-| Link navigation         | `linkComponent`    | `"a"`                    | `Button`, `NavigationItem`, `Breadcrumbs`, `QueueWidget`, `RelationshipList` |
-| Image rendering         | `imageComponent`   | `"img"`                  | `AssetThumbnail`                                                   |
-| Programmatic navigation | `onNavigate`       | `window.location.assign` | `Breadcrumbs`                                                      |
+| Capability              | Prop             | Default                  | Components                                                                   |
+| ----------------------- | ---------------- | ------------------------ | ---------------------------------------------------------------------------- |
+| Link navigation         | `linkComponent`  | `"a"`                    | `Button`, `NavigationItem`, `Breadcrumbs`, `QueueWidget`, `RelationshipList` |
+| Image rendering         | `imageComponent` | `"img"`                  | `AssetThumbnail`                                                             |
+| Programmatic navigation | `onNavigate`     | `window.location.assign` | `Breadcrumbs`                                                                |
 
 `next/image` must be pre-bound to fill mode, since Design always renders images
 filling their positioned parent:
@@ -117,13 +141,13 @@ directive, which made **every** export a client reference.
 
 ## 3. Which entry point
 
-| You want                            | Import from                     |
-| ----------------------------------- | -------------------------------- |
-| Buttons, inputs, layout, tables, patterns | `@studiopod/design`        |
-| Page-section archetypes for marketing surfaces | `@studiopod/design/marketing` |
-| The illustration engine             | `@studiopod/design/illustrations` |
-| Semantic token values in JS         | `@studiopod/design/tokens`      |
-| The stylesheet                      | `@studiopod/design/styles.css`  |
+| You want                                       | Import from                       |
+| ---------------------------------------------- | --------------------------------- |
+| Buttons, inputs, layout, tables, patterns      | `@studiopod/design`               |
+| Page-section archetypes for marketing surfaces | `@studiopod/design/marketing`     |
+| The illustration engine                        | `@studiopod/design/illustrations` |
+| Semantic token values in JS                    | `@studiopod/design/tokens`        |
+| The stylesheet                                 | `@studiopod/design/styles.css`    |
 
 There is a fifth code entry, `@studiopod/design/internal`. **It is not for you.**
 It exists so this repository's own documentation application can render the
@@ -140,11 +164,11 @@ no changelog entry, because nothing was documented as changing.
 
 ## 4. Version ranges
 
-| Consumer type                        | Recommended range                            |
-| ------------------------------------ | -------------------------------------------- |
-| Production application               | **Exact** (`0.14.0`), upgraded deliberately  |
-| Anything depending on a Preview export| **Exact.** Preview may change in any release |
-| Prototypes and internal tools        | Caret is fine                                |
+| Consumer type                          | Recommended range                            |
+| -------------------------------------- | -------------------------------------------- |
+| Production application                 | **Exact** (`0.14.0`), upgraded deliberately  |
+| Anything depending on a Preview export | **Exact.** Preview may change in any release |
+| Prototypes and internal tools          | Caret is fine                                |
 
 Exact pinning in production is the recommendation for the same reason Cloud pins
 every other dependency exactly: an upgrade should be an event with a commit and a
@@ -198,11 +222,11 @@ that is said, the cheaper it is to hold to.
 
 ## 6. Upgrading
 
-| Change     | What to do                                                        |
-| ---------- | ------------------------------------------------------------------ |
-| Patch      | Take it. Nothing looks or behaves differently except what was wrong |
-| Minor      | Take it. Read the changelog for new capability                     |
-| Breaking   | Read the migration guide. Run the codemod. Budget the work.        |
+| Change   | What to do                                                          |
+| -------- | ------------------------------------------------------------------- |
+| Patch    | Take it. Nothing looks or behaves differently except what was wrong |
+| Minor    | Take it. Read the changelog for new capability                      |
+| Breaking | Read the migration guide. Run the codemod. Budget the work.         |
 
 Breaking changes are batched, at most quarterly, with one migration guide for the
 set ([../engineering/publishing.md](../engineering/publishing.md) § 2). One

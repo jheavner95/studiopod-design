@@ -1,7 +1,7 @@
 /**
  * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
  *
- * Source of values : @studiopod/foundation@0.3.0 (tokens.json)
+ * Source of values : @studiopod/foundation@0.4.0 (tokens.json)
  * Source of names  : this file's generator, tooling/generators/generate-tokens-from-foundation.mjs
  * Regenerate       : npm run token:bridge
  * Verified in CI by: npm run token:bridge-check
@@ -11,8 +11,8 @@
  */
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-sans: var(--font-geist-sans, "Geist"), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono, "Geist Mono"), ui-monospace, "SFMono-Regular", monospace;
   --color-canvas: #0a0e17;
   --color-canvas-raised: #0d1420;
   --color-surface: #131a2b;

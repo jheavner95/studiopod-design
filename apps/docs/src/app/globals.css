@@ -24,10 +24,12 @@
     border-color: var(--color-border);
   }
 
+  /* No font-family here (DH-5.5). The package's own base layer sets it on
+     <html>, so restating it would mask a regression in the very thing this
+     site exists to demonstrate. Colour is still this app's business. */
   body {
     background: var(--color-canvas);
     color: var(--color-ink-primary);
-    font-family: var(--font-sans);
   }
 
   ::selection {

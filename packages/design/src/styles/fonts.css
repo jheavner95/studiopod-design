@@ -1,0 +1,109 @@
+/**
+ * The typography foundation — DH-5.5.
+ *
+ * This file is what makes StudioPOD look like StudioPOD. Everything else in
+ * `styles.css` describes the type system; this loads it and turns it on.
+ *
+ * ## Why this file exists at all
+ *
+ * Foundation has named Geist as the canonical typeface since DS-7.2, and the
+ * `--font-sans` token has carried it the whole time. But no package in the
+ * ecosystem ever shipped a font file or a single `@font-face` rule. The only
+ * place Geist rendered was the documentation site, which loaded it privately
+ * through `next/font` — a Next.js API the library cannot use and consumers do
+ * not have. Every real application fell back, and because the token's `var()`
+ * carried no fallback the fallback was not "system sans" but the browser's
+ * default **serif**. See ADR 0017.
+ *
+ * ## Why the `@font-face` rules live in the design system
+ *
+ * Design is the only package a consumer installs. Foundation owns the font
+ * *files* — it is the canonical source and they arrive here by the same
+ * build-time bridge that carries token values — but a package nobody installs
+ * cannot make a font load. So Foundation describes the typeface and Design
+ * distributes it, which is the same split already in force for every token.
+ *
+ * The rules are deliberately plain CSS. No `next/font`, no loader, no build
+ * step a consumer has to adopt: any bundler that can follow a relative `url()`
+ * out of a stylesheet can serve these, which is every bundler Cloud, Web and
+ * the docs site use.
+ */
+
+/**
+ * Two variable fonts, weights 100–900, rather than eighteen static cuts.
+ *
+ * `font-display: swap` because a design system must never make text invisible
+ * while it waits for itself. The fallback stack in `--font-sans` renders
+ * immediately and is replaced when Geist arrives.
+ */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/Geist-Variable.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/GeistMono-Variable.woff2")
+    format("woff2-variations");
+}
+
+/**
+ * The base contract.
+ *
+ * In `@layer base` on purpose. Consumers import this after `tailwindcss`, so
+ * these win over Tailwind's preflight by source order within the same layer —
+ * while an application that genuinely needs to override something still can,
+ * from any later layer or from unlayered CSS. A design system should be the
+ * default, not an immovable object.
+ *
+ * Scope is deliberately narrow: this layer sets typography and nothing else.
+ * No colour, no spacing, no resets. Design already ships those decisions as
+ * tokens and utilities, and a global stylesheet that quietly restyles a
+ * consumer's layout is how design systems earn their reputation.
+ */
+@layer base {
+  /**
+   * On `html`, not `body`, so that anything rendered outside `body`'s subtree
+   * — top-layer dialogs, popovers, `::backdrop` — inherits it too.
+   */
+  html {
+    font-family: var(--font-sans);
+    /**
+     * Geist is a low-contrast grotesque and StudioPOD is dark-only. Subpixel
+     * antialiasing on light-on-dark text renders it perceptibly heavier than
+     * drawn; this is the setting the typeface is designed to be seen at.
+     */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /**
+   * Native controls do not inherit typography — the UA stylesheet gives them a
+   * system font, so without this a `Button` renders in Geist and the `<input>`
+   * beside it does not. This was the most visible half of the DH-5.5 defect
+   * and it is not fixed by loading a font; it has to be said explicitly.
+   */
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: inherit;
+  }
+
+  /** Monospace surfaces resolve to the canonical mono family, not the UA's. */
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+  }
+}

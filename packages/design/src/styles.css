@@ -2,16 +2,24 @@
  * @studiopod/design/styles.css
  *
  * The canonical shared token CSS (palette, semantic theme tokens, raw
- * z-index/motion-duration tokens, fluid typography classes, and small
- * composable utility classes). This is a plain concatenation of the
- * design system's own token files — it does not run Tailwind's compiler.
+ * z-index/motion-duration tokens, the webfonts and base typography, fluid
+ * typography classes, and small composable utility classes). This is a plain
+ * concatenation of the design system's own token files — it does not run
+ * Tailwind's compiler.
  *
  * Consumers import this alongside their own `@import "tailwindcss";` —
  * Tailwind v4 discovers the `@theme` block below via the consumer's own
  * build, the same way it already does inside this repo's own app.
+ *
+ * **This is the whole typography setup.** Importing this file loads Geist and
+ * Geist Mono and applies them; there is no second stylesheet, no font import
+ * and no `<link>` for a consumer to remember (DH-5.5 / ADR 0017).
  */
 @import "./styles/palette.css";
 @import "./styles/theme.css";
 @import "./styles/tokens.css";
+/* After theme.css: the @font-face families here are what --font-sans falls
+   back to, and the base layer reads --font-sans. */
+@import "./styles/fonts.css";
 @import "./styles/typography.css";
 @import "./styles/utilities.css";

@@ -1,6 +1,6 @@
 {
   "name": "@studiopod/design",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "StudioPOD's shared design system: tokens, UI/layout/form/feedback/navigation/overlay/table/metadata primitives, motion and illustration engines, and marketing compositions, for the Web and App products.",
   "license": "UNLICENSED",
   "publishConfig": {
@@ -73,9 +73,9 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.6.0",
+    "framer-motion": "^12.42.2",
     "lucide-react": "^1.23.0",
-    "framer-motion": "^12.42.2"
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "typescript": "^5"

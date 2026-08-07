@@ -39,7 +39,12 @@ import { defineConfig } from "tsup";
 export default defineConfig([
   {
     name: "js",
-    entry: ["src/**/*.ts", "src/**/*.tsx", "!src/**/*.test.ts", "!src/**/*.test.tsx"],
+    entry: [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "!src/**/*.test.ts",
+      "!src/**/*.test.tsx",
+    ],
     outDir: "dist",
     format: ["esm"],
     platform: "browser",
@@ -62,5 +67,26 @@ export default defineConfig([
     sourcemap: false,
     minify: false,
     tsconfig: "./tsconfig.json",
+    /**
+     * The webfonts ride along with the stylesheet that declares them (DH-5.5).
+     *
+     * `copy` emits each file untouched instead of inlining it as a data URI.
+     * Inlining would be the worse default by some margin: ~137 KB of base64
+     * would land in every consumer's CSS bundle, blocking first paint on bytes
+     * the browser can neither cache separately nor skip when it already holds
+     * the font.
+     */
+    loader: { ".woff2": "copy" },
+    esbuildOptions(options) {
+      /**
+       * Stable, unhashed names under `dist/fonts/`. esbuild hashes asset names
+       * by default, which is right for an application and wrong for a library:
+       * the hash changes the emitted filename whenever the file or esbuild's
+       * algorithm changes, and `dist/styles.css` is a published artifact whose
+       * diff should stay reviewable. Cache-busting belongs to the consuming
+       * application's build, and every one of them re-hashes assets anyway.
+       */
+      options.assetNames = "fonts/[name]";
+    },
   },
 ]);

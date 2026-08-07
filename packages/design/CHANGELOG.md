@@ -2,6 +2,32 @@
 
 All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.17.0 — DH-5.5: the typography foundation
+
+**Visually breaking, additive in API.** No export changed. Every consumer's appearance changes, because for the first time the package actually loads the typeface it has always named.
+
+If your application currently renders StudioPOD screens in a serif font, this release is the fix.
+
+### Added
+
+- **Geist and Geist Mono ship with the package.** Two variable fonts covering weights 100–900, ~137 KB, emitted to `dist/fonts/` and declared by `@font-face` in `dist/styles.css`. The files are owned by `@studiopod/foundation` and copied here by the token bridge, which byte-compares them on every build.
+- **A base typography layer**, in `@layer base`: the canonical family on `<html>`, `font-family: inherit` on native form controls, and the mono family on `code`/`kbd`/`samp`/`pre`. Typography only — no colour, no spacing, no reset.
+
+### Fixed
+
+- **The font stacks no longer collapse to the browser's default serif.** `--font-sans` read `var(--font-geist-sans), …` with no fallback, and nothing outside the documentation site ever declared that variable. An undefined `var()` without a fallback is invalid at computed-value time, so the whole declaration — including the trailing system stack — was discarded and `font-family` reverted to serif. Fixed upstream in `@studiopod/foundation@0.4.0` and bridged here.
+- **Native controls inherit the typeface.** Inputs, selects and textareas rendered in the UA's system font next to buttons that did not.
+
+### Changed
+
+- **`styles.css` is now the whole of typography setup.** No second stylesheet, no font import, no `<link>`. Consumers that already set `body { font-family: var(--font-sans) }` can delete it; it is harmless if kept.
+- **The documentation site lost its `next/font` implementation.** It consumes the same contract as every other consumer, so a typography regression in the package is now visible there instead of hidden by it.
+
+### Notes
+
+- `--font-geist-sans` / `--font-geist-mono` still work as **overrides**. An application loading Geist its own way keeps winning; nothing requires them.
+- See [ADR 0017](../../docs/decisions/0017-typography-is-loaded-by-design.md) for why Foundation owns the files and Design loads them.
+
 ## 0.16.0 — DH-5: the API becomes a designed contract
 
 **Additive.** No export was removed or renamed; every existing import keeps working. Verified against Cloud, the first consumer: zero typecheck errors, build unchanged, all 21 browser tests passing.
@@ -11,7 +37,9 @@ All notable changes to `@studiopod/design` are documented here. Releases up to a
 - **310 of 372 root components now export their props type**, up from 54. Wrapping a component is a first-class pattern:
   ```tsx
   import { Button, type ButtonProps } from "@studiopod/design";
-  export const AppButton = (props: ButtonProps) => <Button linkComponent={Link} {...props} />;
+  export const AppButton = (props: ButtonProps) => (
+    <Button linkComponent={Link} {...props} />
+  );
   ```
   Root entry 620 → 876 exports; the 256 new names are all props types. `/marketing` is at 100% coverage, `/illustrations` at 80%.
 - **Stability tiers on every export.** `api-baseline/<entry>.json` now maps export name to `stable` / `preview` / `deprecated` and **ships in the package**, so you can read what each of 1,175 names promises. 218 exports are Stable; everything else is Preview. See `API.md` § Stability model.
@@ -62,7 +90,7 @@ Three defects, all found by **rendering the consuming application and reading co
 
 - **CR-1 — the ink ramp sat below WCAG AA.** `--color-ink-tertiary` `#64748b` → **`#8593a8`**; `--color-ink-disabled` `#475569` → **`#64748b`**. Measured against `panel`, tertiary was 3.73:1 and disabled 2.34:1; against `surface-active` — the most-used surface in StudioPOD — 3.04:1 and 1.91:1. Tertiary now clears **AA (4.5:1) on all six semantic surfaces**; disabled clears **3:1** everywhere (WCAG exempts disabled text, but exempt is not the same as invisible). Values are owned by `@studiopod/foundation`, corrected in **0.3.0**, and reach this package through the existing token bridge — `theme.css` was regenerated, not hand-edited.
 
-- **CR-2 — `.focus-ring` flattened its element's corners on keyboard focus.** The `:focus-visible` rule declared `border-radius: inherit`, which sets the *element's* radius and resolves against its *parent* — so any rounded control whose parent had no radius went square for exactly as long as it held focus. Reproduced on a 32×32 `IconButton`: `border-radius` computed **12px unfocused, 0px focused**. The declaration is removed and nothing replaces it; browsers already follow the element's own radius when drawing an outline. Affected every component using `.focus-ring`, which is the package's whole interactive surface.
+- **CR-2 — `.focus-ring` flattened its element's corners on keyboard focus.** The `:focus-visible` rule declared `border-radius: inherit`, which sets the _element's_ radius and resolves against its _parent_ — so any rounded control whose parent had no radius went square for exactly as long as it held focus. Reproduced on a 32×32 `IconButton`: `border-radius` computed **12px unfocused, 0px focused**. The declaration is removed and nothing replaces it; browsers already follow the element's own radius when drawing an outline. Affected every component using `.focus-ring`, which is the package's whole interactive surface.
 
 - **CR-3 — `Button` failed AA against its own label, in two variants.**
   - `primary` was `accent-500` rest / `accent-400` hover / `accent-600` active: **3.68:1 at rest and 2.54:1 on hover** — the most-clicked surface in both products failed AA, and hovering it made it worse. Now `accent-600` / `accent-700` / `accent-700`: **5.17:1 rest, 6.70:1 hover and active**. Contrast now rises on interaction instead of collapsing. Hover and active share `accent-700` because the scale defines no `accent-800`; press feedback rides the existing colour transition.
@@ -70,13 +98,13 @@ Three defects, all found by **rendering the consuming application and reading co
 
 - **CR-3 was not only a Button defect.** Fixing Button alone would have been the wrong shape of fix: the same light-ink-on-fill pairing existed in **10 other components**, and one of them — `SegmentedControl` — was measured at **3.68:1 in the live application** during UX-2 verification. `Pagination`, `Stepper` and eight `workflow` components carried it too. All 35 occurrences are corrected under one rule:
 
-  | fill | ink | ratio |
-  |---|---|---|
-  | `bg-accent-600` | `text-white` | 5.17:1 |
-  | `bg-accent-500` | **never** with white (3.68:1) — use accent-600 | — |
-  | `bg-success` | `text-canvas` | 8.47:1 *(white was 2.28:1)* |
-  | `bg-warning` | `text-canvas` | 8.99:1 *(white was 2.15:1)* |
-  | `bg-error` | `text-canvas` | 6.37:1 *(white was 3.03:1)* |
+  | fill            | ink                                            | ratio                       |
+  | --------------- | ---------------------------------------------- | --------------------------- |
+  | `bg-accent-600` | `text-white`                                   | 5.17:1                      |
+  | `bg-accent-500` | **never** with white (3.68:1) — use accent-600 | —                           |
+  | `bg-success`    | `text-canvas`                                  | 8.47:1 _(white was 2.28:1)_ |
+  | `bg-warning`    | `text-canvas`                                  | 8.99:1 _(white was 2.15:1)_ |
+  | `bg-error`      | `text-canvas`                                  | 6.37:1 _(white was 3.03:1)_ |
 
 ### Added
 
@@ -98,7 +126,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 
 - **BREAKING (distribution only) — the package is renamed from `@studiopod/design-system` to `@studiopod/design`** (DS-7.3a).
   - **Nothing inside the package changed.** Every one of the 15 emitted `dist/` files is byte-identical to 0.12.0, verified by SHA-256 comparison across the rename. The export map, `main`/`types`, `files` allowlist, `sideEffects`, `type`, dependencies, peer dependencies, and `publishConfig.registry` are unchanged. All four API baselines are unchanged: 616 root exports, 249 illustrations, 44 marketing, 5 tokens. `styles.css` is unchanged. No component API, prop type, behaviour, or visual output was touched.
-  - **Why it is still breaking**: `npm install @studiopod/design-system` no longer resolves a new version, and every import specifier in a consumer changes. Per `VERSIONING.md`'s adopted pre-1.0 policy — *every consumer-visible breaking change is treated with major-version discipline even before 1.0.0, bumping the minor digit and documented as a breaking change* — this is a breaking minor: `0.12.0` → `0.13.0`.
+  - **Why it is still breaking**: `npm install @studiopod/design-system` no longer resolves a new version, and every import specifier in a consumer changes. Per `VERSIONING.md`'s adopted pre-1.0 policy — _every consumer-visible breaking change is treated with major-version discipline even before 1.0.0, bumping the minor digit and documented as a breaking change_ — this is a breaking minor: `0.12.0` → `0.13.0`.
   - **Consumer migration is NOT part of this release.** `studiopod-app` (`^0.12.0`) and `studiopod-web` (`^0.1.1`) still depend on the old name and are unchanged. Their cutover is DS-7.4. Nothing they do today breaks, because nothing has been published.
   - **Rolling back to 0.12.0 or earlier** uses the old package name — those versions exist only under `@studiopod/design-system`. See `docs/DISTRIBUTION.md` § Rollback.
   - Release tags keep the `design-system-v` prefix; the prefix identifies this repository's release series, not the npm package. The tag message and GitHub release title carry the new name.
@@ -116,7 +144,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 ### Added
 
 - **`useEditSession`** (DS-7.2) — the canonical **buffered edit session**: a headless hook holding a draft against a baseline, deriving dirtiness, and running the save lifecycle. Orchestration only — it renders nothing, persists nothing, and knows nothing about any domain.
-  - **Added to close a measured vocabulary gap, not to add a feature.** The DS-7.1 audit of three application orchestration owners found each had invented a *different* name for the same state machine — `saveStatus: idle|saved|warning|error`, `actionBusy`+`actionError`, and `saveStatus: idle|saving|success|error`. This hook replaces those three with one contract. Editing *presentation* was already owned (`InspectorProperty`'s edit slot, the Foundation Forms fields, `InspectorValidation`, `UnsavedChangesBanner`), so **no presentation primitive was added.**
+  - **Added to close a measured vocabulary gap, not to add a feature.** The DS-7.1 audit of three application orchestration owners found each had invented a _different_ name for the same state machine — `saveStatus: idle|saved|warning|error`, `actionBusy`+`actionError`, and `saveStatus: idle|saving|success|error`. This hook replaces those three with one contract. Editing _presentation_ was already owned (`InspectorProperty`'s edit slot, the Foundation Forms fields, `InspectorValidation`, `UnsavedChangesBanner`), so **no presentation primitive was added.**
   - Canonical status: `loading | pristine | dirty | saving | saved | savedWithWarnings | error`. `editing` and `disabled` are deliberately **not** states — editing is inline and continuous (this system has no edit-mode toggle), and `disabled` is derived (`isSaving || isReadOnly || loading`). `readOnly` and "no selection" remain orthogonal modes.
   - Five actions, no more: `update`, `save`, `discard`, `reset`, `dismissError`.
   - Derived selectors `isDirty`, `isSaving`, `canSave`, `isReadOnly`, `hasError` — all computed from a single stored phase plus the draft/baseline comparison, so **no fact is stored twice** (notably there is no second in-flight boolean beside `status === "saving"`).
@@ -180,7 +208,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 ### Added
 
 - **`TableRow` gains `id?: string`** (DS-6.9B4B-DS) — a stable DOM identifier, so another control can point at the row (an expand toggle's `aria-controls` naming the detail row it discloses). The design system neither generates nor namespaces the value; uniqueness is the caller's.
-- **`TableRow` gains `onMouseEnter?` / `onMouseLeave?`** — row-level pointer handlers forwarded to the `tr` unchanged, for coordination *outside* the row: highlighting a matching shape in a canvas, prefetching a detail panel, driving a companion visualisation.
+- **`TableRow` gains `onMouseEnter?` / `onMouseLeave?`** — row-level pointer handlers forwarded to the `tr` unchanged, for coordination _outside_ the row: highlighting a matching shape in a canvas, prefetching a detail panel, driving a companion visualisation.
   - **Row-level, not cell-level, is the point.** Because they sit on the `tr`, moving the pointer between cells does not fire `onMouseLeave`, so the hovered row stays stable while the pointer travels across it.
   - The design system does not own or store hover state — it only delivers the events. `interactive`'s own hover styling is independent of these handlers.
 - All three props are optional and additive; root exports unchanged at **609**.
@@ -213,7 +241,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 ### Added
 
 - **`DrawerEdge` gains `"left"`** (DS-5Q) — the edge vocabulary is now `left | right | bottom`. `right` remains the default and the inspector/detail convention, `bottom` is the mobile sheet, and `left` is the navigation convention (a library or nav panel docked to the reading edge in LTR).
-  - **Added on demonstrated, *paired* need.** One usage is normally thin evidence (DS-5L), but the consuming application renders a left-docked device library **and** a right-docked settings panel on the same screen. Neither existing edge could express that: `right` collides with the inspector's meaning and position, and `bottom` converts a persistent library into a mobile sheet — changing the interaction model to work around an API limit. The alternative, a `className` position override in the application, would re-implement Drawer positioning outside this system.
+  - **Added on demonstrated, _paired_ need.** One usage is normally thin evidence (DS-5L), but the consuming application renders a left-docked device library **and** a right-docked settings panel on the same screen. Neither existing edge could express that: `right` collides with the inspector's meaning and position, and `bottom` converts a persistent library into a mobile sheet — changing the interaction model to work around an API limit. The alternative, a `className` position override in the application, would re-implement Drawer positioning outside this system.
   - `left` mirrors `right` on the x axis and nothing else: `left-0` instead of `right-0`, `x: "-100%"` instead of `x: "100%"`, and `border-r` instead of `border-l` (**the border faces the content**, so a left drawer borders on its right).
   - Focus trap, Escape, backdrop dismiss, body lock, portal and the shared `DialogContext` are edge-independent and untouched. `left` adds **no** reduced-motion branch — motion is disabled globally and `left` only changes the sign of an offset.
 
@@ -227,14 +255,14 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 ### Added
 
 - **`Spinner`** (DS-5P) — the **bare tier** of the loading family: a busy indicator and nothing else, for embedding inside a layout the application owns (status rows, toolbars, table overlays, cards, menus, inline labels). Sizes `xs`/`sm`/`md`/`lg` (12/14/16/24px) on the shared glyph scale.
-  - **`aria-hidden` by default, `role="status"` only when given a `label`.** This is the design, not an oversight: the dominant real usage is a glyph beside visible text inside a container the caller has *already* marked `role="status"`/`aria-live`, and announcing there would nest one live region inside another and double-announce. A label is the signal that the spinner is the sole indication anything is happening.
+  - **`aria-hidden` by default, `role="status"` only when given a `label`.** This is the design, not an oversight: the dominant real usage is a glyph beside visible text inside a container the caller has _already_ marked `role="status"`/`aria-live`, and announcing there would nest one live region inside another and double-announce. A label is the signal that the spinner is the sole indication anything is happening.
 - **`size?: "sm" | "md"` on `EmptyState`** (DS-5P) — `md` (default) is the primary page-level state and renders exactly as before (44px badge, `py-10`); `sm` is the operational density for inspectors, table regions, library panels and console cards (**28px badge**, `py-8`, compact type). The title stays a real `<h4>` at both steps — `sm` shrinks the type only, so density never costs semantics.
 - **`size?: "sm" | "md"` on `TableEmptyState`** — same vocabulary, scaling cell padding only (`py-12` → `py-6`); its type is already dense at both steps because a table body is an operational surface.
 - **`GlyphSize`** type exported — the four-step scale (`xs`/`sm`/`md`/`lg`) for glyph-shaped things.
 
 ### Changed
 
-- **`LoadingState` now composes `Spinner`** instead of owning a second copy of the same `Loader2 + animate-spin`. The same correction DS-5M made when `ComboboxField` came to compose `Combobox`. Its three sizes stay *region* dimensions (16/24/32px) passed through `className`, so **the rendering is unchanged**.
+- **`LoadingState` now composes `Spinner`** instead of owning a second copy of the same `Loader2 + animate-spin`. The same correction DS-5M made when `ComboboxField` came to compose `Combobox`. Its three sizes stay _region_ dimensions (16/24/32px) passed through `className`, so **the rendering is unchanged**.
 - **`IconButtonSize` is now an alias of `GlyphSize`**, not a second declaration of the same four names. No behaviour change — the per-component pixel maps stay with their components, since an icon button's glyph is sized relative to its button footprint while a bare spinner is sized absolutely.
 - **Every default is unchanged, so this release is purely additive for existing consumers.**
 
@@ -248,7 +276,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 ### Changed
 
 - **Navigation now reads its sizing from the shared `src/lib/control-size.ts` scale** (DS-5O) instead of hardcoding padding, joining `Button`, `Badge`, `Dialog`, `IconButton` and the form family on one `ControlSize` vocabulary. **No new size names were introduced.** With this, no component family in the system sits outside the scale.
-  - `sm` on `SegmentedControl` also tightens the pill **track** to `p-px`: the track's padding and 1px border sit *outside* the segment, so sizing the segment alone left the control at 30px. Caught by live measurement rather than class assertions, and now pinned by a test.
+  - `sm` on `SegmentedControl` also tightens the pill **track** to `p-px`: the track's padding and 1px border sit _outside_ the segment, so sizing the segment alone left the control at 30px. Caught by live measurement rather than class assertions, and now pinned by a test.
 - **Both defaults are `md`, so every existing consumer renders identically.** The change is purely additive.
 
 ## 0.5.0
@@ -268,7 +296,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 ### Added
 
 - **A bare control tier across the form family** (DS-5M, per the DS-5L architecture review). `TextInput`, `Textarea`, `Select`, `Checkbox`, `ToggleSwitch`, `SearchInput`, and the new `Combobox` now render **only the control** when given no `label` and no `helperText` — no stacked `flex flex-col` wrapper, no forced `w-full`, intrinsically sized — so they drop straight into toolbars, filter bars, and table rows. Passing `label`/`helperText` renders the stacked field exactly as before, so **every existing consumer is unchanged**. Bare usage takes its accessible name from `aria-label`/`aria-labelledby`.
-- **`size?: "sm" | "md"`** on all seven controls, from a new shared scale in `src/lib/control-size.ts`. **`sm` lands on `h-8` — the exact height `Button`'s own `sm` renders** — so a control and a button in the same row align without hand-tuning. `md` is the default and preserves the previous padding-driven sizing byte for byte. *Documented exception:* `Textarea`'s `sm` sizes padding and text only — a textarea takes its height from `rows`, so pinning one would be wrong.
+- **`size?: "sm" | "md"`** on all seven controls, from a new shared scale in `src/lib/control-size.ts`. **`sm` lands on `h-8` — the exact height `Button`'s own `sm` renders** — so a control and a button in the same row align without hand-tuning. `md` is the default and preserves the previous padding-driven sizing byte for byte. _Documented exception:_ `Textarea`'s `sm` sizes padding and text only — a textarea takes its height from `rows`, so pinning one would be wrong.
 - **`Combobox`** — the bare typeahead control tier, extracted from `ComboboxField` (ARIA combobox pattern, Arrow/Enter/Escape, `role="listbox"` popup). `ComboboxField` now composes it instead of owning a second copy of the keyboard and listbox logic.
 - **`leadingIcon`** on `Select` and `Combobox` — the filter-bar affordance operational rows rely on (`TextInput` already had one).
 - **`IconButton`** — an icon-only button **built on `Button`** rather than beside it, so variants, focus ring, disabled, and loading can never drift. `aria-label` is **required** by the type. Square at `sm` (size-8) and `md` (size-10); `ghost` is the default variant.
@@ -321,7 +349,7 @@ Every surface using `ink-tertiary`/`ink-disabled` text, every `.focus-ring` elem
 
 ### Removed
 
-- **`--color-ink-inverse`** token — confirmed unused anywhere in this package or the documentation site, and never documented on the public tokens page or `API.md`. Removed directly rather than through `VERSIONING.md`'s standard one-release deprecation window: that window exists to protect a real, documented consumer-facing contract, and this value was never surfaced as one — it shipped in `styles.css` (technically installable via `var(--color-ink-inverse)` in a consumer's own CSS) but was never named on the public tokens page or in any prior CHANGELOG entry as something to depend on. If a real consumer *is* relying on it despite that, this is the breaking change to react to — flagged here explicitly rather than buried in a routine "Removed" line.
+- **`--color-ink-inverse`** token — confirmed unused anywhere in this package or the documentation site, and never documented on the public tokens page or `API.md`. Removed directly rather than through `VERSIONING.md`'s standard one-release deprecation window: that window exists to protect a real, documented consumer-facing contract, and this value was never surfaced as one — it shipped in `styles.css` (technically installable via `var(--color-ink-inverse)` in a consumer's own CSS) but was never named on the public tokens page or in any prior CHANGELOG entry as something to depend on. If a real consumer _is_ relying on it despite that, this is the breaking change to react to — flagged here explicitly rather than buried in a routine "Removed" line.
 
 ## 0.2.0 — tagged, never published
 
