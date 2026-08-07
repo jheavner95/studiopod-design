@@ -19,6 +19,7 @@ documentation application. See
 | Document                                          | Read it when                                        |
 | ------------------------------------------------- | ---------------------------------------------------- |
 | [Constitution](../CONSTITUTION.md)                | Before your first commit. It is binding.            |
+| [MILESTONE-001](../MILESTONE-001.md)              | You want the current architectural baseline in one page |
 | [Architecture overview](architecture/overview.md) | You want to know how the repository is shaped, and why |
 | [Boundaries](architecture/boundaries.md)          | You are asking "does this belong in Design?"        |
 | [Public API strategy](architecture/public-api.md) | You are about to change anything consumers can see  |
@@ -72,6 +73,12 @@ documentation application. See
 | [ADR template](decisions/TEMPLATE.md) | The structure every ADR follows               |
 
 The decision log itself is [decisions/](decisions/README.md#4-the-log).
+
+## Milestones
+
+| Milestone                                | Marks                                                    |
+| ---------------------------------------- | --------------------------------------------------------- |
+| [MILESTONE-001](../MILESTONE-001.md)     | Design becomes a platform — the DH-2 architectural baseline |
 
 ## Certification reports
 
