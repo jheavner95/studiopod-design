@@ -91,6 +91,7 @@ The decision log itself is [decisions/](decisions/README.md#4-the-log).
 | [DH-3](certification/DH-3.md)     | Framework Independence                         |
 | [DH-5](certification/DH-5.md)     | Design API Surface                             |
 | [DH-5.5](certification/DH-5.5.md) | Typography Foundation                          |
+| [DH-6](certification/DH-6.md)     | Comprehensive Component Architecture Audit     |
 
 ---
 
