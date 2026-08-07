@@ -2,7 +2,7 @@
 
 All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
-## Unreleased — DH-3: framework independence
+## 0.15.0 — DH-3: framework independence
 
 **The package no longer requires Next.js, and no longer makes every export a client reference.** Both were consumer-facing defects; the second was recorded as N1 in DH-2's certification.
 
