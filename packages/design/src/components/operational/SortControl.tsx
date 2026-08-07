@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { Select, Button, type SelectOption } from "@/components/ui";
 import type { SortDirection } from "@/components/table";

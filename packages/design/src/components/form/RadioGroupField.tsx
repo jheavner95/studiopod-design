@@ -1,3 +1,5 @@
+"use client";
+
 import { useId, type ReactNode } from "react";
 import { Stack } from "@/components/layout";
 import { RadioGroup, type RadioGroupProps } from "@/components/ui";

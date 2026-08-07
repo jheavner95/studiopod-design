@@ -1,55 +1,66 @@
 import { defineConfig } from "tsup";
 
 /**
- * The package builds its own source tree and nothing else.
+ * Two builds, because the package emits two kinds of thing.
  *
- * Before DH-2 this config carried two esbuild resolver plugins that
- * redirected "@/components/layout" and "@/workflows" to package-local
- * shims, because those barrels reached into documentation-site chrome and
- * canned example data that shared a `src/` tree with the library. The
- * shims were a boundary implemented by hand, per barrel — they only ever
- * caught the barrels someone had noticed. DH-2 gave the library its own
- * source tree, so there is nothing left to redirect and both plugins are
- * gone. See docs/decisions/0003-library-owns-its-source.md.
+ * ## Why the JS build does not bundle (DH-3)
+ *
+ * esbuild drops a module-level directive prologue the moment it bundles — it
+ * considers a directive unsafe to keep once tree-shaking can reorder and merge
+ * modules. The old build worked around that by re-injecting one `"use client"`
+ * per entry point after esbuild finished.
+ *
+ * That workaround was the defect DH-2 recorded as N1. A directive at the top of
+ * `index.js` marks *every* export in the package as a client reference,
+ * including `cn`, the token constants, and the ~73% of components that are pure
+ * presentation. Any consumer with a Server Component paid for that, and both
+ * Cloud and Web are App Router applications.
+ *
+ * Not bundling makes the problem disappear rather than managing it: each source
+ * module becomes one output module, and its own directive — or its own absence
+ * of one — travels with it. React's client/server boundary is defined per
+ * module, so this is the output shape the boundary was designed for.
+ *
+ * The cost is that esbuild in transform mode resolves nothing, so emitted
+ * specifiers keep the source's path aliases and extensionless relative paths.
+ * `scripts/resolve-specifiers.mjs` rewrites them against the emitted tree and
+ * fails if any does not resolve.
+ *
+ * Declarations come from `tsc --emitDeclarationOnly` (see package.json), not
+ * from tsup: rollup-plugin-dts bundles types into one file per entry, which
+ * would undo the per-module shape on the type side.
+ *
+ * ## Why the CSS build still bundles
+ *
+ * `styles.css` is a plain concatenation of the five generated token
+ * stylesheets, and consumers import one file. That has to be bundled, and it
+ * must never go through Tailwind's compiler — see scripts/check-css.mjs.
  */
-export default defineConfig({
-  entry: {
-    index: "src/index.ts",
-    tokens: "src/tokens.ts",
-    marketing: "src/marketing.ts",
-    illustrations: "src/illustrations.ts",
-    internal: "src/internal.ts",
-    styles: "src/styles.css",
+export default defineConfig([
+  {
+    name: "js",
+    entry: ["src/**/*.ts", "src/**/*.tsx", "!src/**/*.test.ts", "!src/**/*.test.tsx"],
+    outDir: "dist",
+    format: ["esm"],
+    platform: "browser",
+    target: "es2017",
+    bundle: false,
+    splitting: false,
+    sourcemap: false,
+    clean: true,
+    dts: false,
+    minify: false,
+    tsconfig: "./tsconfig.json",
   },
-  format: ["esm"],
-  platform: "browser",
-  dts: {
-    entry: {
-      index: "src/index.ts",
-      tokens: "src/tokens.ts",
-      marketing: "src/marketing.ts",
-      illustrations: "src/illustrations.ts",
-      internal: "src/internal.ts",
-    },
+  {
+    name: "css",
+    entry: { styles: "src/styles.css" },
+    outDir: "dist",
+    format: ["esm"],
+    bundle: true,
+    clean: false,
+    sourcemap: false,
+    minify: false,
+    tsconfig: "./tsconfig.json",
   },
-  splitting: true,
-  sourcemap: false,
-  clean: true,
-  treeshake: true,
-  minify: false,
-  external: ["react", "react-dom", "react/jsx-runtime", "next", "next/link", "next/navigation", "next/image"],
-  tsconfig: "./tsconfig.json",
-  outDir: "dist",
-  // `treeshake: true` above makes esbuild actively drop any module-level
-  // directive prologue (including a literal "use client" placed as line 1
-  // of an entry's own source) once it bundles — esbuild considers a
-  // directive unsafe to keep after tree-shaking can reorder/merge code, so
-  // it's stripped with a "Module level directives cause errors when
-  // bundled" warning rather than preserved. Since index/marketing/
-  // illustrations all export real client components (hooks, context
-  // providers, framer-motion primitives), this runs a post-build step that
-  // prepends the directive as plain text after esbuild's own transform
-  // finishes, sidestepping the tree-shake/directive conflict entirely. See
-  // scripts/inject-use-client.mjs.
-  onSuccess: "node ./scripts/inject-use-client.mjs",
-});
+]);

@@ -26,7 +26,7 @@
  * them would make the repository's own history inaccurate. This check therefore
  * scopes itself to the package directory's live source, not to prose.
  *
- * On (5): this does NOT import the built modules. They reference "next/link"
+ * On (5): this does NOT import the built modules. They reference bare
  * and friends as bare specifiers, which a plain Node loader cannot resolve
  * outside a bundler — the same reason check-exports.mjs stays static.
  * `import.meta.resolve` performs full export-map resolution WITHOUT executing

@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode, ChangeEvent } from "react";
 import { Stack } from "@/components/layout";
 import { CheckboxField } from "@/components/form";

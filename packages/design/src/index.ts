@@ -13,6 +13,12 @@
  * name (`InspectorPropertyEditor`) instead of being dropped.
  */
 
+// Framework capability types. Design targets React and no framework; the
+// capabilities a framework would otherwise provide — link navigation, image
+// optimisation — are injected as props, and these are the types for doing so.
+// See @/framework/types for why props rather than context.
+export type { LinkComponent, LinkComponentProps, ImageComponent, ImageComponentProps } from "@/framework";
+
 // Core UI primitives
 export * from "@/components/ui";
 
@@ -167,7 +173,9 @@ export {
 
 // Navigation primitives — SegmentedControl is dropped here: the exact
 // same component already re-exported above (from "@/components/ui").
-// Depends on `next` (next/link, next/navigation) at runtime.
+// Link rendering is injected: NavigationItem and Breadcrumbs take an
+// optional `linkComponent` and default to a plain <a>. Until DH-3 they
+// imported next/link and next/navigation directly.
 export {
   NavigationItem,
   NavigationCollapsedContext,

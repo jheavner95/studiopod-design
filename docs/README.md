@@ -86,6 +86,7 @@ The decision log itself is [decisions/](decisions/README.md#4-the-log).
 | ------------------------------- | ---------------------------------------------- |
 | [DH-1](certification/DH-1.md)   | Design Architecture Foundation                 |
 | [DH-2](certification/DH-2.md)   | Foundation Integration & Repository Separation |
+| [DH-3](certification/DH-3.md)   | Framework Independence                         |
 
 ---
 

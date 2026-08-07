@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, type MouseEvent, type ReactNode } from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import type { LinkComponent } from "@/framework";
 import { Tooltip } from "@/components/overlay";
 
 /** Cascades collapsed/icon-only mode from SideNavigation or NavigationRail down to every NavigationItem and NavigationGroup inside, the same way TableDensityContext saves Table's cells from threading a density prop by hand. */
@@ -29,6 +29,8 @@ export interface NavigationItemProps {
   /** Indentation depth — used by grouped and tree navigation, 0 by default. */
   level?: number;
   className?: string;
+  /** What renders the link. Defaults to `"a"`; pass your framework's link component for client-side navigation. A prop, not context, so this component stays server-safe. */
+  linkComponent?: LinkComponent;
 }
 
 const BASE =
@@ -47,6 +49,7 @@ export function NavigationItem({
   badge,
   level = 0,
   className,
+  linkComponent,
 }: NavigationItemProps) {
   const contextCollapsed = useNavigationCollapsed();
   const isCollapsed = collapsed ?? contextCollapsed;
@@ -80,11 +83,13 @@ export function NavigationItem({
   // rather than relying on the tooltip text alone.
   const accessibleLabel = isCollapsed ? tooltipLabel : undefined;
 
+  const LinkEl = linkComponent ?? "a";
+
   const element =
     href && !disabled ? (
-      <Link href={href} aria-current={active ? "page" : undefined} aria-label={accessibleLabel} className={sharedClassName} style={style}>
+      <LinkEl href={href} aria-current={active ? "page" : undefined} aria-label={accessibleLabel} className={sharedClassName} style={style}>
         {content}
-      </Link>
+      </LinkEl>
     ) : (
       <button
         type="button"

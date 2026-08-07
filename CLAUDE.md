@@ -27,9 +27,16 @@ whole ecosystem reads.
 - **No `shared/`, `common/`, `core/`, `utils/`, `helpers/`, `misc/`, or `lib/`
   directories.** `packages/design/src/lib/`, `src/hooks/` and four `*/utils/`
   directories still exist. They are migration targets, not precedent.
-- **No *new* framework coupling in the package.** Six library files still
-  import `next/*` (seven imports) and `next` is still a peer dependency — DH-3
-  ([ADR 0007](docs/decisions/0007-framework-neutrality.md)). Do not add more.
+- **No framework coupling in the package.** No `next/*`, no router, no data
+  layer — `npm run package:framework-check` fails on any of them, in source,
+  in the emitted output, or in the manifest. Framework capabilities are
+  injected as props with plain-HTML defaults, never through context
+  ([ADR 0013](docs/decisions/0013-framework-capabilities-are-props.md)).
+- **Only genuinely interactive modules carry `"use client"`.** The package
+  emits one module per source file so directives are per-module. Adding one
+  where it is not needed fails `package:client-boundaries-check` just as loudly
+  as omitting one where it is — over-marking is how N1 spread
+  ([ADR 0014](docs/decisions/0014-preserve-modules-build.md)).
 - **Accessibility regressions are breaking changes** and are released as such.
 - **Documentation lands in the same commit as the change it describes.**
 - **A decision that is expensive to reverse needs an ADR**, written before the
@@ -84,11 +91,15 @@ tooling/           checks, generators, the verification runner
 library source. If you find yourself wanting one, that is the defect DH-2
 removed — see [ADR 0003](docs/decisions/0003-library-owns-its-source.md).
 
-Five of DH-1's nineteen conformance gaps are closed. The rest are open and
-enumerated in [docs/certification/DH-2.md](docs/certification/DH-2.md)
-§ Remaining gaps — most notably the `next` peer dependency (framework
-neutrality, [ADR 0007](docs/decisions/0007-framework-neutrality.md)), stability
-tiers on exports, and the library's internal tier layout.
+**DH-3 made the package framework-independent.** `next` is no longer a peer
+dependency, no library module imports a framework, and 392 of 538 emitted
+modules (73%) are server-safe where previously every export was a client
+reference. Both blockers Cloud named are gone.
+
+Eight of DH-1's nineteen gaps plus N1 are closed. The rest are enumerated in
+[docs/certification/DH-3.md](docs/certification/DH-3.md) § Remaining gaps —
+most notably stability tiers on exports (gap 5), the root-entry audit (gap 13),
+and the library's tier layout (gap 8).
 
 Do not treat the current tree as precedent where it contradicts this
 architecture.

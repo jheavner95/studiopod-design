@@ -13,7 +13,8 @@
  *   3. every `types` target exists and is non-empty
  *   4. the CSS export exists and still carries its @theme block (the whole
  *      point of the CSS entry — consumers' Tailwind builds depend on it)
- *   5. entries that ship client components retain their "use client" directive
+ *   5. no entry point carries a "use client" directive — that is N1, and the
+ *      dedicated check is scripts/check-client-boundaries.mjs
  *      (tsup's treeshake pass strips it; see tsup.config.ts)
  *   6. every file the exports map points at is inside the `files` allowlist,
  *      i.e. it will actually be present in the published tarball
@@ -34,7 +35,19 @@ const pkgRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8"));
 
 /** Entries whose bundles include React client components. */
-const CLIENT_ENTRIES = new Set(["./dist/index.js", "./dist/marketing.js", "./dist/illustrations.js"]);
+// Entry points must NOT carry the directive. Before DH-3 this set listed the
+// entries that had to HAVE one, because the bundled build stripped per-module
+// directives and re-injected them per entry — which is exactly defect N1: a
+// directive on index.js makes every export in the package a client reference.
+// The package now emits one module per source file, each carrying its own
+// directive, so an entry is a plain re-export graph and must stay server-safe.
+const ENTRIES_MUST_BE_SERVER_SAFE = new Set([
+  "./dist/index.js",
+  "./dist/tokens.js",
+  "./dist/marketing.js",
+  "./dist/illustrations.js",
+  "./dist/internal.js",
+]);
 
 const problems = [];
 const ok = [];
@@ -73,10 +86,11 @@ for (const [subpath, rel] of all) {
       problems.push(`${subpath} -> ${rel} has no ESM export statement — not a valid ESM entry`);
       continue;
     }
-    if (CLIENT_ENTRIES.has(rel) && !body.startsWith('"use client"')) {
+    if (ENTRIES_MUST_BE_SERVER_SAFE.has(rel) && body.startsWith('"use client"')) {
       problems.push(
-        `${subpath} -> ${rel} is MISSING its "use client" directive. tsup's treeshake pass strips ` +
-          `module-level directives; scripts/inject-use-client.mjs must re-add it (see tsup.config.ts).`,
+        `${subpath} -> ${rel} carries a "use client" directive. An entry point is a re-export ` +
+          `graph; marking one client makes every export in the package a client reference — defect N1. ` +
+          `Directives belong on the individual modules that need them.`,
       );
       continue;
     }

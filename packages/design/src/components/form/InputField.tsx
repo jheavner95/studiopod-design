@@ -1,3 +1,5 @@
+"use client";
+
 import { useId, type ReactNode } from "react";
 import { Stack } from "@/components/layout";
 import { TextInput, type TextInputProps } from "@/components/ui";

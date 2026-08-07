@@ -35,19 +35,17 @@ with `read:packages`.
 npm install @studiopod/design
 ```
 
-Peer dependencies today: `react`, `react-dom` (`^18 || ^19`), and `next`
-(`>=14`). The `next` peer is a defect, not a design —
-[ADR 0007](../decisions/0007-framework-neutrality.md) removes it, and that work
-is still open. Until it lands, a consumer must have Next.js installed even if it
-does not use it.
+Peer dependencies: `react` and `react-dom` (`^18 || ^19`). **That is all.**
+DH-3 removed the `next` peer — the package no longer requires Next.js, or any
+framework, and `check-framework-imports.mjs` fails the build if one reappears.
 
 ### Wiring it up
 
 ```
 1. Import the stylesheet once, at the application root
 2. Add the @source line — it is REQUIRED, see below
-3. Wrap the application in the theme provider
-4. Import components from the entry point that matches what you need
+3. Import components from the entry point that matches what you need
+4. Optionally, pass your link component to the components that navigate
 ```
 
 **Step 2 is not optional.** Tailwind ignores `node_modules`, so without
@@ -60,10 +58,60 @@ none of the design system's classes are generated and **every component renders
 unstyled**, with no error. Full setup: [../DISTRIBUTION.md](../DISTRIBUTION.md)
 § 3.
 
-Once [ADR 0007](../decisions/0007-framework-neutrality.md) lands there will be a
-fifth step: giving the theme provider your link component, so components that
-navigate render yours rather than importing a router. That does not exist yet —
-today the package imports `next/link` directly.
+### Step 4 — links, images, and navigation
+
+Design renders a plain `<a>` by default, so **everything works with no wiring at
+all**. `<Button href="/x">` is a working link today. The cost of doing nothing is
+a full page load instead of a client-side transition.
+
+To get client-side routing, pass your link component:
+
+```tsx
+import Link from "next/link";
+
+<Button href="/pricing" linkComponent={Link}>Pricing</Button>
+<NavigationItem href="/docs" linkComponent={Link}>Docs</NavigationItem>
+```
+
+To apply it everywhere, wrap once in your own application — Design deliberately
+has no provider or global registry for this, because a React context read would
+make every one of these components client-only
+([ADR 0013](../decisions/0013-framework-capabilities-are-props.md)):
+
+```tsx
+// app/design.tsx
+import Link from "next/link";
+import { Button as DesignButton, type ButtonProps } from "@studiopod/design";
+
+export const Button = (props: ButtonProps) => <DesignButton linkComponent={Link} {...props} />;
+```
+
+| Capability              | Prop               | Default                  | Components                                                        |
+| ----------------------- | ------------------ | ------------------------ | ------------------------------------------------------------------ |
+| Link navigation         | `linkComponent`    | `"a"`                    | `Button`, `NavigationItem`, `Breadcrumbs`, `QueueWidget`, `RelationshipList` |
+| Image rendering         | `imageComponent`   | `"img"`                  | `AssetThumbnail`                                                   |
+| Programmatic navigation | `onNavigate`       | `window.location.assign` | `Breadcrumbs`                                                      |
+
+`next/image` must be pre-bound to fill mode, since Design always renders images
+filling their positioned parent:
+
+```tsx
+import Image from "next/image";
+import type { ImageComponentProps } from "@studiopod/design";
+
+const FillImage = (props: ImageComponentProps) => <Image {...props} fill />;
+```
+
+### Server Components
+
+Most of the package is server-safe: 392 of 538 modules carry no `"use client"`
+directive, so a Server Component can render `Button`, `Card`, `Stack`, the
+layout and workflow families, `cn`, and the token constants without opening a
+client boundary. Only genuinely interactive modules — overlays, form controls,
+anything with state or motion — are client, and they are marked individually.
+
+Before DH-3 this was not true: the root entry carried a single `"use client"`
+directive, which made **every** export a client reference.
 
 ---
 
@@ -119,10 +167,11 @@ into Design.
 Two facts worth stating for Cloud specifically, because they were the stated
 blockers:
 
-- The `next` peer dependency is scheduled for removal
-  ([ADR 0007](../decisions/0007-framework-neutrality.md)) so Cloud does not
-  inherit a framework coupling it did not choose. **Still open** — DH-2 did the
-  repository separation, not framework neutrality.
+- The `next` peer dependency is **gone** (DH-3,
+  [ADR 0007](../decisions/0007-framework-neutrality.md)). Cloud does not inherit
+  a framework coupling it did not choose.
+- Cloud's Server Components can render Design components directly, without a
+  client boundary per component — the defect DH-2 found as N1 and DH-3 fixed.
 - The marketing surface is a separate entry point Cloud never imports. It is not
   in Cloud's bundle and not in Cloud's API surface.
 

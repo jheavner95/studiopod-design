@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableSelectionCell } from "@/components/table";
 import { QueueHeader } from "./QueueHeader";

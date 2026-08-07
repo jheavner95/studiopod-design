@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { SelectField } from "@/components/form";
 import type { SelectOption } from "@/components/ui";

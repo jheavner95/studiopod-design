@@ -53,9 +53,15 @@ const DEFAULT_STEPS = [
   ...FAST_STEPS,
   // The published contract. Each of these catches a distinct class of defect
   // in what actually ships; see docs/engineering/quality-gates.md § 2.
+  // DH-3 added the two below. The framework check is what keeps ADR 0007 a rule
+  // rather than a convention: no framework specifier in source, in the emitted
+  // output, or in the manifest. The client-boundary check is what keeps defect
+  // N1 fixed: every module carries its own directive, no entry point carries
+  // one, and the emitted output agrees with the source.
   { name: "Package API contract", script: "package:api-check" },
   { name: "Package CSS contract", script: "package:css-check" },
-  { name: 'Package "use client" directives', script: "package:use-client-check" },
+  { name: "Package framework independence", script: "package:framework-check" },
+  { name: "Package client boundaries", script: "package:client-boundaries-check" },
   { name: "Package entry points", script: "package:exports-check" },
   { name: "Package identity", script: "package:identity-check" },
   // Last, because it is the slowest and because it is the one gate that

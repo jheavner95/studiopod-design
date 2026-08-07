@@ -195,10 +195,10 @@ export default function Home() {
         subtitle="The same components, patterns, and architecture that power StudioPOD — one system for the marketing site and the product, so every screen looks, behaves, and composes the same way."
         cta={
           <CTAGroup align="center">
-            <Button href="/application-components" size="lg">
+            <Button linkComponent={Link} href="/application-components" size="lg">
               Explore Components
             </Button>
-            <Button href="#start-here" variant="secondary" size="lg">
+            <Button linkComponent={Link} href="#start-here" variant="secondary" size="lg">
               Start Here
             </Button>
           </CTAGroup>
@@ -259,7 +259,7 @@ export default function Home() {
             title: entry.title,
             description: entry.description,
             cta: (
-              <Button href={entry.href} variant="ghost" size="sm" trailingIcon={<ArrowRight className="size-4" />}>
+              <Button linkComponent={Link} href={entry.href} variant="ghost" size="sm" trailingIcon={<ArrowRight className="size-4" />}>
                 View
               </Button>
             ),
@@ -313,13 +313,13 @@ export default function Home() {
         size="lg"
         cta={
           <CTAGroup align="center">
-            <Button href="/application-components" size="lg">
+            <Button linkComponent={Link} href="/application-components" size="lg">
               Explore Components
             </Button>
-            <Button href="/applications" variant="secondary" size="lg">
+            <Button linkComponent={Link} href="/applications" variant="secondary" size="lg">
               Browse Applications
             </Button>
-            <Button href="/docs" variant="secondary" size="lg">
+            <Button linkComponent={Link} href="/docs" variant="secondary" size="lg">
               Learn the Architecture
             </Button>
           </CTAGroup>

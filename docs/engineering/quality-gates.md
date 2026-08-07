@@ -50,7 +50,8 @@ compilation and no build was needed.
 | **API check**          | The export surface matches `API.md`. **The most valuable check in the repository.**       |
 | **Exports check**      | Every declared entry point resolves, in the shapes consumers import                       |
 | **CSS check**          | The stylesheet contains what it claims and nothing more                                   |
-| **`use client` check** | Client components carry the directive after bundling — a real defect the build introduces |
+| **Framework independence** | No framework specifier in source, in the emitted output, or in the manifest. Keeps [ADR 0007](../decisions/0007-framework-neutrality.md) a rule rather than a convention — the convention had already failed once. |
+| **Client boundaries** | No entry point carries a `"use client"` directive; every module that needs one has one; none carries one it does not need; emitted output agrees with source. This is what keeps defect N1 fixed. |
 | **Identity check**     | Name, version, registry, files, and peer ranges are coherent                              |
 | **Documentation build**| The documentation site builds **against the published surface** — an integration test of the public API |
 
@@ -76,6 +77,12 @@ public API strategy is a document rather than a mechanism.
 **The token bridge check.** It is the only thing standing between the ecosystem
 and a second canonical owner of the brand. A hand-edited generated file is a fork
 that looks like a bug fix.
+
+**The client-boundary check.** Added in DH-3, and the reason N1 cannot come
+back. It does not check a list of known files — it re-derives, from the source,
+which modules do something only a client can do, and fails if the directives
+disagree in either direction. Over-marking fails as loudly as under-marking,
+because over-marking is how N1 spread.
 
 **The documentation build.** Since DH-2 the documentation site consumes the
 published entry points, which makes it the one gate that exercises the API the

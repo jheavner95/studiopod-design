@@ -2,6 +2,35 @@
 
 All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## Unreleased — DH-3: framework independence
+
+**The package no longer requires Next.js, and no longer makes every export a client reference.** Both were consumer-facing defects; the second was recorded as N1 in DH-2's certification.
+
+Migration is intentionally near-zero: every new prop is optional with a plain-HTML default, so **existing call sites compile and work unchanged**. The documentation application — 636 imports across five entry points — typechecked with zero errors after the change.
+
+### Removed
+
+- **`next` is no longer a peer dependency.** Peers are now `react` and `react-dom` only. Consumers no longer install Next.js to use Design. Enforced by a new `framework-check`: no framework specifier may appear in source, in the emitted output, or in the manifest.
+
+### Changed
+
+- **Only genuinely interactive modules are client modules now.** The package emits one module per source file instead of a bundle, so each carries its own `"use client"` directive. **392 of 538 modules (73%) are server-safe** — previously all of them were client references, because a single directive at the top of `index.js` marks every export in the package. A Server Component can now render `Button`, `Card`, `Stack`, the layout and workflow families, `cn` and the token constants without opening a client boundary. See ADR 0014.
+- **`Button`, `NavigationItem`, `Breadcrumbs`, `QueueWidget`, `RelationshipList`** render a plain `<a>` by default instead of `next/link`. Pass `linkComponent` for client-side routing.
+- **`AssetThumbnail`** renders a plain `<img>` by default instead of `next/image`. Pass `imageComponent` (pre-bound to fill mode) for optimisation.
+- **`Breadcrumbs`** no longer calls `useRouter()`. Its overflow menu's keyboard navigation defaults to `window.location.assign`; pass `onNavigate` to keep it a client-side transition.
+- **DOM contract — `Button` with both `href` and `loading`.** It previously rendered `onClick={e => e.preventDefault()}`; it now renders `tabIndex={-1}` and no handler. Same behaviour — the base class already carries `aria-disabled:pointer-events-none` for the pointer path, and `tabIndex={-1}` closes the keyboard path — but an event handler would have made the whole component client-only for a guard the stylesheet already provides. **Only affects consumers asserting on that attribute in tests.**
+
+### Added
+
+- `linkComponent` on `Button`, `NavigationItem`, `Breadcrumbs`, `QueueWidget`, `RelationshipList` — optional, defaults to `"a"`.
+- `imageComponent` on `AssetThumbnail` — optional, defaults to `"img"`.
+- `onNavigate` on `Breadcrumbs` — optional, defaults to `window.location.assign`.
+- Types `LinkComponent`, `LinkComponentProps`, `ImageComponent`, `ImageComponentProps` on the root entry, for typing your own bindings. Root baseline 616 → **620 exports; nothing removed or renamed.**
+
+### Consumer action
+
+None required. To keep client-side routing where you had it, pass `linkComponent`; see `docs/consuming/README.md` § 2.
+
 ## 0.14.0 — UX-2 accessibility corrections (CR-1, CR-2, CR-3)
 
 Three defects, all found by **rendering the consuming application and reading computed CSS out of the DOM** — none was visible to source inspection, and none was caught by the 1,001 tests that existed before this release. No API changed: no export added, removed or renamed; all four API baselines unchanged (616 root, 249 illustrations, 44 marketing, 5 tokens).

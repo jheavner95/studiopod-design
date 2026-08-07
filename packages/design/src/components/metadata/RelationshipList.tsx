@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Stack } from "@/components/layout";
 import { Caption } from "@/components/ui";
+import type { LinkComponent } from "@/framework";
 
 export interface RelationshipItem {
   label: ReactNode;
@@ -14,6 +14,8 @@ interface RelationshipListProps {
   items: RelationshipItem[];
   className?: string;
   emptyLabel?: ReactNode;
+  /** What renders the link. Defaults to `"a"`; pass your framework's link component for client-side navigation. A prop, not context, so this component stays server-safe. */
+  linkComponent?: LinkComponent;
 }
 
 /**
@@ -21,7 +23,8 @@ interface RelationshipListProps {
  * workspace's own regions.ts file already establishes ad hoc via a
  * reuseLinks array (seven separate times — see Promotion Candidates).
  */
-export function RelationshipList({ items, className, emptyLabel = "No related items" }: RelationshipListProps) {
+export function RelationshipList({ items, className, emptyLabel = "No related items", linkComponent }: RelationshipListProps) {
+  const LinkEl = linkComponent ?? "a";
   if (items.length === 0) {
     return <Caption className="text-ink-tertiary">{emptyLabel}</Caption>;
   }
@@ -39,9 +42,9 @@ export function RelationshipList({ items, className, emptyLabel = "No related it
           </span>
         );
         return item.href ? (
-          <Link key={index} href={item.href} className="focus-ring rounded-md">
+          <LinkEl key={index} href={item.href} className="focus-ring rounded-md">
             {content}
-          </Link>
+          </LinkEl>
         ) : (
           <div key={index}>{content}</div>
         );

@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode, KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { cn } from "@/lib/utils";
 

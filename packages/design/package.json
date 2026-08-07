@@ -51,21 +51,23 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsup --config ./tsup.config.ts",
+    "build": "tsup --config ./tsup.config.ts && npm run build:types && npm run build:specifiers",
     "typecheck": "tsc --noEmit -p ./tsconfig.json",
     "api-check": "node ./scripts/check-api.mjs",
     "exports-check": "node ./scripts/check-exports.mjs",
-    "verify": "npm run bridge-check && npm run build && npm run typecheck && npm run api-check && npm run css-check && npm run use-client-check && npm run exports-check && npm run identity-check",
+    "verify": "npm run bridge-check && npm run build && npm run typecheck && npm run api-check && npm run css-check && npm run framework-check && npm run client-boundaries-check && npm run exports-check && npm run identity-check",
     "prepublishOnly": "npm run verify",
     "css-check": "node ./scripts/check-css.mjs",
-    "use-client-check": "node ./scripts/check-use-client.mjs",
     "identity-check": "node ./scripts/check-package-identity.mjs",
-    "bridge-check": "node ../../tooling/generators/generate-tokens-from-foundation.mjs --check"
+    "bridge-check": "node ../../tooling/generators/generate-tokens-from-foundation.mjs --check",
+    "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly --declaration --outDir dist",
+    "build:specifiers": "node ./scripts/resolve-specifiers.mjs",
+    "client-boundaries-check": "node ./scripts/check-client-boundaries.mjs",
+    "framework-check": "node ./scripts/check-framework-imports.mjs"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0",
-    "next": ">=14.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

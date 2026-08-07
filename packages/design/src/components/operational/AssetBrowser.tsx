@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import type { TableDensity } from "@/components/table";
 import { cn } from "@/lib/utils";

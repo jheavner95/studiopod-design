@@ -40,6 +40,11 @@ compiles.
 | `./styles.css`    | The stylesheet                                             | Highest — load-bearing       | Every consumer       |
 | `./internal`      | **Not public API.** The motion engine, the illustration dev overlay, control-sizing constants | **None whatsoever** | `@studiopod/docs` only |
 
+Since DH-3 the package emits one module per source file, so an entry point is a
+re-export graph rather than a bundle, and **no entry point carries a
+`"use client"` directive**. 392 of 538 modules are server-safe.
+[ADR 0014](../decisions/0014-preserve-modules-build.md).
+
 **Adding, removing, or re-scoping a public entry point is a breaking change**,
 because consumers' import paths and bundler configuration depend on the set.
 
@@ -139,9 +144,9 @@ people who install them.
 | Two esbuild resolver plugins shim barrels to strip doc-site imports                              | Only catches barrels someone remembered. Silent inclusion is the default    | **Fixed — DH-2**, deleted  |
 | Directory is `packages/design-system`; package is `@studiopod/design`                            | Two names for one thing                                                    | **Fixed — DH-2**           |
 | `sideEffects` cannot be tightened while the source tree is shared                                | Bundlers evaluate more than they need to                                   | **Unblocked — DH-2**; not yet tightened |
-| `next` is a required peer dependency for all consumers                                          | Blocks Cloud. Levies a framework tax on consumers that do not use it        | Open — DH-3, [ADR 0007](../decisions/0007-framework-neutrality.md) |
+| `next` is a required peer dependency for all consumers                                          | Blocks Cloud. Levies a framework tax on consumers that do not use it        | **Fixed — DH-3** |
 | Barrel-heavy exports (`export * from "@/components/ui"`)                                        | Undermines the tree-shaking that the no-second-package argument depends on   | Open — DH-3                |
-| The root entry carries `"use client"`, so pure exports such as `cn` cannot be called from a server component | Any consumer with a server component hits it              | Open — found by DH-2       |
+| The root entry carries `"use client"`, so pure exports such as `cn` cannot be called from a server component | Any consumer with a server component hits it              | **Fixed — DH-3** (N1)      |
 
 The last row is new, and it is the kind of defect only a real consumer finds.
 The documentation site hit it on its first build against `dist/`. See

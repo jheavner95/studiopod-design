@@ -71,20 +71,24 @@ DH-2's verdict was **CERTIFIED WITH OBSERVATIONS**, and three things are
 deliberately unfinished — stated here so a future package does not discover them
 as surprises:
 
-1. **`next` is still a peer dependency**, and six library files still import
-   `next/*`. Framework neutrality
-   ([ADR 0007](docs/decisions/0007-framework-neutrality.md)) is not done, and it
-   is one of the two reasons Cloud cannot comfortably adopt the package yet.
-2. **N1 — the root entry's `"use client"` directive** makes every root export a
-   client reference, including pure functions like `cn`. Any consumer with a
-   server component hits it. Found by DH-2, intentionally left for a later
-   package.
+1. ~~**`next` is still a peer dependency.**~~ **Resolved by DH-3** — the peer is
+   gone, no library module imports a framework, and
+   `check-framework-imports.mjs` keeps it that way.
+2. ~~**N1 — the root entry's `"use client"` directive.**~~ **Resolved by DH-3** —
+   the package emits one module per source file, and 392 of 538 are server-safe.
 3. **Tree-shaking is an unverified assumption.** DH-2 made verification
-   possible; it did not measure it. See
+   possible; DH-3 changed its nature — the package no longer pre-bundles, so
+   composition is entirely the consumer's bundler's decision — but nothing
+   measures it. Still open (gap 16). See
    [packages.md § 3](docs/architecture/packages.md).
+4. **Cloud has not actually adopted the package yet.** DH-3 removed both stated
+   blockers and proved the package works with no Next.js installed, but
+   "compatible" remains an inference until a Cloud integration observes it.
 
-"Independently consumable" describes the architecture. Making it comfortably
-consumable is DH-3's work.
+"Independently consumable" described the architecture at DH-2. **DH-3 made it
+framework-independent**, closing items 1 and 2 above. What remains before
+"comfortably consumable" is a second real consumer —
+[DH-3 § 9](docs/certification/DH-3.md).
 
 ---
 

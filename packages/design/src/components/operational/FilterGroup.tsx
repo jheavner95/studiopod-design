@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { Badge, Checkbox } from "@/components/ui";
 import { FilterPopover } from "./FilterPopover";

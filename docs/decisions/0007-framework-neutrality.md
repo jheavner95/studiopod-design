@@ -6,6 +6,8 @@
 - **Scope:** Repository
 - **Supersedes:** —
 - **Superseded by:** —
+- **Refined by:** [ADR 0013](0013-framework-capabilities-are-props.md) — § The injection mechanism
+- **Implemented by:** DH-3
 
 ## Context
 
@@ -55,6 +57,14 @@ Concretely:
    library.
 
 ### The injection mechanism
+
+> **Superseded in part by [ADR 0013](0013-framework-capabilities-are-props.md).**
+> DH-3 implemented this ADR and inverted the two mechanisms below: capabilities
+> are injected as **props**, and there is no provider. The reason is that a
+> provider is React context, and a context read makes a component client —
+> which would have made `Button` and four other families permanently client,
+> undoing the other half of DH-3. The decision to remove the coupling is
+> unchanged; only the mechanism is. The rest of this ADR stands.
 
 Two complementary mechanisms, because they suit different cases.
 

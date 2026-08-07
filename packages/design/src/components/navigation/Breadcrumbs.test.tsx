@@ -3,10 +3,10 @@ import { render, screen, fireEvent } from "@test/render";
 import { runA11yCheck } from "@test/a11y";
 import { Breadcrumbs, type BreadcrumbItem } from "./Breadcrumbs";
 
+// DH-3 replaced Breadcrumbs' `useRouter()` import with an injected
+// `onNavigate` prop, so this no longer mocks a framework module — it passes a
+// spy, which is what the component's own contract now asks for.
 const push = vi.fn();
-vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push }),
-}));
 
 const ITEMS: BreadcrumbItem[] = [
   { label: "Home", href: "/" },
@@ -65,13 +65,13 @@ describe("Breadcrumbs", () => {
         { label: "Tees", href: "/tees" },
         { label: "Holiday Collection" },
       ];
-      render(<Breadcrumbs items={many} maxVisible={3} />);
+      render(<Breadcrumbs items={many} maxVisible={3} onNavigate={push} />);
       fireEvent.click(screen.getByRole("button", { name: "Show hidden breadcrumb items" }));
       expect(screen.getByRole("menu")).toBeInTheDocument();
       expect(screen.getByRole("menuitem", { name: "Apparel" })).toBeInTheDocument();
     });
 
-    it("navigates via the router when a hidden item is selected from the overflow menu", () => {
+    it("calls onNavigate when a hidden item is selected from the overflow menu", () => {
       push.mockClear();
       const many: BreadcrumbItem[] = [
         { label: "Home", href: "/" },
@@ -80,7 +80,7 @@ describe("Breadcrumbs", () => {
         { label: "Tees", href: "/tees" },
         { label: "Holiday Collection" },
       ];
-      render(<Breadcrumbs items={many} maxVisible={3} />);
+      render(<Breadcrumbs items={many} maxVisible={3} onNavigate={push} />);
       fireEvent.click(screen.getByRole("button", { name: "Show hidden breadcrumb items" }));
       fireEvent.click(screen.getByRole("menuitem", { name: "Apparel" }));
       expect(push).toHaveBeenCalledWith("/apparel");

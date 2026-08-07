@@ -2,18 +2,24 @@
 /**
  * API baseline check for @studiopod/design.
  *
- * Statically parses each built entry's trailing `export { ... }` statement
- * (present in both the .js and .d.ts tsup output — one per file, since
- * esbuild/tsup always emit a single re-export list at the end of a bundled
- * ESM module) and compares the sorted list of PUBLIC export names against
- * a checked-in baseline manifest per entry point.
+ * Resolves each entry point's full export surface and compares the sorted
+ * list of PUBLIC export names against a checked-in baseline manifest.
  *
- * Deliberately does NOT dynamically `import()` the built files: doing so
- * would require Node to resolve "next/link" etc. as bare specifiers
- * outside of a bundler, which fails in a plain Node ESM loader (a Next.js
- * package-exports quirk, unrelated to this package) — so this reads the
- * .d.ts files as text instead, which covers both values and types and
- * needs no module resolution at all.
+ * Uses the TypeScript compiler's own module resolution rather than reading
+ * the .d.ts as text. It used to do the latter — matching the single trailing
+ * `export { ... }` block that a *bundled* ESM module always ends with — and
+ * DH-3 broke that by design: the package no longer bundles, so each entry's
+ * declaration file is now a graph of `export * from "./..."` re-exports with
+ * no such block. The old parser reported 267 exports removed from an API that
+ * had not changed at all.
+ *
+ * Resolving the graph properly is both the fix and the more durable check: it
+ * sees exactly what a consumer's TypeScript sees, through any number of
+ * re-export hops, and does not care what shape the build emits next.
+ *
+ * Still deliberately does NOT dynamically `import()` the built files — that
+ * would only find runtime values, missing every type-only export in the
+ * baseline.
  *
  * Exit codes: 0 = manifests match. 1 = drift detected (missing export,
  * new/accidental export, or an entry point's .d.ts is missing/unparsable).
@@ -22,6 +28,7 @@
  *   node scripts/check-api.mjs           # verify against checked-in manifests
  *   node scripts/check-api.mjs --write   # regenerate manifests from current dist/ (use after an intentional API change)
  */
+import ts from "typescript";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -38,34 +45,28 @@ const ENTRIES = [
   { name: "illustrations", dts: "illustrations.d.ts" },
 ];
 
-/** Extracts the public export names from a bundled .d.ts file's trailing `export { ... }` statement(s). */
-function extractExportNames(dtsText) {
-  const names = new Set();
-  // Matches every top-level `export { ... }` block (there may be more than
-  // one physical statement, though tsup typically emits exactly one).
-  const blockRegex = /export\s*\{([^}]*)\}/g;
-  let match;
-  while ((match = blockRegex.exec(dtsText)) !== null) {
-    const body = match[1];
-    // Split on commas that separate entries. Entries never contain commas
-    // themselves (identifiers and `X as Y` pairs only), so a plain split is safe.
-    for (const rawEntry of body.split(",")) {
-      const entry = rawEntry.trim();
-      if (!entry) continue;
-      // Forms seen in tsup dts output: "Name", "type Name", "Internal as Public",
-      // "type Internal as Public".
-      const asMatch = entry.match(/^(?:type\s+)?\S+\s+as\s+(\S+)$/);
-      if (asMatch) {
-        names.add(asMatch[1]);
-        continue;
-      }
-      const plainMatch = entry.match(/^(?:type\s+)?(\S+)$/);
-      if (plainMatch) {
-        names.add(plainMatch[1]);
-      }
-    }
-  }
-  return names;
+/**
+ * Every name a consumer can import from this entry, values and types alike,
+ * resolved through the whole re-export graph by the TypeScript compiler.
+ */
+function extractExportNames(dtsPath) {
+  const program = ts.createProgram([dtsPath], {
+    noEmit: true,
+    skipLibCheck: true,
+    // The emitted declarations import siblings as "./x.js"; both of these
+    // resolution modes map that to the neighbouring "./x.d.ts", which is what
+    // a consumer's own compiler will do.
+    moduleResolution: ts.ModuleResolutionKind.Bundler,
+    module: ts.ModuleKind.ESNext,
+    target: ts.ScriptTarget.ESNext,
+    jsx: ts.JsxEmit.ReactJSX,
+  });
+  const checker = program.getTypeChecker();
+  const source = program.getSourceFile(dtsPath);
+  if (!source) return [];
+  const moduleSymbol = checker.getSymbolAtLocation(source);
+  if (!moduleSymbol) return [];
+  return [...new Set(checker.getExportsOfModule(moduleSymbol).map((sym) => sym.getName()))].sort();
 }
 
 function loadBaseline(entryName) {
@@ -99,11 +100,11 @@ for (const entry of ENTRIES) {
     continue;
   }
 
-  const dtsText = readFileSync(dtsPath, "utf8");
-  const currentNames = [...extractExportNames(dtsText)].sort();
+
+  const currentNames = [...extractExportNames(dtsPath)].sort();
 
   if (currentNames.length === 0) {
-    console.error(`✗ ${entry.name}: parsed zero exports from ${entry.dts} — the entry may have failed to resolve, or the parser needs updating for a new tsup output shape.`);
+    console.error(`✗ ${entry.name}: parsed zero exports from ${entry.dts} — the entry may have failed to resolve, or the declaration graph did not resolve — check that dist/ was built and that specifiers were rewritten.`);
     failed = true;
     continue;
   }

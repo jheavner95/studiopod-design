@@ -131,7 +131,7 @@ export function GlobalNav() {
         <nav className="flex flex-col gap-1" aria-label="Design system sections">
           {SECTIONS.map((section) => (
             <div key={section.id} onClick={() => setMobileOpen(false)}>
-              <NavigationItem href={section.href} active={section.id === activeSectionId}>
+              <NavigationItem linkComponent={Link} href={section.href} active={section.id === activeSectionId}>
                 {section.title}
               </NavigationItem>
             </div>

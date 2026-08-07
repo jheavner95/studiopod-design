@@ -1,3 +1,5 @@
+"use client";
+
 import { InputField } from "@/components/form";
 import type { SelectOption } from "@/components/ui";
 import { PropertyToggle } from "./PropertyToggle";

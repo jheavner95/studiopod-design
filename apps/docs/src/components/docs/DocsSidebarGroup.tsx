@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { NavigationGroup, NavigationItem } from "@studiopod/design";
@@ -39,7 +40,7 @@ export function DocsSidebarGroup({ group }: DocsSidebarGroupProps) {
   if (entries.length === 1) {
     const entry = entries[0];
     return (
-      <NavigationItem href={entry.href} active={entry.href === pathname}>
+      <NavigationItem linkComponent={Link} href={entry.href} active={entry.href === pathname}>
         {entry.title}
       </NavigationItem>
     );
@@ -60,7 +61,7 @@ export function DocsSidebarGroup({ group }: DocsSidebarGroupProps) {
     >
       <NavigationGroup>
         {entries.map((entry) => (
-          <NavigationItem key={entry.id} href={entry.href} active={entry.href === pathname} level={1}>
+          <NavigationItem linkComponent={Link} key={entry.id} href={entry.href} active={entry.href === pathname} level={1}>
             {entry.title}
           </NavigationItem>
         ))}

@@ -1,5 +1,3 @@
-"use client";
-
 import { HeightReveal } from "./HeightReveal";
 import type { MotionPrimitiveProps } from "./types";
 

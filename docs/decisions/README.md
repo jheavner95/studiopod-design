@@ -69,6 +69,8 @@ Copy [TEMPLATE.md](TEMPLATE.md) to `NNNN-kebab-case-title.md`.
 | [0010](0010-certification-and-release-approval.md)                        | Certification is the definition of done                      | Accepted |
 | [0011](0011-internal-entry-point.md)                                      | An internal entry point for the documentation application    | Accepted |
 | [0012](0012-workspace-layout.md)                                          | `apps/` and `tooling/` as the workspace layout               | Accepted |
+| [0013](0013-framework-capabilities-are-props.md)                          | Framework capabilities are injected as props, not context    | Accepted |
+| [0014](0014-preserve-modules-build.md)                                    | The package emits one module per source file                 | Accepted |
 
 ---
 

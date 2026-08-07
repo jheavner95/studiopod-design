@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { TableRow, TableCell, TableSelectionCell, TableActionCell } from "@/components/table";
 import { QueueStatus, type QueueStatusValue } from "./QueueStatus";
