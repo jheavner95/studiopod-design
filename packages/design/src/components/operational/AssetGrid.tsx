@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Grid } from "@/components/layout";
+import type { LinkComponent } from "@/framework";
 import { AssetCard } from "./AssetCard";
 import { AssetEmptyState, type AssetEmptyVariant } from "./AssetEmptyState";
 import { AssetLoadingState } from "./AssetLoadingState";
@@ -15,6 +16,10 @@ export interface AssetGridRenderer<T> {
   getThumbnailSrc?: (row: T) => string | undefined;
   getThumbnailFallbackIcon?: (row: T) => ReactNode;
   getStatus?: (row: T) => ReactNode;
+  /** Where the row's card goes. Supplying it makes every card a real link. */
+  getHref?: (row: T) => string | undefined;
+  /** A shorter accessible name than the card's full visible content. */
+  getLabel?: (row: T) => string | undefined;
 }
 
 export interface AssetGridProps<T> {
@@ -30,6 +35,8 @@ export interface AssetGridProps<T> {
   /** Full replacement for the default AssetEmptyState. */
   emptyState?: ReactNode;
   minChildWidth?: string;
+  /** What renders a card's link, when `render.getHref` supplies one. */
+  linkComponent?: LinkComponent;
   className?: string;
 }
 
@@ -50,6 +57,7 @@ export function AssetGrid<T>({
   emptyVariant,
   emptyState,
   minChildWidth = "160px",
+  linkComponent,
   className,
 }: AssetGridProps<T>) {
   const selected = selectedIds ?? new Set<string>();
@@ -68,6 +76,8 @@ export function AssetGrid<T>({
     <Grid columns="auto-fit" minChildWidth={minChildWidth} gap="md" className={className}>
       {rows.map((row) => {
         const id = render.getId(row);
+        const href = render.getHref?.(row);
+        const label = render.getLabel?.(row);
         return (
           <AssetCard
             key={id}
@@ -79,6 +89,9 @@ export function AssetGrid<T>({
             selectable={selectable}
             selected={selected.has(id)}
             onSelectChange={() => handleToggle(id)}
+            {...(href === undefined ? {} : { href })}
+            {...(linkComponent === undefined ? {} : { linkComponent })}
+            {...(label === undefined ? {} : { "aria-label": label })}
             onClick={onItemClick ? () => onItemClick(row) : undefined}
           />
         );
