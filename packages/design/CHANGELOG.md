@@ -2,6 +2,40 @@
 
 All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
 
+## 0.18.0 — a card that navigates is a link
+
+**Additive.** No export changed and no behaviour changed for any existing
+caller. Cloud reported the gap this closes as finding D1 against its UX-2.1
+work package, and proved the fix against its own collection before this release
+was cut.
+
+### Added
+
+- **`AssetCard` takes `href`.** A card that opens something addressable now
+  renders a real anchor instead of a `div` with `role="button"`. Middle-click,
+  ⌘-click, "copy link address" and the browser's own status bar all work, and
+  assistive technology announces a link rather than a button for something that
+  navigates.
+- **`AssetCard` takes `linkComponent`**, so a framework's own link renders the
+  card and navigation stays client-side. A prop rather than context, matching
+  [ADR 0013](../../docs/decisions/0013-framework-capabilities-are-props.md).
+- **`AssetCard` takes `aria-label`.** The default accessible name is the card's
+  entire visible content — title plus every secondary line — which is a great
+  deal to hear before choosing one of twenty. Callers can now supply something
+  a listener can act on.
+- **`AssetGrid` takes `render.getHref`, `render.getLabel` and
+  `linkComponent`**, which turns a whole collection into links in one line.
+
+### Notes
+
+- `onClick` is unchanged and remains correct for cards that **select** rather
+  than navigate. Passing both is a contradiction, and `href` wins — a card
+  never claims to be a link and a button at once.
+- The selection checkbox keeps working inside a linked card; its wrapper stops
+  the click from reaching the anchor.
+- Both forms are covered by eleven new tests, including an axe pass on the link
+  form.
+
 ## 0.17.0 — DH-5.5: the typography foundation
 
 **Visually breaking, additive in API.** No export changed. Every consumer's appearance changes, because for the first time the package actually loads the typeface it has always named.
