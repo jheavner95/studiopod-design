@@ -92,6 +92,7 @@ The decision log itself is [decisions/](decisions/README.md#4-the-log).
 | [DH-5](certification/DH-5.md)     | Design API Surface                             |
 | [DH-5.5](certification/DH-5.5.md) | Typography Foundation                          |
 | [DH-6](certification/DH-6.md)     | Comprehensive Component Architecture Audit     |
+| [DH-7](certification/DH-7.md)     | Text primitives that can be composed with (D8) |
 
 ---
 

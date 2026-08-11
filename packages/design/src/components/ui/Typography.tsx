@@ -1,4 +1,9 @@
-import { createElement, type ElementType, type ReactNode } from "react";
+import {
+  createElement,
+  type ComponentPropsWithoutRef,
+  type ElementType,
+  type ReactNode,
+} from "react";
 import { cn } from "@/lib/utils";
 
 interface TypographyProps {
@@ -6,6 +11,24 @@ interface TypographyProps {
   className?: string;
   as?: ElementType;
 }
+
+/**
+ * A text primitive's own props, plus everything the chosen element accepts.
+ *
+ * `Body` and `Caption` took three props and forwarded none of them, so a
+ * consumer needing an `id`, a `data-` hook, an `aria-` attribute or a handler
+ * had to wrap the text in a `div`. Those wrappers are how invalid `<p>` nesting
+ * and hydration failures reached three separate StudioPOD packages — recorded
+ * as finding D8 across UX-2.5, UX-2.6 and UX-2.7.
+ *
+ * Forwarding is the smallest durable correction: nothing that compiles today
+ * stops compiling, and `<Body as="div" data-x>` becomes expressible. The
+ * generic is what makes it honest — choosing `as="div"` types the rest as div
+ * attributes, so the escape hatch cannot be used to smuggle nonsense onto a
+ * paragraph.
+ */
+type Polymorphic<E extends ElementType, P> = P &
+  Omit<ComponentPropsWithoutRef<E>, keyof P | "as"> & { as?: E };
 
 /**
  * Hero-scale display type. Reserve for one element per page — the
@@ -51,10 +74,15 @@ export function Heading({ children, className, as, level = 2, id }: HeadingProps
   );
 }
 
-export interface BodyProps extends TypographyProps {
+export interface BodyOwnProps {
+  children: ReactNode;
+  className?: string;
   size?: "lg" | "md" | "sm";
   muted?: boolean;
 }
+
+/** Kept exported under its original name — `BodyProps` is a published type. */
+export type BodyProps<E extends ElementType = "p"> = Polymorphic<E, BodyOwnProps>;
 
 const bodyStyles = {
   lg: "text-body-lg",
@@ -62,21 +90,58 @@ const bodyStyles = {
   sm: "text-body-sm",
 } as const;
 
-export function Body({ children, className, as = "p", size = "md", muted = false }: BodyProps) {
+/**
+ * Running text.
+ *
+ * Defaults to a paragraph, which is right for text and wrong for anything that
+ * contains block content — so `as` is how a consumer says what this actually
+ * is. Everything else is forwarded to the element.
+ */
+export function Body<E extends ElementType = "p">({
+  children,
+  className,
+  as,
+  size = "md",
+  muted = false,
+  ...rest
+}: BodyProps<E>) {
   return createElement(
-    as,
-    { className: cn(bodyStyles[size], muted ? "text-ink-secondary" : "text-ink-primary", className) },
+    (as ?? "p") as ElementType,
+    {
+      ...rest,
+      className: cn(
+        bodyStyles[size],
+        muted ? "text-ink-secondary" : "text-ink-primary",
+        className,
+      ),
+    },
     children,
   );
 }
 
-export interface CaptionProps extends TypographyProps {
+export interface CaptionOwnProps {
+  children: ReactNode;
+  className?: string;
   /** For pairing this text with another element via aria-labelledby (e.g. ProgressBar's label naming its progressbar) — mirrors Heading's own id prop. */
   id?: string;
 }
 
-export function Caption({ children, className, as = "p", id }: CaptionProps) {
-  return createElement(as, { id, className: cn("text-caption text-ink-secondary", className) }, children);
+/** Kept exported under its original name — `CaptionProps` is a published type. */
+export type CaptionProps<E extends ElementType = "p"> = Polymorphic<E, CaptionOwnProps>;
+
+/** Supporting text. Same contract as `Body`: `as` chooses the element. */
+export function Caption<E extends ElementType = "p">({
+  children,
+  className,
+  as,
+  id,
+  ...rest
+}: CaptionProps<E>) {
+  return createElement(
+    (as ?? "p") as ElementType,
+    { ...rest, id, className: cn("text-caption text-ink-secondary", className) },
+    children,
+  );
 }
 
 export function Metadata({ children, className, as = "span" }: TypographyProps) {
