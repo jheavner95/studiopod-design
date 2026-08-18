@@ -49,16 +49,27 @@ Every tier (`fast`/`default`/`full`) is a plain array of `{ name, script }` step
 
 It does not wrap, replace, or reimplement any test framework — every step is a normal `npm run <script>` the same as if you'd typed it yourself. This is intentionally the only piece of new orchestration code this consolidation introduces (see the engineering note §4 for why nothing more was needed).
 
-## 5. Release gates (`.github/workflows/release.yml`)
+## 5. Routine validation vs. release gates (CI-2)
+
+Two separate workflows, split by how they trigger and what they prove:
+
+| Workflow | Trigger | Runners per trigger | Runs |
+|---|---|---|---|
+| `.github/workflows/validate.yml` | push to `main`, pull request | **1** | `npm run verify:fast`, then `npm run package:verify` — sequentially, on the same runner |
+| `.github/workflows/release.yml` | `workflow_dispatch` only | 2 (`fast`+`verify`) for verification, plus `dry-run` or `publish` | see table below |
+
+**`validate.yml`** is the routine, always-on gate for every ordinary commit. One job, one checkout, one `npm ci`, running `verify:fast` (Layer 1) and then the package's own `verify` (Layer 2, package-scoped — build, typecheck, API-baseline, CSS, framework-independence, client-boundary, exports, and identity checks) in sequence. It does not build or upload a release tarball: package-level `verify`'s own last step, `identity-check` (`packages/design/scripts/check-package-identity.mjs`), already performs a real `npm pack` to a scratch directory, extracts it, and resolves every export subpath from the actual packed tarball — strictly stronger proof of packability than a standalone `npm pack --dry-run`, so nothing routine correctness needs is lost by not also packing-and-uploading on every commit. Concurrency group `design-validation-${{ github.ref }}`, `cancel-in-progress: true` — a superseded routine run on the same ref/PR is cancelled rather than left to finish and burn minutes on a commit nobody will look at again.
+
+**`release.yml`** is deliberate-only, gated entirely behind `workflow_dispatch` — never a plain push or PR:
 
 | Job | Depends on | Runs |
 |---|---|---|
 | `fast` | — | `npm run verify:fast` |
-| `verify` | — | `packages/design`'s own `npm run verify` (Layer 2, package-scoped) |
+| `verify` | — | `packages/design`'s own `npm run verify` (Layer 2, package-scoped), plus `npm pack --dry-run`, plus a real pack to a temp directory uploaded as an inspectable build artifact |
 | `dry-run` | `[verify, fast]` | Re-verifies the package (necessary rebuild — see the job's own comment for why it isn't wasted duplicate work), then computes and inspects a real tarball without publishing |
 | `publish` | `[verify, fast]` | Versions, tags, and publishes — gated on both quality jobs having already passed |
 
-`fast` and `verify` run in parallel (no dependency between them) — both were already independent checks with nothing for one to wait on from the other, so no ordering change was needed there. `dry-run` and `publish` only run on `workflow_dispatch`, never on a plain push/PR, so the always-on cost of every push/PR is exactly `fast` + `verify`, running concurrently.
+`fast` and `verify` run in parallel inside `release.yml` (no dependency between them) — unchanged from before CI-2. What changed is only *when* they run: a deliberate `workflow_dispatch` re-proves both fresh, rather than trusting a possibly-stale prior routine run, which is the correct property for a release gate to have. `release.yml`'s own concurrency group (`ds-release-${{ github.ref }}`, `cancel-in-progress: false`) is unrelated to `validate.yml`'s — a routine run being cancelled on a superseded commit must never be able to interrupt an in-flight publish, and the two workflows now have no shared concurrency group to make that a risk.
 
 ## 6. Two things named `verify`
 
@@ -100,8 +111,8 @@ npm run verify:full   # before cutting a release locally, or when in doubt
 
 ## 9. CI behavior
 
-- **Every push and PR to `main`**: `fast` and `verify` run in parallel. Both must pass.
-- **`workflow_dispatch` with `dry_run: true`**: additionally runs `dry-run` (needs `fast`+`verify`) — computes and inspects a real tarball, enforces that publish credentials are actually configured, and checks that the target version and tag are still free, but never runs `npm publish`, never commits, never tags.
+- **Every push and PR to `main`**: `validate.yml` runs its one `validate` job on one runner — `verify:fast` then `package:verify`, sequentially. Must pass. `release.yml` does **not** run at all on a plain push or PR (CI-2) — it triggers only via `workflow_dispatch`.
+- **`workflow_dispatch` with `dry_run: true`**: runs `release.yml`'s `fast` and `verify` jobs fresh (in parallel, on their own runners), then additionally runs `dry-run` (needs `fast`+`verify`) — computes and inspects a real tarball, enforces that publish credentials are actually configured, and checks that the target version and tag are still free, but never runs `npm publish`, never commits, never tags.
 
   It does **not** execute a version bump, not even a reverted one: the job runs under `permissions: contents: read` and contains no bump command at all (asserted by `src/lib/release-workflow.test.ts`). So in `bump` mode the tarball it packs carries the **committed** version, while the registry and tag checks run against the **resolved target**. `tooling/release/check-dry-run-artifact.mjs` reconciles the two — the artifact against what was actually packed, the target against the mode's arithmetic. Bumping changes only the manifest's `version` field, so packing the committed version costs no artifact-level coverage; that the bump writes the expected string is checked in the `publish` job, where it matters.
 

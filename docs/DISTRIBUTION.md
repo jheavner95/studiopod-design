@@ -110,15 +110,15 @@ Versioning policy: **`packages/design/VERSIONING.md`** (pre-1.0 rules, PATCH/MIN
 
 ### 4.1 Every push and PR
 
-`.github/workflows/release.yml` → `verify` job runs on all pushes to `main` and all PRs:
+**CI-2 correction:** this used to be `.github/workflows/release.yml`'s own `verify` job, which ran on every push to `main` and every PR — on its own hosted runner, alongside a second, independent `fast` job on a second runner, each with its own checkout/Node-setup/install. That routine half now lives in `.github/workflows/validate.yml`: **one** hosted runner, one checkout, one `npm ci`, running:
 
 ```
-npm ci            deterministic install (fails if lock is out of sync)
-npm run verify    build → typecheck → api-check → exports-check
-npm pack --dry-run
+npm run verify:fast    typecheck (library + docs + tests), ESLint, Vitest/jsdom suite
+npm run package:verify  build → typecheck → api-check → css-check → framework-check
+                         → client-boundaries-check → exports-check → identity-check
 ```
 
-The tarball is uploaded as a build artifact so you can inspect exactly what would ship without publishing.
+No tarball is built or uploaded on a routine push or PR. `package:verify`'s own last step, `identity-check` (`packages/design/scripts/check-package-identity.mjs`), already performs a **real** `npm pack` to a scratch directory, extracts it, and resolves every declared export subpath from the actual packed tarball — a stronger proof of packability than a standalone `npm pack --dry-run` ever was, so nothing routine correctness needs was lost by not also building an inspectable, uploadable tarball on every commit. `release.yml` — including its own `npm pack --dry-run` step, real pack, and artifact upload — now runs **only** on a deliberate `workflow_dispatch` (§4.2), never on an ordinary push or PR.
 
 ### 4.2 Cutting a release
 
@@ -130,7 +130,7 @@ The tarball is uploaded as a build artifact so you can inspect exactly what woul
 
 The workflow then bumps the version, commits, tags `design-system-vX.Y.Z`, publishes, and generates GitHub release notes from the CHANGELOG.
 
-If `DS_REGISTRY` or `DS_NPM_TOKEN` is missing, the publish job **skips with a warning** rather than failing — the release is simply not configured yet.
+If `DS_REGISTRY` or `DS_NPM_TOKEN` is missing, the `dry-run`/`publish` jobs **fail with an error**, not skip — this line previously said "skips with a warning," which stopped being true once `release.yml`'s own header comment records the fix: an earlier revision skipped instead, which let an operator who explicitly requested a release get a green run that published nothing. Silence is the worst outcome for an explicit request, so a missing/misconfigured credential is a hard failure now. (Noted here while revising this section for CI-2; not itself a CI-2 change — the fail-not-skip behavior already existed in `release.yml` before this phase.)
 
 ### 4.3 The gate cannot be bypassed
 

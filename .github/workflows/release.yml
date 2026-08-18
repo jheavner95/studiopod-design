@@ -36,13 +36,25 @@ name: Release @studiopod/design
 # have got a green run that published nothing. Silence is the worst outcome for
 # an explicit request, so it is an error now.
 #
-# `verify` runs on every push and PR regardless.
+# CI-2 — trigger corrected. This workflow used to ALSO run its `fast` and
+# `verify` jobs on every push to main and every pull request — two hosted
+# runners, each with its own checkout/Node-setup/`npm ci`, on every commit.
+# That routine half is now .github/workflows/validate.yml (one runner, no
+# release tarball built or uploaded). This file is release-only: every job
+# below fires ONLY when a human explicitly runs `workflow_dispatch` — never
+# on an ordinary push or PR. See docs/VERIFICATION.md §5/§9 and
+# docs/DISTRIBUTION.md §4.1 for the full before/after and the measured
+# evidence behind the split.
+#
+# `fast` and `verify` are unchanged from what they always were: the same
+# quality gates, running the same commands, with the same `needs` from
+# `dry-run`/`publish` below. What changed is only WHEN they fire — as part of
+# a deliberate release/dry-run request, re-proving the gate fresh rather than
+# trusting a possibly-stale prior routine run, exactly as a release gate
+# should.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
       mode:
@@ -72,7 +84,7 @@ permissions:
   contents: read
 
 jobs:
-  # ── Always-on quality gate: Layer 1, fast (DS-1D) ──────────────────────────
+  # ── Release-time quality gate: Layer 1, fast (DS-1D; retriggered by CI-2) ──
   # Runs `npm run verify:fast` (tooling/verify.mjs) — app typecheck, test-tree
   # typecheck, ESLint, and the Vitest/jsdom component suite (DS-1C). All four
   # are fast, deterministic, and OS-independent, which is exactly why they're
@@ -82,6 +94,12 @@ jobs:
   # `-darwin.png`, this runner is `ubuntu-latest`) — wiring it in without
   # Linux-generated baselines would fail every run for the wrong reason.
   # `npm run test:e2e` stays local-only until a Linux baseline set exists.
+  #
+  # CI-2: this job no longer runs on every push/PR — see this file's header
+  # comment. It still runs the identical steps, now only as a prerequisite of
+  # `dry-run`/`publish` below, re-proven fresh on every deliberate release
+  # request. Routine push/PR coverage of this exact command now lives in
+  # .github/workflows/validate.yml.
   fast:
     name: Verify (fast)
     runs-on: ubuntu-latest
@@ -111,7 +129,7 @@ jobs:
       - name: verify:fast — typecheck, lint, unit tests
         run: npm run verify:fast
 
-  # ── Always-on quality gate: Layer 2, package (DS-1D) ───────────────────────
+  # ── Release-time quality gate: Layer 2, package (DS-1D; retriggered by CI-2) ─
   # `npm run verify` HERE resolves against packages/design's OWN
   # package.json (see working-directory below) — a package-scoped build +
   # typecheck + API-baseline + CSS + use-client + exports check, identical to
@@ -122,6 +140,17 @@ jobs:
   # (via `npm run package:verify`, the unambiguous root-level bridge to this
   # exact script). Two scripts, same name, deliberately kept — see
   # docs/VERIFICATION.md "Two things named verify" for why that's fine.
+  #
+  # CI-2: this job no longer runs on every push/PR — see this file's header
+  # comment. It still runs the identical steps (including the real
+  # `npm pack --dry-run` and the real pack-and-upload below), now only as a
+  # prerequisite of `dry-run`/`publish`, so a deliberate release still gets an
+  # inspectable tarball artifact — the routine half of this job
+  # (`npm run verify` only, no pack, no upload) now lives in
+  # .github/workflows/validate.yml, which does not build or upload a tarball
+  # on every commit (see that file's header comment for why: package-level
+  # `verify`'s own `identity-check` step already performs a real pack and
+  # export-resolution check, so nothing routine correctness needs was lost).
   verify:
     name: Verify package
     runs-on: ubuntu-latest

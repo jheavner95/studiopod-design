@@ -261,10 +261,81 @@ describe("the whole workflow", () => {
       .toMatch(/TAG_PREFIX = "design-system-v"/);
   });
 
-  it("still runs the always-on gates on push and pull request", () => {
-    expect(workflow).toMatch(/^on:\n {2}push:\n {4}branches: \[main\]\n {2}pull_request:/m);
+  // CI-2: this workflow no longer runs on every push/PR — that routine half
+  // moved to .github/workflows/validate.yml (one runner, no release tarball
+  // on every commit). This file is deliberate-only: workflow_dispatch, never
+  // an ordinary push or PR. `fast`/`verify` still carry no `if:
+  // github.event_name` guard of their own — they run unconditionally
+  // whenever this workflow fires, which is now only on workflow_dispatch, so
+  // gating them individually would be redundant with the workflow-level
+  // trigger rather than a second layer of protection.
+  it("triggers only on workflow_dispatch — never an ordinary push or PR", () => {
+    expect(workflow).toMatch(/^on:\n {2}workflow_dispatch:/m);
+    expect(workflow).not.toMatch(/^\s*push:\n\s*branches: \[main\]/m);
+    expect(workflow).not.toMatch(/^\s*pull_request:\s*$/m);
     for (const job of ["fast", "verify"]) {
       expect(jobText(job)).not.toMatch(/if: github\.event_name/);
     }
+  });
+});
+
+describe("routine validation is separated from release (CI-2)", () => {
+  const validateWorkflow = readFileSync(
+    join(process.cwd(), ".github/workflows/validate.yml"),
+    "utf8",
+  );
+
+  it("validate.yml runs on push to main and pull requests", () => {
+    expect(validateWorkflow).toMatch(/^on:\n {2}push:\n {4}branches: \[main\]\n {2}pull_request:/m);
+  });
+
+  it("validate.yml has exactly one job, on one runner", () => {
+    const jobsBlock = validateWorkflow.slice(validateWorkflow.indexOf("\njobs:"));
+    const topLevelJobs = jobsBlock
+      .split("\n")
+      .filter((line) => /^ {2}[a-z][a-z0-9-]*:$/.test(line));
+    expect(topLevelJobs).toHaveLength(1);
+    expect((validateWorkflow.match(/runs-on: ubuntu-latest/g) ?? [])).toHaveLength(1);
+  });
+
+  it("validate.yml never publishes, tags, releases, or writes to the repository", () => {
+    // Anchored to actual YAML keys / run: lines, not bare substrings — this
+    // file's own explanatory comments legitimately use words like "publish"
+    // and "packages: write" in prose when explaining what it does NOT do.
+    expect(validateWorkflow).not.toMatch(/^\s*packages: write\s*$/m);
+    expect(validateWorkflow).not.toMatch(/^\s*contents: write\s*$/m);
+    expect(validateWorkflow).not.toMatch(/^\s*run:.*npm publish/m);
+    expect(validateWorkflow).not.toMatch(/^\s*run:.*git tag/m);
+    expect(validateWorkflow).not.toMatch(/^\s*run:.*git push/m);
+    expect(validateWorkflow).not.toMatch(/^\s*run:.*gh release create/m);
+  });
+
+  it("validate.yml does not build or upload a release tarball", () => {
+    // Anchored to an actual `run:` line, not just the string "npm pack" —
+    // this file's own explanatory comments legitimately mention `npm pack`
+    // when describing what identity-check already covers, so the assertion
+    // must distinguish "the words appear in a comment" from "the command
+    // actually runs," the same pattern used for the dry-run/publish jobs
+    // above (`not.toMatch(/^\s*run:.*npm publish/m)`).
+    expect(validateWorkflow).not.toMatch(/^\s*run:.*npm pack/m);
+    expect(validateWorkflow).not.toMatch(/uses: actions\/upload-artifact/);
+  });
+
+  it("validate.yml runs verify:fast and the package's own verify", () => {
+    expect(validateWorkflow).toMatch(/run: npm run verify:fast/);
+    expect(validateWorkflow).toMatch(/run: npm run package:verify/);
+  });
+
+  it("validate.yml cancels a superseded run on the same ref; release.yml never cancels an in-flight publish", () => {
+    const validateConcurrency = validateWorkflow.slice(validateWorkflow.indexOf("concurrency:"));
+    expect(validateConcurrency.slice(0, 150)).toMatch(/cancel-in-progress: true/);
+
+    const releaseConcurrency = workflow.slice(workflow.indexOf("concurrency:"));
+    expect(releaseConcurrency.slice(0, 150)).toMatch(/cancel-in-progress: false/);
+
+    // Independent concurrency groups — a routine validation run being
+    // cancelled must never be able to touch an in-flight release.
+    expect(validateConcurrency.slice(0, 150)).not.toMatch(/ds-release-/);
+    expect(releaseConcurrency.slice(0, 150)).not.toMatch(/design-validation-/);
   });
 });

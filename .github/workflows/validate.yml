@@ -1,0 +1,93 @@
+name: Validate @studiopod/design
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CI-2 — routine push/PR validation, split out of release.yml.
+#
+# Before CI-2, release.yml's `fast` and `verify` jobs ran on every push to
+# main AND every PR, on two separate hosted Ubuntu runners — each with its own
+# checkout, Node setup, and authenticated `npm ci`. Neither job needed the
+# other's output, but running as two jobs still paid for two runners, two
+# checkouts, two installs. The `verify` job additionally ran a second,
+# real `npm pack` to a temp directory and uploaded the tarball as a build
+# artifact on every single commit — a release-time "prove the artifact"
+# concern, not something routine correctness needs.
+#
+# This workflow is the replacement for the ROUTINE half of that split: one
+# job, one runner, one checkout, one install, running the same two commands
+# (`verify:fast` then the package's own `verify`) sequentially. Evidence for
+# "sequential on one runner, not a second job" (measured locally, see the
+# CI-2 completion report): `npm run verify:fast` ≈ 34s, `npm run verify`
+# inside packages/design ≈ 8s. Neither is remotely expensive enough to
+# justify a dedicated runner, and package-level `verify`'s own last step
+# (`identity-check`, packages/design/scripts/check-package-identity.mjs)
+# already performs a REAL `npm pack` to a scratch directory, extracts it, and
+# resolves every export subpath from the actual packed tarball — strictly
+# stronger proof of packability than the old workflow's separate
+# `npm pack --dry-run` step, which only simulated. Nothing this workflow
+# drops was providing protection `identity-check` doesn't already provide;
+# see docs/VERIFICATION.md §5/§9 for the full before/after.
+#
+# The deliberate release path — dry-run and real publish — lives entirely in
+# release.yml, now triggered ONLY by workflow_dispatch. This workflow never
+# publishes, tags, or releases anything; it has no `packages: write` and no
+# publish credential in scope beyond the same read-only install token every
+# job here already needed to resolve @studiopod/foundation from GitHub
+# Packages.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: design-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+# Minimum permissions: read-only. This workflow only checks out, installs,
+# builds, and tests — it never writes to the repository, tags, or publishes.
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: "@studiopod"
+
+      # Reads @studiopod/foundation from GitHub Packages. GitHub Packages
+      # requires a token for EVERY install, including reads, so an
+      # unauthenticated `npm ci` fails with E401. DS_NPM_TOKEN is the
+      # existing publish PAT; classic-PAT `write:packages` implies
+      # `read:packages`, so the same secret covers both directions — this
+      # job only ever uses its read side. The repo's own .npmrc carries scope
+      # routing only; no credential is committed.
+      - name: Install (deterministic)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: npm ci
+
+      # Layer 1 — typecheck (library + documentation + test tree), ESLint,
+      # the Vitest/jsdom unit + component suite. See docs/VERIFICATION.md.
+      - name: verify:fast — typecheck, lint, unit tests
+        run: npm run verify:fast
+
+      # Layer 2, package-scoped — packages/design's own `verify` script:
+      # build, typecheck, API-baseline, CSS, framework-independence,
+      # client-boundary, exports, and package-identity checks. Identical to
+      # that package's own `prepublishOnly` hook, so this proves the exact
+      # gate a publish would run — without publishing, tagging, or uploading
+      # anything. Run sequentially on this same runner rather than as a
+      # second job; see this file's header comment for the measured evidence.
+      - name: package verify — build, typecheck, API/CSS/framework/exports/identity
+        run: npm run package:verify
