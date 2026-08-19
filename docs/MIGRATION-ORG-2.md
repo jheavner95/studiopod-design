@@ -97,21 +97,48 @@ migrated.** Cloud and other consumers still resolve that name today.
 
 Nothing in step 4 may begin while any consumer still depends on the old names.
 
-## Authentication
+## Authentication — measured, not assumed
 
-Publishing `@jheavner95/design` from `jheavner95/studiopod-design` can use the
-workflow's own `GITHUB_TOKEN` with `packages: write` — the same pattern
-Foundation proved in ORG-2A, since the package is now linked to this
-repository.
+**Publishing `@jheavner95/design` from `jheavner95/studiopod-design` uses the
+workflow's own `GITHUB_TOKEN`**, with `packages: write` on the `publish` job
+only. This works because the package is now linked to this repository — the
+same pattern Foundation proved in ORG-2A. No PAT is used for publishing, for
+the identity check against the registry ("confirm target unused"), or for
+verifying the published artifact from a clean consumer — all four touch
+`@jheavner95/design`, this repository's own package.
 
-**Reading `@jheavner95/foundation` from this repository is a different
-question**, because that package is linked to a *different* repository
-(`jheavner95/studiopod-foundation`). Whether a plain `GITHUB_TOKEN` with
-`packages: read` reaches a package linked elsewhere — even under the same
-account — depends on GitHub's package-level Actions access model, and that is
-not something to assume. See the release workflow's own comments and
-`docs/engineering/publishing.md` for what was actually measured here, and
-whether a package-level "Manage Actions access" grant was required.
+**Reading `@jheavner95/foundation` from this repository is a genuinely
+different question, and it was tried and it failed.** That package is linked
+to a *different* repository (`jheavner95/studiopod-foundation`). With
+`GITHUB_TOKEN` and `packages: read` declared, `validate.yml`'s automatic run
+against this migration (run `32216274798`) failed at `npm ci`:
+
+```text
+npm error code E403
+403 Forbidden - GET https://npm.pkg.github.com/download/@jheavner95/foundation/...
+Permission permission_denied: read_package
+```
+
+That is a different error from the unlinked-package E403 (`The requested
+installation does not exist`) that Foundation and Design themselves produced
+before their own renames. `read_package` means the package **was found and is
+linked somewhere** — just not to a repository this workflow's token is
+authorized for. A repository's own `GITHUB_TOKEN` does not automatically reach
+a package linked to a *sibling* repository under the same account, even when
+the scope matches the owner on both sides.
+
+**The fix is a grant on the Foundation package's own settings**, from someone
+with admin access to it — not something `studiopod-design`'s workflow can do
+to itself:
+
+> Foundation package page → **Package settings → Manage Actions access → Add
+> repository → `studiopod-design`**
+
+Until or unless that grant is made, every `npm ci` step in this repository's
+workflows that installs `@jheavner95/foundation` uses a dedicated read-only
+PAT — `secrets.FOUNDATION_NPM_TOKEN_READ` — and nothing else does. Every step
+that touches this repository's own `@jheavner95/design` package uses
+`GITHUB_TOKEN`.
 
 ## What each repository can drop, and when
 

@@ -31,22 +31,30 @@ name: Validate @jheavner95/design
 # release.yml, now triggered ONLY by workflow_dispatch. This workflow never
 # publishes, tags, or releases anything; it has no `packages: write`.
 #
-# ── ORG-2B: no PAT here anymore, if this keeps passing ─────────────────────
+# ── ORG-2B: measured, not assumed ───────────────────────────────────────────
 #
 # This package moved from @studiopod/design to @jheavner95/design, and its
 # Foundation dependency moved to @jheavner95/foundation — both scopes now
-# match jheavner95, the actual owner of every repository involved. That is
-# what makes GITHUB_TOKEN + `packages: read` worth trying here instead of the
-# DS_NPM_TOKEN PAT this workflow used to require for every install.
+# match jheavner95, the actual owner of every repository involved. That makes
+# GITHUB_TOKEN + `packages: write` sufficient for THIS repository's own
+# package (see release.yml) — proven the same way Foundation proved it in
+# ORG-2A.
 #
-# One thing this does NOT by itself prove: @jheavner95/foundation is linked to
-# studiopod-foundation, a DIFFERENT repository than this one. Whether this
-# repository's own GITHUB_TOKEN can read a package linked elsewhere — even
-# under the same account — depends on GitHub's package-level Actions access
-# model, not merely on scope matching the owner. If this step fails with E403
-# despite that, the fix is a grant on the Foundation package's own settings
-# (Package settings -> Manage Actions access -> Add repository), not a PAT
-# here — see docs/MIGRATION-ORG-2.md.
+# It does NOT make GITHUB_TOKEN sufficient to READ @jheavner95/foundation from
+# here. That package is linked to a DIFFERENT repository
+# (jheavner95/studiopod-foundation), and this was tried on a real runner:
+#
+#   npm error code E403
+#   403 Forbidden ... Permission permission_denied: read_package
+#
+# A repository's own GITHUB_TOKEN does not automatically reach a package
+# linked to a sibling repository under the same account — that needs an
+# explicit grant on the OTHER package's own settings (Package settings ->
+# Manage Actions access -> Add repository), which this repository's workflow
+# cannot perform on itself. See docs/MIGRATION-ORG-2.md.
+#
+# So this step uses a dedicated read-only PAT for the Foundation read, and
+# nothing else in this workflow needs a credential at all.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
@@ -62,7 +70,6 @@ concurrency:
 # builds, and tests — it never writes to the repository, tags, or publishes.
 permissions:
   contents: read
-  packages: read
 
 jobs:
   validate:
@@ -70,7 +77,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
     steps:
       - uses: actions/checkout@v4
 
@@ -81,14 +87,13 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@jheavner95"
 
-      # Reads @jheavner95/foundation from GitHub Packages. GitHub Packages
-      # requires a token for EVERY install, including reads, so an
-      # unauthenticated `npm ci` fails with E401. GITHUB_TOKEN is tried first
-      # — see this file's header comment for what that does and does not
-      # prove, and for the fallback if it fails.
+      # Reads @jheavner95/foundation from GitHub Packages, from a repository
+      # other than the one it is linked to. GITHUB_TOKEN cannot do this — see
+      # this file's header comment for the measured E403. A read-only PAT is
+      # required, and it is the only credential this workflow uses.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.FOUNDATION_NPM_TOKEN_READ }}
         run: npm ci
 
       # Layer 1 — typecheck (library + documentation + test tree), ESLint,

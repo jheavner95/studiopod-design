@@ -234,27 +234,45 @@ describe("publish is transactional", () => {
     expect(invocations).toHaveLength(1);
   });
 
-  it("wires the publish credential only into steps that need the registry", () => {
+  it("wires exactly two credentials into the publish job, and nowhere else", () => {
     const text = jobText("publish");
-    const tokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.GITHUB_TOKEN \}\}/g) ?? [];
-    // Five steps genuinely touch the registry: install, preflight,
-    // confirm-unused, publish, remote verification — and nothing else.
+    const githubTokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.GITHUB_TOKEN \}\}/g) ?? [];
+    const foundationTokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.FOUNDATION_NPM_TOKEN_READ \}\}/g) ?? [];
+    // Five steps genuinely touch a registry, and they use two DIFFERENT
+    // credentials for two different reasons — measured on a real runner, not
+    // assumed:
     //
-    // ORG-2B: the credential is GITHUB_TOKEN, not a PAT — @jheavner95/design
-    // matches this repository's owner, so GitHub Packages links the package
-    // here and this job's own `packages: write` is sufficient. `npm ci` stays
-    // on this list because the package still depends on @jheavner95/foundation
-    // at build time, and GitHub Packages requires a token for every install
-    // including reads. The count is asserted rather than loosened so that a
-    // credential appearing in some *other* step still fails this test.
-    expect(tokenUses).toHaveLength(5);
+    //   install (1)              — reads @jheavner95/foundation, which is
+    //                               linked to a DIFFERENT repository
+    //                               (studiopod-foundation). GITHUB_TOKEN
+    //                               cannot reach it: measured E403
+    //                               `permission_denied: read_package` on
+    //                               validate.yml run 32216274798. A read-only
+    //                               PAT is required.
+    //
+    //   preflight, confirm-unused, publish, remote verification (4)
+    //                             — all touch @jheavner95/design, THIS
+    //                               repository's own package, which GitHub
+    //                               Packages links here because the scope
+    //                               matches the owner. GITHUB_TOKEN with
+    //                               `packages: write` is sufficient, proven
+    //                               the same way Foundation proved it in
+    //                               ORG-2A.
+    //
+    // The counts are asserted rather than loosened so that a credential
+    // appearing in some *other* step, or the wrong credential in either
+    // group, still fails this test.
+    expect(foundationTokenUses).toHaveLength(1);
+    expect(githubTokenUses).toHaveLength(4);
     expect(text).not.toMatch(/DS_NPM_TOKEN/);
-    expect(text).not.toMatch(/echo.*GITHUB_TOKEN/);
+    expect(text).not.toMatch(/echo.*(GITHUB_TOKEN|FOUNDATION_NPM_TOKEN_READ)/);
   });
 
-  it("no longer depends on a personal access token", () => {
-    // The whole point of ORG-2B. If DS_NPM_TOKEN reappears anywhere in this
-    // workflow, the rename did not achieve what it set out to.
+  it("no longer depends on the retired DS_NPM_TOKEN personal access token", () => {
+    // The whole point of ORG-2B, for this repository's OWN package. A PAT
+    // still exists in this workflow (FOUNDATION_NPM_TOKEN_READ) — that is
+    // correct and expected, and is a DIFFERENT credential for a DIFFERENT,
+    // cross-repository reason. What must never reappear is the old one.
     expect(workflow).not.toMatch(/DS_NPM_TOKEN/);
   });
 });

@@ -33,13 +33,21 @@ name: Release @jheavner95/design
 #
 # READING @jheavner95/foundation is a genuinely different question, even
 # though the scope also matches there: that package is linked to a DIFFERENT
-# repository, jheavner95/studiopod-foundation, not this one. Whether a
-# repository's own GITHUB_TOKEN can read a package linked elsewhere — even
-# under the same account — depends on GitHub's package-level Actions access
-# model. This was measured, not assumed; see MEASURED RESULT below.
+# repository, jheavner95/studiopod-foundation, not this one.
 #
-# MEASURED RESULT: see docs/MIGRATION-ORG-2.md and this workflow's `Install`
-# steps for what was actually found when this was tried on a real runner.
+# MEASURED, not assumed: tried with GITHUB_TOKEN + `packages: read` on a real
+# runner (validate.yml, run 32216274798) and it failed —
+#
+#   npm error code E403
+#   403 Forbidden ... Permission permission_denied: read_package
+#
+# A repository's own GITHUB_TOKEN does not automatically reach a package
+# linked to a sibling repository under the same account. That needs an
+# explicit grant on the Foundation package's own settings (Package settings ->
+# Manage Actions access -> Add repository) — a GitHub-side action this
+# workflow cannot perform on itself. Until/unless that grant exists, every
+# `Install` step below that reads Foundation uses a dedicated read-only PAT
+# instead. See docs/MIGRATION-ORG-2.md.
 #
 # WHAT WAS WRONG BEFORE ORG-2B: this header used to explain the PAT by
 # asserting the package belonged to "the studiopod org" and that the two
@@ -100,7 +108,6 @@ concurrency:
 # per-job, only where it is actually needed (see the `publish` job).
 permissions:
   contents: read
-  packages: read
 
 jobs:
   # ── Release-time quality gate: Layer 1, fast (DS-1D; retriggered by CI-2) ──
@@ -124,7 +131,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
     steps:
       - uses: actions/checkout@v4
 
@@ -135,13 +141,12 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@jheavner95"
 
-      # Reads @jheavner95/foundation from GitHub Packages. GitHub Packages
-      # requires a token for EVERY install, including reads, so an
-      # unauthenticated `npm ci` fails with E401. GITHUB_TOKEN is tried here —
-      # see this file's header comment for what that does and does not prove.
+      # Reads @jheavner95/foundation from a DIFFERENT repository than this
+      # one. GITHUB_TOKEN cannot do this — measured E403, see this file's
+      # header comment. A read-only PAT is required.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.FOUNDATION_NPM_TOKEN_READ }}
         run: npm ci
 
       - name: verify:fast — typecheck, lint, unit tests
@@ -174,7 +179,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read        # checkout only — cannot tag, publish, or release
-      packages: read
     defaults:
       run:
         working-directory: packages/design
@@ -194,7 +198,7 @@ jobs:
       # See the `fast` job's note on this workflow's read credential.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.FOUNDATION_NPM_TOKEN_READ }}
         run: npm ci
         working-directory: .
 
@@ -254,10 +258,11 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@jheavner95"
 
-      # Authenticated read of @jheavner95/foundation — see the `fast` job note.
+      # Reads @jheavner95/foundation from a different repository — see the
+      # `fast` job note. PAT, not GITHUB_TOKEN.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.FOUNDATION_NPM_TOKEN_READ }}
         run: npm ci
 
       # ── What are we proposing to publish? ─────────────────────────────────
@@ -451,10 +456,11 @@ jobs:
           registry-url: ${{ vars.DS_REGISTRY }}
           scope: "@jheavner95"
 
-      # Authenticated read of @jheavner95/foundation — see the `fast` job note.
+      # Reads @jheavner95/foundation from a different repository — see the
+      # `fast` job note. PAT, not GITHUB_TOKEN.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.FOUNDATION_NPM_TOKEN_READ }}
         run: npm ci
 
       # ── 1. VALIDATE ───────────────────────────────────────────────────────
