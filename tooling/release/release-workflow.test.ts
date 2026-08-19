@@ -234,46 +234,32 @@ describe("publish is transactional", () => {
     expect(invocations).toHaveLength(1);
   });
 
-  it("wires exactly two credentials into the publish job, and nowhere else", () => {
+  it("wires GITHUB_TOKEN into every step that touches a registry, and no PAT anywhere", () => {
     const text = jobText("publish");
     const githubTokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.GITHUB_TOKEN \}\}/g) ?? [];
-    const foundationTokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.FOUNDATION_NPM_TOKEN_READ \}\}/g) ?? [];
-    // Five steps genuinely touch a registry, and they use two DIFFERENT
-    // credentials for two different reasons — measured on a real runner, not
-    // assumed:
+    // Five steps genuinely touch a registry: install, preflight,
+    // confirm-unused, publish, remote verification — and nothing else.
     //
-    //   install (1)              — reads @jheavner95/foundation, which is
-    //                               linked to a DIFFERENT repository
-    //                               (studiopod-foundation). GITHUB_TOKEN
-    //                               cannot reach it: measured E403
-    //                               `permission_denied: read_package` on
-    //                               validate.yml run 32216274798. A read-only
-    //                               PAT is required.
-    //
-    //   preflight, confirm-unused, publish, remote verification (4)
-    //                             — all touch @jheavner95/design, THIS
-    //                               repository's own package, which GitHub
-    //                               Packages links here because the scope
-    //                               matches the owner. GITHUB_TOKEN with
-    //                               `packages: write` is sufficient, proven
-    //                               the same way Foundation proved it in
-    //                               ORG-2A.
-    //
-    // The counts are asserted rather than loosened so that a credential
-    // appearing in some *other* step, or the wrong credential in either
-    // group, still fails this test.
-    expect(foundationTokenUses).toHaveLength(1);
-    expect(githubTokenUses).toHaveLength(4);
-    expect(text).not.toMatch(/DS_NPM_TOKEN/);
-    expect(text).not.toMatch(/echo.*(GITHUB_TOKEN|FOUNDATION_NPM_TOKEN_READ)/);
+    // ORG-2B: the first attempt at reading @jheavner95/foundation (linked to
+    // a DIFFERENT repository, studiopod-foundation) with GITHUB_TOKEN failed
+    // — measured E403 `permission_denied: read_package` on validate.yml run
+    // 32216274798 — because no cross-repository grant existed yet. That grant
+    // now exists (Foundation's package settings list studiopod-design under
+    // Manage Actions access, Read), so every registry-touching step here uses
+    // the same GITHUB_TOKEN — see docs/MIGRATION-ORG-2.md for the run that
+    // re-proved it. The count is asserted rather than loosened so that a
+    // credential appearing in some *other* step still fails this test.
+    expect(githubTokenUses).toHaveLength(5);
+    expect(text).not.toMatch(/DS_NPM_TOKEN|FOUNDATION_NPM_TOKEN_READ/);
+    expect(text).not.toMatch(/echo.*GITHUB_TOKEN/);
   });
 
-  it("no longer depends on the retired DS_NPM_TOKEN personal access token", () => {
-    // The whole point of ORG-2B, for this repository's OWN package. A PAT
-    // still exists in this workflow (FOUNDATION_NPM_TOKEN_READ) — that is
-    // correct and expected, and is a DIFFERENT credential for a DIFFERENT,
-    // cross-repository reason. What must never reappear is the old one.
-    expect(workflow).not.toMatch(/DS_NPM_TOKEN/);
+  it("no longer depends on any personal access token", () => {
+    // The whole point of ORG-2B. Both the retired DS_NPM_TOKEN and the
+    // temporary FOUNDATION_NPM_TOKEN_READ bridge must be gone: this
+    // repository's Foundation Actions-access grant made the built-in
+    // GITHUB_TOKEN sufficient for everything this workflow does.
+    expect(workflow).not.toMatch(/DS_NPM_TOKEN|FOUNDATION_NPM_TOKEN_READ/);
   });
 });
 

@@ -35,26 +35,21 @@ name: Validate @jheavner95/design
 #
 # This package moved from @studiopod/design to @jheavner95/design, and its
 # Foundation dependency moved to @jheavner95/foundation — both scopes now
-# match jheavner95, the actual owner of every repository involved. That makes
-# GITHUB_TOKEN + `packages: write` sufficient for THIS repository's own
-# package (see release.yml) — proven the same way Foundation proved it in
-# ORG-2A.
+# match jheavner95, the actual owner of every repository involved.
 #
-# It does NOT make GITHUB_TOKEN sufficient to READ @jheavner95/foundation from
-# here. That package is linked to a DIFFERENT repository
-# (jheavner95/studiopod-foundation), and this was tried on a real runner:
+# The first attempt at this — GITHUB_TOKEN + `packages: read`, reading
+# @jheavner95/foundation from a DIFFERENT repository
+# (jheavner95/studiopod-foundation) — failed on a real runner:
 #
 #   npm error code E403
 #   403 Forbidden ... Permission permission_denied: read_package
 #
-# A repository's own GITHUB_TOKEN does not automatically reach a package
-# linked to a sibling repository under the same account — that needs an
-# explicit grant on the OTHER package's own settings (Package settings ->
-# Manage Actions access -> Add repository), which this repository's workflow
-# cannot perform on itself. See docs/MIGRATION-ORG-2.md.
-#
-# So this step uses a dedicated read-only PAT for the Foundation read, and
-# nothing else in this workflow needs a credential at all.
+# That is the correct behaviour: a repository's own GITHUB_TOKEN does not
+# reach a package linked to a sibling repository under the same account
+# without an explicit grant. That grant has now been made — Foundation's
+# package settings list studiopod-design under Manage Actions access, with
+# Read — so GITHUB_TOKEN is tried again below. See docs/MIGRATION-ORG-2.md for
+# the measured result of this specific attempt, recorded once it exists.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
@@ -70,6 +65,7 @@ concurrency:
 # builds, and tests — it never writes to the repository, tags, or publishes.
 permissions:
   contents: read
+  packages: read
 
 jobs:
   validate:
@@ -77,6 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
 
@@ -87,13 +84,14 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@jheavner95"
 
-      # Reads @jheavner95/foundation from GitHub Packages, from a repository
-      # other than the one it is linked to. GITHUB_TOKEN cannot do this — see
-      # this file's header comment for the measured E403. A read-only PAT is
-      # required, and it is the only credential this workflow uses.
+      # Reads @jheavner95/foundation from a different repository
+      # (jheavner95/studiopod-foundation). GITHUB_TOKEN reaches it because
+      # that package's own settings explicitly grant this repository Actions
+      # access (Manage Actions access -> studiopod-design -> Read) — see this
+      # file's header comment.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.FOUNDATION_NPM_TOKEN_READ }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
 
       # Layer 1 — typecheck (library + documentation + test tree), ESLint,

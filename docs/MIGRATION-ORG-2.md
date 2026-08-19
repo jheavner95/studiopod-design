@@ -108,8 +108,8 @@ verifying the published artifact from a clean consumer — all four touch
 `@jheavner95/design`, this repository's own package.
 
 **Reading `@jheavner95/foundation` from this repository is a genuinely
-different question, and it was tried and it failed.** That package is linked
-to a *different* repository (`jheavner95/studiopod-foundation`). With
+different question, and the first attempt at it failed.** That package is
+linked to a *different* repository (`jheavner95/studiopod-foundation`). With
 `GITHUB_TOKEN` and `packages: read` declared, `validate.yml`'s automatic run
 against this migration (run `32216274798`) failed at `npm ci`:
 
@@ -122,23 +122,24 @@ Permission permission_denied: read_package
 That is a different error from the unlinked-package E403 (`The requested
 installation does not exist`) that Foundation and Design themselves produced
 before their own renames. `read_package` means the package **was found and is
-linked somewhere** — just not to a repository this workflow's token is
-authorized for. A repository's own `GITHUB_TOKEN` does not automatically reach
-a package linked to a *sibling* repository under the same account, even when
-the scope matches the owner on both sides.
+linked somewhere** — just not to a repository this workflow's token was
+authorized for at the time. A repository's own `GITHUB_TOKEN` does not
+automatically reach a package linked to a *sibling* repository under the same
+account, even when the scope matches the owner on both sides — an explicit
+grant is required.
 
-**The fix is a grant on the Foundation package's own settings**, from someone
-with admin access to it — not something `studiopod-design`'s workflow can do
-to itself:
+**That grant has now been made**, on the Foundation package's own settings:
 
-> Foundation package page → **Package settings → Manage Actions access → Add
-> repository → `studiopod-design`**
+> Foundation package page → **Package settings → Manage Actions access →
+> `studiopod-design` → Read**
 
-Until or unless that grant is made, every `npm ci` step in this repository's
-workflows that installs `@jheavner95/foundation` uses a dedicated read-only
-PAT — `secrets.FOUNDATION_NPM_TOKEN_READ` — and nothing else does. Every step
-that touches this repository's own `@jheavner95/design` package uses
-`GITHUB_TOKEN`.
+With the grant in place, `GITHUB_TOKEN` was retried and this time succeeded —
+see the completion report for the run that proved it. Every step in both
+workflows, in every job, now uses `GITHUB_TOKEN` and only `GITHUB_TOKEN`. No
+PAT — neither the retired `DS_NPM_TOKEN` nor the temporary
+`FOUNDATION_NPM_TOKEN_READ` bridge used during the brief period before the
+grant existed — remains anywhere in this repository's release or validation
+path.
 
 ## What each repository can drop, and when
 
@@ -147,7 +148,7 @@ Only after it has migrated:
 | Repository | Secret | Becomes |
 | --- | --- | --- |
 | studiopod-foundation | `FOUNDATION_NPM_TOKEN` | obsolete (ORG-2A) |
-| studiopod-design | `DS_NPM_TOKEN` | obsolete once publishing and reads both prove `GITHUB_TOKEN`-sufficient |
+| studiopod-design | `DS_NPM_TOKEN` | **obsolete** — GITHUB_TOKEN proved sufficient for both publishing and the cross-repository Foundation read, once Foundation granted studiopod-design Actions access. No workflow references it. |
 | studiopod-cloud | `DS_NPM_TOKEN_READ` / `_WRITE` | obsolete after step 3 |
 | PowerEditor | `FOUNDATION_NPM_TOKEN_READ` | obsolete after step 3 |
 
