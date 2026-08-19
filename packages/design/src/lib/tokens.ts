@@ -1,8 +1,8 @@
 /**
- * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
+ * GENERATED FROM @jheavner95/foundation — DO NOT EDIT.
  *
- * The public `@studiopod/design/tokens` surface. Values are owned by
- * @studiopod/foundation and written here as literals by
+ * The public `@jheavner95/design/tokens` surface. Values are owned by
+ * @jheavner95/foundation and written here as literals by
  * tooling/generators/generate-tokens-from-foundation.mjs; the stylesheets in src/styles
  * are generated from the same source, so the JS mirror and the CSS cannot
  * drift apart. Regenerate with `npm run token:bridge`.

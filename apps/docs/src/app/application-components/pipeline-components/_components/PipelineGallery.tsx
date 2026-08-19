@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { Pipeline, PipelineStage, PipelineStep, PipelineConnector, PipelineStatus, PipelineProgress, PipelineBranch, PipelineGate, PipelineSummary, PipelineActions, PipelineMetrics, PipelineHistory, WorkflowHeader, WorkflowFooter, type PipelineHistoryEntry } from "@studiopod/design";
-import type { WorkflowStateValue } from "@studiopod/design";
-import type { ApprovalStateValue } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { Pipeline, PipelineStage, PipelineStep, PipelineConnector, PipelineStatus, PipelineProgress, PipelineBranch, PipelineGate, PipelineSummary, PipelineActions, PipelineMetrics, PipelineHistory, WorkflowHeader, WorkflowFooter, type PipelineHistoryEntry } from "@jheavner95/design";
+import type { WorkflowStateValue } from "@jheavner95/design";
+import type { ApprovalStateValue } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

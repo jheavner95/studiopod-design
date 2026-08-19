@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CapabilityFlowDiagram, ProviderDiagram } from "@studiopod/design/illustrations";
+import { CapabilityFlowDiagram, ProviderDiagram } from "@jheavner95/design/illustrations";
 import { aiCapabilityLayer, aiCapabilityFlow } from "@/capabilities/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

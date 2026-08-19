@@ -1,5 +1,5 @@
-import { SectionShell, DescriptionList } from "@studiopod/design";
-import { SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, DescriptionList } from "@jheavner95/design";
+import { SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { FoundationPaletteSection } from "./_sections/FoundationPaletteSection";

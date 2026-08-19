@@ -1,1 +1,1 @@
-export { StateInspector as CommerceInspector } from "@studiopod/design";
+export { StateInspector as CommerceInspector } from "@jheavner95/design";

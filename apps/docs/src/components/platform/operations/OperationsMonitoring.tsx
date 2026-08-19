@@ -1,1 +1,1 @@
-export { ProviderHealthPanel as OperationsMonitoring } from "@studiopod/design";
+export { ProviderHealthPanel as OperationsMonitoring } from "@jheavner95/design";

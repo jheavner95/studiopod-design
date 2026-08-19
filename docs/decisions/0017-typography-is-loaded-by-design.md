@@ -87,7 +87,7 @@ Concretely:
 ### Why Design loads them, when Foundation owns them
 
 Because **Design is the only package a consumer installs**. Cloud depends on
-`@studiopod/design`; it has never depended on `@studiopod/foundation`, and
+`@jheavner95/design`; it has never depended on `@jheavner95/foundation`, and
 Foundation is a _build-time_ dependency inside the Design repository — never a
 runtime one. That is deliberate and predates this ADR: the token bridge emits
 literal values precisely so that Foundation's tree never reaches a consumer's
@@ -97,7 +97,7 @@ Two alternatives follow from that constraint, and both are worse:
 
 - **Have Design `@import` Foundation's stylesheet.** This makes Foundation a
   runtime dependency of every consumer, to deliver two files. A `url()`
-  pointing into `@studiopod/foundation` resolves on a machine that happens to
+  pointing into `@jheavner95/foundation` resolves on a machine that happens to
   have it hoisted and 404s everywhere else.
 - **Have applications install Foundation and load the fonts themselves.** This
   is the state DH-5.5 exists to end: typography ownership sitting in the
@@ -194,4 +194,4 @@ deliberately is not.
 - [ADR 0007 — framework neutrality](0007-framework-neutrality.md) ·
   [ADR 0013 — framework capabilities are props](0013-framework-capabilities-are-props.md)
 - Foundation `src/assets/README.md` · Foundation CHANGELOG `0.4.0`
-- Cloud ADR 0034 — Cloud consumes `@studiopod/design`
+- Cloud ADR 0034 — Cloud consumes `@jheavner95/design`

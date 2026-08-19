@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@jheavner95/design";
 import { WIDTH_MODES, type WidthMode } from "../_data/width-modes";
 
 function ModeCard({ mode, selected, onSelect }: { mode: WidthMode; selected: boolean; onSelect: () => void }) {

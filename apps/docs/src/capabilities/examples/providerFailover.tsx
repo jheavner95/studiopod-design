@@ -1,5 +1,5 @@
 import { AlertTriangle, ShoppingCart, RefreshCw, Package } from "lucide-react";
-import type { CapabilityFlow } from "@studiopod/design/illustrations";
+import type { CapabilityFlow } from "@jheavner95/design/illustrations";
 
 /** What happens automatically when a preferred provider goes down: the capability layer routes around it without StudioPOD noticing. */
 export const providerFailover: CapabilityFlow = {

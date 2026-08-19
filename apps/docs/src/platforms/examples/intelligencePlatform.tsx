@@ -1,5 +1,5 @@
 import { Eye, LineChart, Lightbulb, Bot } from "lucide-react";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 /** The Intelligence Platform's own internal loop: a continuous observe, analyze, recommend, automate cycle. */
 export const intelligencePlatform: PlatformArchitecture = {

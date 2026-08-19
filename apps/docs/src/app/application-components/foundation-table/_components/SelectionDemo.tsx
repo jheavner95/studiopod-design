@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Archive } from "lucide-react";
-import { Button, Body, Caption } from "@studiopod/design";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableSelectionCell, TableToolbar } from "@studiopod/design";
+import { Button, Body, Caption } from "@jheavner95/design";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableSelectionCell, TableToolbar } from "@jheavner95/design";
 
 interface Item {
   id: string;

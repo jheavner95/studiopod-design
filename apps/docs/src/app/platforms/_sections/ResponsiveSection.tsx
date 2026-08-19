@@ -1,4 +1,4 @@
-import { PlatformArchitectureDiagram } from "@studiopod/design/illustrations";
+import { PlatformArchitectureDiagram } from "@jheavner95/design/illustrations";
 import { valueChain } from "@/platforms/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

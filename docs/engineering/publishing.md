@@ -6,7 +6,7 @@
 
 ## 1. What is published
 
-One package, `@studiopod/design`, to **GitHub Packages**
+One package, `@jheavner95/design`, to **GitHub Packages**
 (`https://npm.pkg.github.com`).
 
 The registry choice is deliberate: the package is not open source, every
@@ -93,7 +93,7 @@ What consumers can rely on, stated as ranges rather than intentions.
 | `react`, `react-dom`    | `^18 \|\| ^19` (peer)        | Narrowing is a breaking change                        |
 | `next`                  | **Not a dependency**         | Removing it is the DH-2 deliverable; see ADR 0007     |
 | Node (build-time)       | Current LTS and one prior    | Dropping a line is a breaking change                  |
-| `@studiopod/foundation` | Exact, build-time only       | See § 5                                               |
+| `@jheavner95/foundation` | Exact, build-time only       | See § 5                                               |
 | Tailwind                | v4                           | A major move is a breaking change for consumers       |
 | Module format           | ESM only                     | Adding CJS would be additive; dropping ESM is not     |
 
@@ -115,7 +115,7 @@ an ADR, not a workaround.
 
 ## 5. The Foundation relationship
 
-`@studiopod/foundation` is a **build-time input**, pinned exactly, consumed
+`@jheavner95/foundation` is a **build-time input**, pinned exactly, consumed
 through the token bridge. Its values are baked into Design's generated tokens and
 stylesheet. It is not a runtime dependency and not a peer dependency.
 

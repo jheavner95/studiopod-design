@@ -1,5 +1,5 @@
 import { Sparkles, Bot, Layers } from "lucide-react";
-import type { CapabilityRegistry, CapabilityFlow } from "@studiopod/design/illustrations";
+import type { CapabilityRegistry, CapabilityFlow } from "@jheavner95/design/illustrations";
 
 /** Every AI provider is an interchangeable implementation of the Generation capability, StudioPOD never depends on a specific one. */
 export const aiCapabilityLayer: CapabilityRegistry = {

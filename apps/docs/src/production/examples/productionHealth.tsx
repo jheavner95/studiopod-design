@@ -1,4 +1,4 @@
-import type { ProductionPipeline, HealthMetric } from "@studiopod/design/illustrations";
+import type { ProductionPipeline, HealthMetric } from "@jheavner95/design/illustrations";
 
 export const productionHealthMetrics: HealthMetric[] = [
   { id: "jobs", label: "Jobs", value: "128", trend: "up" },

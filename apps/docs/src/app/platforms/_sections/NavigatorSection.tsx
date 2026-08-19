@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PlatformNavigator, PlatformArchitectureDiagram, PlatformMiniMap } from "@studiopod/design/illustrations";
+import { PlatformNavigator, PlatformArchitectureDiagram, PlatformMiniMap } from "@jheavner95/design/illustrations";
 import { completeArchitecture } from "@/platforms/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

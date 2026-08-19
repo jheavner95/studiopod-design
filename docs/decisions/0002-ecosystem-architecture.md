@@ -65,7 +65,7 @@ Specifically, Design accepts:
    carry any one application's coupling.
 
 Point 5 is Design's own obligation under the arrangement, and it is the one this
-repository has been failing. Cloud declined to consume `@studiopod/design`
+repository has been failing. Cloud declined to consume `@jheavner95/design`
 because of a `next/link` coupling and a marketing surface it does not want. Under
 Cloud ADR 0033 that is not Cloud's problem to solve locally — it is Design's
 defect. [ADR 0007](0007-framework-neutrality.md) fixes it.

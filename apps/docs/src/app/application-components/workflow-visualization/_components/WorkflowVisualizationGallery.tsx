@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { WorkflowCanvas, WorkflowViewport, WorkflowMiniMap, WorkflowNode, WorkflowEdge, WorkflowGroup, WorkflowSelection, useWorkflowSelection, WorkflowToolbar, WorkflowInspector, WorkflowLegend, WorkflowOverview, WorkflowControls, WorkflowHeader, WorkflowFooter, WorkflowActions, type WorkflowNodeStatus } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { WorkflowCanvas, WorkflowViewport, WorkflowMiniMap, WorkflowNode, WorkflowEdge, WorkflowGroup, WorkflowSelection, useWorkflowSelection, WorkflowToolbar, WorkflowInspector, WorkflowLegend, WorkflowOverview, WorkflowControls, WorkflowHeader, WorkflowFooter, WorkflowActions, type WorkflowNodeStatus } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

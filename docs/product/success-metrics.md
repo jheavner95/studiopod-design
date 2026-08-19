@@ -24,7 +24,7 @@ when it is better than the alternative, and route around it when it is not.
 
 | Metric                                                             | Target                    |
 | ------------------------------------------------------------------ | ------------------------- |
-| Applications consuming `@studiopod/design`                         | Every StudioPOD front end |
+| Applications consuming `@jheavner95/design`                         | Every StudioPOD front end |
 | Applications on the current minor or one prior                     | 100%                      |
 | Interface code in consumers built from Design exports              | Rising, measured per release |
 | **Locally reimplemented components in consumers**                  | **Zero**                  |

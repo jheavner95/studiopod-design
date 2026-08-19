@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Stack } from "@studiopod/design";
-import { Button } from "@studiopod/design";
-import { Form, FormSection, FormActions, InputField, SelectField, SwitchField, ValidationSummary, type ValidationSummaryItem } from "@studiopod/design";
+import { Stack } from "@jheavner95/design";
+import { Button } from "@jheavner95/design";
+import { Form, FormSection, FormActions, InputField, SelectField, SwitchField, ValidationSummary, type ValidationSummaryItem } from "@jheavner95/design";
 
 interface FormState {
   title: string;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { CapabilityRegistryDiagram } from "@studiopod/design/illustrations";
+import { CapabilityRegistryDiagram } from "@jheavner95/design/illustrations";
 import { completeCapabilityArchitecture } from "@/capabilities/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

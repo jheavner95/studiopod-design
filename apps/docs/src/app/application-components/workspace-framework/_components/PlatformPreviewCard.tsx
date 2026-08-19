@@ -1,4 +1,4 @@
-import { Card, Badge, Body } from "@studiopod/design";
+import { Card, Badge, Body } from "@jheavner95/design";
 import type { PlatformExample } from "../_data/platform-examples";
 
 /** A small preview card — deliberately lighter than the large anatomy region cards. */

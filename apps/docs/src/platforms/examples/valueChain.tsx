@@ -1,5 +1,5 @@
 import { ClipboardList, Palette, Factory, Rocket, ShoppingCart } from "lucide-react";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 /** The five platforms a product moves through, with no layer grouping, a flat sequential chain. */
 export const valueChain: PlatformArchitecture = {

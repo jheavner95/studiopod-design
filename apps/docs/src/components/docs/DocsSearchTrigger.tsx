@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { CommandNavigation } from "@studiopod/design";
-import type { CommandPaletteItem } from "@studiopod/design";
+import { CommandNavigation } from "@jheavner95/design";
+import type { CommandPaletteItem } from "@jheavner95/design";
 import { NAV_REGISTRY, getGroup, getSection } from "@/lib/design-system-navigation";
 
 interface DocsSearchTriggerProps {

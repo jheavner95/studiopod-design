@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Card, Body } from "@studiopod/design";
+import { Card, Body } from "@jheavner95/design";
 import { cn } from "@/lib/cn";
 
 export interface DocsGroupCardEntry {

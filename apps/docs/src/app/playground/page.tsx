@@ -2,8 +2,8 @@ import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/
 import { DocsEntryGrid } from "@/app/docs/_components/DocsEntryGrid";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
-import { CardGrid, SectionShell } from "@studiopod/design";
-import { Badge, SectionHeader, Eyebrow } from "@studiopod/design";
+import { CardGrid, SectionShell } from "@jheavner95/design";
+import { Badge, SectionHeader, Eyebrow } from "@jheavner95/design";
 import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("playground")!;

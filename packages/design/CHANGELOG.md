@@ -1,6 +1,38 @@
 # Changelog
 
-All notable changes to `@studiopod/design` are documented here. Releases up to and including 0.12.0 were published as `@studiopod/design-system`; see 0.13.0 below. Format loosely follows [Keep a Changelog](https://keepachangelog.com/); versioning discipline is documented in `VERSIONING.md`.
+All notable changes to `@jheavner95/design` are documented here.
+
+Releases up to and including 0.12.0 were published as `@studiopod/design-system`.
+Releases 0.13.0 through 0.19.0 were published as `@studiopod/design`; see
+ORG-2B below for why that changed. Format loosely follows
+[Keep a Changelog](https://keepachangelog.com/); versioning discipline is
+documented in `VERSIONING.md`.
+
+## 0.19.0 — republished as `@jheavner95/design` (ORG-2B)
+
+**Package identity only. No component, token, or behavioural change.**
+
+`@studiopod/design@0.19.0` and `@jheavner95/design@0.19.0` ship the same
+package. The version is deliberately not bumped — see
+`../../docs/MIGRATION-ORG-2.md` for the reasoning, which is the same one
+Foundation's identity migration used.
+
+Verified equivalent before publishing: of 1,088 files in the tarball, 1,077
+are byte-identical and the remaining 11 differ only in the identity string
+inside a doc comment, a markdown example, or `package.json#name`. Every
+shipped `.js` and `.css` file — the entire runtime surface — is byte-identical.
+
+- `name` is now `@jheavner95/design`, matching the repository owner so GitHub
+  Packages links the package to `jheavner95/studiopod-design`.
+- The build-time Foundation dependency moved to `@jheavner95/foundation`,
+  Foundation's own current identity (ORG-2A). The generated token files
+  (`palette.css`, `theme.css`, `tokens.css`, `typography.css`,
+  `src/lib/tokens.ts`) were regenerated; their emitted VALUES are unchanged —
+  only their `GENERATED FROM` comment header updated, and comments never reach
+  the shipped bundle (esbuild strips them).
+
+`@studiopod/design` 0.13.0–0.19.0 remain published and must not be removed
+until Cloud, PowerEditor and Web have migrated.
 
 ## 0.18.0 — a card that navigates is a link
 

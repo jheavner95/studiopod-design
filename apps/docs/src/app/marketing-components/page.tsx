@@ -1,6 +1,6 @@
 import { Info } from "lucide-react";
-import { SectionShell } from "@studiopod/design";
-import { Card, Body } from "@studiopod/design";
+import { SectionShell } from "@jheavner95/design";
+import { Card, Body } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";

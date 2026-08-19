@@ -1,5 +1,5 @@
-import { CardGrid } from "@studiopod/design";
-import { WorkflowRail, WorkflowCard } from "@studiopod/design/illustrations";
+import { CardGrid } from "@jheavner95/design";
+import { WorkflowRail, WorkflowCard } from "@jheavner95/design/illustrations";
 import { publishing } from "@/workflows/examples";
 import { DemoLabel } from "../_components/preview-primitives";
 

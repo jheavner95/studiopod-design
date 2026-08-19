@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { Button, Caption } from "@studiopod/design";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableStatusCell, TableEmptyState, TableLoadingState, TableFooter } from "@studiopod/design";
+import { Button, Caption } from "@jheavner95/design";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableStatusCell, TableEmptyState, TableLoadingState, TableFooter } from "@jheavner95/design";
 import { TABLE_STATES } from "../_data/states";
 
 const ALL_ITEMS = [

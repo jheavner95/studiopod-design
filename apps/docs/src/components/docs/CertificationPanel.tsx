@@ -1,5 +1,5 @@
-import { Card, Badge, Body, Caption } from "@studiopod/design";
-import { ProgressBar } from "@studiopod/design";
+import { Card, Badge, Body, Caption } from "@jheavner95/design";
+import { ProgressBar } from "@jheavner95/design";
 import {
   getCertificationRecord,
   getChecklistCoverage,

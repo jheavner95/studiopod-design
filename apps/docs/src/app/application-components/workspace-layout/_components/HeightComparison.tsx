@@ -1,4 +1,4 @@
-import { Body, Caption } from "@studiopod/design";
+import { Body, Caption } from "@jheavner95/design";
 import { HEIGHT_RULES, type HeightRule } from "../_data/heights";
 
 /** Tailwind's own height scale, not a pixel literal — the ranking is what matters, not the exact step. */

@@ -1,5 +1,5 @@
 import { Sparkles, Bot, Rocket, Globe, Store, ShoppingCart, Factory, Package } from "lucide-react";
-import type { CapabilityRegistry } from "@studiopod/design/illustrations";
+import type { CapabilityRegistry } from "@jheavner95/design/illustrations";
 
 /** Every provider behind Generation, Publishing, and Commerce, with a full spread of health and availability states. */
 export const capabilityRegistry: CapabilityRegistry = {

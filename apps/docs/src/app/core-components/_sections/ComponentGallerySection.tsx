@@ -1,5 +1,5 @@
 import { Database, ShieldCheck, Workflow, Zap } from "lucide-react";
-import { Button, Card, Badge, SectionBadge, SectionHeader, Eyebrow, StatCard, FeatureCard, GlassPanel, SurfacePanel, CTAGroup, Skeleton, Heading, Body, Caption } from "@studiopod/design";
+import { Button, Card, Badge, SectionBadge, SectionHeader, Eyebrow, StatCard, FeatureCard, GlassPanel, SurfacePanel, CTAGroup, Skeleton, Heading, Body, Caption } from "@jheavner95/design";
 import { PreviewSection, StateLabel } from "@/app/docs/_components/DocsShowcase";
 import { CertificationPanel } from "@/components/docs";
 

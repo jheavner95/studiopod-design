@@ -1,12 +1,12 @@
-import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { Card, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@studiopod/design";
-import { IllustrationDevProvider } from "@studiopod/design/internal";
+import { SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { Card, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@jheavner95/design";
+import { IllustrationDevProvider } from "@jheavner95/design/internal";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
-import { DOCK_CLEARANCE_CLASS } from "@studiopod/design/internal";
-import { WorkflowDiagram, WorkflowLegend } from "@studiopod/design/illustrations";
+import { DOCK_CLEARANCE_CLASS } from "@jheavner95/design/internal";
+import { WorkflowDiagram, WorkflowLegend } from "@jheavner95/design/illustrations";
 import { canonicalProductionFlow, prepareValidateProduce, productionIntelligenceLoop } from "@/workflows/examples";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 import { ControlDock } from "./_components/ControlDock";
 import { WorkflowGallerySection } from "./_sections/WorkflowGallerySection";
 import { PlaybackSection } from "./_sections/PlaybackSection";

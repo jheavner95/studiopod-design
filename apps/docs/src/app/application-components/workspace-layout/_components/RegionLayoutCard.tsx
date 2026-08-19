@@ -1,4 +1,4 @@
-import { Card, Body, Caption } from "@studiopod/design";
+import { Card, Body, Caption } from "@jheavner95/design";
 import type { RegionLayout } from "../_data/region-layouts";
 
 const SEGMENT_STYLE = [

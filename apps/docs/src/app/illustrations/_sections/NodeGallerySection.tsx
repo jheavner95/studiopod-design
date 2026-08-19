@@ -1,6 +1,6 @@
 import { Database, Workflow, ShieldCheck } from "lucide-react";
-import { Badge } from "@studiopod/design";
-import type { NodeStatus } from "@studiopod/design/illustrations";
+import { Badge } from "@jheavner95/design";
+import type { NodeStatus } from "@jheavner95/design/illustrations";
 import { PreviewSection, NodeDemo } from "../_components/preview-primitives";
 
 const STATUSES: NodeStatus[] = ["idle", "active", "processing", "complete", "warning", "error"];

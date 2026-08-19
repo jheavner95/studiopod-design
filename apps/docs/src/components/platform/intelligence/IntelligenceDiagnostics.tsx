@@ -1,1 +1,1 @@
-export { HealthIssueList as IntelligenceDiagnostics } from "@studiopod/design";
+export { HealthIssueList as IntelligenceDiagnostics } from "@jheavner95/design";

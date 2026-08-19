@@ -1,9 +1,9 @@
 "use client";
 
 import { File, Folder, Terminal, ChevronRight } from "lucide-react";
-import { SplitView, SplitPane, SplitDivider } from "@studiopod/design";
-import { DescriptionList } from "@studiopod/design";
-import { Body, Caption, Badge } from "@studiopod/design";
+import { SplitView, SplitPane, SplitDivider } from "@jheavner95/design";
+import { DescriptionList } from "@jheavner95/design";
+import { Body, Caption, Badge } from "@jheavner95/design";
 import { CANONICAL_PRODUCTS, CANONICAL_JOBS, CANONICAL_PEOPLE } from "@/lib/canonical";
 
 /**

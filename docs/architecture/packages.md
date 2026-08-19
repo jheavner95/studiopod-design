@@ -9,7 +9,7 @@
 The repository publishes exactly one package.
 
 ```
-@studiopod/design      the visual language as code
+@jheavner95/design      the visual language as code
 ```
 
 Everything else in the repository — the documentation site, the tooling, the
@@ -78,7 +78,7 @@ that as a reason not to consume Design.
 
 Three mechanisms address it, and all three must hold:
 
-1. **Subpath exports.** A consumer that never imports `@studiopod/design/marketing`
+1. **Subpath exports.** A consumer that never imports `@jheavner95/design/marketing`
    never resolves the module. The entry is not reachable from `.`.
 2. **`sideEffects` declared correctly.** The package declares `sideEffects:
    ["*.css"]` so bundlers may drop unreferenced modules. This is currently
@@ -142,7 +142,7 @@ people who install them.
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------- |
 | The package compiles the documentation site's `src/` via `baseUrl: "../.."`                     | No enforceable boundary; the build hand-amputates doc chrome per barrel     | **Fixed — DH-2**           |
 | Two esbuild resolver plugins shim barrels to strip doc-site imports                              | Only catches barrels someone remembered. Silent inclusion is the default    | **Fixed — DH-2**, deleted  |
-| Directory is `packages/design-system`; package is `@studiopod/design`                            | Two names for one thing                                                    | **Fixed — DH-2**           |
+| Directory is `packages/design-system`; package is `@jheavner95/design`                            | Two names for one thing                                                    | **Fixed — DH-2**           |
 | `sideEffects` cannot be tightened while the source tree is shared                                | Bundlers evaluate more than they need to                                   | **Unblocked — DH-2**; not yet tightened |
 | `next` is a required peer dependency for all consumers                                          | Blocks Cloud. Levies a framework tax on consumers that do not use it        | **Fixed — DH-3** |
 | Barrel-heavy exports (`export * from "@/components/ui"`)                                        | Undermines the tree-shaking that the no-second-package argument depends on   | Open — DH-3                |
@@ -158,7 +158,7 @@ The documentation site hit it on its first build against `dist/`. See
 
 The published package declares:
 
-- **Name:** `@studiopod/design`
+- **Name:** `@jheavner95/design`
 - **Registry:** GitHub Packages (`https://npm.pkg.github.com`)
 - **Module format:** ESM only
 - **Peer dependencies:** `react`, `react-dom`, and — still, pending
@@ -166,7 +166,7 @@ The published package declares:
   touch this; framework neutrality is DH-3.
 - **Runtime dependencies:** kept minimal and reviewed as public API — a runtime
   dependency is something every consumer installs, so adding one requires an ADR
-- **Build-time dependency:** `@studiopod/foundation`, consumed through the token
+- **Build-time dependency:** `@jheavner95/foundation`, consumed through the token
   bridge, never a runtime dependency
   ([ADR 0008](../decisions/0008-foundation-is-a-build-time-input.md))
 

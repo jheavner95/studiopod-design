@@ -8,7 +8,7 @@
  * structural rather than a resolver trick.
  *
  * Generic layout primitives (Container, Stack, Surface, Workspace, …) are
- * the library's and come from "@studiopod/design".
+ * the library's and come from "@jheavner95/design".
  */
 export { GlobalNav } from "./GlobalNav";
 export { Footer } from "./Footer";

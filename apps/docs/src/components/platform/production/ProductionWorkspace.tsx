@@ -10,4 +10,4 @@
  * DependencyGraph, RelationshipView, WorkflowCanvas), now applied one tier
  * up for the first time.
  */
-export { Workflow as ProductionWorkspace } from "@studiopod/design";
+export { Workflow as ProductionWorkspace } from "@jheavner95/design";

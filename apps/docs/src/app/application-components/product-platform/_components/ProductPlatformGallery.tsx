@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Shirt } from "lucide-react";
-import { Card, Body, Badge, Button } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
 import {
   ProductWorkspace,
   ProductHeader,
@@ -16,9 +16,9 @@ import {
   ProductSummary,
   ProductActions,
 } from "@/components/platform/product";
-import { WorkflowFooter, RelationshipNode, RelationshipEdge } from "@studiopod/design";
-import { InspectorHeader, PropertyRow, PropertySelect } from "@studiopod/design";
-import type { AssetViewMode, DataGridColumn } from "@studiopod/design";
+import { WorkflowFooter, RelationshipNode, RelationshipEdge } from "@jheavner95/design";
+import { InspectorHeader, PropertyRow, PropertySelect } from "@jheavner95/design";
+import type { AssetViewMode, DataGridColumn } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

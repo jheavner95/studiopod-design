@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Caption } from "@studiopod/design";
-import { WorkflowDiagram, WorkflowLegend, WorkflowStepDetails } from "@studiopod/design/illustrations";
+import { Caption } from "@jheavner95/design";
+import { WorkflowDiagram, WorkflowLegend, WorkflowStepDetails } from "@jheavner95/design/illustrations";
 import { exampleWorkflows } from "@/workflows/examples";
 import { DemoLabel } from "../_components/preview-primitives";
 

@@ -1,5 +1,5 @@
 import { Layers, Globe, Store, Rocket } from "lucide-react";
-import type { CapabilityRegistry } from "@studiopod/design/illustrations";
+import type { CapabilityRegistry } from "@jheavner95/design/illustrations";
 
 /** WordPress and Shopify are both interchangeable implementations of the Publishing capability, with room for future providers to slot in without a new diagram. */
 export const publishingCapability: CapabilityRegistry = {

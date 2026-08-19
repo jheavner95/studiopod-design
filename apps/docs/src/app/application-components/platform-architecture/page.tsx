@@ -13,13 +13,13 @@ import {
   Sparkles,
   Store,
 } from "lucide-react";
-import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@studiopod/design";
+import { SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
-import { PlatformArchitectureDiagram, PlatformLegend } from "@studiopod/design/illustrations";
+import { PlatformArchitectureDiagram, PlatformLegend } from "@jheavner95/design/illustrations";
 import { completeArchitecture } from "@/platforms/examples";
-import { WorkflowDiagram } from "@studiopod/design/illustrations";
+import { WorkflowDiagram } from "@jheavner95/design/illustrations";
 import { canonicalProductionFlow } from "@/workflows/examples";
 import { CANONICAL_PRODUCTION_FLOW, CANONICAL_VOCABULARY } from "@/lib/canonical";
 import { PLATFORM_ARCHITECTURE_TOPICS } from "./_data/architecture";

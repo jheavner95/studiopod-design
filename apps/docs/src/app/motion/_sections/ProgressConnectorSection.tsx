@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CardGrid } from "@studiopod/design";
-import { Progress, ConnectorFlow } from "@studiopod/design/internal";
-import { useMotion } from "@studiopod/design";
+import { CardGrid } from "@jheavner95/design";
+import { Progress, ConnectorFlow } from "@jheavner95/design/internal";
+import { useMotion } from "@jheavner95/design";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
-import { Card, Body, Button } from "@studiopod/design";
-import { DashboardGrid, DashboardSection, MetricCard, KPIWidget, TrendWidget, ChartWidget, StatusWidget, ActivityWidget, QueueWidget, HealthWidget, RecommendationWidget, type QueueRowJob, type JobTimelineEntry } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { DashboardGrid, DashboardSection, MetricCard, KPIWidget, TrendWidget, ChartWidget, StatusWidget, ActivityWidget, QueueWidget, HealthWidget, RecommendationWidget, type QueueRowJob, type JobTimelineEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

@@ -4,4 +4,4 @@
  * covers a Production workspace's own contextual side content, checked
  * directly against its full prop surface and found already fully generic.
  */
-export { WorkflowSidebar as ProductionSidebar } from "@studiopod/design";
+export { WorkflowSidebar as ProductionSidebar } from "@jheavner95/design";

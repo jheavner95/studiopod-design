@@ -1,8 +1,8 @@
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "../docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "../docs/_components/DocsSectionLanding";
-import { SectionShell, CardGrid } from "@studiopod/design";
-import { SectionHeader, Eyebrow, Card, Body } from "@studiopod/design";
+import { SectionShell, CardGrid } from "@jheavner95/design";
+import { SectionHeader, Eyebrow, Card, Body } from "@jheavner95/design";
 import { NAV_SECTIONS, NAV_REGISTRY, getEntry, getGroup } from "@/lib/design-system-navigation";
 
 const entry = getEntry("documentation")!;

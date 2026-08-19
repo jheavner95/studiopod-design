@@ -1,5 +1,5 @@
 import { FileText, Layers, PackageCheck, FileCheck, Store, TrendingUp } from "lucide-react";
-import type { ProductionArtifact } from "@studiopod/design/illustrations";
+import type { ProductionArtifact } from "@jheavner95/design/illustrations";
 
 /** How a single artifact changes shape as it moves from a creative brief to a commercial performance record. */
 export const artifactLifecycle: ProductionArtifact[] = [

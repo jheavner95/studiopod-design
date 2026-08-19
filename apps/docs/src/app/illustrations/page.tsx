@@ -1,11 +1,11 @@
 import { Boxes } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@studiopod/design";
-import { SystemGrid } from "@studiopod/design/illustrations";
+import { PageShell, SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@jheavner95/design";
+import { SystemGrid } from "@jheavner95/design/illustrations";
 import { DocsRelatedGrid } from "@/components/docs";
-import { IllustrationDevProvider } from "@studiopod/design/internal";
+import { IllustrationDevProvider } from "@jheavner95/design/internal";
 import { getEntry } from "@/lib/design-system-navigation";
-import { DOCK_CLEARANCE_CLASS } from "@studiopod/design/internal";
+import { DOCK_CLEARANCE_CLASS } from "@jheavner95/design/internal";
 import { DevControlsPanel } from "./_components/DevControlsPanel";
 import { NodeGallerySection } from "./_sections/NodeGallerySection";
 import { ConnectionGallerySection } from "./_sections/ConnectionGallerySection";

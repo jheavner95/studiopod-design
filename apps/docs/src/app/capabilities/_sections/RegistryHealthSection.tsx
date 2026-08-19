@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AdapterDiagram, ProviderLegend, ProviderCard } from "@studiopod/design/illustrations";
+import { AdapterDiagram, ProviderLegend, ProviderCard } from "@jheavner95/design/illustrations";
 import { capabilityRegistry } from "@/capabilities/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

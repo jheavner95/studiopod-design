@@ -28,12 +28,12 @@ import { spawnSync } from "node:child_process";
 const FAST_STEPS = [
   // First, deliberately: it is the cheapest step and it catches the one class
   // of drift the other steps cannot see — a hand-edited generated token file
-  // silently diverging from @studiopod/foundation. Everything downstream builds
+  // silently diverging from @jheavner95/foundation. Everything downstream builds
   // on those tokens, so failing here fails fast and points at the real cause.
   { name: "Foundation token bridge", script: "token:bridge-check" },
   // Second, and new in DH-2: the package build now has to happen before
   // anything else can typecheck or run. The documentation application is a
-  // consumer — it resolves "@studiopod/design" through the workspace link to
+  // consumer — it resolves "@jheavner95/design" through the workspace link to
   // dist/, not through a source alias — so its typecheck, its tests and its
   // build all need the package built first. That ordering is not an
   // inconvenience; it is the boundary being real.

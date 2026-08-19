@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, ArrowDown } from "lucide-react";
-import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { FRAMEWORK_TOPICS } from "./_data/framework";

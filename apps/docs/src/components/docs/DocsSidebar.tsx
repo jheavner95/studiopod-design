@@ -1,6 +1,6 @@
 "use client";
 
-import { SideNavigation } from "@studiopod/design";
+import { SideNavigation } from "@jheavner95/design";
 import { DocsSidebarGroup } from "./DocsSidebarGroup";
 import { getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 

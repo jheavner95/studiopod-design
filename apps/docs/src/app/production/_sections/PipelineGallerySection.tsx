@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Caption } from "@studiopod/design";
-import { ValidationDiagram, ValidationLegend } from "@studiopod/design/illustrations";
+import { Caption } from "@jheavner95/design";
+import { ValidationDiagram, ValidationLegend } from "@jheavner95/design/illustrations";
 import { artworkValidation, productionPipeline, exportValidation } from "@/production/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

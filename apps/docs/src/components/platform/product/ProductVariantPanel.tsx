@@ -1,1 +1,1 @@
-export { PropertyPanel as ProductVariantPanel } from "@studiopod/design";
+export { PropertyPanel as ProductVariantPanel } from "@jheavner95/design";

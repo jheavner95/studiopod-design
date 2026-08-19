@@ -1,5 +1,5 @@
 /**
- * @studiopod/design/internal — NOT PUBLIC API.
+ * @jheavner95/design/internal — NOT PUBLIC API.
  *
  * ─────────────────────────────────────────────────────────────────────────
  * This entry point carries no compatibility promise of any kind. Anything

@@ -43,7 +43,7 @@ import type { AriaAttributes, CSSProperties, ElementType, ReactNode } from "reac
  * ```tsx
  * // app/design.tsx — the application's own thin binding
  * import Link from "next/link";
- * import { Button as DesignButton, type ButtonProps } from "@studiopod/design";
+ * import { Button as DesignButton, type ButtonProps } from "@jheavner95/design";
  *
  * export const Button = (props: ButtonProps) => <DesignButton linkComponent={Link} {...props} />;
  * ```

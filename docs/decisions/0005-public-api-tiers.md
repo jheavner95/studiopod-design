@@ -84,7 +84,7 @@ genuinely useless — consumers import what resolves.
 > implementation found thirty-seven symbols the documentation application needs
 > that are genuinely library code, genuinely not public API, and that the
 > library itself depends on — so they could not move out either. The package
-> therefore declares one non-public entry point, `@studiopod/design/internal`,
+> therefore declares one non-public entry point, `@jheavner95/design/internal`,
 > which carries no compatibility promise and which no application may import.
 > Everything else in this ADR — the Stable and Preview tiers, the three-minor
 > graduation rule, the declaration requirement — stands unchanged.

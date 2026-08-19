@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Body, Badge, Button } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
 import {
   PublishingWorkspace,
   PublishingHeader,
@@ -14,11 +14,11 @@ import {
   PublishingInspector,
   PublishingActions,
 } from "@/components/platform/publishing";
-import { WorkflowFooter } from "@studiopod/design";
-import type { DataGridColumn } from "@studiopod/design";
-import type { ProviderHealthRow } from "@studiopod/design";
-import type { QueueRowJob } from "@studiopod/design";
-import type { StateHistoryEntry } from "@studiopod/design";
+import { WorkflowFooter } from "@jheavner95/design";
+import type { DataGridColumn } from "@jheavner95/design";
+import type { ProviderHealthRow } from "@jheavner95/design";
+import type { QueueRowJob } from "@jheavner95/design";
+import type { StateHistoryEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

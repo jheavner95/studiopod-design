@@ -1,5 +1,5 @@
-import { SectionShell, DescriptionList } from "@studiopod/design";
-import { SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, DescriptionList } from "@jheavner95/design";
+import { SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";

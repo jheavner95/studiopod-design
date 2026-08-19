@@ -1,1 +1,1 @@
-export { DataGrid as PublishingTargets } from "@studiopod/design";
+export { DataGrid as PublishingTargets } from "@jheavner95/design";

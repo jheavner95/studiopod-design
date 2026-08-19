@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Check, Copy, Archive, Image as ImageIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Badge, Body, Caption, INTERACTIVE_CARD_CLASSES } from "@studiopod/design";
+import { Badge, Body, Caption, INTERACTIVE_CARD_CLASSES } from "@jheavner95/design";
 import { ASSET_CARD_ANATOMY } from "../_data/asset-card-anatomy";
 
 /**

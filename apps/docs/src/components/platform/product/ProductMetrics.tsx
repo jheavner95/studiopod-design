@@ -1,1 +1,1 @@
-export { PipelineMetrics as ProductMetrics } from "@studiopod/design";
+export { PipelineMetrics as ProductMetrics } from "@jheavner95/design";

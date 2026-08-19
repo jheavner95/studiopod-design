@@ -97,12 +97,12 @@ for (const file of sourceFiles(join(PKG, "src"))) {
 
 // ── 3. Documentation source consumes the package, never its source ────────
 const PUBLIC_ENTRIES = new Set([
-  "@studiopod/design",
-  "@studiopod/design/tokens",
-  "@studiopod/design/marketing",
-  "@studiopod/design/illustrations",
-  "@studiopod/design/internal",
-  "@studiopod/design/styles.css",
+  "@jheavner95/design",
+  "@jheavner95/design/tokens",
+  "@jheavner95/design/marketing",
+  "@jheavner95/design/illustrations",
+  "@jheavner95/design/internal",
+  "@jheavner95/design/styles.css",
 ]);
 for (const file of sourceFiles(DOCS)) {
   for (const spec of specifiersIn(file)) {
@@ -112,7 +112,7 @@ for (const file of sourceFiles(DOCS)) {
         fail("documentation reaches into library source", `${relative(repoRoot, file)} -> "${spec}"`);
       }
     }
-    if (spec.startsWith("@studiopod/design") && !PUBLIC_ENTRIES.has(spec)) {
+    if (spec.startsWith("@jheavner95/design") && !PUBLIC_ENTRIES.has(spec)) {
       fail("documentation deep-imports the package", `${relative(repoRoot, file)} -> "${spec}"`);
     }
   }

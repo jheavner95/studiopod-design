@@ -1,4 +1,4 @@
-import { Card, Badge, Body, Caption } from "@studiopod/design";
+import { Card, Badge, Body, Caption } from "@jheavner95/design";
 import { resolveFamilyItems, type ComponentFamily } from "../_data/families";
 
 export function FamilyCard({ family }: { family: ComponentFamily }) {

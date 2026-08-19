@@ -1,4 +1,4 @@
-# @studiopod/design — Public API Contract
+# @jheavner95/design — Public API Contract
 
 This document is the frozen public contract of the package, established in RM-5.5. It classifies every export family, documents the marketing/illustrations/tokens/CSS/dependency contracts, and records the portability caveats a consumer should know about before adopting the package (RM-6).
 
@@ -18,10 +18,10 @@ Current assignment:
 
 | Entry | stable | preview |
 |---|---|---|
-| `@studiopod/design` | 211 | 665 |
-| `@studiopod/design/tokens` | 5 | 0 |
-| `@studiopod/design/marketing` | 0 | 44 |
-| `@studiopod/design/illustrations` | 2 | 248 |
+| `@jheavner95/design` | 211 | 665 |
+| `@jheavner95/design/tokens` | 5 | 0 |
+| `@jheavner95/design/marketing` | 0 | 44 |
+| `@jheavner95/design/illustrations` | 2 | 248 |
 
 `/marketing` and `/illustrations` are entirely Preview because they have **no test files** — nothing pins their behaviour. Every `/tokens` export is Stable without tests, because `token:bridge-check` fails the build if a value drifts from Foundation, which is a stronger guarantee. Reasoning: `docs/decisions/0015-stability-tiers.md`.
 
@@ -30,7 +30,7 @@ Current assignment:
 **310 of 372 root components export their props type** (was 54). Wrapping a component is a first-class pattern:
 
 ```tsx
-import { Button, type ButtonProps } from "@studiopod/design";
+import { Button, type ButtonProps } from "@jheavner95/design";
 export const AppButton = (props: ButtonProps) => <Button linkComponent={Link} {...props} />;
 ```
 
@@ -50,17 +50,17 @@ The A–E family classification below predates DH-5 and is kept as the human-rea
 
 | Entry | Purpose |
 |---|---|
-| `@studiopod/design` | Core UI/layout/form/feedback/navigation/overlay/table/metadata primitives, the motion composition components, the operational and workflow component families, shared hooks/providers, `cn`. |
-| `@studiopod/design/tokens` | Raw JS-side token constants (motion durations/easing, z-index, accent/success RGB triples). |
-| `@studiopod/design/marketing` | The 11 canonical marketing composition components. |
-| `@studiopod/design/illustrations` | The illustration engine plus the workflow/platform/production/capability diagram-engine libraries, merged. |
-| `@studiopod/design/styles.css` | Canonical token CSS. |
+| `@jheavner95/design` | Core UI/layout/form/feedback/navigation/overlay/table/metadata primitives, the motion composition components, the operational and workflow component families, shared hooks/providers, `cn`. |
+| `@jheavner95/design/tokens` | Raw JS-side token constants (motion durations/easing, z-index, accent/success RGB triples). |
+| `@jheavner95/design/marketing` | The 11 canonical marketing composition components. |
+| `@jheavner95/design/illustrations` | The illustration engine plus the workflow/platform/production/capability diagram-engine libraries, merged. |
+| `@jheavner95/design/styles.css` | Canonical token CSS. |
 
 No new *public* entry points were added in RM-5.5 or in DH-2. `/application`, `/platform`, `/workflow`, `/production`, and wildcard exports remain explicitly out of scope.
 
-### `@studiopod/design/internal` — outside this contract
+### `@jheavner95/design/internal` — outside this contract
 
-DH-2 added a fifth code entry, `@studiopod/design/internal`. **It is deliberately not in the frozen table above, and it is not part of this contract.**
+DH-2 added a fifth code entry, `@jheavner95/design/internal`. **It is deliberately not in the frozen table above, and it is not part of this contract.**
 
 It carries no compatibility promise, has no `api-baseline` file, is not covered by `VERSIONING.md`, and may change in any release including a patch. It exists so this repository's documentation application can render the engine internals it documents — the motion engine, the illustration-authoring dev overlay, control-sizing constants — without those becoming public API. RM-5.5 removed those symbols from the root entry deliberately (category D below), and DH-2 did not reverse that.
 
@@ -267,7 +267,7 @@ Source: `@/lib/tokens.ts` only — 5 exports, unchanged since RM-4.
 
 ## CSS contract (`/styles.css`)
 
-- **Required import**: consumers add `import "@studiopod/design/styles.css";` once, in the same place they'd put their own global CSS entry, alongside their own `@import "tailwindcss";`.
+- **Required import**: consumers add `import "@jheavner95/design/styles.css";` once, in the same place they'd put their own global CSS entry, alongside their own `@import "tailwindcss";`.
 - **This package's `styles.css` does not itself import Tailwind.** Consumers must have their own `@import "tailwindcss";` — the package only supplies the `@theme` block and supporting CSS; Tailwind v4 discovers `@theme` transitively through whatever file tree contains `@import "tailwindcss"`, the same way this repo's own app already works.
 - **Deterministic ordering**, verified in the compiled output: palette → theme → tokens → typography → utilities (exactly the `@import` order declared in `packages/design/src/styles.css`, which esbuild's CSS bundler preserves depth-first).
 - **Duplicate import is safe.** CSS custom-property declarations and `@import` are idempotent; importing `styles.css` twice (e.g. from two different sub-packages of a consumer's own dependency tree) costs a few extra KB, not a functional conflict.

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@jheavner95/design";
 import { PRIMARY_WORKSPACE_REGIONS, type PrimaryWorkspaceRegion } from "../_data/regions";
 
 interface RegionCardProps {

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Archive, Download, Trash2 } from "lucide-react";
-import { Card, Body, Checkbox, Badge } from "@studiopod/design";
-import { BulkActionBar, BulkActionGroup, BulkActionButton, BulkActionMenu, BulkActionConfirmation, BulkProgress, BulkStatus, BulkResults, BulkConflictList, BulkUndo, useDataGridSelection, DataGrid, DataGridToolbar, DataGridBulkActions, type DataGridColumn, type BulkStatusValue, type BulkConflictEntry } from "@studiopod/design";
+import { Card, Body, Checkbox, Badge } from "@jheavner95/design";
+import { BulkActionBar, BulkActionGroup, BulkActionButton, BulkActionMenu, BulkActionConfirmation, BulkProgress, BulkStatus, BulkResults, BulkConflictList, BulkUndo, useDataGridSelection, DataGrid, DataGridToolbar, DataGridBulkActions, type DataGridColumn, type BulkStatusValue, type BulkConflictEntry } from "@jheavner95/design";
 
 interface Item {
   id: string;

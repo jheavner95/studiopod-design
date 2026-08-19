@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Badge, Body, Caption } from "@studiopod/design";
-import { Stack, Inline, Panel, Surface, Cluster, DescriptionList } from "@studiopod/design";
+import { Badge, Body, Caption } from "@jheavner95/design";
+import { Stack, Inline, Panel, Surface, Cluster, DescriptionList } from "@jheavner95/design";
 
 interface CompositionExampleProps {
   title: string;

@@ -12,7 +12,7 @@ import {
   Cloud,
   CreditCard,
 } from "lucide-react";
-import type { CapabilityRegistry } from "@studiopod/design/illustrations";
+import type { CapabilityRegistry } from "@jheavner95/design/illustrations";
 
 /** Every capability StudioPOD depends on, all reached through the same provider-agnostic abstraction. */
 export const completeCapabilityArchitecture: CapabilityRegistry = {

@@ -23,7 +23,7 @@ out which one is authoritative.
 
 ---
 
-## 2. Foundation — `@studiopod/foundation`
+## 2. Foundation — `@jheavner95/foundation`
 
 **Owns**
 
@@ -48,7 +48,7 @@ technology, it is Foundation's.
 
 ---
 
-## 3. Design — `@studiopod/design` (this repository)
+## 3. Design — `@jheavner95/design` (this repository)
 
 **Owns**
 

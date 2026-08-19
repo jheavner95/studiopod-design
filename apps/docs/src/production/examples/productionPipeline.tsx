@@ -1,5 +1,5 @@
 import { Download } from "lucide-react";
-import type { ProductionPipeline } from "@studiopod/design/illustrations";
+import type { ProductionPipeline } from "@jheavner95/design/illustrations";
 import { CANONICAL_PRODUCTION_FLOW_ICONS } from "@/lib/canonical";
 
 const {

@@ -17,13 +17,13 @@ import {
   Layers,
   CheckCircle2,
 } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@studiopod/design";
-import { SectionBadge, SectionHeader, Button, CTAGroup, GlassPanel, Caption } from "@studiopod/design";
+import { PageShell, SectionShell, CardGrid } from "@jheavner95/design";
+import { SectionBadge, SectionHeader, Button, CTAGroup, GlassPanel, Caption } from "@jheavner95/design";
 import { DocsLinkCard } from "@/components/docs";
-import { SystemGrid } from "@studiopod/design/illustrations";
-import { HeroComposition, WorkflowComposition, FeatureGridComposition, CTAComposition, type WorkflowStep } from "@studiopod/design/marketing";
+import { SystemGrid } from "@jheavner95/design/illustrations";
+import { HeroComposition, WorkflowComposition, FeatureGridComposition, CTAComposition, type WorkflowStep } from "@jheavner95/design/marketing";
 import { NAV_SECTIONS, getEntry, type NavSectionId } from "@/lib/design-system-navigation";
-import { WorkflowRail } from "@studiopod/design/illustrations";
+import { WorkflowRail } from "@jheavner95/design/illustrations";
 import { canonicalProductionFlow } from "@/workflows/examples";
 
 /** The canonical production flow, rendered as the hero visual — the one flow every layer of the system builds toward, instead of a decorative graphic. */

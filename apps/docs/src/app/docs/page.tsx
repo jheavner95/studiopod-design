@@ -1,7 +1,7 @@
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsGroupCard } from "@/components/docs";
 import { DocsSectionLanding } from "./_components/DocsSectionLanding";
-import { SectionShell, CardGrid } from "@studiopod/design";
-import { SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, CardGrid } from "@jheavner95/design";
+import { SectionHeader, Eyebrow } from "@jheavner95/design";
 import { getEntry, getGroup, getGroupsForSection, getGroupEntries, getSectionEntries } from "@/lib/design-system-navigation";
 
 const entry = getEntry("docs-root")!;

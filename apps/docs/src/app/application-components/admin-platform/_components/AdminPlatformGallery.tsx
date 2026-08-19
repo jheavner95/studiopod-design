@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Badge, Button } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
 import {
   AdminWorkspace,
   AdminHeader,
@@ -15,10 +15,10 @@ import {
   AdminSummary,
   AdminActions,
 } from "@/components/platform/admin";
-import { WorkflowFooter, ApprovalStep } from "@studiopod/design";
-import { InspectorHeader, PropertyRow, PropertyToggle, PropertySelect } from "@studiopod/design";
-import type { DataGridColumn } from "@studiopod/design";
-import type { StateHistoryEntry } from "@studiopod/design";
+import { WorkflowFooter, ApprovalStep } from "@jheavner95/design";
+import { InspectorHeader, PropertyRow, PropertyToggle, PropertySelect } from "@jheavner95/design";
+import type { DataGridColumn } from "@jheavner95/design";
+import type { StateHistoryEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

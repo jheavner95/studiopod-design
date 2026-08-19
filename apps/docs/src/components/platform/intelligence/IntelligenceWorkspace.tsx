@@ -1,1 +1,1 @@
-export { Workflow as IntelligenceWorkspace } from "@studiopod/design";
+export { Workflow as IntelligenceWorkspace } from "@jheavner95/design";

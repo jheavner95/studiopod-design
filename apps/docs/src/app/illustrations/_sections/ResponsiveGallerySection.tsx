@@ -1,5 +1,5 @@
 import { Database, Workflow, GitBranch } from "lucide-react";
-import { IllustrationCanvas, type DiagramNode, type DiagramConnection } from "@studiopod/design/illustrations";
+import { IllustrationCanvas, type DiagramNode, type DiagramConnection } from "@jheavner95/design/illustrations";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 
 const NODES: DiagramNode[] = [

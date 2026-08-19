@@ -1,1 +1,1 @@
-export { Queue as PublishingQueue } from "@studiopod/design";
+export { Queue as PublishingQueue } from "@jheavner95/design";

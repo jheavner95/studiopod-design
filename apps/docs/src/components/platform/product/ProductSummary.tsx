@@ -1,1 +1,1 @@
-export { PipelineSummary as ProductSummary } from "@studiopod/design";
+export { PipelineSummary as ProductSummary } from "@jheavner95/design";

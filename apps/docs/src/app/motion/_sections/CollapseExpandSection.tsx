@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { CardGrid } from "@studiopod/design";
-import { Body } from "@studiopod/design";
-import { Collapse, Expand } from "@studiopod/design/internal";
+import { CardGrid } from "@jheavner95/design";
+import { Body } from "@jheavner95/design";
+import { Collapse, Expand } from "@jheavner95/design/internal";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

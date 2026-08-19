@@ -2,7 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { Image as ImageIcon, Palette, Megaphone, ShoppingBag, Settings2, FileText } from "lucide-react";
-import { Card, Body, Button } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
 // This page documents the operational inspector's field editor. The package
 // publishes it as `InspectorPropertyEditor` — `PropertyEditor` on the root
 // entry is the form system's separate component. Before DH-2 this page
@@ -12,7 +12,7 @@ import { Card, Body, Button } from "@studiopod/design";
 // The operational family's same-named components are its own re-exports of
 // InspectorSection/InspectorGroup and are deliberately not published twice,
 // so this page documents them under their published names.
-import { PropertyPanel, InspectorSection as PropertySection, InspectorGroup as PropertyGroup, PropertyRow, InspectorPropertyEditor as PropertyEditor, PropertyToggle, PropertySelect, PropertyNumber, PropertyColor, PropertyActions, InspectorHeader, InspectorFooter } from "@studiopod/design";
+import { PropertyPanel, InspectorSection as PropertySection, InspectorGroup as PropertyGroup, PropertyRow, InspectorPropertyEditor as PropertyEditor, PropertyToggle, PropertySelect, PropertyNumber, PropertyColor, PropertyActions, InspectorHeader, InspectorFooter } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: ReactNode }) {
   return (

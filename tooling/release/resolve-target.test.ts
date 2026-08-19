@@ -39,7 +39,7 @@ import {
 import { verifyDryRunArtifact } from "./lib/dry-run-artifact.mjs";
 
 /** The manifest as committed at DS-7.3a. */
-const committedManifest = { name: "@studiopod/design", version: "0.13.0" };
+const committedManifest = { name: "@jheavner95/design", version: "0.13.0" };
 
 describe("committed mode", () => {
   it("resolves exactly the committed version — 0.13.0", () => {
@@ -49,7 +49,7 @@ describe("committed mode", () => {
     });
     expect(target.version).toBe("0.13.0");
     expect(target.currentVersion).toBe("0.13.0");
-    expect(target.name).toBe("@studiopod/design");
+    expect(target.name).toBe("@jheavner95/design");
   });
 
   it("never mutates the manifest", () => {
@@ -144,13 +144,17 @@ describe("bump mode", () => {
 
 describe("guards that block a release outright", () => {
   it("blocks a package-name mismatch", () => {
+    // @studiopod/design is the PREVIOUS identity (ORG-2B renamed it to
+    // @jheavner95/design). It is exactly the mismatch this guard exists to
+    // catch: a manifest carrying a name this workflow is no longer allowed
+    // to publish.
     expect(() =>
       resolveTarget({
         mode: "committed",
-        manifest: { name: "@studiopod/design-system", version: "0.13.0" },
+        manifest: { name: "@studiopod/design", version: "0.13.0" },
       }),
-    ).toThrow(/expected "@studiopod\/design"/);
-    expect(EXPECTED_PACKAGE_NAME).toBe("@studiopod/design");
+    ).toThrow(/expected "@jheavner95\/design"/);
+    expect(EXPECTED_PACKAGE_NAME).toBe("@jheavner95/design");
   });
 
   it("blocks a missing or malformed version", () => {

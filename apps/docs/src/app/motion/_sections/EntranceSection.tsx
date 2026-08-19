@@ -1,8 +1,8 @@
 "use client";
 
-import { CardGrid } from "@studiopod/design";
-import { Body } from "@studiopod/design";
-import { Fade, Slide, Scale, type SlideDirection } from "@studiopod/design/internal";
+import { CardGrid } from "@jheavner95/design";
+import { Body } from "@jheavner95/design";
+import { Fade, Slide, Scale, type SlideDirection } from "@jheavner95/design/internal";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

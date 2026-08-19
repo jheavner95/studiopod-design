@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { ApprovalFlow, ApprovalStage, ApprovalStep, ApprovalRequest, ApprovalDecision, ApprovalActions, ReviewPanel, ReviewComment, ReviewChecklist, ReviewSummary, ReviewHistory, WorkflowTransition, type ApprovalStateValue, type ReviewChecklistItem, type ReviewHistoryEntry } from "@studiopod/design";
-import { InspectorHeader, InspectorFooter } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { ApprovalFlow, ApprovalStage, ApprovalStep, ApprovalRequest, ApprovalDecision, ApprovalActions, ReviewPanel, ReviewComment, ReviewChecklist, ReviewSummary, ReviewHistory, WorkflowTransition, type ApprovalStateValue, type ReviewChecklistItem, type ReviewHistoryEntry } from "@jheavner95/design";
+import { InspectorHeader, InspectorFooter } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

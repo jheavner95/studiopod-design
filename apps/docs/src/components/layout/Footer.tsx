@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Boxes } from "lucide-react";
-import { Container } from "@studiopod/design";
-import { Separator } from "@studiopod/design";
-import { Caption, Body } from "@studiopod/design";
+import { Container } from "@jheavner95/design";
+import { Separator } from "@jheavner95/design";
+import { Caption, Body } from "@jheavner95/design";
 import { NAV_SECTIONS, getEntry } from "@/lib/design-system-navigation";
 
 const SECTIONS = NAV_SECTIONS.filter((section) => section.id !== "overview");

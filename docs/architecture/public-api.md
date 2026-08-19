@@ -85,7 +85,7 @@ does. The old `src/_internal/` directory was a build-time shim rather than a
 privacy mechanism, and DH-2 deleted it.
 
 There is exactly one exception, and it is declared rather than implied:
-`@studiopod/design/internal` is **not a public entry point**. It exists so the
+`@jheavner95/design/internal` is **not a public entry point**. It exists so the
 documentation application can consume the engine internals it documents without
 those becoming public API, it carries no compatibility promise, and no
 application may import it. [ADR 0011](../decisions/0011-internal-entry-point.md)

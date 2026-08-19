@@ -1,5 +1,5 @@
 import { FileText, Layers, PackageCheck, FileCheck, Store, TrendingUp, Palette, Factory, Rocket, ShoppingCart } from "lucide-react";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 /** Shows one artifact moving between platforms: a creative brief becomes a listing, then a performance record. */
 export const artifactFlowArchitecture: PlatformArchitecture = {

@@ -11,11 +11,11 @@
 
 Foundation owns the canonical design values. Design owns what they mean in an
 interface. The mechanism connecting them already exists and works: a generator
-(`generate-tokens-from-foundation.mjs`) reads `@studiopod/foundation` and emits
+(`generate-tokens-from-foundation.mjs`) reads `@jheavner95/foundation` and emits
 Design's semantic token modules and CSS custom properties, and a `--check` mode
 fails the build if a generated file has been hand-edited.
 
-`@studiopod/foundation` is pinned exactly (`0.3.0`) and declared as a
+`@jheavner95/foundation` is pinned exactly (`0.3.0`) and declared as a
 **devDependency**. The generated values are baked into the published artefacts.
 
 This arrangement is correct, but it was never written down as a decision, which
@@ -29,9 +29,9 @@ by having consumers import Foundation directly. This ADR records why not.
 
 ## Decision
 
-**`@studiopod/foundation` is a build-time input. It is pinned exactly, consumed
+**`@jheavner95/foundation` is a build-time input. It is pinned exactly, consumed
 through the token bridge, and never appears as a runtime or peer dependency of
-`@studiopod/design`.**
+`@jheavner95/design`.**
 
 Concretely:
 
@@ -43,7 +43,7 @@ Concretely:
    and catches the one class of drift nothing downstream can see.
 4. **Design's published artefacts contain Foundation's values**, resolved at
    build time.
-5. **`@studiopod/design/tokens` exports only the generated projection.** An
+5. **`@jheavner95/design/tokens` exports only the generated projection.** An
    export from that entry that did not come through the bridge is a fork of the
    brand.
 6. **A Foundation release that changes values gets a Design release within one

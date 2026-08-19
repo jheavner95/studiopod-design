@@ -3,7 +3,7 @@ import { productionPipeline } from "./productionPipeline";
 import { qualityGatesPipeline } from "./qualityGates";
 import { productionHealth } from "./productionHealth";
 import { exportValidation } from "./exportValidation";
-import type { ProductionPipeline } from "@studiopod/design/illustrations";
+import type { ProductionPipeline } from "@jheavner95/design/illustrations";
 
 export { artworkValidation } from "./artworkValidation";
 export { productionPipeline } from "./productionPipeline";

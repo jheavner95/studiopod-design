@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 /**
  * The documentation application's own class-name merge.
  *
- * `@studiopod/design` exports a `cn` with the same implementation, and this
+ * `@jheavner95/design` exports a `cn` with the same implementation, and this
  * app used to reach into its source for it. It cannot consume the published
  * one: the package's root entry carries a `"use client"` directive — it has
  * to, because index.js re-exports hooks, context providers and framer-motion

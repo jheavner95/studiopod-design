@@ -1,4 +1,4 @@
-import { HealthDashboardDiagram } from "@studiopod/design/illustrations";
+import { HealthDashboardDiagram } from "@jheavner95/design/illustrations";
 import { productionHealthMetrics } from "@/production/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

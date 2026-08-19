@@ -11,4 +11,4 @@
  * that, the same "children slot for extra context" pattern every Inspector
  * in this tier already uses.
  */
-export { StateInspector as ProductionInspector } from "@studiopod/design";
+export { StateInspector as ProductionInspector } from "@jheavner95/design";

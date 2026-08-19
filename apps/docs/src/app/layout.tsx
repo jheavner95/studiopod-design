@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { MotionProvider } from "@studiopod/design";
+import { MotionProvider } from "@jheavner95/design";
 import { GlobalNav, Footer } from "@/components/layout";
-import { LiveRegionProvider } from "@studiopod/design";
+import { LiveRegionProvider } from "@jheavner95/design";
 import "./globals.css";
 
 /**
@@ -19,7 +19,7 @@ import "./globals.css";
  * looking correct through any regression in the package's own font loading.
  *
  * The fonts now arrive the same way they arrive for Cloud: from
- * `@studiopod/design/styles.css`, which `globals.css` imports. If typography
+ * `@jheavner95/design/styles.css`, which `globals.css` imports. If typography
  * breaks in the package, it breaks here too — which is the entire point of a
  * documentation site that consumes its own product.
  */

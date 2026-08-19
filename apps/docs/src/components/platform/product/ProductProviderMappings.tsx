@@ -1,1 +1,1 @@
-export { RelationshipView as ProductProviderMappings } from "@studiopod/design";
+export { RelationshipView as ProductProviderMappings } from "@jheavner95/design";

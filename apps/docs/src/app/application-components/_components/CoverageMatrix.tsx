@@ -1,4 +1,4 @@
-import { Table, TableHeader, TableHead, TableBody, TableRow, TableStatusCell } from "@studiopod/design";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableStatusCell } from "@jheavner95/design";
 import { COVERAGE_ROWS, PLATFORMS, type CoverageState } from "../_data/coverage";
 
 const STATE_TONE: Record<CoverageState, "success" | "warning" | "neutral"> = {

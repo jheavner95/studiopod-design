@@ -5,9 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Boxes, Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Button } from "@studiopod/design";
-import { Drawer } from "@studiopod/design";
-import { NavigationItem, NavigationSection } from "@studiopod/design";
+import { Button } from "@jheavner95/design";
+import { Drawer } from "@jheavner95/design";
+import { NavigationItem, NavigationSection } from "@jheavner95/design";
 import { DocsSearchTrigger, DocsSidebarGroup } from "@/components/docs";
 import { NAV_SECTIONS, getEntryByHref, getGroupsForSection, getSection, type NavSectionId } from "@/lib/design-system-navigation";
 

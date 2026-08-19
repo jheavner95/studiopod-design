@@ -1,4 +1,4 @@
-import { PlatformLayerDiagram } from "@studiopod/design/illustrations";
+import { PlatformLayerDiagram } from "@jheavner95/design/illustrations";
 import { completeArchitecture, platformLayers } from "@/platforms/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

@@ -69,7 +69,7 @@ Concretely:
    `baseUrl` pointing at the repository root. This single constraint makes the
    boundary structural: the package cannot ship what it cannot resolve.
 3. **The documentation site becomes a workspace member** that declares
-   `@studiopod/design` as a dependency and imports only from public entry points.
+   `@jheavner95/design` as a dependency and imports only from public entry points.
 4. **Both esbuild resolver plugins are deleted.** They have nothing left to do.
 5. **The hand-written exclusion comments in `index.ts` are deleted.**
    `GlobalNav` and `Footer` move to the documentation site, where they always

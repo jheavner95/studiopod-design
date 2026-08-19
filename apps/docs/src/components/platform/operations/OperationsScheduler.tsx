@@ -1,1 +1,1 @@
-export { Queue as OperationsScheduler } from "@studiopod/design";
+export { Queue as OperationsScheduler } from "@jheavner95/design";

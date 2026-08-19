@@ -4,7 +4,7 @@ import { valueChain } from "./valueChain";
 import { intelligencePlatform } from "./intelligencePlatform";
 import { artifactFlowArchitecture } from "./artifactFlow";
 import { platformDependencyView } from "./platformDependencyView";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 export { completeArchitecture } from "./completeArchitecture";
 export { platformLayers } from "./platformLayers";

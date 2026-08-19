@@ -1,5 +1,5 @@
 /**
- * @studiopod/design/illustrations — one merged entry point for the
+ * @jheavner95/design/illustrations — one merged entry point for the
  * illustration engine and all four data-driven diagram-engine libraries
  * built on it (workflows, platforms, production, capabilities). These are
  * kept as a single entry point rather than four separate ones: all four

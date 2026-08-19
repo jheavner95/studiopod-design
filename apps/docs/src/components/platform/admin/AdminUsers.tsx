@@ -1,1 +1,1 @@
-export { DataGrid as AdminUsers } from "@studiopod/design";
+export { DataGrid as AdminUsers } from "@jheavner95/design";

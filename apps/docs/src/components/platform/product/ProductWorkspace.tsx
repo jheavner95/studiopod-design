@@ -1,1 +1,1 @@
-export { Workflow as ProductWorkspace } from "@studiopod/design";
+export { Workflow as ProductWorkspace } from "@jheavner95/design";

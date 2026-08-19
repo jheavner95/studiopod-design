@@ -1,11 +1,11 @@
 "use client";
 
 import { Play, Pause, RotateCcw } from "lucide-react";
-import { Button, SegmentedControl, ToggleSwitch } from "@studiopod/design";
-import { ControlDockShell } from "@studiopod/design/internal";
-import { useMotion } from "@studiopod/design";
-import { useMotionControls } from "@studiopod/design";
-import type { PlaybackSpeed, MotionDiagnostics } from "@studiopod/design";
+import { Button, SegmentedControl, ToggleSwitch } from "@jheavner95/design";
+import { ControlDockShell } from "@jheavner95/design/internal";
+import { useMotion } from "@jheavner95/design";
+import { useMotionControls } from "@jheavner95/design";
+import type { PlaybackSpeed, MotionDiagnostics } from "@jheavner95/design";
 
 const SPEED_OPTIONS: { value: string; label: string }[] = [
   { value: "0.5", label: "0.5x" },

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@jheavner95/design";
 import { HEADER_REGIONS, type HeaderRegion } from "../_data/regions";
 
 const COLUMN_SPAN: Record<HeaderRegion["column"], string> = {

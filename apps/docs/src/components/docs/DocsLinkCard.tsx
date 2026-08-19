@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { Card, Body, Caption } from "@studiopod/design";
+import { Card, Body, Caption } from "@jheavner95/design";
 import { cn } from "@/lib/cn";
 
 interface DocsLinkCardProps {

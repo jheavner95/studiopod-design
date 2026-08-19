@@ -73,8 +73,8 @@ were no more stable the day before it adopted them.
 
 ### One documented exception
 
-Every export of `@studiopod/design/tokens` is Stable, with no test file. Those
-values are generated from `@studiopod/foundation` and `token:bridge-check` fails
+Every export of `@jheavner95/design/tokens` is Stable, with no test file. Those
+values are generated from `@jheavner95/foundation` and `token:bridge-check` fails
 the build if one drifts by a single character — a stronger guarantee than a unit
 test, not a weaker one.
 

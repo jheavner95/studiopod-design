@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Body, Badge, Button } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
 import {
   OperationsWorkspace,
   OperationsHeader,
@@ -14,8 +14,8 @@ import {
   OperationsSummary,
   OperationsActions,
 } from "@/components/platform/operations";
-import { WorkflowFooter, WorkflowStep } from "@studiopod/design";
-import type { ProviderHealthRow, QueueRowJob, HealthIssueEntry, OperationalAlertEntry } from "@studiopod/design";
+import { WorkflowFooter, WorkflowStep } from "@jheavner95/design";
+import type { ProviderHealthRow, QueueRowJob, HealthIssueEntry, OperationalAlertEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

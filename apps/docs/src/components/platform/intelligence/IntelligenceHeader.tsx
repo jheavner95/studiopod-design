@@ -1,1 +1,1 @@
-export { WorkflowHeader as IntelligenceHeader } from "@studiopod/design";
+export { WorkflowHeader as IntelligenceHeader } from "@jheavner95/design";

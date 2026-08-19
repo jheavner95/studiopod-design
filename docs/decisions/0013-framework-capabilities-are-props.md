@@ -66,7 +66,7 @@ four lines:
 
 ```tsx
 import Link from "next/link";
-import { Button as DesignButton, type ButtonProps } from "@studiopod/design";
+import { Button as DesignButton, type ButtonProps } from "@jheavner95/design";
 export const Button = (props: ButtonProps) => <DesignButton linkComponent={Link} {...props} />;
 ```
 

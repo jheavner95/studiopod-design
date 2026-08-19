@@ -1,1 +1,1 @@
-export { Workflow as OperationsWorkspace } from "@studiopod/design";
+export { Workflow as OperationsWorkspace } from "@jheavner95/design";

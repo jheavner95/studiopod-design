@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { SectionShell } from "@studiopod/design";
-import { SectionHeader, Eyebrow, Caption } from "@studiopod/design";
-import { IllustrationNode, type IllustrationNodeProps } from "@studiopod/design/illustrations";
+import { SectionShell } from "@jheavner95/design";
+import { SectionHeader, Eyebrow, Caption } from "@jheavner95/design";
+import { IllustrationNode, type IllustrationNodeProps } from "@jheavner95/design/illustrations";
 
 interface PreviewSectionProps {
   id: string;

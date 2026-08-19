@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Body, Badge, Button } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
 import {
   IntelligenceWorkspace,
   IntelligenceHeader,
@@ -14,8 +14,8 @@ import {
   IntelligenceSummary,
   IntelligenceActions,
 } from "@/components/platform/intelligence";
-import { WorkflowFooter } from "@studiopod/design";
-import type { DataGridColumn, RecommendationEntry, HealthIssueEntry } from "@studiopod/design";
+import { WorkflowFooter } from "@jheavner95/design";
+import type { DataGridColumn, RecommendationEntry, HealthIssueEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

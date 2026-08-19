@@ -1,4 +1,4 @@
-import { Badge, Caption } from "@studiopod/design";
+import { Badge, Caption } from "@jheavner95/design";
 import { MATURITY_ROWS, type MaturityLevel } from "../_data/maturity";
 
 const LEVEL_TONE: Record<MaturityLevel, "neutral" | "warning" | "success" | "accent"> = {

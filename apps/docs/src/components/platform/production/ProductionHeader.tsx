@@ -8,4 +8,4 @@
  * rather than help it. Consistent with every DS-3.5–3.8 package, none of
  * which built a per-tier Header wrapper either.
  */
-export { WorkflowHeader as ProductionHeader } from "@studiopod/design";
+export { WorkflowHeader as ProductionHeader } from "@jheavner95/design";

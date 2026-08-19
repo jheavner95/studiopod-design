@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Caption, Heading, Badge, SelectableCard } from "@studiopod/design";
+import { Card, Body, Caption, Heading, Badge, SelectableCard } from "@jheavner95/design";
 import { TABLE_ANATOMY_REGIONS, type TableAnatomyRegion } from "../_data/anatomy";
 
 interface RegionCardProps {

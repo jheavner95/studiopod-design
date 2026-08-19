@@ -7,4 +7,4 @@
  * call site, the same "shell only, caller arranges content" precedent
  * ProductionStagePanel and ProductionWorkspace both already follow.
  */
-export { Pipeline as ProductionPipeline } from "@studiopod/design";
+export { Pipeline as ProductionPipeline } from "@jheavner95/design";

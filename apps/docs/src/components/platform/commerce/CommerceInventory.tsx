@@ -1,1 +1,1 @@
-export { DataGrid as CommerceInventory } from "@studiopod/design";
+export { DataGrid as CommerceInventory } from "@jheavner95/design";

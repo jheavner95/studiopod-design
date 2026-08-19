@@ -1,1 +1,1 @@
-export { HealthPanel as IntelligenceHealth } from "@studiopod/design";
+export { HealthPanel as IntelligenceHealth } from "@jheavner95/design";

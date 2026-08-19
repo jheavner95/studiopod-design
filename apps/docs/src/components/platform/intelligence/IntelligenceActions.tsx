@@ -1,1 +1,1 @@
-export { WorkflowActions as IntelligenceActions } from "@studiopod/design";
+export { WorkflowActions as IntelligenceActions } from "@jheavner95/design";

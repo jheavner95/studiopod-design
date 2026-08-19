@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Rocket, PanelRightClose, PanelRightOpen } from "lucide-react";
-import { Card, Body, Button } from "@studiopod/design";
-import { Workflow, WorkflowHeader, WorkflowSidebar, WorkflowFooter, WorkflowActions, WorkflowStage, WorkflowStageGroup, WorkflowStep, WorkflowTransition, WorkflowProgress, WorkflowStatus, WorkflowSummary, type WorkflowStateValue } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { Workflow, WorkflowHeader, WorkflowSidebar, WorkflowFooter, WorkflowActions, WorkflowStage, WorkflowStageGroup, WorkflowStep, WorkflowTransition, WorkflowProgress, WorkflowStatus, WorkflowSummary, type WorkflowStateValue } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

@@ -1,6 +1,6 @@
 # Consuming StudioPOD Design
 
-**Owns:** how an application installs, uses, and upgrades `@studiopod/design`,
+**Owns:** how an application installs, uses, and upgrades `@jheavner95/design`,
 and what it owes in return.
 
 Audience: engineers in Cloud, Web, and every application after them.
@@ -9,7 +9,7 @@ Audience: engineers in Cloud, Web, and every application after them.
 
 ## 1. The contract, in four sentences
 
-1. You install `@studiopod/design` and compose its exports.
+1. You install `@jheavner95/design` and compose its exports.
 2. You do not reimplement them.
 3. When you need something it does not have, you propose it here — you do not
    fork it locally and plan to upstream later.
@@ -32,7 +32,7 @@ with `read:packages`.
 ```
 
 ```bash
-npm install @studiopod/design
+npm install @jheavner95/design
 ```
 
 Peer dependencies: `react` and `react-dom` (`^18 || ^19`). **That is all.**
@@ -51,7 +51,7 @@ framework, and `check-framework-imports.mjs` fails the build if one reappears.
 **Step 2 is not optional.** Tailwind ignores `node_modules`, so without
 
 ```css
-@source '../node_modules/@studiopod/design/dist';
+@source '../node_modules/@jheavner95/design/dist';
 ```
 
 none of the design system's classes are generated and **every component renders
@@ -103,7 +103,7 @@ make every one of these components client-only
 ```tsx
 // app/design.tsx
 import Link from "next/link";
-import { Button as DesignButton, type ButtonProps } from "@studiopod/design";
+import { Button as DesignButton, type ButtonProps } from "@jheavner95/design";
 
 export const Button = (props: ButtonProps) => (
   <DesignButton linkComponent={Link} {...props} />
@@ -121,7 +121,7 @@ filling their positioned parent:
 
 ```tsx
 import Image from "next/image";
-import type { ImageComponentProps } from "@studiopod/design";
+import type { ImageComponentProps } from "@jheavner95/design";
 
 const FillImage = (props: ImageComponentProps) => <Image {...props} fill />;
 ```
@@ -143,20 +143,20 @@ directive, which made **every** export a client reference.
 
 | You want                                       | Import from                       |
 | ---------------------------------------------- | --------------------------------- |
-| Buttons, inputs, layout, tables, patterns      | `@studiopod/design`               |
-| Page-section archetypes for marketing surfaces | `@studiopod/design/marketing`     |
-| The illustration engine                        | `@studiopod/design/illustrations` |
-| Semantic token values in JS                    | `@studiopod/design/tokens`        |
-| The stylesheet                                 | `@studiopod/design/styles.css`    |
+| Buttons, inputs, layout, tables, patterns      | `@jheavner95/design`               |
+| Page-section archetypes for marketing surfaces | `@jheavner95/design/marketing`     |
+| The illustration engine                        | `@jheavner95/design/illustrations` |
+| Semantic token values in JS                    | `@jheavner95/design/tokens`        |
+| The stylesheet                                 | `@jheavner95/design/styles.css`    |
 
-There is a fifth code entry, `@studiopod/design/internal`. **It is not for you.**
+There is a fifth code entry, `@jheavner95/design/internal`. **It is not for you.**
 It exists so this repository's own documentation application can render the
 engine internals it documents; it has no compatibility promise and its contents
 may change in any release, including a patch. If you need something that is only
 reachable there, that is a gap to report, not a door to use —
 [ADR 0011](../decisions/0011-internal-entry-point.md).
 
-**Import from the entry point, never from a deep path.** `@studiopod/design/dist/...`
+**Import from the entry point, never from a deep path.** `@jheavner95/design/dist/...`
 is not a public API, and a version that reorganises internals will break you with
 no changelog entry, because nothing was documented as changing.
 

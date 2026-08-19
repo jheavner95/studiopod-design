@@ -1,4 +1,4 @@
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "@studiopod/design";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "@jheavner95/design";
 import { CELL_TYPES } from "../_data/cell-types";
 
 /** The eleven documented cell types, rendered as a real Table — using the foundation system to document itself. */

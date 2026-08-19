@@ -1,4 +1,4 @@
-import { WorkflowDiagram } from "@studiopod/design/illustrations";
+import { WorkflowDiagram } from "@jheavner95/design/illustrations";
 import { commerce } from "@/workflows/examples";
 import { DemoLabel } from "../_components/preview-primitives";
 

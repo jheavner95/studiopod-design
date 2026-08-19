@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Client/server boundary check for @studiopod/design (DH-3).
+ * Client/server boundary check for @jheavner95/design (DH-3).
  *
  * Replaces check-use-client.mjs, which asserted the opposite of what is now
  * true. That check required every code entry point to BEGIN with

@@ -1,5 +1,5 @@
-import { Caption } from "@studiopod/design";
-import { StatusBadge, type NodeStatus, type ConnectionStatus } from "@studiopod/design/illustrations";
+import { Caption } from "@jheavner95/design";
+import { StatusBadge, type NodeStatus, type ConnectionStatus } from "@jheavner95/design/illustrations";
 import { PreviewSection } from "../_components/preview-primitives";
 
 const NODE_STATES: NodeStatus[] = ["idle", "active", "processing", "complete", "warning", "error"];

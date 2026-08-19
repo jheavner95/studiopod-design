@@ -16,7 +16,7 @@ Both are DH-3 work — see [../certification/DH-2.md](../certification/DH-2.md)
 ```
 studiopod-design/
 ├── packages/
-│   └── design/               @studiopod/design — the published library
+│   └── design/               @jheavner95/design — the published library
 ├── apps/
 │   └── docs/                 the documentation product (a consumer)
 ├── docs/                     repository documentation — architecture, ADRs, certification
@@ -150,7 +150,7 @@ apps/docs/
 │   └── {workflows,capabilities,platforms,production}/examples/
 │                             canned demo scenario data
 ├── e2e/                      Playwright visual regression
-├── package.json              depends on @studiopod/design
+├── package.json              depends on @jheavner95/design
 └── next.config.ts
 ```
 

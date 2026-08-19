@@ -1,5 +1,5 @@
-import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { Card, Body, Caption, SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { Card, Body, Caption, SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { WorkflowVisualizationGallery } from "./_components/WorkflowVisualizationGallery";

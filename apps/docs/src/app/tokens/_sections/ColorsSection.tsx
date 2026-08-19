@@ -1,4 +1,4 @@
-import { Caption } from "@studiopod/design";
+import { Caption } from "@jheavner95/design";
 import { PreviewSection, Swatch } from "@/app/docs/_components/DocsShowcase";
 
 const canvas = [

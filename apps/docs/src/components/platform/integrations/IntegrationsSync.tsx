@@ -1,1 +1,1 @@
-export { SyncStatusPanel as IntegrationsSync } from "@studiopod/design";
+export { SyncStatusPanel as IntegrationsSync } from "@jheavner95/design";

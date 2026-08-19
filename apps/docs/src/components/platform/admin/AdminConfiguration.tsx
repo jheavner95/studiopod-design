@@ -1,1 +1,1 @@
-export { PropertyPanel as AdminConfiguration } from "@studiopod/design";
+export { PropertyPanel as AdminConfiguration } from "@jheavner95/design";

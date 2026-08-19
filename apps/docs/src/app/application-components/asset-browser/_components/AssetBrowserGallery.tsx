@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Image as ImageIcon, Palette, FileText, Music, Video } from "lucide-react";
-import { Card, Body, Badge, Button } from "@studiopod/design";
-import { AssetBrowser, type AssetGridRenderer, type AssetViewMode, useAssetSelection, InspectorPanel, InspectorHeader, InspectorSection, InspectorGroup, InspectorProperty } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
+import { AssetBrowser, type AssetGridRenderer, type AssetViewMode, useAssetSelection, InspectorPanel, InspectorHeader, InspectorSection, InspectorGroup, InspectorProperty } from "@jheavner95/design";
 
 interface Asset {
   id: string;

@@ -1,5 +1,5 @@
 import { RectangleHorizontal, Crop, ScanLine, Camera, FileType, CheckCircle2 } from "lucide-react";
-import type { ProductionPipeline } from "@studiopod/design/illustrations";
+import type { ProductionPipeline } from "@jheavner95/design/illustrations";
 
 /** The final checks a file passes through on its way out of StudioPOD and into production. */
 export const exportValidation: ProductionPipeline = {

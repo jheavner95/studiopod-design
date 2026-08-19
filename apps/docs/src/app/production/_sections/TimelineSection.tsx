@@ -1,4 +1,4 @@
-import { ValidationTimeline } from "@studiopod/design/illustrations";
+import { ValidationTimeline } from "@jheavner95/design/illustrations";
 import { artworkValidation } from "@/production/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

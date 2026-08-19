@@ -1,5 +1,5 @@
 import { Database, Layers, Cloud, Activity } from "lucide-react";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 /** The four foundational layers of the underlying platform stack, independent of the value chain built on top. */
 export const platformLayers: PlatformArchitecture = {

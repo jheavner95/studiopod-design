@@ -1,1 +1,1 @@
-export { ChartWidget as IntelligenceInsights } from "@studiopod/design";
+export { ChartWidget as IntelligenceInsights } from "@jheavner95/design";

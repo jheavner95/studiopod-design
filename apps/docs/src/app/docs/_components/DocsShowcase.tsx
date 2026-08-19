@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
-import { motionDuration, motionEase } from "@studiopod/design/tokens";
-import { useMotionPreference } from "@studiopod/design";
-import { SectionShell } from "@studiopod/design";
-import { SectionHeader, Eyebrow, Caption } from "@studiopod/design";
+import { motionDuration, motionEase } from "@jheavner95/design/tokens";
+import { useMotionPreference } from "@jheavner95/design";
+import { SectionShell } from "@jheavner95/design";
+import { SectionHeader, Eyebrow, Caption } from "@jheavner95/design";
 
 interface PreviewSectionProps {
   id: string;

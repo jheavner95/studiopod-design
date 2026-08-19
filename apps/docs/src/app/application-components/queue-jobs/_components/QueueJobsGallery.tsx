@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { RotateCw, X, Eye } from "lucide-react";
-import { Card, Body } from "@studiopod/design";
-import { Queue, QueueFilters, QueueStatus, JobCard, JobProgress, JobError, JobResults, JobRetry, BulkActionButton, useDataGridSelection, type QueueRowJob, type QueueFilterValue, type JobTimelineEntry } from "@studiopod/design";
+import { Card, Body } from "@jheavner95/design";
+import { Queue, QueueFilters, QueueStatus, JobCard, JobProgress, JobError, JobResults, JobRetry, BulkActionButton, useDataGridSelection, type QueueRowJob, type QueueFilterValue, type JobTimelineEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

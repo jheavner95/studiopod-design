@@ -1,10 +1,10 @@
 import { Waves } from "lucide-react";
-import { PageShell, SectionShell, CardGrid } from "@studiopod/design";
-import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@studiopod/design";
+import { PageShell, SectionShell, CardGrid } from "@jheavner95/design";
+import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsRelatedGrid } from "@/components/docs";
-import { SystemGrid } from "@studiopod/design/illustrations";
+import { SystemGrid } from "@jheavner95/design/illustrations";
 import { getEntry } from "@/lib/design-system-navigation";
-import { DOCK_CLEARANCE_CLASS } from "@studiopod/design/internal";
+import { DOCK_CLEARANCE_CLASS } from "@jheavner95/design/internal";
 import { ControlDock } from "./_components/ControlDock";
 import { TokensSection } from "./_sections/TokensSection";
 import { MotionControlsSection, SpeedControlsSection, ReducedMotionSection } from "./_sections/ControlsSection";

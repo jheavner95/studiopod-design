@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { CardGrid } from "@studiopod/design";
-import { Button, Body } from "@studiopod/design";
-import { Pulse, Highlight } from "@studiopod/design/internal";
+import { CardGrid } from "@jheavner95/design";
+import { Button, Body } from "@jheavner95/design";
+import { Pulse, Highlight } from "@jheavner95/design/internal";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

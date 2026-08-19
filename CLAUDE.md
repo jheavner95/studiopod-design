@@ -7,13 +7,13 @@ short, it is binding, and it governs decisions that are not obvious from the
 code.
 
 This repository is `studiopod-design` — the StudioPOD visual language. It
-publishes `@studiopod/design` and it owns the documentation product that the
+publishes `@jheavner95/design` and it owns the documentation product that the
 whole ecosystem reads.
 
 ## Non-negotiables
 
 - **Design never owns a design value.** Colour, spacing, type, motion, radius,
-  and icon geometry come from `@studiopod/foundation` through the token bridge.
+  and icon geometry come from `@jheavner95/foundation` through the token bridge.
   A hand-edited generated token file fails `token:bridge-check`. **The webfonts
   travel the same bridge** — `src/assets/fonts` is a byte-for-byte copy of
   Foundation's, and editing one here fails the same check
@@ -94,7 +94,7 @@ resolver plugins that used to amputate documentation code out of the bundle are
 deleted.
 
 ```
-packages/design/   @studiopod/design — the published library
+packages/design/   @jheavner95/design — the published library
 apps/docs/         @studiopod/docs — the documentation product, a consumer
 docs/              repository documentation
 tooling/           checks, generators, the verification runner

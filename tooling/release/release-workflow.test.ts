@@ -234,19 +234,28 @@ describe("publish is transactional", () => {
     expect(invocations).toHaveLength(1);
   });
 
-  it("wires the publish token only into steps that need the registry", () => {
+  it("wires the publish credential only into steps that need the registry", () => {
     const text = jobText("publish");
-    const tokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.DS_NPM_TOKEN \}\}/g) ?? [];
+    const tokenUses = text.match(/NODE_AUTH_TOKEN: \$\{\{ secrets\.GITHUB_TOKEN \}\}/g) ?? [];
     // Five steps genuinely touch the registry: install, preflight,
     // confirm-unused, publish, remote verification — and nothing else.
     //
-    // `npm ci` joined this list in DS-7.5D: the package now depends on
-    // @studiopod/foundation, and GitHub Packages requires a token for every
-    // install including reads, so an unauthenticated install fails with E401.
-    // The count is asserted rather than loosened so that a token appearing in
-    // some *other* step still fails this test.
+    // ORG-2B: the credential is GITHUB_TOKEN, not a PAT — @jheavner95/design
+    // matches this repository's owner, so GitHub Packages links the package
+    // here and this job's own `packages: write` is sufficient. `npm ci` stays
+    // on this list because the package still depends on @jheavner95/foundation
+    // at build time, and GitHub Packages requires a token for every install
+    // including reads. The count is asserted rather than loosened so that a
+    // credential appearing in some *other* step still fails this test.
     expect(tokenUses).toHaveLength(5);
-    expect(text).not.toMatch(/echo.*DS_NPM_TOKEN/);
+    expect(text).not.toMatch(/DS_NPM_TOKEN/);
+    expect(text).not.toMatch(/echo.*GITHUB_TOKEN/);
+  });
+
+  it("no longer depends on a personal access token", () => {
+    // The whole point of ORG-2B. If DS_NPM_TOKEN reappears anywhere in this
+    // workflow, the rename did not achieve what it set out to.
+    expect(workflow).not.toMatch(/DS_NPM_TOKEN/);
   });
 });
 

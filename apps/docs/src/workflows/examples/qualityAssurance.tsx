@@ -1,5 +1,5 @@
 import { Image as ImageIcon, ScanLine, Camera, Download, CheckCircle2 } from "lucide-react";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 
 /** Linear flow with one optional step: Camera Check only applies to products with a 3D mockup preview. */
 export const qualityAssurance: Workflow = {

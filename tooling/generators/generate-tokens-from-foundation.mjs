@@ -2,7 +2,7 @@
 /**
  * The Tailwind bridge (DS-7.5D).
  *
- * Generates this repository's four token stylesheets from `@studiopod/foundation`,
+ * Generates this repository's four token stylesheets from `@jheavner95/foundation`,
  * which is now the canonical owner of every token VALUE. This repository remains
  * the canonical owner of its own Tailwind-shaped NAMES and ordering.
  *
@@ -46,7 +46,7 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const pkgRoot = join(repoRoot, "packages/design");
 
 /** Foundation's machine-readable token data — the canonical source of values. */
-const foundationPath = require.resolve("@studiopod/foundation/tokens.json");
+const foundationPath = require.resolve("@jheavner95/foundation/tokens.json");
 const foundation = JSON.parse(readFileSync(foundationPath, "utf8"));
 const flat = foundation.flat;
 const scale = foundation.tokens.typography.scale;
@@ -56,15 +56,15 @@ function v(spName) {
   if (!(spName in flat)) {
     throw new Error(
       `Foundation has no token "${spName}". The bridge cannot invent a value — ` +
-        `either the mapping below is wrong or @studiopod/foundation needs the token.`,
+        `either the mapping below is wrong or @jheavner95/foundation needs the token.`,
     );
   }
   return flat[spName];
 }
 
 const banner = (file) =>
-  `/**\n * GENERATED FROM @studiopod/foundation — DO NOT EDIT.\n *\n` +
-  ` * Source of values : @studiopod/foundation@${require("@studiopod/foundation/package.json").version} (tokens.json)\n` +
+  `/**\n * GENERATED FROM @jheavner95/foundation — DO NOT EDIT.\n *\n` +
+  ` * Source of values : @jheavner95/foundation@${require("@jheavner95/foundation/package.json").version} (tokens.json)\n` +
   ` * Source of names  : this file's generator, tooling/generators/generate-tokens-from-foundation.mjs\n` +
   ` * Regenerate       : npm run token:bridge\n` +
   ` * Verified in CI by: npm run token:bridge-check\n *\n` +
@@ -275,7 +275,7 @@ function typographyCss() {
 // ── src/lib/tokens.ts — the public JS token surface, as literals ────────────
 /**
  * Emitted as literal values rather than as `export { x } from
- * "@studiopod/foundation"`, deliberately.
+ * "@jheavner95/foundation"`, deliberately.
  *
  * A module-level re-export makes tsup bundle Foundation's whole token tree into
  * `dist/`, and Tailwind's content scanner then reads Foundation's object keys
@@ -298,10 +298,10 @@ function libTokensTs() {
       .join("\n");
 
   return `/**
- * GENERATED FROM @studiopod/foundation — DO NOT EDIT.
+ * GENERATED FROM @jheavner95/foundation — DO NOT EDIT.
  *
- * The public \`@studiopod/design/tokens\` surface. Values are owned by
- * @studiopod/foundation and written here as literals by
+ * The public \`@jheavner95/design/tokens\` surface. Values are owned by
+ * @jheavner95/foundation and written here as literals by
  * tooling/generators/generate-tokens-from-foundation.mjs; the stylesheets in src/styles
  * are generated from the same source, so the JS mirror and the CSS cannot
  * drift apart. Regenerate with \`npm run token:bridge\`.
@@ -351,8 +351,8 @@ export const successRgb = ${JSON.stringify(rgb.success)};
  *
  * Foundation owns the files and Design owns the loading, but Design cannot
  * simply `@import` Foundation's copy: Foundation is a **build-time** dependency
- * here, never a runtime one, and consumers install `@studiopod/design` alone.
- * A `url()` pointing into `@studiopod/foundation` would resolve on this machine
+ * here, never a runtime one, and consumers install `@jheavner95/design` alone.
+ * A `url()` pointing into `@jheavner95/foundation` would resolve on this machine
  * and 404 in every consumer that has not also installed Foundation.
  *
  * So the fonts travel the same road the token *values* already travel: copied
@@ -361,7 +361,7 @@ export const successRgb = ${JSON.stringify(rgb.success)};
  * fails, and for the same reason.
  */
 const fontsFrom = dirname(
-  require.resolve("@studiopod/foundation/assets/fonts/OFL.txt"),
+  require.resolve("@jheavner95/foundation/assets/fonts/OFL.txt"),
 );
 const FONT_FILES = [
   "Geist-Variable.woff2",
@@ -419,14 +419,14 @@ for (const [rel, content] of artifacts) {
 if (checkOnly) {
   if (drifted.length > 0) {
     console.error(
-      "✖ Token stylesheets have drifted from @studiopod/foundation:",
+      "✖ Token stylesheets have drifted from @jheavner95/foundation:",
     );
     for (const d of drifted) console.error(`  - ${d}`);
     console.error("\nRun `npm run token:bridge` and commit the result.");
     console.error(
-      "If a value genuinely needs to change, change it in @studiopod/foundation — not here.",
+      "If a value genuinely needs to change, change it in @jheavner95/foundation — not here.",
     );
     process.exit(1);
   }
-  console.log("✔ Token stylesheets match @studiopod/foundation.");
+  console.log("✔ Token stylesheets match @jheavner95/foundation.");
 }

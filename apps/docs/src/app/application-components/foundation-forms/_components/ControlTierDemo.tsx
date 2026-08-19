@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Filter, Search as SearchIcon, Trash2, Pencil } from "lucide-react";
-import { Card, Body, Caption } from "@studiopod/design";
-import { TextInput, Select, Checkbox, ToggleSwitch, SearchInput, Combobox, IconButton } from "@studiopod/design";
-import { InputField, SelectField } from "@studiopod/design";
+import { Card, Body, Caption } from "@jheavner95/design";
+import { TextInput, Select, Checkbox, ToggleSwitch, SearchInput, Combobox, IconButton } from "@jheavner95/design";
+import { InputField, SelectField } from "@jheavner95/design";
 
 /**
  * DS-5M — the control/field two-tier split (DS-5L) shown in the five contexts

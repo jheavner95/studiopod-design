@@ -15,7 +15,7 @@ const url = (p: string) => fileURLToPath(new URL(p, import.meta.url));
  *   design   the published library. "@" is packages/design/src.
  *   docs     the documentation application. "@" is apps/docs/src. It has no
  *            alias into the library: like Cloud and Web, it resolves
- *            "@studiopod/design" through the workspace link to the package's
+ *            "@jheavner95/design" through the workspace link to the package's
  *            built output, so these tests exercise the real public surface.
  *   tooling  repository tooling — release-target resolution, token hygiene.
  *

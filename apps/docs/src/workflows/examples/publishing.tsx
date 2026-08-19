@@ -1,5 +1,5 @@
 import { Store, Activity } from "lucide-react";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 import { CANONICAL_PRODUCTION_FLOW_ICONS } from "@/lib/canonical";
 
 const { "production-package": Package, publishing: Rocket } = CANONICAL_PRODUCTION_FLOW_ICONS;

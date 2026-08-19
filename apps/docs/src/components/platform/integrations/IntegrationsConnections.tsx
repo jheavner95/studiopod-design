@@ -1,1 +1,1 @@
-export { ProviderHealthPanel as IntegrationsConnections } from "@studiopod/design";
+export { ProviderHealthPanel as IntegrationsConnections } from "@jheavner95/design";

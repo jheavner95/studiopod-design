@@ -1,8 +1,10 @@
-name: Release @studiopod/design
+name: Release @jheavner95/design
 
 # ─────────────────────────────────────────────────────────────────────────────
-# DS-0.6 — release pipeline for @studiopod/design (renamed from
-# @studiopod/design-system in DS-7.3a; see docs/DS-7.3a-Package-Rename.md).
+# DS-0.6 / ORG-2B — release pipeline for @jheavner95/design (formerly
+# @studiopod/design, renamed at ORG-2B; formerly @studiopod/design-system,
+# renamed at DS-7.3a — see docs/MIGRATION-ORG-2.md and
+# docs/DS-7.3a-Package-Rename.md).
 #
 # REGISTRY: GitHub Packages (https://npm.pkg.github.com). PRIVATE.
 # The package must never reach npmjs. `private: true` was removed in Phase D, so
@@ -12,47 +14,45 @@ name: Release @studiopod/design
 #   npm notice Publishing to https://npm.pkg.github.com with tag latest
 # This workflow's `registry-url` + scope pin the same target independently.
 #
-# SCOPE: `@studiopod` is a package namespace, NOT a GitHub organization. No
-# live GitHub organization by that name exists — github.com/studiopod returns
-# 404 — and this account belongs to no organizations at all
-# (`gh api /user/orgs` → []). Repository and package are both jheavner95's:
+# SCOPE: `@jheavner95` is a package namespace that matches the repository
+# owner on purpose — that is the entire reason for the ORG-2B rename.
+# `@studiopod`, this package's previous scope, was never a GitHub organization
+# — github.com/studiopod returns 404, and this account belongs to no
+# organizations at all (`gh api /user/orgs` → []) — but it did not match the
+# owner login either, and GitHub Packages links a package to a repository only
+# when the scope matches. Every version published under `@studiopod/design`
+# is therefore UNLINKED: `npm view @studiopod/design repository` returns
+# `{"type":"git"}` with the `url` stripped, and a repository-scoped
+# GITHUB_TOKEN has no installation to resolve against — the same E403
+# `The requested installation does not exist` measured for Foundation before
+# its own ORG-2A rename.
 #
-#   repository  jheavner95/studiopod-design
-#   package     @studiopod/design, published by jheavner95
-#               (`npm view @studiopod/design _npmUser` → jheavner95)
+# PUBLISHING: the scope now matches, so this repository's own GITHUB_TOKEN can
+# publish, with `packages: write` on the `publish` job only — the same pattern
+# Foundation proved in ORG-2A. No PAT is used for publishing.
 #
-# PUBLISHING STILL NEEDS A PAT, for a different reason than once believed.
-# GitHub Packages links a package to a repository only when the npm scope
-# matches the owner login. `@studiopod` does not match `jheavner95`, so the
-# package is UNLINKED: registry metadata returns `repository` as
-# `{"type":"git"}` with the `url` stripped. A repository-scoped GITHUB_TOKEN
-# has no installation to resolve against and fails with:
+# READING @jheavner95/foundation is a genuinely different question, even
+# though the scope also matches there: that package is linked to a DIFFERENT
+# repository, jheavner95/studiopod-foundation, not this one. Whether a
+# repository's own GITHUB_TOKEN can read a package linked elsewhere — even
+# under the same account — depends on GitHub's package-level Actions access
+# model. This was measured, not assumed; see MEASURED RESULT below.
 #
-#   npm error code E403
-#   Permission permission_denied: The requested installation does not exist.
+# MEASURED RESULT: see docs/MIGRATION-ORG-2.md and this workflow's `Install`
+# steps for what was actually found when this was tried on a real runner.
 #
-# A user-owned PAT is not repository-scoped, so it works. That is what
-# secrets.DS_NPM_TOKEN is, and it is what published every version so far.
-#
-# WHAT WAS WRONG BEFORE: this header explained the PAT by asserting the package
-# belonged to "the studiopod org" and that the two owners "INTENTIONALLY
-# differ". Both claims are false. The conclusion was right, which is why the
-# premise went unchecked for so long — and it later produced a wrong CI
-# diagnosis in a downstream consumer. Keep the mechanism, drop the story.
-#
-# Escaping the PAT would mean republishing under a scope matching the owner
-# (@jheavner95/*) — a coordinated migration across every producer and consumer,
-# not a change to this file.
+# WHAT WAS WRONG BEFORE ORG-2B: this header used to explain the PAT by
+# asserting the package belonged to "the studiopod org" and that the two
+# owners "INTENTIONALLY differ". Both claims were false — the false premise
+# happened to produce the right instruction (use a PAT), which is why it went
+# unchecked, and it later produced a wrong CI diagnosis in a downstream
+# consumer. The mechanism that actually mattered — scope/owner matching
+# determines package linkage, and linkage determines what GITHUB_TOKEN can
+# reach — is what this version of the header states directly.
 #
 # Releasing requires:
-#   vars.DS_REGISTRY     repository variable = https://npm.pkg.github.com
-#   secrets.DS_NPM_TOKEN classic PAT (write:packages), owned by jheavner95.
-#                        It reaches ONLY the publish step (below).
-# The dry-run and publish jobs FAIL (not skip) when DS_REGISTRY is missing; a
-# missing/invalid DS_NPM_TOKEN surfaces as a publish-step npm error. An earlier
-# revision skipped instead: an operator who asked for a release would have got a
-# green run that published nothing. Silence is the worst outcome for an explicit
-# request, so it is an error now.
+#   vars.DS_REGISTRY  repository variable = https://npm.pkg.github.com
+# See the `Install` and `Publish` steps below for the credential each uses.
 #
 # CI-2 — trigger corrected. This workflow used to ALSO run its `fast` and
 # `verify` jobs on every push to main and every pull request — two hosted
@@ -100,6 +100,7 @@ concurrency:
 # per-job, only where it is actually needed (see the `publish` job).
 permissions:
   contents: read
+  packages: read
 
 jobs:
   # ── Release-time quality gate: Layer 1, fast (DS-1D; retriggered by CI-2) ──
@@ -123,6 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
 
@@ -131,17 +133,15 @@ jobs:
           node-version: 20
           cache: npm
           registry-url: https://npm.pkg.github.com
-          scope: "@studiopod"
+          scope: "@jheavner95"
 
-      # Reads @studiopod/foundation from GitHub Packages (DS-7.5D). GitHub
-      # Packages requires a token for EVERY install, including reads, so an
-      # unauthenticated `npm ci` now fails with E401. DS_NPM_TOKEN is the
-      # existing publish PAT; classic-PAT `write:packages` implies
-      # `read:packages`, so one secret covers both directions. The repo's own
-      # .npmrc carries scope routing only — no credential is committed.
+      # Reads @jheavner95/foundation from GitHub Packages. GitHub Packages
+      # requires a token for EVERY install, including reads, so an
+      # unauthenticated `npm ci` fails with E401. GITHUB_TOKEN is tried here —
+      # see this file's header comment for what that does and does not prove.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
 
       - name: verify:fast — typecheck, lint, unit tests
@@ -174,6 +174,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read        # checkout only — cannot tag, publish, or release
+      packages: read
     defaults:
       run:
         working-directory: packages/design
@@ -185,15 +186,15 @@ jobs:
           node-version: 20
           cache: npm
           registry-url: https://npm.pkg.github.com
-          scope: "@studiopod"
+          scope: "@jheavner95"
 
       # Deterministic installs: `npm ci` fails if package-lock.json is out of
       # sync with package.json, which is the property we want in CI.
       #
-      # Authenticated since DS-7.5D — see the note in the `fast` job.
+      # See the `fast` job's note on this workflow's read credential.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
         working-directory: .
 
@@ -241,6 +242,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read   # cannot tag, publish, or release — enforced, not promised
+      packages: read
 
     steps:
       - uses: actions/checkout@v4
@@ -250,12 +252,12 @@ jobs:
           node-version: 20
           cache: npm
           registry-url: https://npm.pkg.github.com
-          scope: "@studiopod"
+          scope: "@jheavner95"
 
-      # Authenticated read of @studiopod/foundation — see the `fast` job note.
+      # Authenticated read of @jheavner95/foundation — see the `fast` job note.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
 
       # ── What are we proposing to publish? ─────────────────────────────────
@@ -272,7 +274,7 @@ jobs:
 
       - name: Credential preflight (diagnosis only — nothing is published)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node tooling/release/preflight-credential.mjs
 
       - name: Report + enforce distribution configuration
@@ -365,10 +367,13 @@ jobs:
           done
           echo "OK   all export targets present in the tarball"
 
-      # Would the real publish be rejected? Ask now, while it is free.
+      # Would the real publish be rejected? Ask now, while it is free. This
+      # reads @jheavner95/design — the package THIS repository owns and will
+      # publish, matching scope — so GITHUB_TOKEN is the right credential here,
+      # unlike the Foundation read above.
       - name: Registry existence check
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           node tooling/release/check-registry.mjs \
@@ -444,18 +449,18 @@ jobs:
           node-version: 20
           cache: npm
           registry-url: ${{ vars.DS_REGISTRY }}
-          scope: "@studiopod"
+          scope: "@jheavner95"
 
-      # Authenticated read of @studiopod/foundation — see the `fast` job note.
+      # Authenticated read of @jheavner95/foundation — see the `fast` job note.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
 
       # ── 1. VALIDATE ───────────────────────────────────────────────────────
       - name: Credential preflight
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node tooling/release/preflight-credential.mjs
 
       - name: Resolve release target
@@ -508,10 +513,13 @@ jobs:
           test "$NAME" = "${{ steps.target.outputs.name }}" || { echo "::error::packed name != target"; exit 1; }
 
       # ── 4. CONFIRM THE COORDINATE IS UNUSED ───────────────────────────────
-      # Last free moment. Everything after this is irreversible.
+      # Last free moment. Everything after this is irreversible. This reads
+      # @jheavner95/design — this repository's own package, matching scope —
+      # so GITHUB_TOKEN is right here even though the Foundation read above
+      # needs it for a different, cross-repository reason.
       - name: Confirm target version is unused
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           node tooling/release/check-registry.mjs \
@@ -519,15 +527,15 @@ jobs:
             --version "${{ steps.target.outputs.version }}"
 
       # ── 5. PUBLISH — IRREVERSIBLE ─────────────────────────────────────────
-      # Auth is a PAT (secrets.DS_NPM_TOKEN), NOT GITHUB_TOKEN: the repo owner
-      # (jheavner95, a User) differs from the package scope (@studiopod, an
-      # org), and GITHUB_TOKEN's packages:write is scoped to the repo owner.
-      # The token reaches ONLY this step.
+      # GITHUB_TOKEN, not a PAT: @jheavner95/design matches this repository's
+      # owner, GitHub Packages links the package to this repository, and this
+      # job's `packages: write` is what grants GITHUB_TOKEN the publish. This
+      # is the ORG-2B rename's entire point — see this file's header.
       - name: Publish
         id: publish
         working-directory: packages/design
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm publish
 
       # ── 6/7. VERIFY FROM A CLEAN EXTERNAL CONSUMER ────────────────────────
@@ -536,7 +544,7 @@ jobs:
       # failure here stops the run before any tag exists.
       - name: Verify the published package from a clean consumer
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DS_REGISTRY: ${{ vars.DS_REGISTRY }}
         run: |
           TARBALL=$(ls /tmp/ds-pack/*.tgz | head -1)
@@ -558,7 +566,7 @@ jobs:
           else
             echo "committed mode — version ${V} is already committed; tagging HEAD."
           fi
-          git tag -a "$TAG" -m "@studiopod/design v${V}"
+          git tag -a "$TAG" -m "@jheavner95/design v${V}"
           git push origin HEAD --follow-tags
 
       # ── 9. GITHUB RELEASE ─────────────────────────────────────────────────
@@ -569,6 +577,6 @@ jobs:
           V="${{ steps.target.outputs.version }}"
           TAG="${{ steps.target.outputs.tag }}"
           gh release create "$TAG" \
-            --title "@studiopod/design v${V}" \
+            --title "@jheavner95/design v${V}" \
             --generate-notes \
             --notes-file <(sed -n "/^## ${V}/,/^## /p" packages/design/CHANGELOG.md || echo "See CHANGELOG.md")

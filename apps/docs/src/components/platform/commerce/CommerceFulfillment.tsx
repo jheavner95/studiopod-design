@@ -1,1 +1,1 @@
-export { PipelineStage as CommerceFulfillment } from "@studiopod/design";
+export { PipelineStage as CommerceFulfillment } from "@jheavner95/design";

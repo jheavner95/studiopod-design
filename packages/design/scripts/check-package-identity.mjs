@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Package-identity check for @studiopod/design (DS-7.3a).
+ * Package-identity check for @jheavner95/design (ORG-2B, formerly DS-7.3a
+ * for the design-system -> design rename).
  *
  * The sibling scripts verify what the package CONTAINS — check-api.mjs the
  * exported symbols, check-css.mjs the stylesheet, check-exports.mjs that every
@@ -45,8 +46,14 @@ import { fileURLToPath } from "node:url";
 const pkgRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8"));
 
-const EXPECTED_NAME = "@studiopod/design";
-const OLD_NAME = "@studiopod/design-system";
+const EXPECTED_NAME = "@jheavner95/design";
+/**
+ * Both prior identities. @studiopod/design-system was retired at DS-7.3a;
+ * @studiopod/design was retired at ORG-2B. Neither may leak into a built
+ * artifact or a live self-reference — the property this script exists to
+ * prove is unbroken by having two predecessors instead of one.
+ */
+const OLD_NAMES = ["@studiopod/design-system", "@studiopod/design"];
 const EXPECTED_REGISTRY = "https://npm.pkg.github.com";
 
 const problems = [];
@@ -69,8 +76,8 @@ if (pkg.publishConfig?.registry !== EXPECTED_REGISTRY) {
   ok.push(`publishConfig.registry: ${pkg.publishConfig.registry}`);
 }
 
-if (!pkg.name?.startsWith("@studiopod/")) {
-  problems.push(`package name must stay in the @studiopod scope — GitHub Packages routes by scope`);
+if (!pkg.name?.startsWith("@jheavner95/")) {
+  problems.push(`package name must stay in the @jheavner95 scope — GitHub Packages routes by scope`);
 }
 
 if (pkg.repository?.directory && !existsSync(join(pkgRoot, "..", "..", pkg.repository.directory))) {
@@ -82,7 +89,7 @@ const dist = join(pkgRoot, "dist");
 if (!existsSync(dist)) {
   problems.push(`dist/ not found — run "npm run build" before this check`);
 } else {
-  const stale = [];
+  const stale = new Map();
   const walk = (dir) => {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
       const full = join(dir, entry.name);
@@ -91,15 +98,23 @@ if (!existsSync(dist)) {
         continue;
       }
       if (![".js", ".ts", ".css", ".map", ".json"].includes(extname(entry.name))) continue;
-      if (readFileSync(full, "utf8").includes(OLD_NAME)) stale.push(entry.name);
+      const text = readFileSync(full, "utf8");
+      for (const oldName of OLD_NAMES) {
+        if (text.includes(oldName)) {
+          if (!stale.has(oldName)) stale.set(oldName, []);
+          stale.get(oldName).push(entry.name);
+        }
+      }
     }
   };
   walk(dist);
 
-  if (stale.length > 0) {
-    problems.push(`built file(s) still reference "${OLD_NAME}": ${stale.join(", ")}`);
+  if (stale.size > 0) {
+    for (const [oldName, files] of stale) {
+      problems.push(`built file(s) still reference "${oldName}": ${files.join(", ")}`);
+    }
   } else {
-    ok.push(`dist/: no reference to "${OLD_NAME}"`);
+    ok.push(`dist/: no reference to any prior identity (${OLD_NAMES.join(", ")})`);
   }
 }
 
@@ -117,18 +132,18 @@ for (const rel of liveDirs) {
         continue;
       }
       const text = readFileSync(full, "utf8");
-      // This script names the old string deliberately; exempt it.
+      // This script names the old strings deliberately; exempt it.
       if (full === fileURLToPath(import.meta.url)) continue;
-      if (text.includes(OLD_NAME)) staleSources.push(join(rel, entry.name));
+      if (OLD_NAMES.some((oldName) => text.includes(oldName))) staleSources.push(join(rel, entry.name));
     }
   };
   walk(root);
 }
 
 if (staleSources.length > 0) {
-  problems.push(`live source still references "${OLD_NAME}": ${staleSources.join(", ")}`);
+  problems.push(`live source still references a prior identity (${OLD_NAMES.join(", ")}): ${staleSources.join(", ")}`);
 } else {
-  ok.push(`src/ and scripts/: no reference to "${OLD_NAME}"`);
+  ok.push(`src/ and scripts/: no reference to any prior identity (${OLD_NAMES.join(", ")})`);
 }
 
 // Manifest fields must be clean too — `files`, `main`, `types`, `exports`.
@@ -142,8 +157,10 @@ const manifestBlob = JSON.stringify({
   homepage: pkg.homepage,
   bugs: pkg.bugs,
 });
-if (manifestBlob.includes(OLD_NAME)) {
-  problems.push(`package.json still references "${OLD_NAME}" in a published metadata field`);
+for (const oldName of OLD_NAMES) {
+  if (manifestBlob.includes(oldName)) {
+    problems.push(`package.json still references "${oldName}" in a published metadata field`);
+  }
 }
 
 // ── 5. Real export-map resolution from a packed tarball ─────────────────────
@@ -173,7 +190,7 @@ if (!existsSync(dist)) {
       ok.push(`tarball: ${tarball}`);
     }
 
-    // Install position: <scratch>/node_modules/@studiopod/design
+    // Install position: <scratch>/node_modules/@jheavner95/design
     const installDir = join(scratch, "node_modules", EXPECTED_NAME);
     mkdirSync(installDir, { recursive: true });
     execFileSync("tar", ["-xzf", join(packDir, tarball), "-C", installDir, "--strip-components=1"], {
@@ -210,20 +227,23 @@ if (!existsSync(dist)) {
       }
     }
 
-    // The old name must NOT resolve — nothing should still be reachable by it.
-    writeFileSync(
-      join(scratch, "probe-old.mjs"),
-      `try { import.meta.resolve(${JSON.stringify(OLD_NAME)}); console.log("RESOLVED"); }
-       catch { console.log("NOT_FOUND"); }`,
-    );
-    const oldResult = execFileSync(process.execPath, [join(scratch, "probe-old.mjs")], {
-      cwd: scratch,
-      encoding: "utf8",
-    }).trim();
-    if (oldResult === "RESOLVED") {
-      problems.push(`"${OLD_NAME}" still resolves from the packed tarball`);
-    } else {
-      ok.push(`"${OLD_NAME}" no longer resolves`);
+    // Neither prior name may still resolve — nothing should be reachable by
+    // either of them from a package built under the current identity.
+    for (const oldName of OLD_NAMES) {
+      writeFileSync(
+        join(scratch, "probe-old.mjs"),
+        `try { import.meta.resolve(${JSON.stringify(oldName)}); console.log("RESOLVED"); }
+         catch { console.log("NOT_FOUND"); }`,
+      );
+      const oldResult = execFileSync(process.execPath, [join(scratch, "probe-old.mjs")], {
+        cwd: scratch,
+        encoding: "utf8",
+      }).trim();
+      if (oldResult === "RESOLVED") {
+        problems.push(`"${oldName}" still resolves from the packed tarball`);
+      } else {
+        ok.push(`"${oldName}" no longer resolves`);
+      }
     }
   } catch (error) {
     problems.push(`export-resolution check failed to run: ${error.message}`);

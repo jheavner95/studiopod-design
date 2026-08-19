@@ -1,4 +1,4 @@
-import { WorkflowTimeline } from "@studiopod/design/illustrations";
+import { WorkflowTimeline } from "@jheavner95/design/illustrations";
 import { artworkProduction } from "@/workflows/examples";
 import { DemoLabel } from "../_components/preview-primitives";
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Caption } from "@studiopod/design";
-import { CapabilityRegistryDiagram, CapabilityDetails, ProviderLegend } from "@studiopod/design/illustrations";
+import { Caption } from "@jheavner95/design";
+import { CapabilityRegistryDiagram, CapabilityDetails, ProviderLegend } from "@jheavner95/design/illustrations";
 import { exampleRegistries } from "@/capabilities/examples";
-import type { DiagramLayoutKind } from "@studiopod/design/illustrations";
+import type { DiagramLayoutKind } from "@jheavner95/design/illustrations";
 import { PreviewSection } from "../_components/preview-primitives";
 
 /**

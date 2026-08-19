@@ -5,4 +5,4 @@
  * Printing, QA, Shipped — checked directly against its full prop surface
  * and found a 1:1 match, no Production-specific field needed.
  */
-export { PipelineStage as ProductionStagePanel } from "@studiopod/design";
+export { PipelineStage as ProductionStagePanel } from "@jheavner95/design";

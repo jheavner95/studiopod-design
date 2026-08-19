@@ -5,4 +5,4 @@
  * job's own object-level actions (Approve, Retry, Cancel) — checked
  * directly and found fully generic, no Production-specific field needed.
  */
-export { WorkflowActions as ProductionActions } from "@studiopod/design";
+export { WorkflowActions as ProductionActions } from "@jheavner95/design";

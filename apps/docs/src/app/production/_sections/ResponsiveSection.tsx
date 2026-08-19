@@ -1,4 +1,4 @@
-import { ProductionPipelineDiagram } from "@studiopod/design/illustrations";
+import { ProductionPipelineDiagram } from "@jheavner95/design/illustrations";
 import { exportValidation } from "@/production/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

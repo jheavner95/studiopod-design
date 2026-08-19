@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Card, Body, Badge, Button } from "@studiopod/design";
-import { DataGrid, DataGridToolbar, DataGridSearch, DataGridFilters, DataGridPagination, useDataGridSelection, type DataGridColumn } from "@studiopod/design";
-import type { SortDirection } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
+import { DataGrid, DataGridToolbar, DataGridSearch, DataGridFilters, DataGridPagination, useDataGridSelection, type DataGridColumn } from "@jheavner95/design";
+import type { SortDirection } from "@jheavner95/design";
 
 interface AssetRow {
   id: string;

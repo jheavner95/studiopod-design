@@ -65,7 +65,7 @@ architectural decision, reviewed as one.
 ### 3. Foundation owns values; Design owns presentation
 
 Design never owns a raw design value. Colour, spacing, type scale, motion
-duration, radius, elevation, and icon geometry are `@studiopod/foundation`'s, and
+duration, radius, elevation, and icon geometry are `@jheavner95/foundation`'s, and
 they arrive here through a generator, never through a hand-edit.
 
 Design owns the layer above: what the values **mean** in an interface, which
@@ -138,9 +138,9 @@ capability is **injected by the consumer**, not imported by the library.
 StudioPOD is four repositories with deliberately separated ownership.
 
 ```
-studiopod-foundation      canonical design values          @studiopod/foundation
+studiopod-foundation      canonical design values          @jheavner95/foundation
         ↓
-studiopod-design          the visual language              @studiopod/design
+studiopod-design          the visual language              @jheavner95/design
         ↓
 studiopod-cloud           the SaaS product
 studiopod-web             the public web presence
@@ -176,7 +176,7 @@ Changing the boundary requires agreement across the repositories it binds. See
 
 ## Article IV — The library model
 
-**§1. The repository publishes one package.** `@studiopod/design`. A second
+**§1. The repository publishes one package.** `@jheavner95/design`. A second
 published package requires an ADR that clears the three-part test in
 [docs/architecture/packages.md](docs/architecture/packages.md) § 4.
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CardGrid } from "@studiopod/design";
-import { ArtifactLifecycleDiagram, ArtifactCard } from "@studiopod/design/illustrations";
+import { CardGrid } from "@jheavner95/design";
+import { ArtifactLifecycleDiagram, ArtifactCard } from "@jheavner95/design/illustrations";
 import { artifactLifecycle } from "@/production/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

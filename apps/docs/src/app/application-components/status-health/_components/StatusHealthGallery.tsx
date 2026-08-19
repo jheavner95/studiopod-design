@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Database, ShoppingCart, Radio } from "lucide-react";
-import { Card, Body, Button } from "@studiopod/design";
-import { StatGroup } from "@studiopod/design";
-import { HealthPanel, HealthScore, HealthIndicator, StatusSummary, StatusTimeline, HealthIssueList, HealthRecommendation, SyncStatusPanel, ProviderHealthPanel, OperationalAlertPanel, type SyncSource, type OperationalAlertEntry } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { StatGroup } from "@jheavner95/design";
+import { HealthPanel, HealthScore, HealthIndicator, StatusSummary, StatusTimeline, HealthIssueList, HealthRecommendation, SyncStatusPanel, ProviderHealthPanel, OperationalAlertPanel, type SyncSource, type OperationalAlertEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

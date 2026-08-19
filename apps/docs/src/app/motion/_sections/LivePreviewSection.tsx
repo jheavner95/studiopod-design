@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SurfacePanel } from "@studiopod/design";
-import { Activate, ConnectorFlow, QueueFlow, Progress, type ActivateState } from "@studiopod/design/internal";
-import { useMotion } from "@studiopod/design";
+import { SurfacePanel } from "@jheavner95/design";
+import { Activate, ConnectorFlow, QueueFlow, Progress, type ActivateState } from "@jheavner95/design/internal";
+import { useMotion } from "@jheavner95/design";
 import { PreviewSection } from "../_components/preview-primitives";
 
 const STEP_COUNT = 3;

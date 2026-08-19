@@ -1,4 +1,4 @@
-import { IllustrationConnection, type ConnectionStatus, type ConnectionDirection, type ConnectionStyle } from "@studiopod/design/illustrations";
+import { IllustrationConnection, type ConnectionStatus, type ConnectionDirection, type ConnectionStyle } from "@jheavner95/design/illustrations";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 
 const WIDTH = 160;

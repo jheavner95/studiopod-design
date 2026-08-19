@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Boxes, Image as ImageIcon, FileText, Folder, Home, Info } from "lucide-react";
-import { Card, Body } from "@studiopod/design";
-import { CardGrid } from "@studiopod/design";
-import { Tabs, TabsList, Tab, TabPanel, SegmentedControl, Breadcrumbs, Pagination, Stepper, SideNavigation, TopNavigation, NavigationRail, TreeNavigation, CommandNavigation, ContextNavigation, NavigationSection, NavigationGroup, NavigationItem, NavigationDivider, type TreeNode } from "@studiopod/design";
-import type { CommandPaletteItem } from "@studiopod/design";
+import { Card, Body } from "@jheavner95/design";
+import { CardGrid } from "@jheavner95/design";
+import { Tabs, TabsList, Tab, TabPanel, SegmentedControl, Breadcrumbs, Pagination, Stepper, SideNavigation, TopNavigation, NavigationRail, TreeNavigation, CommandNavigation, ContextNavigation, NavigationSection, NavigationGroup, NavigationItem, NavigationDivider, type TreeNode } from "@jheavner95/design";
+import type { CommandPaletteItem } from "@jheavner95/design";
 
 function TabsDemo() {
   const [value, setValue] = useState("overview");

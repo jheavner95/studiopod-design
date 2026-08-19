@@ -1,5 +1,5 @@
 import { TrendingUp } from "lucide-react";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 import { CANONICAL_PRODUCTION_FLOW_ICONS } from "@/lib/canonical";
 
 const {

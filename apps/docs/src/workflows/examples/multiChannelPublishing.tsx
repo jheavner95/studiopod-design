@@ -1,5 +1,5 @@
 import { Package, Store, Rocket } from "lucide-react";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 
 /** Parallel flow: the same Production Package publishes to three channels at once, reconverging once all three are live. */
 export const multiChannelPublishing: Workflow = {

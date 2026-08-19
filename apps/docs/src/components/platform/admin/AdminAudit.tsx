@@ -1,1 +1,1 @@
-export { StateHistory as AdminAudit } from "@studiopod/design";
+export { StateHistory as AdminAudit } from "@jheavner95/design";

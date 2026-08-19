@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { Body } from "@studiopod/design";
-import { Crossfade, Stagger } from "@studiopod/design/internal";
+import { Body } from "@jheavner95/design";
+import { Crossfade, Stagger } from "@jheavner95/design/internal";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

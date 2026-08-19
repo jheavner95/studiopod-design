@@ -1,6 +1,6 @@
 import { ArrowDown } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Caption, Body } from "@studiopod/design";
+import { Caption, Body } from "@jheavner95/design";
 import { PreviewSection, Swatch } from "@/app/docs/_components/DocsShowcase";
 
 const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;

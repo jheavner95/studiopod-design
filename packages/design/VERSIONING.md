@@ -1,4 +1,4 @@
-# @studiopod/design — Versioning Policy
+# @jheavner95/design — Versioning Policy
 
 ## Pre-1.0 policy (adopted in RM-5.5)
 

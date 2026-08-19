@@ -2,8 +2,8 @@
 
 import { Columns3, Crosshair, Waypoints, Grid3x3, Route, Tag } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { ControlDockShell } from "@studiopod/design/internal";
-import { useIllustrationDevControls, type IllustrationDevState } from "@studiopod/design/internal";
+import { ControlDockShell } from "@jheavner95/design/internal";
+import { useIllustrationDevControls, type IllustrationDevState } from "@jheavner95/design/internal";
 
 const TOGGLES: { key: keyof IllustrationDevState; label: string; icon: typeof Columns3 }[] = [
   { key: "nodeBounds", label: "Node Bounds", icon: Columns3 },

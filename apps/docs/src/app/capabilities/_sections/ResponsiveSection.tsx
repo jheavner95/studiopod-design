@@ -1,4 +1,4 @@
-import { CapabilityRegistryDiagram } from "@studiopod/design/illustrations";
+import { CapabilityRegistryDiagram } from "@jheavner95/design/illustrations";
 import { commerceCapability } from "@/capabilities/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

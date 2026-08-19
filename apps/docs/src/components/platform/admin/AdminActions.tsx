@@ -1,1 +1,1 @@
-export { WorkflowActions as AdminActions } from "@studiopod/design";
+export { WorkflowActions as AdminActions } from "@jheavner95/design";

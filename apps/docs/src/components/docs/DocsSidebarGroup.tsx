@@ -4,8 +4,8 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
-import { NavigationGroup, NavigationItem } from "@studiopod/design";
-import { Expandable } from "@studiopod/design";
+import { NavigationGroup, NavigationItem } from "@jheavner95/design";
+import { Expandable } from "@jheavner95/design";
 import { getGroup, getGroupEntries, type NavGroupId } from "@/lib/design-system-navigation";
 
 interface DocsSidebarGroupProps {

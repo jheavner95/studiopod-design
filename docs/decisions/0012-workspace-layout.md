@@ -50,7 +50,7 @@ that family, and the extra syllable costs nothing.
 
 ```
 studiopod-design/
-├── packages/design/     @studiopod/design — the published library
+├── packages/design/     @jheavner95/design — the published library
 ├── apps/docs/           the documentation product — a consumer
 ├── docs/                repository documentation — architecture, ADRs, reports
 └── tooling/             checks, generators, the verification runner

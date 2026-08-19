@@ -1,5 +1,12 @@
 # @studiopod/design — Distribution
 
+> **Superseded by ORG-2B — see [`MIGRATION-ORG-2.md`](MIGRATION-ORG-2.md).**
+> The package is now `@jheavner95/design`; `@studiopod/design` is retained as a
+> legacy identity until every consumer has migrated. This document's DS-7.3a
+> content below is preserved as the record of that earlier rename and is not
+> current distribution guidance — read `MIGRATION-ORG-2.md` for the operative
+> registry, identity, and authentication story.
+
 > **Renamed in DS-7.3a.** This package was published as `@studiopod/design-system`
 > through **0.12.0**. From **0.13.0** it is `@studiopod/design`. The repository,
 > exports, component APIs, and CSS are unchanged — only the package name moved.

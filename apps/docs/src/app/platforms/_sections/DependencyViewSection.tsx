@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PlatformRelationshipMap, PlatformLegend, PlatformDetailsPanel } from "@studiopod/design/illustrations";
+import { PlatformRelationshipMap, PlatformLegend, PlatformDetailsPanel } from "@jheavner95/design/illustrations";
 import { platformDependencyView } from "@/platforms/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

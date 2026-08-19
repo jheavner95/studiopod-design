@@ -2,9 +2,9 @@
 
 import { useState, type ReactNode } from "react";
 import { Image as ImageIcon, Package, Megaphone, ShoppingBag } from "lucide-react";
-import { Card, Body, Button } from "@studiopod/design";
-import { InputField, SwitchField } from "@studiopod/design";
-import { InspectorPanel, InspectorHeader, InspectorSection, InspectorGroup, InspectorProperty, InspectorTabs, InspectorTabPanel, InspectorValidation, InspectorStatus, InspectorHistory, InspectorActions, InspectorFooter } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { InputField, SwitchField } from "@jheavner95/design";
+import { InspectorPanel, InspectorHeader, InspectorSection, InspectorGroup, InspectorProperty, InspectorTabs, InspectorTabPanel, InspectorValidation, InspectorStatus, InspectorHistory, InspectorActions, InspectorFooter } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: ReactNode }) {
   return (

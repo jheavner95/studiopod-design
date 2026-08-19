@@ -1,1 +1,1 @@
-export { RelationshipView as IntegrationsMappings } from "@studiopod/design";
+export { RelationshipView as IntegrationsMappings } from "@jheavner95/design";

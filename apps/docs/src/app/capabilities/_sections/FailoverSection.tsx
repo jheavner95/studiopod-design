@@ -1,4 +1,4 @@
-import { CapabilityFlowDiagram } from "@studiopod/design/illustrations";
+import { CapabilityFlowDiagram } from "@jheavner95/design/illustrations";
 import { providerFailover } from "@/capabilities/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

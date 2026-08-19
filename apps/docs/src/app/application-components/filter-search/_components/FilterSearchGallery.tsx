@@ -2,13 +2,13 @@
 
 import { useMemo, useState, type KeyboardEvent } from "react";
 import { Image as ImageIcon } from "lucide-react";
-import { Card, Body, Badge } from "@studiopod/design";
+import { Card, Body, Badge } from "@jheavner95/design";
 // This page documents the operational family's FilterBar, published as
 // `OperationalFilterBar` — the bare `FilterBar` on the root entry is the ui
 // system's. Before DH-2 this page imported the source name and so documented
 // a name no consumer can import.
-import { SearchField, SearchScope, SearchSuggestions, SearchHistory, OperationalFilterBar as FilterBar, FilterGroup, FilterSummary, SavedFilter, SortControl, ResultSummary, ActiveFilterList, ClearFilters, InspectorPanel, InspectorHeader, InspectorSection, InspectorGroup, InspectorProperty, type SavedFilterEntry } from "@studiopod/design";
-import type { SortDirection } from "@studiopod/design";
+import { SearchField, SearchScope, SearchSuggestions, SearchHistory, OperationalFilterBar as FilterBar, FilterGroup, FilterSummary, SavedFilter, SortControl, ResultSummary, ActiveFilterList, ClearFilters, InspectorPanel, InspectorHeader, InspectorSection, InspectorGroup, InspectorProperty, type SavedFilterEntry } from "@jheavner95/design";
+import type { SortDirection } from "@jheavner95/design";
 
 interface Item {
   id: string;

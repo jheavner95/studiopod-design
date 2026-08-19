@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Framework-import check for @studiopod/design (DH-1 gap 17, built in DH-3).
+ * Framework-import check for @jheavner95/design (DH-1 gap 17, built in DH-3).
  *
  * ADR 0007 says the package targets React and no framework. Until DH-3 that was
  * a convention, and the convention had already failed: five components imported

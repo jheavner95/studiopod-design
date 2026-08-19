@@ -1,1 +1,1 @@
-export { DataGrid as IntegrationsProviders } from "@studiopod/design";
+export { DataGrid as IntegrationsProviders } from "@jheavner95/design";

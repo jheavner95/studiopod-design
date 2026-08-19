@@ -1,1 +1,1 @@
-export { AssetBrowser as ProductLibrary } from "@studiopod/design";
+export { AssetBrowser as ProductLibrary } from "@jheavner95/design";

@@ -6,4 +6,4 @@
  * over the job type, nothing operational-specific baked in that a
  * Production job type couldn't satisfy.
  */
-export { Queue as ProductionQueue } from "@studiopod/design";
+export { Queue as ProductionQueue } from "@jheavner95/design";

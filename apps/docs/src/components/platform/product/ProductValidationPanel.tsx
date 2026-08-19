@@ -1,1 +1,1 @@
-export { PipelineGate as ProductValidationPanel } from "@studiopod/design";
+export { PipelineGate as ProductValidationPanel } from "@jheavner95/design";

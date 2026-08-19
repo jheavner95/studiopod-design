@@ -1,5 +1,5 @@
 import { Database, ClipboardList, Palette, Factory, Rocket, ShoppingCart, Sparkles } from "lucide-react";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 /** The same seven platforms as the complete architecture, but wired as a genuine dependency graph rather than a single chain, for a relationship-only view with no workflow emphasis. */
 export const platformDependencyView: PlatformArchitecture = {

@@ -1,5 +1,5 @@
-import { StatusBadge, HealthIndicator, type NodeStatus, type NodeHealth } from "@studiopod/design/illustrations";
-import { Caption } from "@studiopod/design";
+import { StatusBadge, HealthIndicator, type NodeStatus, type NodeHealth } from "@jheavner95/design/illustrations";
+import { Caption } from "@jheavner95/design";
 import { PreviewSection } from "../_components/preview-primitives";
 
 const STATUSES: NodeStatus[] = ["idle", "active", "processing", "complete", "warning", "error"];

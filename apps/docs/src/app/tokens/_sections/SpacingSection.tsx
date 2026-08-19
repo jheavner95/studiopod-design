@@ -1,5 +1,5 @@
 import { PreviewSection, SpacingBar } from "@/app/docs/_components/DocsShowcase";
-import { DescriptionList } from "@studiopod/design";
+import { DescriptionList } from "@jheavner95/design";
 
 const SPACING_SCALE = [
   { px: 4, token: "space-1" },

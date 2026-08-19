@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { WorkflowStepper, WorkflowStepperHeader, WorkflowStepperStage, WorkflowStepperStep, WorkflowStepperConnector, WorkflowStepperSummary, WorkflowStepperProgress, WorkflowStepperNavigation, WorkflowStepperActions, WorkflowStepperFooter, type WorkflowStepperStateValue } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { WorkflowStepper, WorkflowStepperHeader, WorkflowStepperStage, WorkflowStepperStep, WorkflowStepperConnector, WorkflowStepperSummary, WorkflowStepperProgress, WorkflowStepperNavigation, WorkflowStepperActions, WorkflowStepperFooter, type WorkflowStepperStateValue } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

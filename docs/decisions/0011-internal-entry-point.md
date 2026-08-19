@@ -15,7 +15,7 @@
 ## Context
 
 [ADR 0003](0003-library-owns-its-source.md) required the documentation
-application to consume `@studiopod/design` rather than reach into library
+application to consume `@jheavner95/design` rather than reach into library
 source. Implementing that in DH-2 surfaced a case ADR 0005 had not anticipated.
 
 The documentation product does not only document the public API. It documents
@@ -44,7 +44,7 @@ something.
 
 ## Decision
 
-**The package declares one additional entry point, `@studiopod/design/internal`,
+**The package declares one additional entry point, `@jheavner95/design/internal`,
 which carries no compatibility promise and which no application may import.**
 
 Concretely:

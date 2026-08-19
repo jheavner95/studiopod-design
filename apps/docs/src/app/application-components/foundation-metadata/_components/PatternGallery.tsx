@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Card, Body, Caption, Heading } from "@studiopod/design";
-import { Stack, Panel } from "@studiopod/design";
-import { DescriptionList, PropertyGroup, MetadataField, IdentityBlock, RelationshipList, StatGroup, HealthSummary, TagCollection } from "@studiopod/design";
+import { Card, Body, Caption, Heading } from "@jheavner95/design";
+import { Stack, Panel } from "@jheavner95/design";
+import { DescriptionList, PropertyGroup, MetadataField, IdentityBlock, RelationshipList, StatGroup, HealthSummary, TagCollection } from "@jheavner95/design";
 import { PRESENTATION_PATTERNS, type PresentationPattern } from "../_data/patterns";
 
 const ITEMS = [

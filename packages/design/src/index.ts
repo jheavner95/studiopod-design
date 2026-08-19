@@ -1,5 +1,5 @@
 /**
- * @studiopod/design — root entry point.
+ * @jheavner95/design — root entry point.
  *
  * Shared presentation primitives only: no business logic, no API clients,
  * no repository/auth/routing state, no application orchestration.

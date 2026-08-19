@@ -1,5 +1,5 @@
 import { Package, ShieldCheck, Factory } from "lucide-react";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 
 /** The canonical StudioPOD workflow: linear, three-stage, no branches. */
 export const prepareValidateProduce: Workflow = {

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Caption } from "@studiopod/design";
-import { PlatformArchitectureDiagram, PlatformLegend, PlatformDetailsPanel } from "@studiopod/design/illustrations";
+import { Caption } from "@jheavner95/design";
+import { PlatformArchitectureDiagram, PlatformLegend, PlatformDetailsPanel } from "@jheavner95/design/illustrations";
 import { exampleArchitectures } from "@/platforms/examples";
-import type { DiagramLayoutKind } from "@studiopod/design/illustrations";
+import type { DiagramLayoutKind } from "@jheavner95/design/illustrations";
 import { PreviewSection } from "../_components/preview-primitives";
 
 /**

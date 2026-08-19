@@ -1,1 +1,1 @@
-export { StateInspector as IntegrationsInspector } from "@studiopod/design";
+export { StateInspector as IntegrationsInspector } from "@jheavner95/design";

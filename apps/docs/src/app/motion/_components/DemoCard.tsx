@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Card } from "@studiopod/design";
-import { MotionDebugOverlay } from "@studiopod/design/internal";
-import { useMotion } from "@studiopod/design";
+import { Card } from "@jheavner95/design";
+import { MotionDebugOverlay } from "@jheavner95/design/internal";
+import { useMotion } from "@jheavner95/design";
 import { DemoLabel } from "./preview-primitives";
 
 interface DemoCardProps {

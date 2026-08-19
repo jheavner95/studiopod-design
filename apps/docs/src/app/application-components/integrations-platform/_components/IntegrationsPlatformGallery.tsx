@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Body, Badge, Button } from "@studiopod/design";
+import { Card, Body, Badge, Button } from "@jheavner95/design";
 import {
   IntegrationsWorkspace,
   IntegrationsHeader,
@@ -14,11 +14,11 @@ import {
   IntegrationsSummary,
   IntegrationsActions,
 } from "@/components/platform/integrations";
-import { WorkflowFooter, RelationshipNode, RelationshipEdge } from "@studiopod/design";
-import type { DataGridColumn } from "@studiopod/design";
-import type { ProviderHealthRow } from "@studiopod/design";
-import type { SyncSource } from "@studiopod/design";
-import type { HealthIssueEntry } from "@studiopod/design";
+import { WorkflowFooter, RelationshipNode, RelationshipEdge } from "@jheavner95/design";
+import type { DataGridColumn } from "@jheavner95/design";
+import type { ProviderHealthRow } from "@jheavner95/design";
+import type { SyncSource } from "@jheavner95/design";
+import type { HealthIssueEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

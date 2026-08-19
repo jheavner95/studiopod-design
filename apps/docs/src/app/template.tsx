@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
-import { motionDuration, motionEase } from "@studiopod/design/tokens";
-import { useMotionPreference } from "@studiopod/design";
+import { motionDuration, motionEase } from "@jheavner95/design/tokens";
+import { useMotionPreference } from "@jheavner95/design";
 
 /**
  * Re-mounts on every navigation (Next's template.tsx contract), giving each

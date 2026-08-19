@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Boxes } from "lucide-react";
-import { PageShell, SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@studiopod/design";
-import { SystemGrid } from "@studiopod/design/illustrations";
+import { PageShell, SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { SectionBadge, Display, Body, Card, SectionHeader, Eyebrow } from "@jheavner95/design";
+import { SystemGrid } from "@jheavner95/design/illustrations";
 import { DocsRelatedGrid } from "@/components/docs";
 import { getEntry, getGroup, getSection } from "@/lib/design-system-navigation";
 import { PlaygroundBody } from "./_components/PlaygroundBody";

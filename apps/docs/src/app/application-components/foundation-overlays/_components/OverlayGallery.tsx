@@ -2,9 +2,9 @@
 
 import { useRef, useState } from "react";
 import { Info, MoreVertical, Filter, Pencil, Copy, Trash2, Command } from "lucide-react";
-import { CardGrid } from "@studiopod/design";
-import { Card, Button, Body, Caption } from "@studiopod/design";
-import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose, ConfirmDialog, Drawer, type DrawerEdge, Popover, Menu, MenuItem, Tooltip, CommandPalette, type CommandPaletteItem } from "@studiopod/design";
+import { CardGrid } from "@jheavner95/design";
+import { Card, Button, Body, Caption } from "@jheavner95/design";
+import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose, ConfirmDialog, Drawer, type DrawerEdge, Popover, Menu, MenuItem, Tooltip, CommandPalette, type CommandPaletteItem } from "@jheavner95/design";
 
 // DS-5K: the canonical composition pattern — structure assembled from Dialog* parts,
 // with DialogTitle/DialogDescription auto-wiring aria-labelledby/describedby (no ids).

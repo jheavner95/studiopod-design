@@ -1,4 +1,4 @@
-name: Validate @studiopod/design
+name: Validate @jheavner95/design
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CI-2 — routine push/PR validation, split out of release.yml.
@@ -29,10 +29,24 @@ name: Validate @studiopod/design
 #
 # The deliberate release path — dry-run and real publish — lives entirely in
 # release.yml, now triggered ONLY by workflow_dispatch. This workflow never
-# publishes, tags, or releases anything; it has no `packages: write` and no
-# publish credential in scope beyond the same read-only install token every
-# job here already needed to resolve @studiopod/foundation from GitHub
-# Packages.
+# publishes, tags, or releases anything; it has no `packages: write`.
+#
+# ── ORG-2B: no PAT here anymore, if this keeps passing ─────────────────────
+#
+# This package moved from @studiopod/design to @jheavner95/design, and its
+# Foundation dependency moved to @jheavner95/foundation — both scopes now
+# match jheavner95, the actual owner of every repository involved. That is
+# what makes GITHUB_TOKEN + `packages: read` worth trying here instead of the
+# DS_NPM_TOKEN PAT this workflow used to require for every install.
+#
+# One thing this does NOT by itself prove: @jheavner95/foundation is linked to
+# studiopod-foundation, a DIFFERENT repository than this one. Whether this
+# repository's own GITHUB_TOKEN can read a package linked elsewhere — even
+# under the same account — depends on GitHub's package-level Actions access
+# model, not merely on scope matching the owner. If this step fails with E403
+# despite that, the fix is a grant on the Foundation package's own settings
+# (Package settings -> Manage Actions access -> Add repository), not a PAT
+# here — see docs/MIGRATION-ORG-2.md.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
@@ -48,6 +62,7 @@ concurrency:
 # builds, and tests — it never writes to the repository, tags, or publishes.
 permissions:
   contents: read
+  packages: read
 
 jobs:
   validate:
@@ -55,6 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
 
@@ -63,18 +79,16 @@ jobs:
           node-version: 20
           cache: npm
           registry-url: https://npm.pkg.github.com
-          scope: "@studiopod"
+          scope: "@jheavner95"
 
-      # Reads @studiopod/foundation from GitHub Packages. GitHub Packages
+      # Reads @jheavner95/foundation from GitHub Packages. GitHub Packages
       # requires a token for EVERY install, including reads, so an
-      # unauthenticated `npm ci` fails with E401. DS_NPM_TOKEN is the
-      # existing publish PAT; classic-PAT `write:packages` implies
-      # `read:packages`, so the same secret covers both directions — this
-      # job only ever uses its read side. The repo's own .npmrc carries scope
-      # routing only; no credential is committed.
+      # unauthenticated `npm ci` fails with E401. GITHUB_TOKEN is tried first
+      # — see this file's header comment for what that does and does not
+      # prove, and for the fallback if it fails.
       - name: Install (deterministic)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
 
       # Layer 1 — typecheck (library + documentation + test tree), ESLint,

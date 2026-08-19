@@ -3,7 +3,7 @@
 **Owns:** the architectural assessment at the end of the infrastructure phase,
 and the handoff into the product-quality phase.
 
-**Written:** 2026-08-07, at `@studiopod/design@0.16.0`.
+**Written:** 2026-08-07, at `@jheavner95/design@0.16.0`.
 
 ---
 

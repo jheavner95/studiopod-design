@@ -1,5 +1,5 @@
 import { Database, ClipboardList, Palette, Factory, Rocket, ShoppingCart, Sparkles } from "lucide-react";
-import type { PlatformArchitecture } from "@studiopod/design/illustrations";
+import type { PlatformArchitecture } from "@jheavner95/design/illustrations";
 
 /** The full StudioPOD system: one continuous chain from the foundation layer, through the value chain, into intelligence. */
 export const completeArchitecture: PlatformArchitecture = {

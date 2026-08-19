@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { DependencyGraph, DependencyNode, DependencyEdge, DependencyGroup, RelationshipView, RelationshipNode, RelationshipEdge, DependencyLegend, DependencySummary, DependencyFilters, DependencyInspector, DependencyActions, WorkflowHeader, WorkflowFooter, type DependencyStatusValue, type DependencyFilterValue } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { DependencyGraph, DependencyNode, DependencyEdge, DependencyGroup, RelationshipView, RelationshipNode, RelationshipEdge, DependencyLegend, DependencySummary, DependencyFilters, DependencyInspector, DependencyActions, WorkflowHeader, WorkflowFooter, type DependencyStatusValue, type DependencyFilterValue } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

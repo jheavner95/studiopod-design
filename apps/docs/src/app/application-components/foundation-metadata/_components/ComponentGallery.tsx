@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Card, Body, Caption, Heading } from "@studiopod/design";
-import { MetadataRow, MetadataGroup, PropertyGroup, MetadataField, DescriptionList, IdentityBlock, RelationshipList, StatusSummary, HealthSummary, StatGroup, TagCollection, EmptyMetadata, LoadingMetadata } from "@studiopod/design";
+import { Card, Body, Caption, Heading } from "@jheavner95/design";
+import { MetadataRow, MetadataGroup, PropertyGroup, MetadataField, DescriptionList, IdentityBlock, RelationshipList, StatusSummary, HealthSummary, StatGroup, TagCollection, EmptyMetadata, LoadingMetadata } from "@jheavner95/design";
 import { METADATA_COMPONENTS } from "../_data/components";
 
 function LiveDemo({ id }: { id: string }) {

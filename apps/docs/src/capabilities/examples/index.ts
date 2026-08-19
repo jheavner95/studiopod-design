@@ -3,7 +3,7 @@ import { publishingCapability } from "./publishingCapability";
 import { commerceCapability } from "./commerceCapability";
 import { capabilityRegistry } from "./capabilityRegistry";
 import { completeCapabilityArchitecture } from "./completeCapabilityArchitecture";
-import type { CapabilityRegistry } from "@studiopod/design/illustrations";
+import type { CapabilityRegistry } from "@jheavner95/design/illustrations";
 
 export { aiCapabilityLayer, aiCapabilityFlow } from "./aiCapabilityLayer";
 export { publishingCapability } from "./publishingCapability";

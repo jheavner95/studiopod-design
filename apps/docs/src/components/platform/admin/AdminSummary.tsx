@@ -1,1 +1,1 @@
-export { PipelineSummary as AdminSummary } from "@studiopod/design";
+export { PipelineSummary as AdminSummary } from "@jheavner95/design";

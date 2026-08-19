@@ -9,7 +9,7 @@
 
 ## Context
 
-The repository publishes `@studiopod/design` with four code entries — `.`,
+The repository publishes `@jheavner95/design` with four code entries — `.`,
 `./tokens`, `./marketing`, `./illustrations` — plus a stylesheet.
 
 There is real pressure to split it. Cloud declined to consume the package partly
@@ -77,7 +77,7 @@ An ADR proposing one must answer **all three** affirmatively. Two of three is a
 
 ## Alternatives considered
 
-### Alternative A — Split into `@studiopod/design`, `-marketing`, and `-illustrations`
+### Alternative A — Split into `@jheavner95/design`, `-marketing`, and `-illustrations`
 
 The direct answer to Cloud's complaint: Cloud installs the core package and never
 sees the rest.
@@ -108,7 +108,7 @@ package boundary.
 
 ### Alternative C — One package, one entry point
 
-Simplest possible: everything from `@studiopod/design`.
+Simplest possible: everything from `@jheavner95/design`.
 
 Rejected because it removes the scope declaration, which is the part doing the
 work. With one entry, nothing prevents a brand composition from being imported

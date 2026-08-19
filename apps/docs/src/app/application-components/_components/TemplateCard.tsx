@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card, Badge, Body, Caption } from "@studiopod/design";
+import { Card, Badge, Body, Caption } from "@jheavner95/design";
 import { COMPONENT_FAMILIES } from "../_data/families";
 import type { PlatformTemplate } from "../_data/templates";
 

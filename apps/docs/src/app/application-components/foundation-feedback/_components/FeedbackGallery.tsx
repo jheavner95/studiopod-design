@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { CardGrid } from "@studiopod/design";
-import { Alert, Banner, Notification, InlineMessage, EmptyState, LoadingState, Spinner, Skeleton, ProgressBar, ProgressRing, StatusIndicator, ValidationSummary, SuccessState, WarningState, ErrorState, InfoState, ToastProvider, useToast, type FeedbackTone } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { CardGrid } from "@jheavner95/design";
+import { Alert, Banner, Notification, InlineMessage, EmptyState, LoadingState, Spinner, Skeleton, ProgressBar, ProgressRing, StatusIndicator, ValidationSummary, SuccessState, WarningState, ErrorState, InfoState, ToastProvider, useToast, type FeedbackTone } from "@jheavner95/design";
 
 function AlertDemo() {
   const [dismissed, setDismissed] = useState(false);

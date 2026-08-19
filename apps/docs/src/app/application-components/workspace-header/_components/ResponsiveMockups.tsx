@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { CardGrid } from "@studiopod/design";
-import { Card, Body, Caption } from "@studiopod/design";
+import { CardGrid } from "@jheavner95/design";
+import { Card, Body, Caption } from "@jheavner95/design";
 
 function Chip({ children }: { children: string }) {
   return (

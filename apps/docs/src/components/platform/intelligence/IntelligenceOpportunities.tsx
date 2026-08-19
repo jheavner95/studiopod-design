@@ -1,1 +1,1 @@
-export { DataGrid as IntelligenceOpportunities } from "@studiopod/design";
+export { DataGrid as IntelligenceOpportunities } from "@jheavner95/design";

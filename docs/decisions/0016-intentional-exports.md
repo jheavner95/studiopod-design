@@ -52,7 +52,7 @@ The value is entirely in what happens next. A component added to
 
 `./tokens` remains `export * from "@/lib/tokens"`, deliberately.
 
-That module is **generated** from `@studiopod/foundation` and never hand-edited.
+That module is **generated** from `@jheavner95/foundation` and never hand-edited.
 Naming its exports here would mean a token could be generated into the package
 and still not reach consumers until somebody remembered to add a line — a
 second, manual, silently-drifting source of truth for a surface whose entire
@@ -91,7 +91,7 @@ an export has to make it.
 
 ### Alternative C — Split families into their own entry points
 
-`@studiopod/design/workflow`, `/operational`, and so on.
+`@jheavner95/design/workflow`, `/operational`, and so on.
 
 Rejected. [ADR 0004](0004-one-published-package.md) makes an entry point's set
 frozen and its addition a breaking change, and there is no consumer asking to

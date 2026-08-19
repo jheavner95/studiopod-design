@@ -1,4 +1,4 @@
-# @studiopod/design
+# @jheavner95/design
 
 StudioPOD's shared design system: tokens, UI/layout/form/feedback/navigation/overlay/table/metadata primitives, motion and illustration engines, and marketing compositions — for the StudioPOD Web and App products.
 
@@ -12,22 +12,22 @@ StudioPOD's shared design system: tokens, UI/layout/form/feedback/navigation/ove
 
 | Import | Contents |
 |---|---|
-| `@studiopod/design` | Core UI/layout/form/feedback/navigation/overlay/table/metadata primitives, the motion engine, the operational and workflow component families, shared hooks/providers, and `cn()`. |
-| `@studiopod/design/tokens` | JS-side motion/z-index token constants (durations, easings, z-index scale). Raw values, no application-specific theme config. |
-| `@studiopod/design/marketing` | The 11 canonical marketing composition components (Hero, CTA, FeatureGrid, Comparison, Metrics, Timeline, FAQ, Testimonial, Empty, Workflow, Platform). |
-| `@studiopod/design/illustrations` | The illustration engine plus the workflow/platform/production/capability diagram-engine libraries, merged into one entry point. Depends on the root entry point for some UI/motion primitives — not fully self-contained, and that's expected. |
-| `@studiopod/design/styles.css` | The canonical token CSS (palette, semantic theme tokens, typography, small utility classes) as one file. Import this alongside your own `@import "tailwindcss";` — Tailwind v4 discovers the `@theme` block inside via your own app's build. |
+| `@jheavner95/design` | Core UI/layout/form/feedback/navigation/overlay/table/metadata primitives, the motion engine, the operational and workflow component families, shared hooks/providers, and `cn()`. |
+| `@jheavner95/design/tokens` | JS-side motion/z-index token constants (durations, easings, z-index scale). Raw values, no application-specific theme config. |
+| `@jheavner95/design/marketing` | The 11 canonical marketing composition components (Hero, CTA, FeatureGrid, Comparison, Metrics, Timeline, FAQ, Testimonial, Empty, Workflow, Platform). |
+| `@jheavner95/design/illustrations` | The illustration engine plus the workflow/platform/production/capability diagram-engine libraries, merged into one entry point. Depends on the root entry point for some UI/motion primitives — not fully self-contained, and that's expected. |
+| `@jheavner95/design/styles.css` | The canonical token CSS (palette, semantic theme tokens, typography, small utility classes) as one file. Import this alongside your own `@import "tailwindcss";` — Tailwind v4 discovers the `@theme` block inside via your own app's build. |
 
 Every JS entry ships a `.d.ts` alongside it; TypeScript resolves types automatically.
 
 Representative imports:
 
 ```ts
-import { Button, Card, DataGrid } from "@studiopod/design";
-import { motionDuration, motionEase } from "@studiopod/design/tokens";
-import { HeroComposition, CTAComposition } from "@studiopod/design/marketing";
-import { WorkflowDiagram, AnimatedNode } from "@studiopod/design/illustrations";
-import "@studiopod/design/styles.css";
+import { Button, Card, DataGrid } from "@jheavner95/design";
+import { motionDuration, motionEase } from "@jheavner95/design/tokens";
+import { HeroComposition, CTAComposition } from "@jheavner95/design/marketing";
+import { WorkflowDiagram, AnimatedNode } from "@jheavner95/design/illustrations";
+import "@jheavner95/design/styles.css";
 ```
 
 ## Public stability policy
@@ -81,7 +81,7 @@ or, once the tarball is hosted somewhere reachable by both repos, via a `file:` 
 
 ## CSS
 
-Import `@studiopod/design/styles.css` once, wherever your app's own Tailwind entry CSS lives, alongside your own `@import "tailwindcss";`. This package does not run Tailwind's compiler itself — the CSS is a plain concatenation of the canonical token files, and your app's own Tailwind v4 build discovers the `@theme` block inside via the normal import graph, exactly as this repo's own app does today.
+Import `@jheavner95/design/styles.css` once, wherever your app's own Tailwind entry CSS lives, alongside your own `@import "tailwindcss";`. This package does not run Tailwind's compiler itself — the CSS is a plain concatenation of the canonical token files, and your app's own Tailwind v4 build discovers the `@theme` block inside via the normal import graph, exactly as this repo's own app does today.
 
 This package ships its own empty `postcss.config.mjs` for exactly this reason: `tsup`'s bundled PostCSS integration walks up the directory tree looking for a config, and without a package-local one it would find and apply this repo's own (Tailwind-enabled) root config while building `styles.css` in isolation — silently pruning the entire `@theme` block as "unused" content. `npm run package:css-check` guards against this regressing.
 

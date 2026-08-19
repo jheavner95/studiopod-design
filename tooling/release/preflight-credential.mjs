@@ -4,77 +4,79 @@
  *
  *   NODE_AUTH_TOKEN=… node scripts/release/preflight-credential.mjs
  *
- * Distinguishes, as far as GitHub permits from a read-only probe:
- *   missing credential · invalid credential · missing read:packages ·
- *   missing write:packages · organization (SSO) restriction · indeterminate
+ * ORG-2B rewrite. The credential is now GITHUB_TOKEN, not a personal access
+ * token, and that changes what is worth checking here.
  *
- * **The token value is never printed, logged, or written anywhere.** Only the
- * `x-oauth-scopes` / SSO response headers and the resulting classification are
- * shown. The token's first four characters (`ghp_`, `github_pat_`, …) are
- * reported solely to identify classic vs fine-grained, which changes how the
- * result must be read.
+ * The previous version of this script called `api.github.com/user` and read
+ * `x-oauth-scopes` / SSO headers to diagnose a classic PAT's organization
+ * membership and scope grants. None of that applies to GITHUB_TOKEN: it is an
+ * installation token, not a user OAuth token, `GET /user` does not
+ * authenticate it the same way, and there is no "studiopod org member" model
+ * to check anymore — see docs/MIGRATION-ORG-2.md for why.
  *
- * HONEST LIMITATION, stated up front and repeated in the output: **no read-only
- * probe can establish whether this token's owner is allowed to CREATE a new
- * package in the `studiopod` organization.** GitHub exposes no endpoint for it.
- * `write:packages` is necessary but not sufficient. First-publish permission is
- * proven only by the publish attempt.
+ * What IS worth proving before `npm publish` runs: that the credential can
+ * actually reach the registry and read a package under the scope it is about
+ * to publish into. A registry-level control read — the same technique
+ * check-registry.mjs uses to distinguish "genuinely absent" from "cannot see
+ * it" — answers that without depending on any GitHub-API-specific token
+ * shape, so it works identically whether the credential in NODE_AUTH_TOKEN is
+ * GITHUB_TOKEN or, if this workflow ever needs one again, a PAT.
+ *
+ * HONEST LIMITATION, stated up front and repeated in the output: **no
+ * read-only probe can establish whether this token can CREATE a new package**
+ * — first-publish permission is proven only by the publish attempt. This was
+ * true of the old PAT model too; it does not go away with GITHUB_TOKEN.
  *
  * Exit 0 = the checkable preconditions hold. Exit 1 = a definite blocker.
  */
 
-import { CREDENTIAL_CODES, classifyCredential } from "./lib/registry.mjs";
+import { execFileSync } from "node:child_process";
 
-const token = process.env.NODE_AUTH_TOKEN ?? process.env.DS_NPM_TOKEN ?? "";
+const token = process.env.NODE_AUTH_TOKEN ?? "";
 const present = token.trim().length > 0;
-const tokenPrefix = present ? `${token.slice(0, 4)}…` : null;
+const registry = process.env.DS_REGISTRY || "https://npm.pkg.github.com";
 
-let status = null;
-let scopesHeader = null;
-let ssoHeader = null;
-
-if (present) {
-  try {
-    const response = await fetch("https://api.github.com/user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/vnd.github+json",
-        "User-Agent": "studiopod-release-preflight",
-      },
-    });
-    status = response.status;
-    scopesHeader = response.headers.get("x-oauth-scopes");
-    ssoHeader = response.headers.get("x-github-sso");
-  } catch (error) {
-    console.error(`::error::credential probe could not reach api.github.com: ${error.message}`);
-    process.exit(1);
-  }
-}
-
-const result = classifyCredential({ present, status, scopesHeader, ssoHeader, tokenPrefix });
+/** A package that already exists under the CURRENT scope, same as the target. */
+const CONTROL_PACKAGE = "@jheavner95/design";
 
 console.log("── Credential preflight ─────────────────────────");
 console.log(`  credential present : ${present ? "yes" : "NO"}`);
-console.log(`  token kind         : ${tokenPrefix ?? "n/a"}${tokenPrefix === "ghp_…" ? " (classic PAT)" : ""}`);
-console.log(`  api status         : ${status ?? "n/a"}`);
-console.log(`  x-oauth-scopes     : ${scopesHeader === null ? "(absent)" : scopesHeader || "(empty)"}`);
-console.log(`  sso header         : ${ssoHeader ?? "(none)"}`);
-console.log(`  diagnosis          : ${result.code}`);
-console.log(`  detail             : ${result.detail}`);
+
+if (!present) {
+  console.error("::error title=Publish credential not usable::NODE_AUTH_TOKEN is empty.");
+  process.exit(1);
+}
+
+let controlReadOk = false;
+let detail = "";
+try {
+  execFileSync("npm", ["view", CONTROL_PACKAGE, "version", "--json", `--registry=${registry}`], {
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  controlReadOk = true;
+} catch (error) {
+  // A 404 here means the FIRST publish of @jheavner95/design has not happened
+  // yet — that is not a credential failure, it is the expected state before
+  // this package exists. Anything else (401/403/network) is.
+  const stderr = String(error.stderr ?? error.message ?? "");
+  if (/E404|404 Not Found|does not exist/i.test(stderr)) {
+    controlReadOk = true;
+    detail = "package not yet published — read succeeded, absence is genuine";
+  } else {
+    detail = stderr.replace(/(Bearer|token|_authToken=)\s*\S+/gi, "$1 <redacted>").split("\n").slice(0, 3).join(" | ");
+  }
+}
+
+console.log(`  registry           : ${registry}`);
+console.log(`  control package    : ${CONTROL_PACKAGE} — ${controlReadOk ? "reachable" : "NOT reachable"}`);
+if (detail) console.log(`  detail             : ${detail}`);
 console.log("─────────────────────────────────────────────────");
 
-if (!result.publishable) {
-  console.error(`::error title=Publish credential not usable::${result.code} — ${result.detail}`);
+if (!controlReadOk) {
+  console.error(`::error title=Publish credential not usable::could not read ${CONTROL_PACKAGE} from ${registry}: ${detail}`);
   process.exit(1);
 }
 
 console.log("⚠ NOT a guarantee of first-publish permission:");
-console.log(`  ${result.caveat}`);
-console.log("");
-console.log("Organization-side confirmation still required before a real publish:");
-console.log("  1. token owner is an authorized member of the `studiopod` organization");
-console.log("  2. token has write:packages                     (verified above)");
-console.log("  3. classic PAT use is permitted by org policy");
-console.log("  4. token is SSO-authorized for `studiopod`, if SSO is enforced");
-console.log("  5. the org permits this owner to CREATE a new package");
-console.log("  6. Actions can read the DS_NPM_TOKEN secret     (verified above)");
+console.log("  A credential that can READ under this scope is not proof it can CREATE");
+console.log("  a brand-new package name. That is proven only by the publish attempt.");

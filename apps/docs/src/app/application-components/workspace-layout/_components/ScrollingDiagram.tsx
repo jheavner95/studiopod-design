@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Badge, Body, Caption, SelectableCard } from "@studiopod/design";
+import { Card, Badge, Body, Caption, SelectableCard } from "@jheavner95/design";
 import { SCROLL_REGIONS, type ScrollBehavior, type ScrollRegion } from "../_data/scrolling";
 
 const BEHAVIOR_TONE: Record<ScrollBehavior, "accent" | "warning" | "neutral"> = {

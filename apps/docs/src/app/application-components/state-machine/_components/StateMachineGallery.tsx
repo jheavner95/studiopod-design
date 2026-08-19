@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
-import { StateMachine, StateNode, StateTransition, StateCondition, StateAction, StateActions, StateEvents, StateInspector, StateHistory, StateLegend, StateSummary, StateMetrics, WorkflowHeader, WorkflowFooter, type StateValue, type StateEventEntry, type StateHistoryEntry } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
+import { StateMachine, StateNode, StateTransition, StateCondition, StateAction, StateActions, StateEvents, StateInspector, StateHistory, StateLegend, StateSummary, StateMetrics, WorkflowHeader, WorkflowFooter, type StateValue, type StateEventEntry, type StateHistoryEntry } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

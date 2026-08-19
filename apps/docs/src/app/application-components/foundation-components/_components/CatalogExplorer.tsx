@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
-import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading, SelectableCard } from "@jheavner95/design";
 import type { InventoryStatus } from "../../inventory/_data/inventory";
 import { FOUNDATION_COMPONENTS, FOUNDATION_GROUPS, groupFor, maturityFor, type FoundationComponent } from "../_data/catalog";
 

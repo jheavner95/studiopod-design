@@ -1,6 +1,6 @@
-import { Body, SectionHeader, Eyebrow } from "@studiopod/design";
-import { CardGrid, SectionShell } from "@studiopod/design";
-import { MetricCard } from "@studiopod/design";
+import { Body, SectionHeader, Eyebrow } from "@jheavner95/design";
+import { CardGrid, SectionShell } from "@jheavner95/design";
+import { MetricCard } from "@jheavner95/design";
 import { DocsLinkCard } from "@/components/docs";
 import type { NavEntry, NavGroup } from "@/lib/design-system-navigation";
 

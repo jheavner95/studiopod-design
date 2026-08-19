@@ -1,5 +1,5 @@
-import { Caption } from "@studiopod/design";
-import { Inline } from "@studiopod/design";
+import { Caption } from "@jheavner95/design";
+import { Inline } from "@jheavner95/design";
 import { type NavEntry } from "@/lib/design-system-navigation";
 
 interface DocsLandingSummaryProps {

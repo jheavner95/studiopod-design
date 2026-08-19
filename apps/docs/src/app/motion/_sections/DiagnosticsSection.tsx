@@ -1,9 +1,9 @@
 "use client";
 
 import { Columns3, Crosshair, Tag, Activity } from "lucide-react";
-import { CardGrid } from "@studiopod/design";
-import { Card } from "@studiopod/design";
-import { Slide } from "@studiopod/design/internal";
+import { CardGrid } from "@jheavner95/design";
+import { Card } from "@jheavner95/design";
+import { Slide } from "@jheavner95/design/internal";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

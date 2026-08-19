@@ -1,6 +1,6 @@
-import { SectionShell, CardGrid } from "@studiopod/design";
-import { DescriptionList } from "@studiopod/design";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, CardGrid } from "@jheavner95/design";
+import { DescriptionList } from "@jheavner95/design";
+import { Card, Badge, Body, Caption, SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid } from "@/components/docs";
 import { getEntry, getRelatedLinks } from "@/lib/design-system-navigation";
 import { CatalogExplorer } from "./_components/CatalogExplorer";

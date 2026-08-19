@@ -1,5 +1,5 @@
 import { Layers, ShoppingCart, Package, Factory } from "lucide-react";
-import type { CapabilityRegistry } from "@studiopod/design/illustrations";
+import type { CapabilityRegistry } from "@jheavner95/design/illustrations";
 
 /** Printify, Gelato, and Printful are interchangeable implementations of the Commerce capability's fulfillment leg. */
 export const commerceCapability: CapabilityRegistry = {

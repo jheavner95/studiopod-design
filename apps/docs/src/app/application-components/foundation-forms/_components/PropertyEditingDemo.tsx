@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Stack, Panel } from "@studiopod/design";
-import { Card, Body, Caption, Expandable } from "@studiopod/design";
-import { FormSection, PropertyEditor } from "@studiopod/design";
+import { Stack, Panel } from "@jheavner95/design";
+import { Card, Body, Caption, Expandable } from "@jheavner95/design";
+import { FormSection, PropertyEditor } from "@jheavner95/design";
 
 function SimpleExample() {
   const [name, setName] = useState("Trailhead mug wrap");

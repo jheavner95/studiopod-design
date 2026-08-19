@@ -1,9 +1,9 @@
 "use client";
 
 import { Boxes, Home, Layers, Settings, ShieldCheck, Sliders } from "lucide-react";
-import { Workspace, WorkspaceHeader, WorkspaceToolbar, WorkspaceBody, WorkspaceNavigation, WorkspaceContent, WorkspaceInspector, WorkspaceFooter } from "@studiopod/design";
-import { DescriptionList } from "@studiopod/design";
-import { Button, Badge, Body, Caption, SearchInput } from "@studiopod/design";
+import { Workspace, WorkspaceHeader, WorkspaceToolbar, WorkspaceBody, WorkspaceNavigation, WorkspaceContent, WorkspaceInspector, WorkspaceFooter } from "@jheavner95/design";
+import { DescriptionList } from "@jheavner95/design";
+import { Button, Badge, Body, Caption, SearchInput } from "@jheavner95/design";
 import { CANONICAL_PRODUCTS, CANONICAL_JOBS, CANONICAL_PEOPLE } from "@/lib/canonical";
 
 /**

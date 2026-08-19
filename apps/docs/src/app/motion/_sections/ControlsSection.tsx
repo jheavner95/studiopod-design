@@ -1,9 +1,9 @@
 "use client";
 
-import { CardGrid } from "@studiopod/design";
-import { Body } from "@studiopod/design";
-import { Fade, Slide, Pulse, QueueFlow } from "@studiopod/design/internal";
-import { useMotion } from "@studiopod/design";
+import { CardGrid } from "@jheavner95/design";
+import { Body } from "@jheavner95/design";
+import { Fade, Slide, Pulse, QueueFlow } from "@jheavner95/design/internal";
+import { useMotion } from "@jheavner95/design";
 import { PreviewSection } from "../_components/preview-primitives";
 import { DemoCard } from "../_components/DemoCard";
 

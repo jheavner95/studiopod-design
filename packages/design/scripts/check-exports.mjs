@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Export-map verification for @studiopod/design (DS-0.5).
+ * Export-map verification for @jheavner95/design (DS-0.5).
  *
  * `check-api.mjs` verifies WHAT is exported (the symbol surface). This verifies
  * that the package's declared entry points are actually RESOLVABLE and shippable

@@ -2,8 +2,8 @@
 
 import { useState, type ComponentType } from "react";
 import { cn } from "@/lib/cn";
-import { Card, Badge, Body, Caption, Heading } from "@studiopod/design";
-import { InputField, TextareaField, SelectField, ComboboxField, CheckboxField, RadioGroupField, SwitchField, SliderField, DatePickerField, FileUploadField } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading } from "@jheavner95/design";
+import { InputField, TextareaField, SelectField, ComboboxField, CheckboxField, RadioGroupField, SwitchField, SliderField, DatePickerField, FileUploadField } from "@jheavner95/design";
 import { FIELD_DOCS, type FieldDoc } from "../_data/fields";
 
 function InputDemo() {

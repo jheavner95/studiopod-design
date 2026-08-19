@@ -1,5 +1,5 @@
 import { Upload, Sparkles, ScanLine, Camera, FileCheck, CheckCircle2 } from "lucide-react";
-import type { ProductionPipeline } from "@studiopod/design/illustrations";
+import type { ProductionPipeline } from "@jheavner95/design/illustrations";
 
 /** The automated checks a single piece of artwork passes through before it is marked ready to produce. */
 export const artworkValidation: ProductionPipeline = {

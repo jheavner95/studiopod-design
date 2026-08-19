@@ -1,4 +1,4 @@
-import { Badge, Body, Caption, Metadata } from "@studiopod/design";
+import { Badge, Body, Caption, Metadata } from "@jheavner95/design";
 import type { InventoryItem, InventoryPriority, InventoryStatus } from "../_data/inventory";
 
 const STATUS_TONE: Record<InventoryStatus, "success" | "warning" | "neutral"> = {

@@ -1,8 +1,8 @@
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsGroupCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";
-import { SectionShell, CardGrid } from "@studiopod/design";
-import { SectionHeader, Eyebrow } from "@studiopod/design";
+import { SectionShell, CardGrid } from "@jheavner95/design";
+import { SectionHeader, Eyebrow } from "@jheavner95/design";
 import { getEntry, getGroup, getGroupEntries, getGroupsForSection } from "@/lib/design-system-navigation";
 
 const entry = getEntry("workflow-patterns")!;

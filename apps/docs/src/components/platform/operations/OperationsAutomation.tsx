@@ -1,1 +1,1 @@
-export { PipelineStage as OperationsAutomation } from "@studiopod/design";
+export { PipelineStage as OperationsAutomation } from "@jheavner95/design";

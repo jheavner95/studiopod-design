@@ -1,1 +1,1 @@
-export { ApprovalStage as AdminEnrollment } from "@studiopod/design";
+export { ApprovalStage as AdminEnrollment } from "@jheavner95/design";

@@ -2,8 +2,8 @@
 
 import { useState, type ComponentType } from "react";
 import { cn } from "@/lib/cn";
-import { Card, Badge, Body, Caption, Heading, Button } from "@studiopod/design";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableSelectionCell, TableStatusCell, TableActionCell } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading, Button } from "@jheavner95/design";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead, TableSelectionCell, TableStatusCell, TableActionCell } from "@jheavner95/design";
 import { Pencil, Trash2 } from "lucide-react";
 import { TABLE_VARIANTS, type TableVariant } from "../_data/variants";
 

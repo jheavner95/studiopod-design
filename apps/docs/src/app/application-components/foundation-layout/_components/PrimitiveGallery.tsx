@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { Card, Badge, Body, Caption, Heading, Button, TextInput, Textarea } from "@studiopod/design";
-import { Stack, Inline, Grid, Cluster, Surface, Panel, ScrollArea, Separator, DescriptionList, CardGrid, ContentColumns, Container, SectionShell } from "@studiopod/design";
+import { Card, Badge, Body, Caption, Heading, Button, TextInput, Textarea } from "@jheavner95/design";
+import { Stack, Inline, Grid, Cluster, Surface, Panel, ScrollArea, Separator, DescriptionList, CardGrid, ContentColumns, Container, SectionShell } from "@jheavner95/design";
 import { LAYOUT_PRIMITIVES, catalogEntryFor } from "../_data/primitives";
 
 const ELEVATIONS = ["none", "subtle", "card", "panel", "floating"] as const;

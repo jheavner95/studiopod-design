@@ -3,7 +3,7 @@ import { publishing } from "./publishing";
 import { commerce } from "./commerce";
 import { qualityAssurance } from "./qualityAssurance";
 import { multiChannelPublishing } from "./multiChannelPublishing";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 
 export { prepareValidateProduce } from "./prepareValidateProduce";
 export { artworkProduction } from "./artworkProduction";

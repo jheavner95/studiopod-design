@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, ArrowDown, Blocks, Table2, Waypoints, Layers3, LayoutDashboard, Globe, SlidersHorizontal, GitBranch, Search, ListChecks, Gauge, Activity, ShieldCheck, Boxes, Rocket, ShoppingCart, Sparkles } from "lucide-react";
-import { SectionShell, CardGrid, DescriptionList } from "@studiopod/design";
-import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@studiopod/design";
+import { SectionShell, CardGrid, DescriptionList } from "@jheavner95/design";
+import { Card, Badge, Body, Caption, SectionHeader, Eyebrow, GlassPanel } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsRelatedGrid, DocsLinkCard } from "@/components/docs";
 import { getEntry } from "@/lib/design-system-navigation";
 import { COMPOSITION_ARCHITECTURE_TOPICS } from "./_data/architecture";

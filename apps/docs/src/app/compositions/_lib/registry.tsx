@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { Boxes, Database, Workflow, GitBranch, ShieldCheck, TrendingUp, Zap, Layers3 } from "lucide-react";
-import { Button, Badge, Eyebrow, SectionBadge, CTAGroup, GlassPanel, SurfacePanel } from "@studiopod/design";
-import { FlowCard, ProgressRail } from "@studiopod/design/illustrations";
-import { HeroComposition, WorkflowComposition, PlatformComposition, FeatureGridComposition, ComparisonComposition, MetricsComposition, TimelineComposition, CTAComposition, FAQComposition, TestimonialComposition, EmptyComposition } from "@studiopod/design/marketing";
+import { Button, Badge, Eyebrow, SectionBadge, CTAGroup, GlassPanel, SurfacePanel } from "@jheavner95/design";
+import { FlowCard, ProgressRail } from "@jheavner95/design/illustrations";
+import { HeroComposition, WorkflowComposition, PlatformComposition, FeatureGridComposition, ComparisonComposition, MetricsComposition, TimelineComposition, CTAComposition, FAQComposition, TestimonialComposition, EmptyComposition } from "@jheavner95/design/marketing";
 
 export interface RegistryEntry {
   slug: string;

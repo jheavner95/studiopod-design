@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Display, Body, Badge } from "@studiopod/design";
-import { Inline } from "@studiopod/design";
+import { Display, Body, Badge } from "@jheavner95/design";
+import { Inline } from "@jheavner95/design";
 import { BADGE_TONE, BADGE_LABEL, type NavEntry } from "@/lib/design-system-navigation";
 
 interface DocsPageHeaderProps {

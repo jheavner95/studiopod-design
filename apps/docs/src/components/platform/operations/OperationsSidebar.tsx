@@ -1,1 +1,1 @@
-export { WorkflowSidebar as OperationsSidebar } from "@studiopod/design";
+export { WorkflowSidebar as OperationsSidebar } from "@jheavner95/design";

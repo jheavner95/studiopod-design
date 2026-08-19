@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Body, Button } from "@studiopod/design";
+import { Card, Body, Button } from "@jheavner95/design";
 import { ProductionWorkspace, ProductionHeader, ProductionCanvas, ProductionStagePanel, ProductionInspector, ProductionPipeline, ProductionQueue, ProductionValidationPanel, ProductionMetrics, ProductionSummary, ProductionActions } from "@/components/platform/production";
-import { WorkflowFooter, WorkflowNode, WorkflowStep, DependencyNode, DependencyEdge, type WorkflowNodeStatus, type DependencyStatusValue } from "@studiopod/design";
-import type { QueueRowJob } from "@studiopod/design";
+import { WorkflowFooter, WorkflowNode, WorkflowStep, DependencyNode, DependencyEdge, type WorkflowNodeStatus, type DependencyStatusValue } from "@jheavner95/design";
+import type { QueueRowJob } from "@jheavner95/design";
 
 function GalleryCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (

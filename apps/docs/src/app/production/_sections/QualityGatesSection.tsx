@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@studiopod/design";
-import { QualityGateDiagram, QualitySummary, ValidationLegend } from "@studiopod/design/illustrations";
+import { Button } from "@jheavner95/design";
+import { QualityGateDiagram, QualitySummary, ValidationLegend } from "@jheavner95/design/illustrations";
 import { qualityGates } from "@/production/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

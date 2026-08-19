@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * API contract check for @studiopod/design.
+ * API contract check for @jheavner95/design.
  *
  * Resolves each public entry point's full export surface and compares it
  * against a checked-in manifest that records, for every export, **what it is

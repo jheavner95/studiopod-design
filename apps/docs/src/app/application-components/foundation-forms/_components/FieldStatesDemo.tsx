@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { Card, Caption } from "@studiopod/design";
-import { InputField } from "@studiopod/design";
+import { Card, Caption } from "@jheavner95/design";
+import { InputField } from "@jheavner95/design";
 
 function PillButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (

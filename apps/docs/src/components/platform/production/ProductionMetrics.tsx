@@ -5,4 +5,4 @@
  * rate — checked directly against its full prop surface (items/columns/
  * className) and found fully generic.
  */
-export { PipelineMetrics as ProductionMetrics } from "@studiopod/design";
+export { PipelineMetrics as ProductionMetrics } from "@jheavner95/design";

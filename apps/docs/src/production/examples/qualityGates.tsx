@@ -1,5 +1,5 @@
 import { Ruler, ScanLine, Maximize2, Blend, Crop, FileCheck, BadgeCheck } from "lucide-react";
-import type { ProductionPipeline, QualityGate } from "@studiopod/design/illustrations";
+import type { ProductionPipeline, QualityGate } from "@jheavner95/design/illustrations";
 
 export const qualityGates: QualityGate[] = [
   { id: "geometry", title: "Geometry", passed: 3, icon: <Ruler className="size-5" /> },

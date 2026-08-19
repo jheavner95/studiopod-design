@@ -18,7 +18,7 @@ It produces two artefacts:
 
 | Artefact                | What it is                                                              | Who consumes it                       |
 | ----------------------- | ----------------------------------------------------------------------- | ------------------------------------- |
-| `@studiopod/design`     | The published npm package — the visual language as code                 | Cloud, Web, every future application  |
+| `@jheavner95/design`     | The published npm package — the visual language as code                 | Cloud, Web, every future application  |
 | The documentation site  | The canonical reference for how StudioPOD applications look and behave  | Engineers, designers, product         |
 
 Both are deliverables. Neither is a by-product of the other.
@@ -96,7 +96,7 @@ Design sits in the middle of a three-repository dependency chain and is bound in
 both directions.
 
 ```
-@studiopod/foundation ──► studiopod-design ──► studiopod-cloud
+@jheavner95/foundation ──► studiopod-design ──► studiopod-cloud
    (build-time input)         (this repo)         studiopod-web
                                                   (runtime consumers)
 ```
@@ -123,7 +123,7 @@ plainly.
 
 ```
 studiopod-design/            the repository — a workspace
-├── packages/design/         the package — @studiopod/design
+├── packages/design/         the package — @jheavner95/design
 ├── apps/docs/               the documentation product — a consumer
 ├── docs/                    repository documentation — this file
 └── tooling/                 checks and generators

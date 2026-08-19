@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PlatformFlowDiagram } from "@studiopod/design/illustrations";
+import { PlatformFlowDiagram } from "@jheavner95/design/illustrations";
 import { artifactFlowArchitecture } from "@/platforms/examples";
 import { PreviewSection } from "../_components/preview-primitives";
 

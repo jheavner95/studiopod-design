@@ -1,4 +1,4 @@
-import { Card, Body, Caption } from "@studiopod/design";
+import { Card, Body, Caption } from "@jheavner95/design";
 import type { InspectorVariant } from "../_data/variants";
 
 export function VariantCard({ variant }: { variant: InspectorVariant }) {

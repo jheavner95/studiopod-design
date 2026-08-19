@@ -2,7 +2,7 @@
 /**
  * CLI: is `<name>@<version>` free to publish?
  *
- *   node scripts/release/check-registry.mjs --name @studiopod/design --version 0.13.0
+ *   node scripts/release/check-registry.mjs --name @jheavner95/design --version 0.13.0
  *
  * Exit 0 = available. Exit 1 = already published, ambiguous, or unreadable.
  *
@@ -27,7 +27,7 @@ function arg(flag, fallback) {
   return value && !value.startsWith("--") ? value : fallback;
 }
 
-const name = arg("--name", "@studiopod/design");
+const name = arg("--name", "@jheavner95/design");
 const version = arg("--version");
 const registry = arg("--registry", process.env.DS_REGISTRY || "https://npm.pkg.github.com");
 const controlPackage = arg("--control", "@studiopod/design-system");

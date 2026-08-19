@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PublishingDiagram, CommerceDiagram } from "@studiopod/design/illustrations";
+import { PublishingDiagram, CommerceDiagram } from "@jheavner95/design/illustrations";
 import { publishingCapability, commerceCapability } from "@/capabilities/examples";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 

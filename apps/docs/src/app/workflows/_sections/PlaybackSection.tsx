@@ -1,8 +1,8 @@
 "use client";
 
 import { Play, Pause } from "lucide-react";
-import { Button } from "@studiopod/design";
-import { WorkflowDiagram, WorkflowProgress, WorkflowMiniMap, useWorkflowPlayback } from "@studiopod/design/illustrations";
+import { Button } from "@jheavner95/design";
+import { WorkflowDiagram, WorkflowProgress, WorkflowMiniMap, useWorkflowPlayback } from "@jheavner95/design/illustrations";
 import { prepareValidateProduce } from "@/workflows/examples";
 import { DemoLabel } from "../_components/preview-primitives";
 

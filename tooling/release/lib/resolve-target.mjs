@@ -28,7 +28,7 @@
 export const TAG_PREFIX = "design-system-v";
 
 /** The only package name this workflow may publish. */
-export const EXPECTED_PACKAGE_NAME = "@studiopod/design";
+export const EXPECTED_PACKAGE_NAME = "@jheavner95/design";
 
 /** Release types the bump path accepts. */
 export const RELEASE_TYPES = ["patch", "minor", "major"];

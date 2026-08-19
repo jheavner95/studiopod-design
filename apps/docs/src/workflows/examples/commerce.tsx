@@ -1,5 +1,5 @@
 import { BookOpen, ShoppingCart, Factory, Truck, Sparkles } from "lucide-react";
-import type { Workflow } from "@studiopod/design/illustrations";
+import type { Workflow } from "@jheavner95/design/illustrations";
 
 /** Branching flow: Orders is a decision step, routing to Production (make-to-order) or straight to Fulfillment (from stock). */
 export const commerce: Workflow = {

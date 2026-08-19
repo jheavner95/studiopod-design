@@ -1,6 +1,6 @@
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Caption } from "@studiopod/design";
+import { Caption } from "@jheavner95/design";
 import type { DependencyChain, DependencyFanout } from "../_data/dependency-map";
 
 function Pill({ children, emphasis = false }: { children: string; emphasis?: boolean }) {

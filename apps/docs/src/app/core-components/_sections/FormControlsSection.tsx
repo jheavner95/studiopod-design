@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Percent } from "lucide-react";
-import { TextInput, Textarea, Select, Checkbox, RadioGroup, ToggleSwitch, SegmentedControl, Slider, SearchInput, FormField, FieldGroup, FilterBar, Button, Caption } from "@studiopod/design";
+import { TextInput, Textarea, Select, Checkbox, RadioGroup, ToggleSwitch, SegmentedControl, Slider, SearchInput, FormField, FieldGroup, FilterBar, Button, Caption } from "@jheavner95/design";
 import { PreviewSection, StateLabel } from "@/app/docs/_components/DocsShowcase";
 
 const PLAN_OPTIONS = [

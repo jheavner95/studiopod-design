@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Database, Workflow } from "lucide-react";
-import { Badge } from "@studiopod/design";
-import { IllustrationGroup, IllustrationNode, type DiagramGroup } from "@studiopod/design/illustrations";
+import { Badge } from "@jheavner95/design";
+import { IllustrationGroup, IllustrationNode, type DiagramGroup } from "@jheavner95/design/illustrations";
 import { PreviewSection, DemoLabel } from "../_components/preview-primitives";
 
 export function GroupGallerySection() {

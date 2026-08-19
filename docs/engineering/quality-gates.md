@@ -35,7 +35,7 @@ compilation and no build was needed.
 | Gate                       | Proves                                                                                          |
 | -------------------------- | ------------------------------------------------------------------------------------------------ |
 | **Foundation token bridge**| No generated token file has been hand-edited. Runs **first** because it is cheapest and catches the one class of drift nothing downstream can see — a silently forked brand value. |
-| **Package build**          | The package builds. Runs **second** because everything after it needs `dist/`: the documentation application resolves `@studiopod/design` through the workspace link, not through a source alias. |
+| **Package build**          | The package builds. Runs **second** because everything after it needs `dist/`: the documentation application resolves `@jheavner95/design` through the workspace link, not through a source alias. |
 | **Boundary**               | The package's tsconfig resolves only inside the package; no library source escapes it; documentation imports only declared entry points; no documentation identifier appears in the bundle. Replaces the two esbuild resolver plugins DH-2 deleted. |
 | **TypeScript — library & documentation** | Both compile under strict mode, each resolving only its own tree     |
 | **TypeScript — tests**     | Tests type-check. A test that does not compile is not a test.                                   |

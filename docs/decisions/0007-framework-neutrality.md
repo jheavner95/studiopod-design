@@ -11,7 +11,7 @@
 
 ## Context
 
-`@studiopod/design` declares `next` as a **required peer dependency**:
+`@jheavner95/design` declares `next` as a **required peer dependency**:
 
 ```json
 "peerDependencies": {
@@ -27,7 +27,7 @@ navigation.
 
 This is not a theoretical purity concern. It is the stated reason a consumer
 declined to adopt the package. Cloud ADR 0033 records that
-`@studiopod/design` "carries marketing compositions, an illustration engine and a
+`@jheavner95/design` "carries marketing compositions, an illustration engine and a
 `next/link` coupling Cloud does not want" — and concludes, correctly, that this
 is an argument for **improving Design**, not for Cloud owning a second copy of
 the design system.

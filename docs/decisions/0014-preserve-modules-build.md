@@ -56,7 +56,7 @@ Concretely:
 
 ### Alternative A — Keep bundling; add a separate server-safe entry point
 
-Publish `@studiopod/design/utils` without a directive for `cn` and the token
+Publish `@jheavner95/design/utils` without a directive for `cn` and the token
 constants, leaving the root entry client.
 
 Rejected because it fixes the smallest part of the problem. Pure utilities are a

@@ -5,4 +5,4 @@
  * overview row — checked directly and found fully generic, no Production-
  * specific field needed.
  */
-export { PipelineSummary as ProductionSummary } from "@studiopod/design";
+export { PipelineSummary as ProductionSummary } from "@jheavner95/design";

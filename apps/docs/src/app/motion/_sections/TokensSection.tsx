@@ -1,14 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Caption } from "@studiopod/design";
-import { useMotion } from "@studiopod/design";
+import { Caption } from "@jheavner95/design";
+import { useMotion } from "@jheavner95/design";
 // The motion engine's own tokens, not the Foundation projection on
-// "@studiopod/design/tokens". Both export `motionDuration` and `motionEase`
+// "@jheavner95/design/tokens". Both export `motionDuration` and `motionEase`
 // under the same names with different shapes — the projection is Foundation's
 // duration scale, this is the engine's easing/distance vocabulary. This page
 // documents the engine.
-import { transition, resolveDuration, motionDuration, motionDelay, motionDistance, motionEase } from "@studiopod/design/internal";
+import { transition, resolveDuration, motionDuration, motionDelay, motionDistance, motionEase } from "@jheavner95/design/internal";
 import { PreviewSection } from "../_components/preview-primitives";
 
 const EASE_LABELS: Record<keyof typeof motionEase, string> = {

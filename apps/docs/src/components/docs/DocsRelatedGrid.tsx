@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CardGrid } from "@studiopod/design";
+import { CardGrid } from "@jheavner95/design";
 import { DocsLinkCard } from "./DocsLinkCard";
 
 interface DocsRelatedGridEntry {

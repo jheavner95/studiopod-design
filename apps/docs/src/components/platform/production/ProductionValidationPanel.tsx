@@ -12,4 +12,4 @@
  * same discipline that kept every lower-tier package from inventing a
  * redundant vocabulary where an existing one already fit.
  */
-export { PipelineGate as ProductionValidationPanel } from "@studiopod/design";
+export { PipelineGate as ProductionValidationPanel } from "@jheavner95/design";

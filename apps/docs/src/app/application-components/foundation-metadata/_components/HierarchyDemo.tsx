@@ -1,7 +1,7 @@
 import { Image as ImageIcon } from "lucide-react";
-import { Badge, Caption } from "@studiopod/design";
-import { Stack, Panel, Separator } from "@studiopod/design";
-import { IdentityBlock, PropertyGroup, MetadataField, RelationshipList, StatusSummary, HealthSummary, StatGroup, TagCollection } from "@studiopod/design";
+import { Badge, Caption } from "@jheavner95/design";
+import { Stack, Panel, Separator } from "@jheavner95/design";
+import { IdentityBlock, PropertyGroup, MetadataField, RelationshipList, StatusSummary, HealthSummary, StatGroup, TagCollection } from "@jheavner95/design";
 import { INFORMATION_HIERARCHY } from "../_data/hierarchy";
 
 const TIER_TONE = { primary: "accent", secondary: "neutral", operational: "warning", supporting: "neutral" } as const;

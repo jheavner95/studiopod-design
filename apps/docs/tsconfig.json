@@ -24,7 +24,7 @@
     ],
     // "@/..." resolves inside this application only. There is deliberately no
     // path mapping into packages/design: the library is consumed through
-    // "@studiopod/design", the same public entry points Cloud and Web use.
+    // "@jheavner95/design", the same public entry points Cloud and Web use.
     // Adding an alias here would restore the shared compilation DH-2 removed.
     "baseUrl": ".",
     "paths": {

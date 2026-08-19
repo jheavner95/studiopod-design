@@ -1,5 +1,5 @@
-import { CardGrid, SectionShell } from "@studiopod/design";
-import { SectionHeader, Eyebrow } from "@studiopod/design";
+import { CardGrid, SectionShell } from "@jheavner95/design";
+import { SectionHeader, Eyebrow } from "@jheavner95/design";
 import { DocsShell, DocsPageHeader, DocsTableOfContents, DocsLinkCard } from "@/components/docs";
 import { DocsLandingSummary } from "@/app/docs/_components/DocsLandingSummary";
 import { DocsSectionLanding } from "@/app/docs/_components/DocsSectionLanding";

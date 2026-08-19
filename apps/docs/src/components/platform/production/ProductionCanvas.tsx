@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { type ScrollDirection } from "@studiopod/design";
-import { WorkflowViewport } from "@studiopod/design";
+import { type ScrollDirection } from "@jheavner95/design";
+import { WorkflowViewport } from "@jheavner95/design";
 import { cn } from "@/lib/cn";
 
 interface ProductionCanvasProps {

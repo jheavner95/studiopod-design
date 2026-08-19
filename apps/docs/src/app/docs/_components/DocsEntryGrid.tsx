@@ -1,5 +1,5 @@
-import { Badge } from "@studiopod/design";
-import { CardGrid } from "@studiopod/design";
+import { Badge } from "@jheavner95/design";
+import { CardGrid } from "@jheavner95/design";
 import { DocsLinkCard } from "@/components/docs";
 import { BADGE_TONE, BADGE_LABEL, type NavEntry } from "@/lib/design-system-navigation";
 

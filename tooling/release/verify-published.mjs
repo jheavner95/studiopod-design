@@ -3,7 +3,7 @@
  * CLI: prove the just-published package is really installable, from OUTSIDE
  * this repository.
  *
- *   node scripts/release/verify-published.mjs --name @studiopod/design \
+ *   node scripts/release/verify-published.mjs --name @jheavner95/design \
  *        --version 0.13.0 --tarball /tmp/ds-pack/studiopod-design-0.13.0.tgz
  *
  * Runs in a temp directory outside the workspace, installs the package from the
@@ -40,11 +40,12 @@ function arg(flag, fallback) {
   return value && !value.startsWith("--") ? value : fallback;
 }
 
-const name = arg("--name", "@studiopod/design");
+const name = arg("--name", "@jheavner95/design");
 const version = arg("--version");
 const registry = arg("--registry", process.env.DS_REGISTRY || "https://npm.pkg.github.com");
 const localTarball = arg("--tarball");
-const OLD_NAME = "@studiopod/design-system";
+/** Both prior identities — see check-package-identity.mjs for why there are two. */
+const OLD_NAMES = ["@studiopod/design-system", "@studiopod/design"];
 
 if (!version) {
   console.error("::error::--version is required");
@@ -72,7 +73,7 @@ try {
     join(scratch, "package.json"),
     JSON.stringify({ name: "ds-clean-consumer", version: "1.0.0", type: "module", private: true }, null, 2),
   );
-  writeFileSync(join(scratch, ".npmrc"), `@studiopod:registry=${registry}\n`);
+  writeFileSync(join(scratch, ".npmrc"), `@jheavner95:registry=${registry}\n`);
 
   console.log(`installing ${name}@${version} from ${registry} …`);
   execFileSync(
@@ -92,21 +93,31 @@ try {
   if (installed.version !== version) problems.push(`installed manifest version is "${installed.version}", expected "${version}"`);
   else ok.push(`installed manifest version: ${installed.version}`);
 
-  // ── The old package must NOT have come along ──────────────────────────────
-  if (existsSync(join(scratch, "node_modules", OLD_NAME))) {
-    problems.push(`${OLD_NAME} was installed transitively — it must not be a dependency`);
-  } else {
-    ok.push(`${OLD_NAME} not installed transitively`);
+  // ── Neither prior package may have come along ─────────────────────────────
+  for (const oldName of OLD_NAMES) {
+    if (existsSync(join(scratch, "node_modules", oldName))) {
+      problems.push(`${oldName} was installed transitively — it must not be a dependency`);
+    } else {
+      ok.push(`${oldName} not installed transitively`);
+    }
   }
 
   // ── No unexpected runtime dependency ──────────────────────────────────────
   const declaredDeps = Object.keys(installed.dependencies ?? {});
   ok.push(`runtime dependencies: ${declaredDeps.length ? declaredDeps.join(", ") : "none"}`);
-  const scopedExtras = readdirSync(join(scratch, "node_modules", "@studiopod")).filter(
-    (d) => `@studiopod/${d}` !== name,
-  );
+  // The new scope is @jheavner95, shared with Foundation — but Foundation is
+  // a devDependency of THIS repo's build, never a runtime dependency of the
+  // published package (see docs/decisions/0008-foundation-is-a-build-time-input.md),
+  // so nothing besides `design` itself should ever appear here.
+  const scopedExtras = existsSync(join(scratch, "node_modules", "@jheavner95"))
+    ? readdirSync(join(scratch, "node_modules", "@jheavner95")).filter(
+        (d) => `@jheavner95/${d}` !== name,
+      )
+    : [];
   if (scopedExtras.length > 0) {
-    problems.push(`unexpected @studiopod package(s) installed: ${scopedExtras.join(", ")}`);
+    problems.push(`unexpected @jheavner95 package(s) installed: ${scopedExtras.join(", ")}`);
+  } else {
+    ok.push("no unexpected @jheavner95 package installed alongside it");
   }
 
   // ── Export subpaths, types, CSS ───────────────────────────────────────────
