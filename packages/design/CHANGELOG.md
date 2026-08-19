@@ -8,19 +8,26 @@ ORG-2B below for why that changed. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versioning discipline is
 documented in `VERSIONING.md`.
 
-## 0.19.0 — republished as `@jheavner95/design` (ORG-2B)
+## 0.19.1 — republished as `@jheavner95/design` (ORG-2B)
 
 **Package identity only. No component, token, or behavioural change.**
 
-`@studiopod/design@0.19.0` and `@jheavner95/design@0.19.0` ship the same
-package. The version is deliberately not bumped — see
-`../../docs/MIGRATION-ORG-2.md` for the reasoning, which is the same one
-Foundation's identity migration used.
+`@jheavner95/design@0.19.1` is an identity-only republish of
+`@studiopod/design@0.19.0` — the two ship the same package. The version
+differs by one patch number, not because anything changed, but because this
+repository's `design-system-v0.19.0` tag already exists as the historical
+artifact of the original `@studiopod/design@0.19.0` release, and republishing
+under `0.19.0` again would have required a second, colliding tag by the same
+name. `0.19.1` gets its own tag, `design-system-v0.19.1`, and leaves
+`design-system-v0.19.0` untouched. See `../../docs/MIGRATION-ORG-2.md` for
+the full reasoning, which otherwise follows the same identity-migration
+pattern Foundation used in ORG-2A.
 
 Verified equivalent before publishing: of 1,088 files in the tarball, 1,077
-are byte-identical and the remaining 11 differ only in the identity string
-inside a doc comment, a markdown example, or `package.json#name`. Every
-shipped `.js` and `.css` file — the entire runtime surface — is byte-identical.
+are byte-identical and the remaining files differ only in the identity
+string or the version number, inside a doc comment, a markdown example, or
+`package.json` metadata. Every shipped `.js` and `.css` file — the entire
+runtime surface — is byte-identical.
 
 - `name` is now `@jheavner95/design`, matching the repository owner so GitHub
   Packages links the package to `jheavner95/studiopod-design`.

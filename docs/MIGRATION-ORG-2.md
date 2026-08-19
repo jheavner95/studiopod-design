@@ -55,18 +55,46 @@ affect emitted `.js`.
 
 ## Version
 
-`@jheavner95/design@0.19.0` is the same package as
-`@studiopod/design@0.19.0`. The version was **not** bumped, for the same
-reason Foundation's wasn't: a new package identity starts its own version
-line, so the number was free, and holding it means a consumer switching names
-keeps its specifier and gets identical bytes.
+**`@jheavner95/design@0.19.1` is an identity-only republish of
+`@studiopod/design@0.19.0`.** No source, API, or emitted-file change — the
+version differs by one patch number for a reason that has nothing to do with
+the code.
 
-**Verified, not assumed.** Of the 1,088 files in the published tarball, 1,077
-are byte-identical between the two identities. The remaining 11 — `API.md`,
-`README.md`, `VERSIONING.md`, `package.json`, and 7 `.d.ts` files — differ
-*only* in the identity string inside a doc comment, a markdown example, or
-`package.json#name`. Every shipped `.js` file and every shipped `.css` file —
-the entire runtime surface, 538 modules — is byte-identical.
+The reasoning behind holding a version across an identity rename is the same
+one Foundation used and this package's own ORG-2A precedent: a new package
+identity starts its own version line, so a consumer switching names should be
+able to keep its specifier and get identical bytes. That worked cleanly for
+Foundation, whose first-ever release under either scheme was this migration.
+It does not work unmodified for Design, which already has 19 versions of
+history and a tag namespace it shares with them.
+
+**This repository's release tags name a release *series*, not a package
+identity** — `design-system-v<version>`, unrelated to what the package is
+currently called (see `tooling/release/lib/resolve-target.mjs`, `TAG_PREFIX`,
+deliberately unchanged by this migration). `design-system-v0.19.0` already
+exists: it is the real, historical tag for the original
+`@studiopod/design@0.19.0` release, created by commit `b49376e` before this
+migration began. Publishing the new identity under `0.19.0` would require
+creating that same tag a second time — the release workflow's own tag
+existence safeguard caught exactly this and refused, correctly, when it was
+tried.
+
+`0.19.1` is the smallest change that resolves the conflict: it keeps
+`design-system-v0.19.0` untouched as the legacy release's own historical
+artifact, and gives the republish a tag of its own,
+`design-system-v0.19.1`, without inventing a new tag scheme or skipping tag
+creation for this release. HQ decision, recorded here rather than made
+silently — see the completion report for ORG-2B's version-conflict
+resolution.
+
+**Verified, not assumed, at the new version.** Of the 1,088 files in the
+published tarball, 1,077 are byte-identical between
+`@studiopod/design@0.19.0` and `@jheavner95/design@0.19.1`. The remaining
+files — `API.md`, `README.md`, `VERSIONING.md`, `package.json`, and the
+`.d.ts` files — differ *only* in the identity string and the version number,
+inside a doc comment, a markdown example, or `package.json` metadata. Every
+shipped `.js` file and every shipped `.css` file — the entire runtime
+surface, 538 modules — is byte-identical.
 
 ## Coexistence
 
