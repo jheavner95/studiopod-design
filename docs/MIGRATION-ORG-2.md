@@ -289,3 +289,24 @@ Only after it has migrated:
 
 Deleting a repository secret is a GitHub-side action, performed only after the
 workflow that used it has been proven green without it.
+
+## ORG-2D: closing what stayed open
+
+By ORG-2D, every named consumer above — Design's own release line (ORG-2B),
+Cloud (ORG-2C1), PowerEditor (ORG-2C2), and Web (ORG-2C3B) — had migrated.
+That made `.npmrc`'s `@studiopod` scope route genuinely unused: nothing in a
+normal install, build, or release path resolves anything under that scope
+any more, so it was removed. It is **not** needed by the historical backfill
+mechanism either — `tooling/release/backfill-historical-version.mjs` has
+never depended on this file; it constructs its own throwaway `--userconfig`
+`.npmrc` for each direction (§ Historical backfills above), independent of
+what this file routes. Verified, not assumed: a fresh `backfill-historical.yml`
+dry-run was run after removing the route, to confirm the mechanism is
+genuinely self-sufficient rather than relying on this repository's own
+`.npmrc` by coincidence.
+
+`DS_NPM_TOKEN` remains configured and remains the one secret this repository
+still has a real, narrow use for — reading the legacy scope for a future
+historical backfill, should HQ ever need one. It is not safe to delete while
+that mechanism is retained; see the ORG-2D completion report for the
+explicit retention decision on the backfill workflow itself.
