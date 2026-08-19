@@ -1,5 +1,13 @@
 # Final Verification — PAT Scope Audit (Least-Privilege)
 
+> **HISTORICAL RECORD — do not act on this document.** It is preserved as the
+> dated record of the work package named in its title. It describes the
+> `@studiopod` package namespace as a GitHub *organization*; that was never
+> true, and no such organization is part of this infrastructure. Every active
+> repository and both published packages are owned by the personal account
+> `jheavner95`. For the current model see
+> [`engineering/publishing.md`](engineering/publishing.md).
+
 **Verdict:** ⚠️ **CERTIFIED WITH OWNER ACTION** — only PAT creation and the workflow trigger remain. The PAT recommendation is confirmed correct and minimal against **current GitHub documentation**; the secret wiring is verified least-exposure. No code, workflow, version, or publish change was made in this audit.
 
 ---

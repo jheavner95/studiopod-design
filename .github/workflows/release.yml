@@ -12,29 +12,47 @@ name: Release @studiopod/design
 #   npm notice Publishing to https://npm.pkg.github.com with tag latest
 # This workflow's `registry-url` + scope pin the same target independently.
 #
-# SCOPE (cross-owner, by design): the repo is jheavner95/studiopod-design (a
-# User — kept public so it deploys on Vercel's free plan) while the package is
-# @studiopod (the studiopod org). These owners INTENTIONALLY differ. GitHub
-# Packages ties GITHUB_TOKEN's write to the repo owner, so GITHUB_TOKEN cannot
-# publish @studiopod from this repo — which is precisely why publishing uses a
-# PAT (secrets.DS_NPM_TOKEN) owned by a studiopod-org member with write:packages.
-# That PAT crosses the owner boundary; it is what published 0.1.1. (An earlier
-# note here claimed the repo "must" live under the org — that was wrong;
-# corrected in the DS-5G revised release recovery.)
+# SCOPE: `@studiopod` is a package namespace, NOT a GitHub organization. No
+# live GitHub organization by that name exists — github.com/studiopod returns
+# 404 — and this account belongs to no organizations at all
+# (`gh api /user/orgs` → []). Repository and package are both jheavner95's:
+#
+#   repository  jheavner95/studiopod-design
+#   package     @studiopod/design, published by jheavner95
+#               (`npm view @studiopod/design _npmUser` → jheavner95)
+#
+# PUBLISHING STILL NEEDS A PAT, for a different reason than once believed.
+# GitHub Packages links a package to a repository only when the npm scope
+# matches the owner login. `@studiopod` does not match `jheavner95`, so the
+# package is UNLINKED: registry metadata returns `repository` as
+# `{"type":"git"}` with the `url` stripped. A repository-scoped GITHUB_TOKEN
+# has no installation to resolve against and fails with:
+#
+#   npm error code E403
+#   Permission permission_denied: The requested installation does not exist.
+#
+# A user-owned PAT is not repository-scoped, so it works. That is what
+# secrets.DS_NPM_TOKEN is, and it is what published every version so far.
+#
+# WHAT WAS WRONG BEFORE: this header explained the PAT by asserting the package
+# belonged to "the studiopod org" and that the two owners "INTENTIONALLY
+# differ". Both claims are false. The conclusion was right, which is why the
+# premise went unchecked for so long — and it later produced a wrong CI
+# diagnosis in a downstream consumer. Keep the mechanism, drop the story.
+#
+# Escaping the PAT would mean republishing under a scope matching the owner
+# (@jheavner95/*) — a coordinated migration across every producer and consumer,
+# not a change to this file.
 #
 # Releasing requires:
 #   vars.DS_REGISTRY     repository variable = https://npm.pkg.github.com
-#   secrets.DS_NPM_TOKEN classic PAT (write:packages), owned by a studiopod-org
-#                        member. It reaches ONLY the publish step (below).
-# Publish auth is a PAT, NOT GITHUB_TOKEN — deliberately. The repo is
-# jheavner95/studiopod-design (User; public for Vercel's free plan) while the
-# package is @studiopod (org). GITHUB_TOKEN is scoped to the repo owner and
-# cannot publish across that boundary; a studiopod-member PAT can (it published
-# 0.1.1). The dry-run and publish jobs FAIL (not skip) when DS_REGISTRY is
-# missing; a missing/invalid DS_NPM_TOKEN surfaces as a publish-step npm error.
-# An earlier revision skipped instead: an operator who asked for a release would
-# have got a green run that published nothing. Silence is the worst outcome for
-# an explicit request, so it is an error now.
+#   secrets.DS_NPM_TOKEN classic PAT (write:packages), owned by jheavner95.
+#                        It reaches ONLY the publish step (below).
+# The dry-run and publish jobs FAIL (not skip) when DS_REGISTRY is missing; a
+# missing/invalid DS_NPM_TOKEN surfaces as a publish-step npm error. An earlier
+# revision skipped instead: an operator who asked for a release would have got a
+# green run that published nothing. Silence is the worst outcome for an explicit
+# request, so it is an error now.
 #
 # CI-2 — trigger corrected. This workflow used to ALSO run its `fast` and
 # `verify` jobs on every push to main and every pull request — two hosted

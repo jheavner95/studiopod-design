@@ -9,9 +9,10 @@
 One package, `@studiopod/design`, to **GitHub Packages**
 (`https://npm.pkg.github.com`).
 
-The registry choice is deliberate: the package is not open source, the consumers
-are all inside the same GitHub organisation, and the alternative — a private
-registry — adds infrastructure to own for no capability we need. It costs
+The registry choice is deliberate: the package is not open source, every
+consumer repository is owned by the same GitHub account that publishes it, and
+the alternative — a private registry — adds infrastructure to own for no
+capability we need. It costs
 consumers one `.npmrc` line and an authentication token, which is documented in
 [../consuming/README.md](../consuming/README.md) § 2.
 

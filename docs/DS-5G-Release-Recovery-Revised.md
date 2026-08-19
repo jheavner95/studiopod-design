@@ -1,5 +1,13 @@
 # DS-5G Release Recovery — Revised (Public Repo + Org-Scoped Package)
 
+> **HISTORICAL RECORD — do not act on this document.** It is preserved as the
+> dated record of the work package named in its title. It describes the
+> `@studiopod` package namespace as a GitHub *organization*; that was never
+> true, and no such organization is part of this infrastructure. Every active
+> repository and both published packages are owned by the personal account
+> `jheavner95`. For the current model see
+> [`engineering/publishing.md`](engineering/publishing.md).
+
 **Verdict:** ⚠️ **CERTIFIED WITH OWNER ACTION.** The workflow is repaired for the project's real cross-owner architecture, `0.2.0` is correctly abandoned, and the next release (`0.2.1`, containing DS-5G) is verified-ready. Two owner steps remain: refresh the `DS_NPM_TOKEN` PAT and trigger the workflow. **Nothing was published.**
 
 **Correction I own:** my prior recovery report recommended transferring the repo back to the `studiopod` org. That was wrong. The public `jheavner95/studiopod-design` repo is **deliberate** (Vercel free-plan deploys), the package stays `@studiopod`, and repo-owner ≠ package-owner is the intended architecture. That report and the 0.2.0-recovery workflow it introduced are removed.

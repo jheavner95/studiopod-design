@@ -1,5 +1,13 @@
 # DS-7.3a — Package rename: `@studiopod/design-system` → `@studiopod/design`
 
+> **HISTORICAL RECORD — do not act on this document.** It is preserved as the
+> dated record of the work package named in its title. It describes the
+> `@studiopod` package namespace as a GitHub *organization*; that was never
+> true, and no such organization is part of this infrastructure. Every active
+> repository and both published packages are owned by the personal account
+> `jheavner95`. For the current model see
+> [`engineering/publishing.md`](engineering/publishing.md).
+
 A mechanical package-identity migration. **Nothing inside the package changed.**
 
 > **Status:** implemented, not published, not tagged, not released.

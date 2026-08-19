@@ -209,9 +209,15 @@ Items 1, 3–7 are done, verified by the real artifacts they were supposed to pr
   > 1. *"GitHub Packages requires the npm scope to equal the repo owner."* It
   >    does not. `@studiopod/design-system` has been published from
   >    `jheavner95/studiopod-design` at least seventeen times — `0.1.1` through
-  >    `0.12.0` are all readable in the registry today. A cross-owner publish
-  >    works when the credential is a PAT owned by an authorized `studiopod`
-  >    member; `GITHUB_TOKEN` is what cannot cross that boundary.
+  >    `0.12.0` are all readable in the registry today. What the PAT
+  >    actually supplies is a credential that is not repository-scoped:
+  >    because `@studiopod` does not match the owner login `jheavner95`,
+  >    GitHub never links the package to a repository, and a repository-scoped
+  >    `GITHUB_TOKEN` therefore has no installation to resolve against.
+  >
+  >    There is no `studiopod` GitHub organization and there never needed to
+  >    be one for this to work — see
+  >    [`engineering/publishing.md`](engineering/publishing.md).
   > 2. *"a publish attempt … should be expected to fail."* Publishing a NEW
   >    VERSION of an existing package demonstrably succeeds. What remains genuinely
   >    unproven is a **first publish of a NEW package name** into the org

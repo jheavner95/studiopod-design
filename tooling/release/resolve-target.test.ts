@@ -43,7 +43,10 @@ const committedManifest = { name: "@studiopod/design", version: "0.13.0" };
 
 describe("committed mode", () => {
   it("resolves exactly the committed version — 0.13.0", () => {
-    const target = resolveTarget({ mode: "committed", manifest: committedManifest });
+    const target = resolveTarget({
+      mode: "committed",
+      manifest: committedManifest,
+    });
     expect(target.version).toBe("0.13.0");
     expect(target.currentVersion).toBe("0.13.0");
     expect(target.name).toBe("@studiopod/design");
@@ -52,12 +55,18 @@ describe("committed mode", () => {
   it("never mutates the manifest", () => {
     // The flag the workflow branches on: `committed` must not reach any step
     // that runs `npm version`. This is the DS-7.3a-R blocker, encoded.
-    const target = resolveTarget({ mode: "committed", manifest: committedManifest });
+    const target = resolveTarget({
+      mode: "committed",
+      manifest: committedManifest,
+    });
     expect(target.willMutateManifest).toBe(false);
   });
 
   it("derives the tag as design-system-v<version>", () => {
-    const target = resolveTarget({ mode: "committed", manifest: committedManifest });
+    const target = resolveTarget({
+      mode: "committed",
+      manifest: committedManifest,
+    });
     expect(target.tag).toBe("design-system-v0.13.0");
     expect(TAG_PREFIX).toBe("design-system-v");
   });
@@ -70,14 +79,22 @@ describe("committed mode", () => {
 
   it("rejects a release type — a pre-set version plus a bump is ambiguous", () => {
     expect(() =>
-      resolveTarget({ mode: "committed", releaseType: "minor", manifest: committedManifest }),
+      resolveTarget({
+        mode: "committed",
+        releaseType: "minor",
+        manifest: committedManifest,
+      }),
     ).toThrow(/does not take a release type/);
   });
 
   it("treats an empty release type as absent, not as a value", () => {
     // Workflow inputs arrive as "" when unset; that must not look like a bump.
     expect(() =>
-      resolveTarget({ mode: "committed", releaseType: undefined, manifest: committedManifest }),
+      resolveTarget({
+        mode: "committed",
+        releaseType: undefined,
+        manifest: committedManifest,
+      }),
     ).not.toThrow();
   });
 });
@@ -90,7 +107,11 @@ describe("bump mode", () => {
       ["major", "1.0.0"],
     ] as const;
     for (const [releaseType, expected] of cases) {
-      const target = resolveTarget({ mode: "bump", releaseType, manifest: committedManifest });
+      const target = resolveTarget({
+        mode: "bump",
+        releaseType,
+        manifest: committedManifest,
+      });
       expect(target.version, releaseType).toBe(expected);
       expect(target.tag, releaseType).toBe(`design-system-v${expected}`);
       expect(target.willMutateManifest).toBe(true);
@@ -104,14 +125,18 @@ describe("bump mode", () => {
   });
 
   it("requires a release type", () => {
-    expect(() => resolveTarget({ mode: "bump", manifest: committedManifest })).toThrow(
-      /requires a release type/,
-    );
+    expect(() =>
+      resolveTarget({ mode: "bump", manifest: committedManifest }),
+    ).toThrow(/requires a release type/);
   });
 
   it("rejects an unknown release type", () => {
     expect(() =>
-      resolveTarget({ mode: "bump", releaseType: "prerelease", manifest: committedManifest }),
+      resolveTarget({
+        mode: "bump",
+        releaseType: "prerelease",
+        manifest: committedManifest,
+      }),
     ).toThrow(/invalid release type/);
     expect(RELEASE_TYPES).toEqual(["patch", "minor", "major"]);
   });
@@ -129,9 +154,19 @@ describe("guards that block a release outright", () => {
   });
 
   it("blocks a missing or malformed version", () => {
-    for (const version of [undefined, "", "1.2", "v1.2.3", "1.2.3-beta.1", "latest"]) {
+    for (const version of [
+      undefined,
+      "",
+      "1.2",
+      "v1.2.3",
+      "1.2.3-beta.1",
+      "latest",
+    ]) {
       expect(() =>
-        resolveTarget({ mode: "committed", manifest: { name: EXPECTED_PACKAGE_NAME, version } }),
+        resolveTarget({
+          mode: "committed",
+          manifest: { name: EXPECTED_PACKAGE_NAME, version },
+        }),
       ).toThrow(/is missing or not x\.y\.z/);
     }
   });
@@ -141,9 +176,9 @@ describe("guards that block a release outright", () => {
     // lets the RUNTIME guard be tested, which is the one that protects a
     // workflow input arriving as an arbitrary string.
     const badMode = "auto" as unknown as "committed";
-    expect(() => resolveTarget({ mode: badMode, manifest: committedManifest })).toThrow(
-      /invalid mode/,
-    );
+    expect(() =>
+      resolveTarget({ mode: badMode, manifest: committedManifest }),
+    ).toThrow(/invalid mode/);
   });
 
   it("parses versions strictly", () => {
@@ -158,7 +193,11 @@ describe("guards that block a release outright", () => {
 });
 
 describe("registry coordinate classification", () => {
-  const base = { controlReadSucceeded: true, status: null, targetVersion: "0.13.0" };
+  const base = {
+    controlReadSucceeded: true,
+    status: null,
+    targetVersion: "0.13.0",
+  };
 
   it("blocks when the target version is already published", () => {
     const result = classifyCoordinate({
@@ -170,13 +209,17 @@ describe("registry coordinate classification", () => {
   });
 
   it("allows a new version of an existing package", () => {
-    const result = classifyCoordinate({ ...base, publishedVersions: ["0.12.0"] });
+    const result = classifyCoordinate({
+      ...base,
+      publishedVersions: ["0.12.0"],
+    });
     expect(result.verdict).toBe(AVAILABLE);
   });
 
   it("accepts a 404 as availability ONLY when the control read proved auth", () => {
     expect(
-      classifyCoordinate({ ...base, status: 404, publishedVersions: null }).verdict,
+      classifyCoordinate({ ...base, status: 404, publishedVersions: null })
+        .verdict,
     ).toBe(AVAILABLE);
 
     // Same 404, but nothing proved the registry is readable — could equally be
@@ -192,12 +235,28 @@ describe("registry coordinate classification", () => {
   });
 
   it("blocks on auth and authorization errors", () => {
-    expect(classifyCoordinate({ ...base, publishedVersions: null, stderr: "npm error code E401" }).verdict).toBe(BLOCKED);
-    expect(classifyCoordinate({ ...base, publishedVersions: null, stderr: "npm error code E403" }).verdict).toBe(BLOCKED);
+    expect(
+      classifyCoordinate({
+        ...base,
+        publishedVersions: null,
+        stderr: "npm error code E401",
+      }).verdict,
+    ).toBe(BLOCKED);
+    expect(
+      classifyCoordinate({
+        ...base,
+        publishedVersions: null,
+        stderr: "npm error code E403",
+      }).verdict,
+    ).toBe(BLOCKED);
   });
 
   it("blocks anything it cannot classify", () => {
-    const result = classifyCoordinate({ ...base, status: 500, publishedVersions: null });
+    const result = classifyCoordinate({
+      ...base,
+      status: 500,
+      publishedVersions: null,
+    });
     expect(result.verdict).toBe(BLOCKED);
     expect(result.reason).toMatch(/ambiguous/);
   });
@@ -205,13 +264,21 @@ describe("registry coordinate classification", () => {
 
 describe("credential classification", () => {
   it("detects a missing credential", () => {
-    const result = classifyCredential({ present: false, status: null, scopesHeader: null });
+    const result = classifyCredential({
+      present: false,
+      status: null,
+      scopesHeader: null,
+    });
     expect(result.code).toBe(CREDENTIAL_CODES.MISSING);
     expect(result.publishable).toBe(false);
   });
 
   it("detects an invalid credential", () => {
-    const result = classifyCredential({ present: true, status: 401, scopesHeader: null });
+    const result = classifyCredential({
+      present: true,
+      status: 401,
+      scopesHeader: null,
+    });
     expect(result.code).toBe(CREDENTIAL_CODES.INVALID);
   });
 
@@ -226,7 +293,11 @@ describe("credential classification", () => {
   });
 
   it("detects a token that cannot even read", () => {
-    const result = classifyCredential({ present: true, status: 200, scopesHeader: "repo, gist" });
+    const result = classifyCredential({
+      present: true,
+      status: 200,
+      scopesHeader: "repo, gist",
+    });
     expect(result.code).toBe(CREDENTIAL_CODES.NO_READ);
   });
 
@@ -250,7 +321,8 @@ describe("credential classification", () => {
     expect(result.code).toBe(CREDENTIAL_CODES.OK);
     expect(result.publishable).toBe(true);
     // The honest caveat is part of the contract, not decoration: write:packages
-    // does not imply permission to CREATE a package in an org namespace.
+    // does not imply permission to CREATE a package under a scope that does not
+    // match the token owner's login.
     expect(result.caveat).toMatch(/not sufficient for a FIRST publish/i);
   });
 
@@ -287,7 +359,9 @@ describe("dry-run artifact reconciliation", () => {
       });
       expect(result.ok).toBe(true);
       expect(result.problems).toEqual([]);
-      expect(result.notes.join(" ")).toContain("the tarball IS the release candidate");
+      expect(result.notes.join(" ")).toContain(
+        "the tarball IS the release candidate",
+      );
     });
 
     it("still rejects a target that drifts from the committed version", () => {
@@ -298,7 +372,9 @@ describe("dry-run artifact reconciliation", () => {
         targetVersion: "0.13.1",
       });
       expect(result.ok).toBe(false);
-      expect(result.problems.join(" ")).toContain("committed mode must publish the committed version");
+      expect(result.problems.join(" ")).toContain(
+        "committed mode must publish the committed version",
+      );
     });
 
     it("rejects a release type, matching the resolver's own rule", () => {
@@ -310,7 +386,9 @@ describe("dry-run artifact reconciliation", () => {
         targetVersion: "0.13.0",
       });
       expect(result.ok).toBe(false);
-      expect(result.problems.join(" ")).toContain("does not take a release type");
+      expect(result.problems.join(" ")).toContain(
+        "does not take a release type",
+      );
     });
   });
 
@@ -320,18 +398,21 @@ describe("dry-run artifact reconciliation", () => {
       ["patch", "0.13.1"],
       ["minor", "0.14.0"],
       ["major", "1.0.0"],
-    ])("accepts a %s candidate packed as the committed version", (releaseType, target) => {
-      const result = verifyDryRunArtifact({
-        mode: "bump",
-        releaseType,
-        packedVersion: packed,
-        currentVersion: "0.13.0",
-        targetVersion: target,
-      });
-      expect(result.ok).toBe(true);
-      expect(result.problems).toEqual([]);
-      expect(result.notes.join(" ")).toContain(`publish ${target}`);
-    });
+    ])(
+      "accepts a %s candidate packed as the committed version",
+      (releaseType, target) => {
+        const result = verifyDryRunArtifact({
+          mode: "bump",
+          releaseType,
+          packedVersion: packed,
+          currentVersion: "0.13.0",
+          targetVersion: target,
+        });
+        expect(result.ok).toBe(true);
+        expect(result.problems).toEqual([]);
+        expect(result.notes.join(" ")).toContain(`publish ${target}`);
+      },
+    );
 
     it("rejects a target that is not the arithmetic result of the bump", () => {
       const result = verifyDryRunArtifact({
@@ -342,7 +423,9 @@ describe("dry-run artifact reconciliation", () => {
         targetVersion: "0.14.0",
       });
       expect(result.ok).toBe(false);
-      expect(result.problems.join(" ")).toContain('bump("0.13.0", "patch") is 0.13.1');
+      expect(result.problems.join(" ")).toContain(
+        'bump("0.13.0", "patch") is 0.13.1',
+      );
     });
 
     it("rejects a bump that does not advance the version", () => {
@@ -381,7 +464,9 @@ describe("dry-run artifact reconciliation", () => {
         targetVersion: "0.13.1",
       });
       expect(result.ok).toBe(false);
-      expect(result.problems.join(" ")).toContain("packed version 0.12.0 != committed version 0.13.0");
+      expect(result.problems.join(" ")).toContain(
+        "packed version 0.12.0 != committed version 0.13.0",
+      );
     });
 
     it("fails loudly when a version is unwired rather than comparing empties", () => {
