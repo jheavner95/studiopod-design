@@ -103,13 +103,16 @@ surface, 538 modules — is byte-identical.
 | `@jheavner95/foundation` | Current (ORG-2A). |
 | `@jheavner95/design` | **Current release line: 0.19.1** (ORG-2B). All future releases land here. |
 | `@jheavner95/design@0.14.0` | **Historical backfill only (ORG-2C3A).** Not the current version — see [Historical backfills](#historical-backfills-org-2c3a) below. `0.19.1` remains current. |
+| `@jheavner95/design@0.13.0` | **Historical backfill only (ORG-2C3A.1).** Not the current version — same section below. |
 | `@studiopod/foundation` | LEGACY — temporarily retained for migration. |
 | `@studiopod/design` | LEGACY — temporarily retained for migration. |
 
 `@studiopod/design` 0.13.0–0.19.0 remain published and installable.
 **Do not unpublish, deprecate or delete them until every consumer has
-migrated.** Web still resolves `@studiopod/design@0.14.0` today (ORG-2C3);
-other consumers may resolve other versions.
+migrated.** `studiopod-web`'s `main` branch resolves `@studiopod/design@0.13.0`
+today (measured during ORG-2C3B, correcting an earlier `0.14.0` reading that
+came from an unmerged feature branch, not `main` — see below); other
+consumers may resolve other versions.
 
 `.npmrc` routes both `@jheavner95` and `@studiopod` for the duration.
 
@@ -138,6 +141,21 @@ force them to be.** ORG-2C3 found `studiopod-web` pinned to
 detail nobody decided to make, so HQ's resolution was: **backfill the missing
 historical version instead of upgrading the consumer.**
 
+**That `0.14.0` figure needs one correction, made during ORG-2C3B.**
+`studiopod-web`'s `main` branch — the authoritative baseline for its own
+migration — actually resolves `@studiopod/design@0.13.0`, not `0.14.0`;
+measured directly from `main`'s `package.json`, `package-lock.json`, its own
+`check-design-package.mjs` guard, and `DEPLOYMENT-OPS.md`, all four agreeing.
+`0.14.0` is real, but it belongs to an **unmerged feature branch**
+(`ms-6.5-homepage-visual-discovery`) that is not production state and does
+not redefine Web's dependency baseline. Both versions are legitimately
+in play — `main` on `0.13.0` today, that branch on `0.14.0` once it lands —
+so **both `0.14.0` (ORG-2C3A) and `0.13.0` (ORG-2C3A.1) were backfilled**,
+letting either code state migrate its package *identity* without that
+migration being coupled to, or gated on, a Design version change or a branch
+merge. Nothing here treats the feature branch as current state; it is
+recorded only as the reason a second backfilled version exists.
+
 `@jheavner95/design@0.14.0` is that backfill. It is **not** a new release and
 **not** a rollback of `main`, which stays at `0.19.1` throughout. It is the
 same bytes GitHub Packages has served every `@studiopod/design@0.14.0`
@@ -161,9 +179,17 @@ byte-for-byte historical. Taking the artifact the registry already built
 entirely: nothing is rebuilt, so no Foundation version needs to resolve at
 all.
 
-**Why no `design-system-v0.14.0` tag and no new GitHub Release.** That tag
-already names the *original* `0.14.0` release of this repository. Creating it
-again, or creating a second GitHub Release for the same version number, would
+**`0.13.0`'s Foundation story is simpler still.** The root `package.json` at
+the `design-system-v0.13.0` tag has no Foundation `devDependency` at all —
+Foundation's build-time token bridge was introduced into this repository
+after `0.13.0` shipped. There is no historical Foundation version to reconcile
+because none was ever consumed; using the published artifact sidesteps the
+question in the same way, just more completely.
+
+**Why no `design-system-v0.14.0`/`v0.13.0` tag and no new GitHub Release.** That tag
+already names the *original* release of that version in this repository.
+Creating either again, or creating a second GitHub Release for the same
+version number, would
 misrepresent a republish as a new release that never happened. This is
 package-identity migration, not a repository release — the same distinction
 ORG-2B drew between a version bump and an identity-only republish, taken one
@@ -181,7 +207,9 @@ driving
 [`tooling/release/backfill-historical-version.mjs`](../tooling/release/backfill-historical-version.mjs)
 — `workflow_dispatch` only, parameterized by version, so it can backfill
 another historical version later without becoming a mode of the release
-pipeline.
+pipeline. ORG-2C3A.1 is the proof of that reuse: `0.13.0` used the identical
+script and workflow, unmodified, with only the `--version`/`version` input
+changed.
 
 **Credentials.** Reading `@studiopod/design` needs `DS_NPM_TOKEN` — that
 scope was never linked to this repository, so `GITHUB_TOKEN` cannot reach it,
@@ -195,9 +223,14 @@ load-bearing, and it is scoped to reads of the legacy name only — see the
 table above.
 
 **What this does not do.** It does not touch `studiopod-web` — migrating Web
-to consume this backfill is ORG-2C3B, a separate package. It does not change
-`main`'s package version. It does not alter `@jheavner95/design@0.19.1` or
-its tag/release history in any way.
+to consume either backfill is ORG-2C3B, a separate package, not yet started.
+It does not change `main`'s package version. It does not alter
+`@jheavner95/design@0.19.1` or its tag/release history in any way.
+
+| Package | Historical Foundation relationship | Backfilled | Web state it unblocks |
+| --- | --- | --- | --- |
+| `@jheavner95/design@0.14.0` | Build-time-only, `@studiopod/foundation@0.3.0` (never republished under the new scope) | ORG-2C3A | none directly — `main` never resolved `0.14.0` |
+| `@jheavner95/design@0.13.0` | None — predates the Foundation token bridge | ORG-2C3A.1 | `studiopod-web`'s `main` branch, its actual current dependency |
 
 ## Authentication — measured, not assumed
 
