@@ -1,0 +1,132 @@
+name: Backfill historical @jheavner95/design version
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ORG-2C3A — republish an already-published `@studiopod/design@<version>`
+# under the current identity, `@jheavner95/design@<version>`, unchanged.
+#
+# WHY THIS EXISTS, AND WHY IT IS NOT release.yml: ORG-2B moved this package's
+# CURRENT release line to @jheavner95/design, at 0.19.1. It did not — and
+# could not, without rebuilding history — give every version ever published
+# under @studiopod/design an @jheavner95 equivalent. studiopod-web (ORG-2C3)
+# is pinned to @studiopod/design@0.14.0, five versions behind current, and
+# migrating it to 0.19.1 would be an unwanted product upgrade forced by a
+# packaging detail, not a decision anyone made about Web. This workflow
+# produces the missing 0.14.0 artifact under the new name so Web can move to
+# @jheavner95/design without also moving to a different product version.
+#
+# This is package-identity migration, not a release:
+#   - No git tag is created. design-system-v0.14.0 already names the ORIGINAL
+#     0.14.0 release of this repository; a second tag for the same version
+#     number would misrepresent a republish as a new release.
+#   - No GitHub Release is created, for the same reason.
+#   - main's own package.json version is never touched — it stays whatever
+#     the current release line actually is (0.19.1 as of ORG-2C3A),
+#     regardless of which historical version this backfills.
+#   - Nothing is rebuilt from source. tooling/release/backfill-historical-version.mjs
+#     takes the tarball the registry already served every consumer of that
+#     version and changes exactly one field: package.json#name. This matters
+#     because the historical build resolved @studiopod/foundation@0.3.0,
+#     which was never republished as @jheavner95/foundation@0.3.0 (only 0.4.0
+#     exists under the new scope) — rebuilding would silently swap in a
+#     different Foundation's token values under a version number that is
+#     supposed to be byte-for-byte historical.
+#
+# TWO CREDENTIALS, TWO DIRECTIONS: reading @studiopod/design needs a PAT —
+# that scope was never linked to this repository (ORG-1/ORG-2B), so
+# GITHUB_TOKEN cannot reach it (measured, not assumed, elsewhere in this
+# repository's history: E403 "The requested installation does not exist").
+# Publishing @jheavner95/design needs no PAT — that scope IS linked here, and
+# GITHUB_TOKEN with `packages: write` is what ORG-2B proved sufficient.
+# DS_NPM_TOKEN, otherwise obsolete since ORG-2B, is used here for the one
+# thing it remains unavoidable for: reading the legacy scope. It is never
+# used to publish. See tooling/release/backfill-historical-version.mjs for
+# how the two credentials are kept in separate, single-purpose .npmrc files
+# so a bug here cannot cross them.
+#
+# This is deliberately a separate, narrow workflow rather than a mode added
+# to release.yml: release.yml's whole shape — dry-run/publish, version
+# resolution, tagging, GitHub Releases — is about the CURRENT release line.
+# Bending it to also handle "republish an old version's identity, but skip
+# the tag and skip the release" would weaken what release.yml's tag/release
+# steps guarantee for every real release. A dedicated mechanism keeps that
+# guarantee intact and keeps this narrow, unusual operation legible on its
+# own.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Legacy @studiopod/design version to republish as @jheavner95/design (must already be published under @studiopod/design)"
+        required: true
+        type: string
+      dry_run:
+        description: "Fetch, rewrite and repack, but do not publish"
+        required: false
+        type: boolean
+        default: true
+
+concurrency:
+  group: design-backfill-${{ github.ref }}
+  cancel-in-progress: false
+
+# Read-only by default. The one job below elevates to packages: write only
+# when it actually publishes (dry_run == false) — see the job's own
+# permissions block.
+permissions:
+  contents: read
+
+jobs:
+  backfill:
+    name: Backfill ${{ inputs.version }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # write only lets this job publish; it still cannot tag or push, since
+      # neither step exists below and there is no `contents: write` here.
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Neither credential is ever passed to `npm ci`/`setup-node`'s own
+      # registry wiring — the script builds its own throwaway, single-scope
+      # .npmrc for each direction, precisely so this step cannot mix them.
+      - name: Dry run — fetch, rewrite, repack, prove equivalence (no publish)
+        if: inputs.dry_run == true
+        env:
+          LEGACY_READ_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+        run: |
+          node tooling/release/backfill-historical-version.mjs \
+            --version "${{ inputs.version }}" \
+            --dry-run
+
+      - name: Publish — fetch, rewrite, repack, publish
+        if: inputs.dry_run == false
+        env:
+          LEGACY_READ_TOKEN: ${{ secrets.DS_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node tooling/release/backfill-historical-version.mjs \
+            --version "${{ inputs.version }}"
+
+      # Confirms what the mission requires: the new coordinate is reachable,
+      # still reports the correct repository (proving GitHub Packages linked
+      # it the same way ORG-2B proved for the current release line), and the
+      # untouched coordinates around it are still exactly as they were.
+      - name: Prove repository linkage and surrounding versions are untouched
+        if: inputs.dry_run == false
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm view "@jheavner95/design@${{ inputs.version }}" repository --json \
+            --userconfig <(echo "@jheavner95:registry=https://npm.pkg.github.com"; echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}") \
+            | tee /tmp/repo.json
+          grep -q "jheavner95/studiopod-design.git" /tmp/repo.json \
+            || { echo "::error::published package does not report the expected repository"; exit 1; }
+          echo "OK — @jheavner95/design@${{ inputs.version }} is linked to jheavner95/studiopod-design"

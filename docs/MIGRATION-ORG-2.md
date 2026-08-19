@@ -101,13 +101,15 @@ surface, 538 modules — is byte-identical.
 | Package | Status |
 | --- | --- |
 | `@jheavner95/foundation` | Current (ORG-2A). |
-| `@jheavner95/design` | **Current (ORG-2B).** All future releases. |
+| `@jheavner95/design` | **Current release line: 0.19.1** (ORG-2B). All future releases land here. |
+| `@jheavner95/design@0.14.0` | **Historical backfill only (ORG-2C3A).** Not the current version — see [Historical backfills](#historical-backfills-org-2c3a) below. `0.19.1` remains current. |
 | `@studiopod/foundation` | LEGACY — temporarily retained for migration. |
-| `@studiopod/design` | **LEGACY — TEMPORARILY RETAINED FOR MIGRATION.** |
+| `@studiopod/design` | LEGACY — temporarily retained for migration. |
 
 `@studiopod/design` 0.13.0–0.19.0 remain published and installable.
 **Do not unpublish, deprecate or delete them until every consumer has
-migrated.** Cloud and other consumers still resolve that name today.
+migrated.** Web still resolves `@studiopod/design@0.14.0` today (ORG-2C3);
+other consumers may resolve other versions.
 
 `.npmrc` routes both `@jheavner95` and `@studiopod` for the duration.
 
@@ -124,6 +126,78 @@ migrated.** Cloud and other consumers still resolve that name today.
    repository secrets.
 
 Nothing in step 4 may begin while any consumer still depends on the old names.
+
+## Historical backfills (ORG-2C3A)
+
+**Not every consumer is on the current version, and this migration does not
+force them to be.** ORG-2C3 found `studiopod-web` pinned to
+`@studiopod/design@0.14.0` — five versions behind `0.19.1` — with no
+`@jheavner95/design@0.14.0` to move it to, because ORG-2B only republished the
+*current* version under the new identity. Republishing Web's dependency at
+`0.19.1` would have been a five-version product upgrade forced by a packaging
+detail nobody decided to make, so HQ's resolution was: **backfill the missing
+historical version instead of upgrading the consumer.**
+
+`@jheavner95/design@0.14.0` is that backfill. It is **not** a new release and
+**not** a rollback of `main`, which stays at `0.19.1` throughout. It is the
+same bytes GitHub Packages has served every `@studiopod/design@0.14.0`
+installer since that version's original release — the same artifact
+Web's own lockfile already resolves — republished under the current package
+name, with exactly one field of the tarball changed:
+`package.json#name`. Every `.js`, `.css`, `.d.ts`, and prose file inside is
+byte-identical to the original publish; the identity-string mentions that
+remain in `README.md`, `API.md`, `CHANGELOG.md`, `VERSIONING.md`, and one
+`.d.ts` doc comment are deliberately left as they were published — this is a
+frozen historical artifact, not a living release, so nothing about it is
+"corrected" the way a current-release migration would.
+
+**Why not rebuild `0.14.0` from source instead?** The historical commit
+(`design-system-v0.14.0`) resolved `@studiopod/foundation@0.3.0` at build
+time. Only `@jheavner95/foundation@0.4.0` was ever republished under the new
+scope — `0.3.0` was not — so rebuilding would silently bake in a different
+Foundation's token values under a version number that is supposed to be
+byte-for-byte historical. Taking the artifact the registry already built
+(back when Foundation 0.3.0 still existed under the old scope) sidesteps that
+entirely: nothing is rebuilt, so no Foundation version needs to resolve at
+all.
+
+**Why no `design-system-v0.14.0` tag and no new GitHub Release.** That tag
+already names the *original* `0.14.0` release of this repository. Creating it
+again, or creating a second GitHub Release for the same version number, would
+misrepresent a republish as a new release that never happened. This is
+package-identity migration, not a repository release — the same distinction
+ORG-2B drew between a version bump and an identity-only republish, taken one
+step further: here, not even a new tag is warranted.
+
+**Why a dedicated mechanism instead of a `release.yml` mode.**
+`release.yml`'s entire shape — version resolution, tagging, GitHub Releases —
+exists to guarantee properties of a *current release*: that a publish failure
+leaves no orphan tag, that the tag names a real release. Bending that
+workflow to also skip tagging for "this one is different" would weaken those
+guarantees for every real release that goes through it. Historical backfills
+get their own workflow instead —
+[`backfill-historical.yml`](../.github/workflows/backfill-historical.yml),
+driving
+[`tooling/release/backfill-historical-version.mjs`](../tooling/release/backfill-historical-version.mjs)
+— `workflow_dispatch` only, parameterized by version, so it can backfill
+another historical version later without becoming a mode of the release
+pipeline.
+
+**Credentials.** Reading `@studiopod/design` needs `DS_NPM_TOKEN` — that
+scope was never linked to this repository, so `GITHUB_TOKEN` cannot reach it,
+the same measured constraint documented above for Foundation before ORG-2A.
+Publishing `@jheavner95/design@0.14.0` uses `GITHUB_TOKEN`, exactly as
+`release.yml` does for the current line — that scope is linked here. The two
+credentials are kept in separate, single-purpose `.npmrc` files within the
+script, so the read step and the write step can never share or cross a
+credential. This is the one place in the repository `DS_NPM_TOKEN` remains
+load-bearing, and it is scoped to reads of the legacy name only — see the
+table above.
+
+**What this does not do.** It does not touch `studiopod-web` — migrating Web
+to consume this backfill is ORG-2C3B, a separate package. It does not change
+`main`'s package version. It does not alter `@jheavner95/design@0.19.1` or
+its tag/release history in any way.
 
 ## Authentication — measured, not assumed
 
@@ -176,7 +250,7 @@ Only after it has migrated:
 | Repository | Secret | Becomes |
 | --- | --- | --- |
 | studiopod-foundation | `FOUNDATION_NPM_TOKEN` | obsolete (ORG-2A) |
-| studiopod-design | `DS_NPM_TOKEN` | **obsolete** — GITHUB_TOKEN proved sufficient for both publishing and the cross-repository Foundation read, once Foundation granted studiopod-design Actions access. No workflow references it. |
+| studiopod-design | `DS_NPM_TOKEN` | Obsolete for the current release line — `release.yml` and `validate.yml` use only `GITHUB_TOKEN`. **Reintroduced narrowly by ORG-2C3A** (see below) for the one thing GITHUB_TOKEN genuinely cannot do: read the unlinked `@studiopod/design` scope, to backfill a historical version. Not used to publish anywhere. |
 | studiopod-cloud | `DS_NPM_TOKEN_READ` / `_WRITE` | obsolete after step 3 |
 | PowerEditor | `FOUNDATION_NPM_TOKEN_READ` | obsolete after step 3 |
 
