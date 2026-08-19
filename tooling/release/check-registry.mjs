@@ -8,10 +8,22 @@
  *
  * A bare 404 is NOT treated as proof of availability. GitHub Packages returns
  * 404 both for "no such package" and for "you may not see this package", so
- * this first performs a CONTROL READ of a package known to be published
- * (`@studiopod/design-system`). Only if that read succeeds — proving the
+ * this first performs a CONTROL READ of a package known to be published AND
+ * reachable by this credential. Only if that read succeeds — proving the
  * credential and registry routing work — is a 404 on the target accepted as
  * genuine absence. Every other outcome is blocked.
+ *
+ * The control package is `@jheavner95/foundation`, not the older
+ * `@studiopod/design-system`. ORG-2B moved this workflow's credential from a
+ * user-owned PAT to GITHUB_TOKEN, and GITHUB_TOKEN can only reach packages
+ * that are LINKED to a repository it is authorized against.
+ * `@studiopod/design-system` was never linked to any repository — the scope
+ * never matched an owner login — so a PAT could read it but GITHUB_TOKEN
+ * cannot; using it as the control after the auth migration would report every
+ * genuinely-available target as "blocked" instead. `@jheavner95/foundation`
+ * is linked to jheavner95/studiopod-foundation, and studiopod-design's
+ * GITHUB_TOKEN is granted Actions access to it (see docs/MIGRATION-ORG-2.md),
+ * so it is a control this credential can actually read.
  *
  * Authentication comes from the environment (NODE_AUTH_TOKEN, as wired by
  * actions/setup-node). No token value is read, printed, or logged here.
@@ -30,7 +42,7 @@ function arg(flag, fallback) {
 const name = arg("--name", "@jheavner95/design");
 const version = arg("--version");
 const registry = arg("--registry", process.env.DS_REGISTRY || "https://npm.pkg.github.com");
-const controlPackage = arg("--control", "@studiopod/design-system");
+const controlPackage = arg("--control", "@jheavner95/foundation");
 
 if (!version) {
   console.error("::error::--version is required");
