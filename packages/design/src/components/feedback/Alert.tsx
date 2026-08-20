@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import { AlertCircle, AlertTriangle, CheckCircle2, Info, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Surface } from "@/components/layout";
@@ -33,7 +33,30 @@ export function feedbackRole(tone: FeedbackTone): "alert" | "status" {
   return tone === "error" ? "alert" : "status";
 }
 
-export interface AlertProps {
+/**
+ * Alert renders an outer `div`, a `Surface`, an icon, a content column and an
+ * optional dismiss `button`. The element a caller addresses is the **outer
+ * div** — it carries the role, so it is what assistive technology treats as
+ * the alert, and it is what an `aria-describedby` or an `id` needs to reach
+ * (UX-5.7A § multi-element).
+ *
+ * **`role` stays this component's own.** It is derived from `tone` by
+ * `feedbackRole`, deliberately: error announces assertively and everything
+ * else politely, because severity and announcement urgency are different
+ * questions and only one of them is the caller's. Forwarding still lets a
+ * caller refine the relationship — `aria-live`, `aria-atomic`, `aria-labelledby`
+ * — without fighting the role for it.
+ *
+ * **The native `title` attribute is deliberately unavailable here.** `title`
+ * is already this component's own prop — the alert's heading, a `ReactNode` —
+ * and the two mean different things: one is the visible heading, the other a
+ * browser tooltip. The heading is by far the more important of the two and
+ * had the name first, so the native attribute is omitted rather than the
+ * component prop renamed. A tooltip on an alert is a questionable idea in any
+ * case; an accessible name belongs in `aria-label` or `aria-labelledby`, both
+ * of which forward.
+ */
+export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   tone?: FeedbackTone;
   title?: ReactNode;
   children: ReactNode;
@@ -47,10 +70,10 @@ export interface AlertProps {
  * (derived from the DS-0.2 Warning Banner inventory item). Stays inline in the layout
  * until dismissed; never traps focus or blocks the page the way Dialog/Drawer do.
  */
-export function Alert({ tone = "info", title, children, action, onDismiss, className }: AlertProps) {
+export function Alert({ tone = "info", title, children, action, onDismiss, className, ...domProps }: AlertProps) {
   const Icon = FEEDBACK_TONE_ICON[tone];
   return (
-    <div role={feedbackRole(tone)} className={className}>
+    <div {...domProps} role={feedbackRole(tone)} className={className}>
       <Surface border elevation="none" padding="md" className={FEEDBACK_TONE_BG[tone]}>
         <div className="flex items-start gap-3">
           <Icon className={cn("mt-0.5 size-4 shrink-0", FEEDBACK_TONE_TEXT[tone])} aria-hidden />

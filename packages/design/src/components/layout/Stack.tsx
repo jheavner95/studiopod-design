@@ -1,11 +1,17 @@
-import type { ElementType, ReactNode } from "react";
+import type { ElementType, HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export type StackGap = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 export type StackAlign = "start" | "center" | "end" | "stretch";
 export type StackJustify = "start" | "center" | "end" | "between";
 
-export interface StackProps {
+/**
+ * Stack owns one element — the one `as` names — and exposes its native
+ * contract (UX-5.7A). It was closed, and UIP-3F is the record of what that
+ * cost: two `data-*` test hooks were dropped at render, found by reading the
+ * served HTML, and worked around with a wrapper `div`.
+ */
+export interface StackProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
   className?: string;
   gap?: StackGap;
@@ -49,9 +55,9 @@ const justifyMap: Record<StackJustify, string> = {
  * not two components that should agree. See
  * docs/engineering-notes/14-spacing-consolidation.md.
  */
-export function Stack({ children, className, gap = "md", align = "stretch", justify = "start", as: Component = "div" }: StackProps) {
+export function Stack({ children, className, gap = "md", align = "stretch", justify = "start", as: Component = "div", ...domProps }: StackProps) {
   return (
-    <Component className={cn("flex flex-col", gapMap[gap], alignMap[align], justifyMap[justify], className)}>
+    <Component {...domProps} className={cn("flex flex-col", gapMap[gap], alignMap[align], justifyMap[justify], className)}>
       {children}
     </Component>
   );

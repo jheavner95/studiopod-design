@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { STATUS_TONE_DOT_CLASSES, STATUS_TONE_PILL_CLASSES, type StatusTone } from "@/lib/tone";
@@ -17,7 +17,19 @@ const badgeStyles = cva("inline-flex w-fit items-center gap-1.5 rounded-full fon
   defaultVariants: { tone: "neutral", size: "md" },
 });
 
-export interface BadgeProps extends VariantProps<typeof badgeStyles> {
+/**
+ * Badge owns one `span` and exposes that element's contract (UX-5.7A) — it is
+ * the element a caller reasonably believes they are addressing.
+ *
+ * It stays **non-interactive on purpose**. A Badge states a status; it is not
+ * a control, so nothing here turns it into one, and a status that needs an
+ * action belongs beside a `Button` rather than inside a pill. The dot remains
+ * `aria-hidden`: status meaning is carried by the text, never by colour or a
+ * mark alone (UII-7, ADR 0071).
+ */
+export interface BadgeProps
+  extends VariantProps<typeof badgeStyles>,
+    Omit<HTMLAttributes<HTMLSpanElement>, "color"> {
   children: ReactNode;
   /**
    * DS-5I: render a static leading indicator dot inside the pill, inheriting
@@ -30,9 +42,9 @@ export interface BadgeProps extends VariantProps<typeof badgeStyles> {
 }
 
 /** Inline status/label pill — counts, "Beta", plan tiers, pipeline states. */
-export function Badge({ children, tone, size, dot = false, className }: BadgeProps) {
+export function Badge({ children, tone, size, dot = false, className, ...domProps }: BadgeProps) {
   return (
-    <span className={cn(badgeStyles({ tone, size }), className)}>
+    <span {...domProps} className={cn(badgeStyles({ tone, size }), className)}>
       {dot ? <span aria-hidden="true" className={cn("size-1.5 shrink-0 rounded-full", STATUS_TONE_DOT_CLASSES[tone ?? "neutral"])} /> : null}
       {children}
     </span>

@@ -8,6 +8,59 @@ ORG-2B below for why that changed. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versioning discipline is
 documented in `VERSIONING.md`.
 
+## 0.21.0 — the DOM contract, stated and enforced (UX-5.7A)
+
+**Additive. Nothing is removed and no existing call site has to change.**
+
+0.20.0 fixed `Button`. This release fixes the class of defect it belonged to,
+across the primitives a real consumer actually uses, and writes the rule down
+so a new component does not rediscover it — see
+[`docs/DOM-CONTRACT.md`](../../docs/DOM-CONTRACT.md).
+
+### Fixed
+
+`Surface`, `Stack`, `Panel`, `Badge` and `Alert` now expose the native contract
+of the element each owns. Arbitrary `data-*`, `aria-*`, `id`, `title`, native
+event handlers and the rest reach the DOM instead of being discarded at render.
+
+**`Surface` is the leverage point**: it is the base every panel-like component
+reduces to, so `Card`, `Panel` and everything else built on it inherit the
+correction rather than each re-declaring one. Its `role` prop, previously
+declared on its own, was the tell — the contract was being rebuilt one
+attribute at a time as callers asked, and everything unasked-for was dropped.
+
+### Changed
+
+- `SurfaceProps` extends `HTMLAttributes<HTMLElement>`; its standalone `role`
+  prop is now part of that inheritance and behaves identically.
+- `StackProps` extends `HTMLAttributes<HTMLElement>`.
+- `PanelProps` extends `HTMLAttributes<HTMLDivElement>` and forwards to the
+  `Surface` it is built on — its outer boundary, not its interior wrappers.
+- `BadgeProps` extends `Omit<HTMLAttributes<HTMLSpanElement>, "color">`.
+- `AlertProps` extends `Omit<HTMLAttributes<HTMLDivElement>, "title">` and
+  forwards to the outer `div` that carries the role.
+
+### Intentional restrictions, now documented rather than implicit
+
+- **`Alert` does not accept the native `title` attribute.** The name is already
+  taken by its own heading prop, which is the more important meaning. Use
+  `aria-label` or `aria-labelledby`, both of which forward.
+- **`Alert` keeps its `role`.** It is derived from `tone` — error announces
+  assertively, everything else politely — so a caller cannot silently change
+  announcement urgency. `aria-live` and `aria-atomic` forward for refinement.
+- **`Badge` stays non-interactive.** It states a status; it is not a control.
+- **Refs remain per-component and evidence-driven**, not blanket-forwarded.
+
+### Notes
+
+`src/components/dom-contract.test.tsx` holds the contract, table-driven, and
+was proved to detect the defect: reintroducing the closed branch in all five
+primitives failed 26 of its 30 assertions.
+
+Most of the library's other native-DOM-owning exports are still closed. They
+are unconsumed, so nothing is broken today; `docs/DOM-CONTRACT.md` § 8 is the
+procedure for the first consumer of each.
+
 ## 0.20.0 — `Button` forwards the attributes it is given (UX-5.7)
 
 **Additive. Nothing is removed and no existing call site has to change.**
