@@ -53,7 +53,16 @@ import type { AriaAttributes, CSSProperties, ElementType, ReactNode } from "reac
  * with no clear behaviour across the server/client boundary.
  */
 
-/** The props Design passes to whatever renders a navigational link. */
+/**
+ * The props Design passes to whatever renders a navigational link.
+ *
+ * **UX-5.7 widened this deliberately.** `Button`'s link form now forwards every
+ * prop it does not itself consume, so this interface has to describe what a
+ * `linkComponent` will actually receive rather than the narrower set Design
+ * used to hand over. The `data-*` index signature is the load-bearing part: it
+ * is what lets an application put its own hooks and analytics attributes on a
+ * Design link instead of wrapping it in a spare element.
+ */
 export interface LinkComponentProps extends AriaAttributes {
   href: string;
   children?: ReactNode;
@@ -62,6 +71,11 @@ export interface LinkComponentProps extends AriaAttributes {
   target?: string;
   rel?: string;
   tabIndex?: number;
+  id?: string;
+  title?: string;
+  role?: string;
+  /** Arbitrary data attributes reach the rendered element. */
+  [key: `data-${string}`]: unknown;
 }
 
 /**

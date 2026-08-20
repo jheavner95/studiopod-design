@@ -1,8 +1,8 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentType, ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import type { LinkComponent } from "@/framework";
+import type { LinkComponent, LinkComponentProps } from "@/framework";
 
 const buttonStyles = cva(
   "focus-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] disabled:pointer-events-none disabled:opacity-40 aria-disabled:pointer-events-none aria-disabled:opacity-40",
@@ -74,10 +74,9 @@ interface CommonProps extends VariantProps<typeof buttonStyles> {
 
 type ButtonAsButton = CommonProps &
   Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children"> & { href?: undefined };
-type ButtonAsLink = CommonProps & {
+type ButtonAsLink = CommonProps &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children" | "href"> & {
   href: string;
-  target?: string;
-  rel?: string;
   /**
    * What renders the link. Defaults to `"a"`. Pass your framework's link
    * component — `next/link`, a router Link — to get client-side navigation.
@@ -98,14 +97,59 @@ export type ButtonProps = ButtonAsButton | ButtonAsLink;
  * `destructive` is for irreversible actions (delete/discard/remove); use `primary` for
  * confirm/approve/save. There is intentionally no `success` variant — green is a status
  * tone in this system, not an action colour (DS-5G).
+ *
+ * ## Attribute forwarding (UX-5.7)
+ *
+ * Every prop this component does not itself consume reaches the rendered
+ * element — `data-*`, `aria-*`, `id`, `title`, `name`, `form`, event handlers,
+ * `target`/`rel` on the link form. The component's own computed attributes win
+ * over anything passed in: `className` is composed rather than replaced, `href`
+ * is authoritative, and the `loading` guard cannot be overridden from outside.
+ *
+ * **This was a silent, five-times-rediscovered defect, and the silence had a
+ * specific cause.** The `<button>` branch always spread its rest props; the
+ * link branch destructured a closed set and forwarded none of the remainder, so
+ * `<Button href=…  data-x="1">` dropped `data-x` at render. Nothing caught it,
+ * because TypeScript deliberately exempts hyphenated JSX attributes from
+ * excess-property checking — `data-*` and `aria-*` type-check against *any*
+ * component whether or not its props admit them. The type system permits the
+ * attribute by design and the implementation discarded it, so the only way to
+ * observe the defect was to read the served DOM. Consumers found it four times
+ * on other primitives and once here, and each time wrote a wrapper element
+ * instead.
+ *
+ * `Button.test.tsx` holds the contract, including the link form specifically,
+ * so a future refactor that closes the branch again fails a test rather than a
+ * downstream reviewer.
  */
 export function Button(props: ButtonProps) {
   const size = props.size ?? "md";
   const spinner = <Loader2 className={cn("animate-spin", spinnerSizeMap[size])} aria-hidden />;
 
   if (typeof props.href === "string") {
-    const { children, className, variant, leadingIcon, trailingIcon, loading, href, target, rel, linkComponent } = props;
-    const LinkEl = linkComponent ?? "a";
+    const {
+      children,
+      className,
+      variant,
+      size: _linkSize,
+      leadingIcon,
+      trailingIcon,
+      loading,
+      href,
+      linkComponent,
+      ...domProps
+    } = props;
+    void _linkSize;
+    /*
+     * `LinkComponent` is `ElementType<LinkComponentProps>`, which resolves to
+     * every intrinsic tag whose props those satisfy — SVG tags included, since
+     * their props are all optional. Handing a full set of anchor attributes to
+     * that union makes the compiler check them against, say,
+     * `SVGProps<SVGSymbolElement>`. Naming the one thing this actually renders
+     * resolves it: whatever a caller passes, Design is rendering a link and
+     * passing it link props.
+     */
+    const LinkEl = (linkComponent ?? "a") as unknown as ComponentType<LinkComponentProps>;
     return (
       // `loading` used to also attach an onClick that called preventDefault.
       // That made the whole component client-only for a guard the stylesheet
@@ -114,12 +158,10 @@ export function Button(props: ButtonProps) {
       // `tabIndex={-1}` closes the keyboard path without a handler. Same
       // behaviour, no event handler, server-renderable. See DH-3 § API impact.
       <LinkEl
+        {...domProps}
         href={href}
-        target={target}
-        rel={rel}
-        aria-disabled={loading || undefined}
-        tabIndex={loading ? -1 : undefined}
         className={cn(buttonStyles({ variant, size }), className)}
+        {...(loading ? { "aria-disabled": true, tabIndex: -1 } : {})}
       >
         {loading ? spinner : leadingIcon}
         {children}
@@ -145,10 +187,10 @@ export function Button(props: ButtonProps) {
 
   return (
     <button
+      {...domProps}
       className={cn(buttonStyles({ variant, size }), className)}
       disabled={disabled || loading}
-      aria-busy={loading || undefined}
-      {...domProps}
+      {...(loading ? { "aria-busy": true } : {})}
     >
       {loading ? spinner : leadingIcon}
       {children}

@@ -8,6 +8,52 @@ ORG-2B below for why that changed. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versioning discipline is
 documented in `VERSIONING.md`.
 
+## 0.20.0 — `Button` forwards the attributes it is given (UX-5.7)
+
+**Additive. Nothing is removed and no existing call site has to change.**
+
+### Fixed
+
+`Button`'s link form — `<Button href=…>` — dropped every prop it did not
+itself consume. `data-*`, `aria-*`, `id`, `title` and event handlers reached
+the component and never reached the DOM. The `<button>` form always spread its
+rest props, so the defect was specific to the link branch, which is why it read
+as intermittent.
+
+The silence had a cause worth recording: **TypeScript deliberately exempts
+hyphenated JSX attributes from excess-property checking**, so `data-*` and
+`aria-*` type-check against any component regardless of its declared props. The
+type system permitted the attribute by design and the implementation discarded
+it, leaving the served DOM as the only place the loss was observable. Five
+consumer packages found it that way and each wrote a wrapper element instead.
+
+Both forms now forward every unconsumed prop. The component's own computed
+attributes stay authoritative: `className` is composed rather than replaced,
+`href` wins, and the `loading` guard cannot be re-enabled from outside.
+
+### Changed
+
+- `ButtonAsLink` now extends `AnchorHTMLAttributes<HTMLAnchorElement>`, so
+  `target`, `rel`, `onClick`, `id` and the rest are typed rather than silently
+  tolerated. `target` and `rel` were previously the only two declared.
+- `LinkComponentProps` gains `id`, `title`, `role` and a
+  `` [key: `data-${string}`] `` index signature. Design now genuinely passes
+  these through to a `linkComponent`, so the interface describes what a link
+  component actually receives.
+- While `loading`, `Button` owns `aria-disabled` (link) and `aria-busy`
+  (button) and a caller cannot override them. When not loading, a caller's own
+  values are left alone — previously they were overwritten with `undefined`.
+
+### Notes
+
+`Button.test.tsx` gains ten assertions covering the contract, including the
+link form specifically. They were proved to detect the defect: reintroducing
+the closed branch fails five of them.
+
+Other primitives — `Badge`, `Panel`, `Stack`, `Alert` and most of the feedback
+and form families — still declare closed prop sets and forward nothing. That is
+recorded for a future package rather than changed here.
+
 ## 0.19.1 — republished as `@jheavner95/design` (ORG-2B)
 
 **Package identity only. No component, token, or behavioural change.**

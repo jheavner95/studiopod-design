@@ -120,6 +120,154 @@ describe("Button", () => {
     });
   });
 
+  /**
+   * The attribute-forwarding contract — UX-5.7.
+   *
+   * The link branch used to destructure a closed set of props and forward none
+   * of the remainder, so `data-*` and `aria-*` reached the component and never
+   * reached the DOM. Nothing caught it: TypeScript exempts hyphenated JSX
+   * attributes from excess-property checking, so they type-check against any
+   * component regardless of its props. Five consumer packages found it by
+   * reading served HTML and wrote wrapper elements instead.
+   *
+   * These assertions are the contract. The link cases are the ones that were
+   * actually broken; the button cases guard the branch that already worked.
+   */
+  describe("attribute forwarding", () => {
+    it("forwards arbitrary data-* to the native button", () => {
+      render(
+        <Button data-testid="save" data-analytics-id="save-product">
+          Save
+        </Button>,
+      );
+      const button = screen.getByRole("button", { name: "Save" });
+      expect(button).toHaveAttribute("data-testid", "save");
+      expect(button).toHaveAttribute("data-analytics-id", "save-product");
+    });
+
+    it("forwards arbitrary data-* to the link form", () => {
+      render(
+        <Button href="/products" data-testid="back" data-source-return="enterprise-job">
+          Back
+        </Button>,
+      );
+      const link = screen.getByRole("link", { name: "Back" });
+      expect(link).toHaveAttribute("data-testid", "back");
+      expect(link).toHaveAttribute("data-source-return", "enterprise-job");
+    });
+
+    it("forwards aria-* to both forms", () => {
+      render(
+        <>
+          <Button aria-label="Save product" aria-keyshortcuts="Meta+S">
+            Save
+          </Button>
+          <Button href="/products" aria-current="page">
+            Products
+          </Button>
+        </>,
+      );
+      expect(screen.getByRole("button", { name: "Save product" })).toHaveAttribute(
+        "aria-keyshortcuts",
+        "Meta+S",
+      );
+      expect(screen.getByRole("link", { name: "Products" })).toHaveAttribute("aria-current", "page");
+    });
+
+    it("forwards ordinary native attributes", () => {
+      render(
+        <>
+          <Button id="save" title="Save this product" name="intent" value="save" type="submit">
+            Save
+          </Button>
+          <Button href="https://example.test" target="_blank" rel="noreferrer" id="out">
+            Out
+          </Button>
+        </>,
+      );
+      const button = screen.getByRole("button", { name: "Save" });
+      expect(button).toHaveAttribute("id", "save");
+      expect(button).toHaveAttribute("title", "Save this product");
+      expect(button).toHaveAttribute("type", "submit");
+
+      const link = screen.getByRole("link", { name: "Out" });
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noreferrer");
+      expect(link).toHaveAttribute("id", "out");
+    });
+
+    it("passes forwarded attributes through a custom linkComponent", () => {
+      const Link = ({ href, children, ...rest }: React.ComponentProps<"a">) => (
+        <a href={href} {...rest}>
+          {children}
+        </a>
+      );
+      render(
+        <Button href="/products" linkComponent={Link} data-testid="composed">
+          Products
+        </Button>,
+      );
+      expect(screen.getByRole("link", { name: "Products" })).toHaveAttribute(
+        "data-testid",
+        "composed",
+      );
+    });
+
+    it("composes className rather than letting it replace the variant styles", () => {
+      render(
+        <Button variant="destructive" className="-ml-2">
+          Delete
+        </Button>,
+      );
+      const button = screen.getByRole("button", { name: "Delete" });
+      expect(button).toHaveClass("-ml-2");
+      expect(button).toHaveClass("bg-error");
+    });
+
+    it("does not leak its own variant props onto the DOM", () => {
+      render(
+        <>
+          <Button size="lg" variant="ghost">
+            Save
+          </Button>
+          <Button href="/x" size="lg" variant="ghost">
+            Go
+          </Button>
+        </>,
+      );
+      // `size` is a real HTML attribute on some elements, so a leaked variant
+      // prop would render as one rather than being dropped as unknown.
+      expect(screen.getByRole("button", { name: "Save" })).not.toHaveAttribute("size");
+      expect(screen.getByRole("link", { name: "Go" })).not.toHaveAttribute("size");
+    });
+
+    it("keeps the loading guard authoritative over a passed aria-disabled", () => {
+      render(
+        <Button href="/docs" loading aria-disabled={false}>
+          Read the docs
+        </Button>,
+      );
+      // The component owns this attribute while loading — a caller cannot
+      // re-enable a link the component has deliberately closed.
+      expect(screen.getByRole("link", { name: "Read the docs" })).toHaveAttribute(
+        "aria-disabled",
+        "true",
+      );
+    });
+
+    it("leaves aria-disabled alone when it is not loading", () => {
+      render(
+        <Button href="/docs" aria-disabled>
+          Read the docs
+        </Button>,
+      );
+      expect(screen.getByRole("link", { name: "Read the docs" })).toHaveAttribute(
+        "aria-disabled",
+        "true",
+      );
+    });
+  });
+
   describe("accessibility", () => {
     it("has no axe violations in its default state", async () => {
       const { container } = render(<Button>Save</Button>);
