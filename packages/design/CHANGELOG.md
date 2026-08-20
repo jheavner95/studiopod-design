@@ -8,6 +8,22 @@ ORG-2B below for why that changed. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versioning discipline is
 documented in `VERSIONING.md`.
 
+## 0.22.0 — `EmptyState` takes a heading level (UX-5.10)
+
+**Additive. The default is unchanged, so nothing existing moves.**
+
+### Changed
+
+`EmptyState` — and the `InfoState` / `WarningState` / `ErrorState` /
+`SuccessState` presets over it — hard-coded its title at `level={4}`. The right
+level depends on where the state sits rather than on what it is: an
+`EmptyState` inside a section headed `h2` produced `h2 → h4`, skipping a level,
+on four StudioPOD screens.
+
+`headingLevel?: 2 | 3 | 4` is now the caller's choice, defaulting to 4. The
+range is `Heading`'s own — it renders 1 through 4, and a level 1 inside an
+empty state would be claiming to be the page.
+
 ## 0.21.0 — the DOM contract, stated and enforced (UX-5.7A)
 
 **Additive. Nothing is removed and no existing call site has to change.**

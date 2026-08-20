@@ -24,6 +24,19 @@ export interface EmptyStateProps {
    * console cards, landing the icon badge at 28px.
    */
   size?: ControlSize;
+  /**
+   * The heading level for `title`. Defaults to 4, which is what this component
+   * hard-coded before UX-5.7A's contract work reached it.
+   *
+   * It needs to be the caller's choice because the correct level depends on
+   * where the state sits, not on what it is: an `EmptyState` inside a section
+   * headed `h2` produced `h2 → h4`, skipping a level, on four StudioPOD
+   * screens. The default is unchanged, so nothing existing moves.
+   *
+   * The range is `Heading`'s own — it renders 1 through 4, and a level 1
+   * inside an empty state would be claiming to be the page.
+   */
+  headingLevel?: 2 | 3 | 4;
   className?: string;
 }
 
@@ -32,7 +45,7 @@ export interface EmptyStateProps {
  * or a failed load. The Foundation Component Catalog's "empty-state" entry
  * (derived from the DS-0.2 Error State inventory item).
  */
-export function EmptyState({ tone = "neutral", icon, title, description, action, size = "md", className }: EmptyStateProps) {
+export function EmptyState({ tone = "neutral", icon, title, description, action, size = "md", headingLevel = 4, className }: EmptyStateProps) {
   const textClass = tone === "neutral" ? NEUTRAL_TEXT : FEEDBACK_TONE_TEXT[tone];
   const bgClass = tone === "neutral" ? NEUTRAL_BG : FEEDBACK_TONE_BG[tone];
   const role = tone === "neutral" ? "status" : feedbackRole(tone);
@@ -47,7 +60,7 @@ export function EmptyState({ tone = "neutral", icon, title, description, action,
         {/* Still a real heading at both densities — `sm` only shrinks the type
             (tailwind-merge resolves it against text-heading-4), so the dense
             variant never trades semantics for size. */}
-        <Heading level={4} className={size === "sm" ? "text-body-sm font-medium" : undefined}>
+        <Heading level={headingLevel} className={size === "sm" ? "text-body-sm font-medium" : undefined}>
           {title}
         </Heading>
         {description ? (
